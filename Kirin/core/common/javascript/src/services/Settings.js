@@ -36,7 +36,7 @@ defineServiceModule("Settings", function (require, exports) {
 	};
 	
 	exports.mergeOrOverwrite = function (newValues) {
-		
+		console.log("merge or overwrite " + newValues + ")");
 		if (keyValuePairs === null) {
 			console.log("Initializing settings");
 			keyValuePairs = {};

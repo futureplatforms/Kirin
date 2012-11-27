@@ -14,5 +14,10 @@ defineModule("Zomg", function (require, exports) {
 			console.log("THE ERROR WAS " + err);
 		};
 		require("Networking").downloadString(config);
+		
+		var settings = require("Settings");
+		//settings.put("oh", "yes");
+		//settings.commit();
+		console.log("oh: " + settings.get("oh"));
 	};
 });

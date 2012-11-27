@@ -1,4 +1,5 @@
-﻿using Microsoft.Phone.Controls;
+﻿using KirinWP8.Extensions;
+using Microsoft.Phone.Controls;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -25,6 +26,7 @@ namespace KirinWP8
             holder = new KirinWebViewHolder(context = new NativeContext());
             BindScreen(new DebugConsole(), "DebugConsole");
             new WP8Networking("Networking", this);
+            new Settings("Settings", this); 
         }
 
 

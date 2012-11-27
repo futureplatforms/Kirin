@@ -84,16 +84,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="DebugConsole.cs" />
-    <Compile Include="Kirin.cs" />
-    <Compile Include="KirinAssistant.cs" />
-    <Compile Include="KirinConstants.cs" />
-    <Compile Include="KirinExtension.cs" />
-    <Compile Include="KirinWebViewHolder.cs" />
-    <Compile Include="NativeContext.cs" />
-    <Compile Include="NativeObjectHolder.cs" />
+    <Compile Include="Extensions\DebugConsole.cs" />
+    <Compile Include="Core\Kirin.cs" />
+    <Compile Include="Core\KirinAssistant.cs" />
+    <Compile Include="Core\KirinConstants.cs" />
+    <Compile Include="Core\KirinExtension.cs" />
+    <Compile Include="Core\KirinWebViewHolder.cs" />
+    <Compile Include="Core\NativeContext.cs" />
+    <Compile Include="Core\NativeObjectHolder.cs" />
+    <Compile Include="Extensions\Settings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WP8Networking.cs" />
+    <Compile Include="Extensions\WP8Networking.cs" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

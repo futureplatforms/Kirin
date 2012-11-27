@@ -32,6 +32,11 @@ namespace KirinWP8
             holder.InvokeScriptoids(string.Format(KirinConstants.REGISTER_MODULE_WITH_METHODS, args));
         }
 
+        public void jsMethod(string methodName)
+        {
+            jsMethod(methodName, null);
+        }
+
         public void jsMethod(string methodName, object[] args)
         {   
             if (args == null || args.Length == 0)
