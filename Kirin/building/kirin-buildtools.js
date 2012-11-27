@@ -8,6 +8,8 @@ exports.supportedPlatforms = {
         "ios": ["webview", "webkit", "safari"],
         "android": ["webview", "webkit"],
         "wp7": ["webview", "ie"],
+		"wp8": ["webview", "ie"],
+		"w8": ["webview", "ie"],
         "qt": ["javascript", "js"],
         "html": ["webview", "fakeNative"],
         "node": ["fakeNative"]
@@ -126,6 +128,13 @@ exports.runCompiler = function (outputFilepath, callback, dryRun) {
 	var reDontCompress = /generated|lib|-min\.js/;
 	var allFiles = _.values(testtools.getAllNonTestModulePathMapping());
 	var files = _.filter(allFiles, function (f) {return !reDontCompress.test(f);});
+	
+	// we need to wrap each file name with quotes so the compiler doesn't puke when you get file paths with spaces
+	var len = files.length;
+	for (var i=0; i<len; i++) {
+		files[i] = "\"" + files[i] + "\"";
+	}
+	
 	var file = files.join(" --js ");
 	
 	var javaPath = "java";
@@ -133,7 +142,11 @@ exports.runCompiler = function (outputFilepath, callback, dryRun) {
 		javaPath = path.join(process.env["JAVA_HOME"], "bin", "java");
 	}
 	
-	var cmd = [javaPath, "-jar", compilerPath, "--js", file, "--js_output_file", "\"" + outputFilepath + "\""].join(" ");
+	// CAUTION!!!!  file in this list of parameters is NOT a single file, it is a list of files separated by
+	// --js, which itself is then prepended with --js in this parameter list!!!!!!
+	// perhaps rename file to fileNamesSeparatedByMinusMinusJs.
+	var cmd = [javaPath, "-jar", compilerPath, "--js ", file, "--js_output_file", "\"" + outputFilepath + "\""].join(" ");
+	console.log("compiler command is " + cmd);
 	if (dryRun) {
 		console.log(cmd);
 		callback("");

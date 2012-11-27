@@ -83,6 +83,14 @@ function buildAll (argv, dir) {
 			case "--native":
 				args.compileNative = true;
 				break;
+			case "--wp8":
+				args.platform = "wp8";
+				args.compileNative = true;
+				break;
+			case "--w8":
+				args.platform = "w8";
+				args.compileNative = true;
+				break;
 			case "--ios": 
 				args.platform = "ios";
 				args.compileNative = true;
