@@ -20,11 +20,11 @@ namespace KirinWP8
             this.moduleName = moduleName;
             this.holder = holder;
             this.context = context;
+            context.RegisterNativeObject(nativeObject, moduleName);
         } 
 
         public void onLoad()
         {
-            context.RegisterNativeObject(nativeObject, moduleName);
             string[] args = new string[2];
             args[0] = moduleName;
             string[] methods = context.MethodsForClass(moduleName);
@@ -41,6 +41,23 @@ namespace KirinWP8
             else
             {
                 holder.InvokeScriptoids(string.Format(KirinConstants.EXECUTE_METHOD_WITH_ARGS_JS, moduleName, methodName, JsonConvert.SerializeObject(args)));
+            }
+        }
+
+        public void executeCallback(string methodName, object arg)
+        {
+            this.executeCallback(methodName, new object[] { arg });
+        }
+
+        public void executeCallback(string methodName, object[] args)
+        {
+            if (args == null || args.Length == 0)
+            {
+                holder.InvokeScriptoids(string.Format(KirinConstants.EXECUTE_CALLBACK_JS, methodName));
+            }
+            else
+            {
+                holder.InvokeScriptoids(string.Format(KirinConstants.EXECUTE_CALLBACK_WITH_ARGS_JS, methodName, JsonConvert.SerializeObject(args)));
             }
         }
     }  

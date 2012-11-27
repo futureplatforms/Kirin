@@ -98,7 +98,7 @@ defineModule("kirin", function (require, exports) {
 		} else {
 			proxy = {};
 			for (max=methodNames.length; i<max; i++) {
-				var methodName = methodNames[i];	
+				var methodName = methodNames[i];
 				proxy[methodName] = createWrappingCall(className, methodName);
 			}
 		}

@@ -20,7 +20,6 @@ namespace KirinWP8
 
             while (t != null && !t.FullName.StartsWith("System"))
             {
-                Debug.WriteLine("type: " + t);
                 MethodInfo[] methods = t.GetMethods();
                 foreach (MethodInfo method in methods)
                 {

@@ -29,14 +29,6 @@ namespace KirinWP8
             
             object[] objs = (object[])JsonConvert.DeserializeObject(parameters, (new object[0]).GetType());
 
-            for (int i=0; i<objs.Length; i++) 
-            {
-                object obj = objs[i];
-                if (obj != null)
-                {
-                    //Debug.WriteLine(obj + ", " + obj.GetType());
-                }
-            }
             holder.InvokeMethod(methodName, objs);
         }
 

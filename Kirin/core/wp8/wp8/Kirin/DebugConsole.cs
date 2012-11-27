@@ -9,7 +9,7 @@ namespace KirinWP8
 {
     class DebugConsole
     {
-        public void log(string message, string level)
+        public void log_atLevel_(string message, string level)
         {
             Debug.WriteLine(level + ": " +message);
         }

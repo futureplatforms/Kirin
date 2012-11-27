@@ -1,5 +1,6 @@
 ﻿using Microsoft.Phone.Controls;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
 using System.Windows;
@@ -22,8 +23,10 @@ namespace KirinWP8
         private Kirin()
         {
             holder = new KirinWebViewHolder(context = new NativeContext());
-            context.RegisterNativeObject(new DebugConsole(), "DebugConsole");
+            BindScreen(new DebugConsole(), "DebugConsole");
+            new WP8Networking("Networking", this);
         }
+
 
         public static Kirin getInstance()
         {

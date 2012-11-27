@@ -88,10 +88,12 @@
     <Compile Include="Kirin.cs" />
     <Compile Include="KirinAssistant.cs" />
     <Compile Include="KirinConstants.cs" />
+    <Compile Include="KirinExtension.cs" />
     <Compile Include="KirinWebViewHolder.cs" />
     <Compile Include="NativeContext.cs" />
     <Compile Include="NativeObjectHolder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WP8Networking.cs" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

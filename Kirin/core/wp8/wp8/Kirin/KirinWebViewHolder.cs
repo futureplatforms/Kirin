@@ -69,9 +69,11 @@ namespace KirinWP8
 
         void wb_ScriptNotify(object sender, NotifyEventArgs e)
         {
-            Debug.WriteLine(e.Value);
-            
-            if (!e.Value.StartsWith("native")) { return; }
+            if (!e.Value.StartsWith("native"))
+            {
+                Debug.WriteLine(e.Value);
+                return;
+            }
             Uri uri = new Uri(e.Value);
             if ("native".Equals(uri.Scheme))
             {
@@ -94,7 +96,6 @@ namespace KirinWP8
                 string method = classAndMethod.Substring(dot + 1);
 
                 context.PerformMethod(className, method, parameters);
-                Debug.WriteLine("class: " + className + ", " + method);
                 wb.InvokeScript("eval", "EXPOSED_TO_NATIVE.js_ObjC_bridge.ready = true;");
             }
         }
