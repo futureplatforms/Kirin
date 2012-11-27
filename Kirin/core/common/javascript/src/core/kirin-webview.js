@@ -130,7 +130,11 @@ defineModule("kirin", function (require, exports) {
 		console.error("url    : " + e.sourceURL);
 		
 		var stack = e.stack || e.stacktrace;
-
+		for (var i in e) {
+			if (e.hasOwnProperty(i)) {
+				console.log("exception." + i + " = " + e[i]);
+			}
+		}
 		if (stack) {
 			console.error(stack);
 		} else {

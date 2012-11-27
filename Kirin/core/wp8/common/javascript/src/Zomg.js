@@ -5,7 +5,7 @@ defineModule("Zomg", function (require, exports) {
 		var config = {};
 		config.method = "GET";
 		config.url = "http://www.google.co.uk/";
-		config.postData = "";
+		config.postData = null;
 		config.headers = "";
 		config.payload = function(payload) {
 			console.log("THE PAYLOAD WAS " + payload);

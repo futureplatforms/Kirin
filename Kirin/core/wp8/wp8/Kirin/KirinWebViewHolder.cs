@@ -34,17 +34,7 @@ namespace KirinWP8
             while (queue.Count > 0)
             {
                 string script = queue.Dequeue();
-                wb.Dispatcher.BeginInvoke(() =>
-                {
-                    try
-                    {
-                        ActuallyInvokeIt(script);
-                    }
-                    catch (Exception ex)
-                    {
-                        Debug.WriteLine(ex.Message);
-                    }
-                });
+                ActuallyInvokeIt(script);
             }
         }
 
@@ -54,8 +44,18 @@ namespace KirinWP8
             fn += script + ";";
             fn += "} catch (e) { window.external.notify(e); } })();";
             Debug.WriteLine("actually invoking " + fn);
-            
-            wb.InvokeScript("eval", fn);
+
+            wb.Dispatcher.BeginInvoke(() =>
+            {
+                try
+                {
+                    wb.InvokeScript("eval", fn);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                }
+            }); 
         }
 
         public void InvokeScriptoids(string script)
