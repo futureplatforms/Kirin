@@ -7,21 +7,21 @@ using System.Threading.Tasks;
 
 namespace KirinW8.W8
 {
-    class W8KirinPlatform : IKirinPlatform
+    public class W8KirinPlatform : IKirinPlatform
     {
         public IWebBrowserWrapper GetWebBrowserWrapper()
         {
-            throw new NotImplementedException();
+            return new W8WebBrowser();
         }
 
         public INetworking GetNetworking(string name, Kirin k)
         {
-            throw new NotImplementedException();
+            return new W8Networking(name, k);
         }
 
         public ISettingsBackend GetSettingsBackend()
         {
-            throw new NotImplementedException();
+            return new W8SettingsBackend();
         }
     }
 }

@@ -55,9 +55,6 @@ defineModule("Native", function (require, exports) {
 		var parts = Array.prototype.slice.call(args, 1);
 		var url = "native://" + args[0] + "/?" + encodeURIComponent(JSON.stringify(parts));	
 		window.external.notify(url);
-		//var url = "native://" + args[0] + "/?" + JSON.stringify(parts);	
-		//document.location = url;		    
-		
 	};
 	
 	/**
@@ -84,16 +81,16 @@ defineModule("Native", function (require, exports) {
 	var log = console.log;
 	// assume the presence of console and document.
 	console.log = function (message) {
-		exec("DebugConsole.log", message, "INFO");
+		exec("DebugConsole.log_atLevel_", message, "INFO");
 	};
 	console.debug = function (message) {
-		exec("DebugConsole.log", message, "DEBUG");
+		exec("DebugConsole.log_atLevel_", message, "DEBUG");
 	};
 	console.warn = function (message) {
-		exec("DebugConsole.log", message, "WARN");
+		exec("DebugConsole.log_atLevel_", message, "WARN");
 	};
 	console.error = function (message) {
-		exec("DebugConsole.log", message, "ERROR");
+		exec("DebugConsole.log_atLevel_", message, "ERROR");
 	};
 	console.dir = function (obj) {
 		console.log(JSON.stringify(obj));

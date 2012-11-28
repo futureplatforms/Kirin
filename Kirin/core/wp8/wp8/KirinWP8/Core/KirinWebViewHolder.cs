@@ -57,13 +57,13 @@ namespace KirinWindows.Core
         void wb_ScriptNotify(object sender, INotifyEventArgsWrapper e)
         {
             if (!e.Value.StartsWith("native"))
-            {
+            {  
                 Debug.WriteLine(e.Value);
                 return;
             }
             Uri uri = new Uri(e.Value);
             if ("native".Equals(uri.Scheme))
-            {
+            { 
                 // Here's an example URI:
                 // native://DebugConsole.log_atLevel_/?%5B%22Javascript%20says%3A%20windaes%20webview%20loaded%22%2C%22INFO%22%5D
 

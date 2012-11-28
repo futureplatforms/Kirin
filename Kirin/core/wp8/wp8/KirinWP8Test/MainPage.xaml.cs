@@ -19,6 +19,7 @@ namespace KirinTest
         // Constructor
         public MainPage()
         {
+            this.InitializeComponent();
             Kirin.Initialize(new WP8KirinPlatform());
             Kirin k = Kirin.GetInstance();
             KirinAssistant ka = k.BindScreen(new Zomg(), "Zomg");

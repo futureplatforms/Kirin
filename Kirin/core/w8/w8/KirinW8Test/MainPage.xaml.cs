@@ -1,4 +1,6 @@
-﻿using System;
+﻿using KirinW8.W8;
+using KirinWindows.Core;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -14,7 +16,7 @@ using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace KirinW8
+namespace KirinW8Test
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
@@ -24,6 +26,10 @@ namespace KirinW8
         public MainPage()
         {
             this.InitializeComponent();
+            Kirin.Initialize(new W8KirinPlatform());
+            Kirin k = Kirin.GetInstance();
+            KirinAssistant ka = k.BindScreen(new Kazomfg(), "Kazomfg");
+            ka.onLoad();
         }
 
         /// <summary>

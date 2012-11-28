@@ -13,7 +13,6 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-
 defineModule("kirin", function (require, exports) {
 	var Native = require("Native"),
 		slice = Array.prototype.slice,

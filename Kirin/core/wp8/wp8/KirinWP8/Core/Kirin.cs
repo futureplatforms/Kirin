@@ -23,7 +23,7 @@ namespace KirinWindows.Core
 
         public static void Initialize(IKirinPlatform platform)
         {
-            instance = new Kirin(platform);
+            instance = new Kirin(platform); 
         }
 
         public static Kirin GetInstance()

@@ -30,7 +30,7 @@ namespace KirinW8.W8
 
         public IDictionary<string, object> Retrieve()
         {
-            return kirinContainer.Values;
+            return kirinContainer.Values; 
         }
 
         public void Persist()
