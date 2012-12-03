@@ -56,7 +56,7 @@ namespace KirinWP8
         }
 
         void wb_Navigated(object sender, NavigationEventArgs e)
-        {
+        { 
             Navigated(sender, new WP8NavigationEventArgsWrapper(e));
         }
 

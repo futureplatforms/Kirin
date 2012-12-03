@@ -9,6 +9,7 @@ var _ = require("underscore");
 function compileProject (environment, dir, callback, errback) {
 	verbose = environment.verbose;
 	var directory = path.join(dir, environment["w8.dir"] || "w8");
+	var msbuildHome = environment["msbuild_home"] || "c:\\windows\\Microsoft.NET\\Framework\\v4.0.30319";
 	if (!path.existsSync(directory)) {
 		console.log("# cd " + directory + " # directory doesn't exist");
 		callback();
@@ -16,7 +17,7 @@ function compileProject (environment, dir, callback, errback) {
 	}
 
 	if (!iphoneSDK) {
-		childProcess.exec("xcodebuild -showsdks | grep -o 'iphoneos*.*' | tail -n 1", function (error, stdout, stderr) {
+		childProcess.exec(msbuildHome + "\\MSBuild KirinW8.csproj", function (error, stdout, stderr) {
 			if (!error) {
 				iphoneSDK = stdout.toString().replace(/[\n\s]/g, "");
 				compileProject (environment, dir, callback, errback);
