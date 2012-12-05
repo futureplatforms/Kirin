@@ -137,7 +137,6 @@ function count(string, substring) {
 }
 
 exports.addPlugin = function (pluginName, modulePaths, longestPathPrefix) {
-
 	var moduleInfo = {
 		dummy: {},
 		integration: {},

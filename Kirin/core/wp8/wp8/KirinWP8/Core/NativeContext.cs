@@ -17,9 +17,9 @@ namespace KirinWindows.Core
             objects = new Dictionary<string, NativeObjectHolder>();
         }
 
-        public void RegisterNativeObject(object obj, string name)
+        public void RegisterNativeObject(object obj, string name, bool isGwt)
         {
-            objects.Add(name, new NativeObjectHolder(obj));
+            objects.Add(name, new NativeObjectHolder(obj, isGwt));
         }
 
         public void PerformMethod(string className, string methodName, string parameters)
@@ -28,6 +28,15 @@ namespace KirinWindows.Core
             var holder = objects[className];
             
             object[] objs = (object[])JsonConvert.DeserializeObject(parameters, (new object[0]).GetType());
+
+            for (var i = 0; i < objs.Length; i++)
+            {
+                var obj = objs[i];
+                if (obj is Int64)
+                {
+                    objs[i] = Convert.ToInt32(obj);
+                }
+            }
 
             holder.InvokeMethod(methodName, objs);
         }

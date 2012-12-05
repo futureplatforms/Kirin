@@ -9,7 +9,7 @@ namespace KirinTest
 { 
     class Zomg
     { 
-        public void Arrrgh_()
+        public void Arrrgh()
         { 
             Debug.WriteLine("it's arrrgh!"); 
         } 

@@ -10,36 +10,50 @@ namespace KirinWindows.Core
 {
     class NativeObjectHolder
     {
-        private List<string> methodNames;
-        private object o;
-        public NativeObjectHolder(object o)
-        {
-            this.o = o;
-            methodNames = new List<string>();
-            Type t = o.GetType();
+        private readonly string[] Names = { "System", "Microsoft" };
+        private Dictionary<string, MethodInfo> Methods;
+        private object Obj;
 
-            while (t != null && !t.FullName.StartsWith("System"))
+        public NativeObjectHolder(object o, bool isGwt)
+        {
+            this.Obj = o;
+            Methods = new Dictionary<string, MethodInfo>();
+
+            var t = Obj.GetType();
+
+            while (t != null)
             {
-                IEnumerable<MethodInfo> methods = RuntimeReflectionExtensions.GetRuntimeMethods(t);
-                foreach (MethodInfo method in methods)
+                if (!Names.Any(t.FullName.StartsWith)) 
                 {
-                    if (method.IsPublic)
+                    foreach (var method in RuntimeReflectionExtensions.GetRuntimeMethods(t))
                     {
-                        methodNames.Add(method.Name);
+                        if (method.IsPublic && !Names.Any(method.DeclaringType.FullName.StartsWith))
+                        {
+                            var methodNameForJS = method.Name;
+                            var numParams = method.GetParameters().Length;
+                            if (isGwt)
+                            {
+                                for (var i = 0; i < numParams; i++)
+                                {
+                                    methodNameForJS += "_";
+                                }
+                            }
+                            Methods.Add(methodNameForJS, method);
+                        }
                     }
                 }
                 t = t.GetTypeInfo().BaseType;
             }
         }
 
-        public List<string> GetMethodNames()
-        {
-            return methodNames;
-        }
-
         public void InvokeMethod(string methodName, object[] args)
         {
-            o.GetType().GetTypeInfo().GetDeclaredMethod(methodName).Invoke(o, args);
+            Methods[methodName].Invoke(Obj, args);
+        }
+
+        public IEnumerable<string> GetMethodNames()
+        {
+            return Methods.Keys;
         }
     }
 }

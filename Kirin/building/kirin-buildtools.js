@@ -8,8 +8,8 @@ exports.supportedPlatforms = {
         "ios": ["webview", "webkit", "safari"],
         "android": ["webview", "webkit"],
         "wp7": ["webview", "ie"],
-		"wp8": ["webview", "ie"],
-		"w8": ["webview", "ie"],
+		"wp8": ["webview", "ie", "safari"],
+		"w8": ["webview", "ie", "safari"],
         "qt": ["javascript", "js"],
         "html": ["webview", "fakeNative"],
         "node": ["fakeNative"]
@@ -145,8 +145,7 @@ exports.runCompiler = function (outputFilepath, callback, dryRun) {
 	// CAUTION!!!!  file in this list of parameters is NOT a single file, it is a list of files separated by
 	// --js, which itself is then prepended with --js in this parameter list!!!!!!
 	// perhaps rename file to fileNamesSeparatedByMinusMinusJs.
-	var cmd = [javaPath, "-jar", compilerPath, "--js ", file, "--js_output_file", "\"" + outputFilepath + "\""].join(" ");
-	console.log("compiler command is " + cmd);
+	var cmd = ["\"" + javaPath + "\"", "-jar", compilerPath, "--js ", file, "--js_output_file", "\"" + outputFilepath + "\""].join(" ");
 	if (dryRun) {
 		console.log(cmd);
 		callback("");
@@ -165,7 +164,8 @@ exports.runCompiler = function (outputFilepath, callback, dryRun) {
 
     files = _.filter(allFiles, function (f) {return /(\/lib\/)|-min\.js/.test(f);});
     files.push(path.basename(outputFilepath));
-	files = _.union(files, _.filter(allFiles, function (f) {return /generated/.test(f);}));    
+	files = _.union(files, _.filter(allFiles, function (f) {return /generated/.test(f);}));   
+
     return files;
 	
 };

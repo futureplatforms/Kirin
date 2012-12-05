@@ -15,7 +15,7 @@ namespace KirinWindows.Core
         private Kirin(IKirinPlatform platform)
         {
             holder = new KirinWebViewHolder(context = new NativeContext(), platform.GetWebBrowserWrapper());
-            BindScreen(new DebugConsole(), "DebugConsole");
+            BindScreen(new DebugConsole(), "DebugConsole", isGwt:false);
             platform.GetNetworking("Networking", this);
             new Settings("Settings", this, platform.GetSettingsBackend()); 
         }
@@ -32,9 +32,9 @@ namespace KirinWindows.Core
             return instance;
         }
 
-        public KirinAssistant BindScreen(Object o, String moduleName)
+        public KirinAssistant BindScreen(Object o, String moduleName, bool isGwt=true)
         {
-            return new KirinAssistant(o, moduleName, holder, context);
+            return new KirinAssistant(o, moduleName, holder, context, isGwt);
         }
     }
 }

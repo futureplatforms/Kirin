@@ -77,7 +77,6 @@ walkDirectory.createFilteredWalker = function (extensionPattern, exclusionsPatte
 			if (!environment.allVariantsRegexp.test(filepath)) {
 				return true;
 			}
-			
 			return environment.includeRegexp.test(filepath);
 		};
 	};
@@ -93,6 +92,7 @@ walkDirectory.createFileCopier = function (srcPath, destPath) {
 			console.log("cp " + filepath + " " + newFilepath);
 		}
 		if (!dryRun) {
+		
 			fs.linkSync(filepath, newFilepath);
 		}
 	};

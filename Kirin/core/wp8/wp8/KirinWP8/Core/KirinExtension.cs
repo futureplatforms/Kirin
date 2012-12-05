@@ -15,7 +15,7 @@ namespace KirinWindows.Core
         public KirinExtension(string moduleName, Kirin k)
         {
             this.moduleName = moduleName;
-            KirinAssistant = k.BindScreen(this, moduleName);
+            KirinAssistant = k.BindScreen(this, moduleName, isGwt:false);
             KirinAssistant.onLoad();
         }
     }

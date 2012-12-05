@@ -27,12 +27,7 @@ namespace KirinWindows.Core
         }
 
         void wb_Navigated(object sender, INavigationEventArgsWrapper e)
-        {
-            navigated = true;
-            while (queue.Count > 0)
-            {
-                ActuallyInvokeIt(queue.Dequeue());
-            }
+        { 
         }
 
         private void ActuallyInvokeIt(string script)
@@ -56,6 +51,15 @@ namespace KirinWindows.Core
 
         void wb_ScriptNotify(object sender, INotifyEventArgsWrapper e)
         {
+            if (!navigated && ">>> READY >>>".Equals(e.Value))
+            {
+                navigated = true;
+                while (queue.Count > 0)
+                {
+                    ActuallyInvokeIt(queue.Dequeue());
+                }
+                return;
+            }
             if (!e.Value.StartsWith("native"))
             {  
                 Debug.WriteLine(e.Value);

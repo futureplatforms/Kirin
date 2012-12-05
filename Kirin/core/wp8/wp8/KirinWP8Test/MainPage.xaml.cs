@@ -15,7 +15,7 @@ using KirinWindows.Core;
 namespace KirinTest
 {
     public partial class MainPage : PhoneApplicationPage
-    { 
+    {  
         // Constructor
         public MainPage()
         {
@@ -23,7 +23,9 @@ namespace KirinTest
             Kirin.Initialize(new WP8KirinPlatform());
             Kirin k = Kirin.GetInstance();
             KirinAssistant ka = k.BindScreen(new Zomg(), "Zomg");
-            ka.onLoad(); 
+            ka.onLoad();
+            ZomgJS jsProxy = new ZomgJS(ka);
+            jsProxy.Whateva(1337);  
         }
     }
 }

@@ -1,7 +1,7 @@
 defineModule("Zomg", function (require, exports) {
 	exports.onLoad = function(obj) {
 		console.log("onLoad done!", "INFO");
-		obj.Arrrgh_();
+		obj.Arrrgh();
 		var config = {};
 		config.method = "GET";
 		config.url = "http://www.google.co.uk/";
@@ -19,5 +19,9 @@ defineModule("Zomg", function (require, exports) {
 		//settings.put("oh", "yes");
 		//settings.commit();
 		console.log("oh: " + settings.get("oh"));
+	};
+	
+	exports.Whateva = function(num) {
+		console.log("Whateva " + num);
 	};
 });

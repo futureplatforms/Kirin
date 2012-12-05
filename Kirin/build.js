@@ -461,7 +461,7 @@ function buildModule (pluginName, inheritedEnvironment, dir) {
 	buildDependencies(info, environment);
 	environment.isApplication = isApplication;
 	buildOrder.push(environment);
-	startMessage("Gathering " + pluginName);
+	startMessage("Gathering " + pluginName + ", dir is " + dir);
 
 	var javascriptFileWalker = fileUtils.walkDirectory.createFilteredWalker(/\.js$/);
 	javascriptFileWalker.createSpecificFileTest(environment);
@@ -474,7 +474,7 @@ function buildModule (pluginName, inheritedEnvironment, dir) {
 	var srcPath = path.join(dir, info["javascript.src"] || "common/javascript/src");
 	var resPath = path.join(dir, info["common.resources"] || "common/resources");	
 	var libPath = path.join(dir, info["javascript.lib"] || "common/lib");	
-
+	console.log("srcPath: " + srcPath);
 	fileUtils.walkDirectory(srcPath, javascriptFileWalker);
 
 
@@ -486,6 +486,7 @@ function buildModule (pluginName, inheritedEnvironment, dir) {
 	if (environment.buildDir) {
 		var resourceFileWalker = fileUtils.walkDirectory.createFilteredWalker(
 		        function (filepath) {
+						
 			            return ! /\.js/.test(filepath);
 		        }
 		);
@@ -514,7 +515,9 @@ function buildModule (pluginName, inheritedEnvironment, dir) {
 			var files = _.values(moduleInfo["default"]);
 			var re = /generated/;
 			files = _.filter(files, function (filename) { 
-			    return re.test(filename);
+				var res = re.test(filename);
+				console.log("include " + filename + "?  " + res);
+			    return res;
 			});
 			console.dir(files);
 			_.each(files, copier);

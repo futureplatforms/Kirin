@@ -14,14 +14,14 @@ namespace KirinWindows.Core
         private KirinWebViewHolder holder;
         private NativeContext context;
 
-        public KirinAssistant(object nativeObject, string moduleName, KirinWebViewHolder holder, NativeContext context)
+        public KirinAssistant(object nativeObject, string moduleName, KirinWebViewHolder holder, NativeContext context, bool isGwt)
         {
             this.nativeObject = nativeObject;
             this.moduleName = moduleName;
             this.holder = holder;
             this.context = context;
-            context.RegisterNativeObject(nativeObject, moduleName);
-        } 
+            context.RegisterNativeObject(nativeObject, moduleName, isGwt);
+        }
 
         public void onLoad()
         {
@@ -30,6 +30,11 @@ namespace KirinWindows.Core
             string[] methods = context.MethodsForClass(moduleName);
             args[1] = JsonConvert.SerializeObject(methods);
             holder.InvokeScriptoids(string.Format(KirinConstants.REGISTER_MODULE_WITH_METHODS, args));
+        }
+
+        public void onResume()
+        {
+            jsMethod("onResume");
         }
 
         public void jsMethod(string methodName)
