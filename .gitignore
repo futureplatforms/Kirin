@@ -40,3 +40,5 @@ local.properties
 generated-javascript
 obj
 node_modules
+/Kirin/core/wp8/wp8/KirinWP8.v11.suo
+/Kirin/core/wp8/wp8/KirinWP8/Bin
