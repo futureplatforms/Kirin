@@ -20,29 +20,25 @@ namespace KirinWindows.Core
             Methods = new Dictionary<string, MethodInfo>();
 
             var t = Obj.GetType();
-
-            while (t != null)
+            // We don't need to traverse our way up the full type hierarchy because all available methods are included in GetRuntimeMethods
+            if (!Names.Any(t.FullName.StartsWith)) 
             {
-                if (!Names.Any(t.FullName.StartsWith)) 
+                foreach (var method in RuntimeReflectionExtensions.GetRuntimeMethods(t))
                 {
-                    foreach (var method in RuntimeReflectionExtensions.GetRuntimeMethods(t))
+                    if (method.IsPublic && !Names.Any(method.DeclaringType.FullName.StartsWith) && !method.IsAbstract)
                     {
-                        if (method.IsPublic && !Names.Any(method.DeclaringType.FullName.StartsWith))
+                        var methodNameForJS = method.Name;
+                        var numParams = method.GetParameters().Length;
+                        if (isGwt)
                         {
-                            var methodNameForJS = method.Name;
-                            var numParams = method.GetParameters().Length;
-                            if (isGwt)
+                            for (var i = 0; i < numParams; i++)
                             {
-                                for (var i = 0; i < numParams; i++)
-                                {
-                                    methodNameForJS += "_";
-                                }
+                                methodNameForJS += "_";
                             }
-                            Methods.Add(methodNameForJS, method);
                         }
+                        Methods.Add(methodNameForJS, method);
                     }
                 }
-                t = t.GetTypeInfo().BaseType;
             }
         }
 

@@ -4,6 +4,7 @@ var _ = require("underscore");
 // TODO split these keyword definitions into a seperate module.
 exports.buildTypes = ['prod', 'dev', 'qa', 'stage', 'uitest'];
 
+// RIGHT.  These supported platforms define what extensions files need to have in order to be copied in to a build for that platform.
 exports.supportedPlatforms = {
         "ios": ["webview", "webkit", "safari"],
         "android": ["webview", "webkit"],
