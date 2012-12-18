@@ -34,16 +34,16 @@ namespace KirinWindows.Core
             return toReturn;
         }
 
-        public void updateContents_withDeletes_(JObject adds, JArray deletes)
+        public void updateContents_withDeletes_(JObject adds, string[] deletes)
         { 
             foreach (KeyValuePair<string, JToken> pair in adds)
             {
                 backend.Add("kirin-" + pair.Key, pair.Value.ToString());
             }
 
-            foreach (JToken val in deletes)
+            foreach (string val in deletes)
             {
-                backend.Remove("kirin-" + val.ToString());
+                backend.Remove("kirin-" + val);
             }
             ScheduleBackgroundSave();
         }

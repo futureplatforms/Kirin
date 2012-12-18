@@ -42,6 +42,11 @@ namespace KirinWindows.Core
             }
         }
 
+        public Type GetMethodParamType(string methodName, int paramNum)
+        {
+            return Methods[methodName].GetParameters()[paramNum].ParameterType;
+        }
+
         public void InvokeMethod(string methodName, object[] args)
         {
             Methods[methodName].Invoke(Obj, args);

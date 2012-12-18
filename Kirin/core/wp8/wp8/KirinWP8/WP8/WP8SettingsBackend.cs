@@ -24,7 +24,7 @@ namespace KirinWP8.WP8
 
         public void Add(string key, object val)
         {
-            settings.Add(key, val);
+            settings[key] = val;
         }
 
         public bool Remove(string key)

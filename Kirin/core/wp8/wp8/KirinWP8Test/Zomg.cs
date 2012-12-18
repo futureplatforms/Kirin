@@ -12,30 +12,36 @@ namespace KirinTest
         public void Arrrgh()
         { 
             Debug.WriteLine("it's arrrgh!"); 
-        } 
-         
+        }
+
+        public void HeresAString(string str)
+        {
+            Debug.WriteLine(str);
+        }
+
+        public void HeresAnInt(int i)
+        {
+            Debug.WriteLine(i);
+        }
+
+        public void HeresABool(bool b)
+        {
+            Debug.WriteLine(b);
+        }
+
         public void HeresAStringArray(string[] strs)
         {
-            foreach (var str in strs)
-            {
-                Debug.WriteLine(str);
-            }
+            Array.ForEach(strs, HeresAString);
         }
          
         public void HeresAnIntArray(int[] ints)
-        {  
-            foreach (var i in ints)
-            { 
-                Debug.WriteLine(i);
-            }
+        {
+            Array.ForEach(ints, HeresAnInt);
         }
 
         public void HeresABoolArray(bool[] bools)
         {
-            foreach (var b in bools)
-            {
-                Debug.WriteLine(b);
-            }
+            Array.ForEach(bools, HeresABool);
         }
 
         public void HeresSomeArrays(string[] strs, int[] ints, bool[] bools)
@@ -44,5 +50,11 @@ namespace KirinTest
             HeresAnIntArray(ints);
             HeresABoolArray(bools);
         }
+
+        /*public void HeresSomeArraysOfArrays(string[][] strs, int[][][] ints)
+        {
+            Array.ForEach(strs, HeresAStringArray);
+            Array.ForEach(ints, (x) => Array.ForEach(x, HeresAnIntArray));
+        }*/
     } 
 } 
