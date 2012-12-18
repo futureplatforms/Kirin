@@ -65,30 +65,27 @@ namespace KirinWindows.Core
                 Debug.WriteLine(e.Value);
                 return;
             }
-            Uri uri = new Uri(e.Value);
-            if ("native".Equals(uri.Scheme))
-            { 
-                // Here's an example URI:
-                // native://DebugConsole.log_atLevel_/?%5B%22Javascript%20says%3A%20windaes%20webview%20loaded%22%2C%22INFO%22%5D
 
-                // We need to parse the URI ourselves because uri.host loses string case information
-                string schemelessUri = e.Value.Substring("native://".Length);
+            // Here's an example URI:
+            // native://DebugConsole.log_atLevel_/?%5B%22Javascript%20says%3A%20windaes%20webview%20loaded%22%2C%22INFO%22%5D
 
-                // ok our string now looks like this: 
-                // DebugConsole.log_atLevel_/?%5B%22Javascript%20says%3A%20windaes%20webview%20loaded%22%2C%22INFO%22%5D
-                // everything before /? is class and method, everything after /? is the parameters
-                int slash = schemelessUri.IndexOf('/');
-                string classAndMethod = schemelessUri.Substring(0, slash);
-                string parameters = schemelessUri.Substring(slash + 2);
+            // We need to parse the URI ourselves because uri.host loses string case information
+            string schemelessUri = e.Value.Substring("native://".Length);
 
-                // before the . is the classname, after the . is the method
-                int dot = classAndMethod.IndexOf('.');
-                string className = classAndMethod.Substring(0, dot);
-                string method = classAndMethod.Substring(dot + 1);
+            // ok our string now looks like this: 
+            // DebugConsole.log_atLevel_/?%5B%22Javascript%20says%3A%20windaes%20webview%20loaded%22%2C%22INFO%22%5D
+            // everything before /? is class and method, everything after /? is the parameters
+            int slash = schemelessUri.IndexOf('/');
+            string classAndMethod = schemelessUri.Substring(0, slash);
+            string parameters = schemelessUri.Substring(slash + 2);
 
-                context.PerformMethod(className, method, parameters);
-                wb.InvokeScriptAsync("eval", "EXPOSED_TO_NATIVE.js_ObjC_bridge.ready = true;");
-            }
+            // before the . is the classname, after the . is the method
+            int dot = classAndMethod.IndexOf('.');
+            string className = classAndMethod.Substring(0, dot);
+            string method = classAndMethod.Substring(dot + 1);
+
+            context.PerformMethod(className, method, parameters);
+            wb.InvokeScriptAsync("eval", "EXPOSED_TO_NATIVE.js_ObjC_bridge.ready = true;");
         }
 
         private void debugUri(Uri uri)

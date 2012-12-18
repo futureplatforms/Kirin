@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -35,6 +36,55 @@ namespace KirinWindows.Core
                 if (obj is Int64)
                 {
                     objs[i] = Convert.ToInt32(obj);
+                }
+
+                if (obj is JArray)
+                {
+                    var objAsJarray = obj as JArray;
+                    if (objAsJarray.Count == 0)
+                    {
+                        objs[i] = new object[0];
+                    }
+
+                    var objArr = new object[objAsJarray.Count];
+
+                    // what if it's empty................?
+                    JToken anObj = objAsJarray[0];
+                    for (var j = 0; j < objArr.Length; j++)
+                    {
+                        var current = objAsJarray[j].ToObject((new object()).GetType());
+                        objArr[j] = current;
+                    }
+
+                    // it's either gonna be int, string or bool
+                    if (anObj.Type == JTokenType.String)
+                    {
+                        var strArr = new string[objAsJarray.Count];
+                        for (var j = 0; j < objArr.Length; j++)
+                        {
+                            strArr[j] = (string)objArr[j];
+                        }
+                        obj = strArr;
+                    }
+                    else if (anObj.Type == JTokenType.Integer)
+                    {
+                        var intArr = new int[objAsJarray.Count];
+                        for (var j = 0; j < intArr.Length; j++)
+                        { 
+                            intArr[j] = Convert.ToInt32(objArr[j]);
+                        }
+                        obj = intArr;
+                    }
+                    else
+                    {
+                        var boolArr = new bool[objAsJarray.Count];
+                        for (var j = 0; j < boolArr.Length; j++)
+                        {
+                            boolArr[j] = (bool)objArr[j];
+                        }
+                        obj = boolArr;
+                    }
+                    objs[i] = obj;
                 }
             }
 

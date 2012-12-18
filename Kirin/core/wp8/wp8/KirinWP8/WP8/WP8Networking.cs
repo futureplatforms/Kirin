@@ -96,7 +96,25 @@ namespace KirinWP8
                  
                 var streamReader = new StreamReader(resp.GetResponseStream());
                 string s = streamReader.ReadToEnd();
-                KirinAssistant.executeCallback(payload, Uri.EscapeDataString(s));
+
+                // Uri.EscapeDataString only accepts up to 32766 characters.
+                int limit = 30000;
+
+                StringBuilder sb = new StringBuilder();
+                int loops = s.Length / limit;
+                for (int i = 0; i <= loops; i++)
+                {
+                    if (i < loops)
+                    {
+                        sb.Append(Uri.EscapeDataString(s.Substring(limit * i, limit)));
+                    }
+                    else
+                    {
+                        sb.Append(Uri.EscapeDataString(s.Substring(limit * i)));
+                    }
+                }
+
+                KirinAssistant.executeCallback(payload, sb.ToString());
             }
             catch (WebException e)
             {
