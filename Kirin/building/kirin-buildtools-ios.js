@@ -67,6 +67,7 @@ function compileProject (environment, dir, callback, errback) {
 		environment["ios.configuration"] = "Release";
 	}
 
+	args.push("-verbose");
 	args.push("clean build");
 	var cmd = args.join(" ");
 	console.log(cmd);
