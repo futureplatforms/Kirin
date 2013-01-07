@@ -24,6 +24,7 @@ namespace KirinW8.W8
             }
             else
             {
+                kirinContainer = localSettings.Containers["KirinSettings"];
                 Debug.WriteLine("Container already existed");
             } 
         }
