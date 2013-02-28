@@ -129,6 +129,9 @@ namespace KirinWindows.Core
                 objs[i] = ConvertParameter(objs[i], holder.GetMethodParamType(methodName, i));
             }
 
+#if DEBUG
+            System.Diagnostics.Debug.WriteLine("{0}", methodName);
+#endif
             holder.InvokeMethod(methodName, objs);
         }
 

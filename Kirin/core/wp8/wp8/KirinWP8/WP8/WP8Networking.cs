@@ -1,12 +1,9 @@
 ﻿using KirinWindows.Core;
 using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace KirinWP8
 {
@@ -80,6 +77,18 @@ namespace KirinWP8
                     stream.Close();
                 }
                 req.BeginGetResponse(new AsyncCallback(Net_Resp), req);
+            }
+            catch (WebException wex)
+            {
+                if (wex.Status == WebExceptionStatus.RequestCanceled)
+                {
+                    //Fast Application Switching - re-issue request
+                    var req = res.AsyncState as HttpWebRequest;
+                    if (req.Method == "GET")
+                        req.BeginGetResponse(new AsyncCallback(Net_Resp), req);
+                    else
+                        req.BeginGetRequestStream(new AsyncCallback(Net_Req), req);
+                }
             }
             catch (Exception e)
             {
