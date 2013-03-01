@@ -89,6 +89,8 @@ namespace KirinWP8
                     else
                         req.BeginGetRequestStream(new AsyncCallback(Net_Req), req);
                 }
+                else
+                    KirinAssistant.executeCallback(onError, "Exception: " + wex.ToString());
             }
             catch (Exception e)
             {
@@ -125,9 +127,19 @@ namespace KirinWP8
 
                 KirinAssistant.executeCallback(payload, sb.ToString());
             }
-            catch (WebException e)
+            catch (WebException wex)
             {
-                KirinAssistant.executeCallback(onError, "WebException: " + e.ToString());
+                if (wex.Status == WebExceptionStatus.RequestCanceled)
+                {
+                    //Fast Application Switching - re-issue request
+                    var req = res.AsyncState as HttpWebRequest;
+                    if (req.Method == "GET")
+                        req.BeginGetResponse(new AsyncCallback(Net_Resp), req);
+                    else
+                        req.BeginGetRequestStream(new AsyncCallback(Net_Req), req);
+                }
+                else
+                    KirinAssistant.executeCallback(onError, "Exception: " + wex.ToString());
             }
             catch (Exception e)
             {
