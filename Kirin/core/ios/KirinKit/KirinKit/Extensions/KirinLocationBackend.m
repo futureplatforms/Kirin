@@ -82,10 +82,16 @@
     [self.kirinHelper jsCallback:self.errback withArgsList:[KirinArgs string:message]];
 }
 
-- (void) startWithCallback: (NSString*) callback andErrback: (NSString*) errback {
+- (void) startWithIsFine: (BOOL) isFine andCallback: (NSString*) callback andErrback: (NSString*) errback {
     self.callback = callback;
     self.errback = errback;
-    self.locationManager.delegate = self;    
+    self.locationManager.delegate = self;
+    if (isFine) {
+        NSLog(@"it's isFine");
+    } else {
+        NSLog(@"not isFine");
+    }
+    self.locationManager.desiredAccuracy = (isFine ? kCLLocationAccuracyBest : kCLLocationAccuracyKilometer);
     
     if (self.locationManager.location) {
         [self sendLocation:self.locationManager.location];
