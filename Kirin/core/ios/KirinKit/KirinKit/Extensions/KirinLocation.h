@@ -10,7 +10,7 @@
 
 @protocol KirinLocation <NSObject>
 
-- (void) startWithCallback: (NSString*) callback andErrback: (NSString*) errback;
+- (void) startWithIsFine: (BOOL) isFine andCallback: (NSString*) callback andErrback: (NSString*) errback ;
 
 - (void) stop;
 

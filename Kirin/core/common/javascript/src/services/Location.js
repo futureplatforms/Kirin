@@ -41,7 +41,7 @@ defineModule("Location", function (require, exports) {
     	}
     }
     
-    exports.registerLocationListener = function (listener) {
+    exports.registerLocationListener = function (isFine, listener) {
     
         if (!_.isFunction(listener)) {
             throw new Error("Listener is not a function");
@@ -58,7 +58,8 @@ defineModule("Location", function (require, exports) {
             
             var wrapCallback = require("kirin").wrapCallback;
             console.log("Location: Starting the Location Services");
-            backend.startWithCallback_andErrback_(
+            backend.startWithIsFine_andCallback_andErrback_(
+            	isFine,
                 wrapCallback(onLocationUpdate, "Location.", "callback."),
                 wrapCallback(onLocationError, "Location.", "errback.")
             );
