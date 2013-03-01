@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KirinWindows.Core
 {
-    abstract class KirinExtension
+    public abstract class KirinExtension
     {
         private string moduleName;
 

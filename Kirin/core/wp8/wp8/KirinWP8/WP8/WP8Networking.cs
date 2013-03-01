@@ -7,18 +7,26 @@ using System.Text;
 
 namespace KirinWP8
 {
-    class WP8Networking : KirinExtension, INetworking
+    public class WP8Networking : KirinExtension, INetworking
     {
         private string payload, onError, toPost;
         private bool isGet;
         private JObject _lastRequest;
 
+        private static int _retryCount;
+
+        public static Action<string> FeedMe { get; set; }
+        public static bool NetworkAvailable { get; set; }
+
         public WP8Networking(string s, Kirin k) : base(s, k)
         {
+            _retryCount = 0;
         }
 
         public void downloadString_(JObject o)
         {
+            if (!NetworkAvailable) return;
+
             _lastRequest = o;
             var method = o["method"].ToString().ToUpper();
             isGet = "GET".Equals(method);
@@ -112,6 +120,7 @@ namespace KirinWP8
                     }
                 }
 
+                _retryCount = 0;
                 KirinAssistant.executeCallback(payload, sb.ToString());
             }
             catch (WebException wex)
@@ -130,11 +139,30 @@ namespace KirinWP8
         {
             if (wex.Status == WebExceptionStatus.RequestCanceled)
             {
+                if (FeedMe != null)
+                    FeedMe("RequestCancelled");
+
                 //Fast Application Switching - re-issue request
                 //we attempt up to three wake up requests
                 downloadString_(_lastRequest);
                 return;
             }
+
+            _retryCount++;
+            if (_retryCount < 2)
+            {
+                downloadString_(_lastRequest);
+                return;
+            }
+
+            if (FeedMe != null)
+            {
+                //FeedMe(String.Format("Exception: {0}", wex.Message));
+                //FeedMe(_lastRequest.ToString());
+                //FeedMe(wex.Status.ToString());
+                FeedMe(String.Format("Retried {0} times", _retryCount));
+            }
+            _retryCount = 0;
             KirinAssistant.executeCallback(onError, "Exception: " + wex.ToString());
         }
 
