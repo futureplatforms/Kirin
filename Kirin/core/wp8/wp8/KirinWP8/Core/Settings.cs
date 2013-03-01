@@ -28,7 +28,13 @@ namespace KirinWindows.Core
             Dictionary<string, object> toReturn = new Dictionary<string, object>();
             foreach (KeyValuePair<string, object> pair in settings)
             {
-                toReturn.Add(pair.Key.Substring("kirin-".Length), pair.Value);
+                //SKIP non-kirin values
+                if (!pair.Key.StartsWith("kirin-")) continue;
+                string key = pair.Key.Substring("kirin-".Length);
+                if (toReturn.ContainsKey(key))
+                    toReturn[key] = pair.Value;
+                else
+                    toReturn.Add(key, pair.Value);
             }
 
             return toReturn;

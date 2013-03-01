@@ -59,15 +59,8 @@ namespace KirinW8.W8
 
         void wv_ScriptNotify(object sender, NotifyEventArgs e)
         {
-            if ("OK".Equals(e.Value))
-            {
-                Navigated(sender, null);
-            }
-            else
-            {
-                ScriptNotify(sender, new W8NotifyEventArgs(e));
-            }
-        } 
+            ScriptNotify(sender, new W8NotifyEventArgs(e));
+        }  
          
         public void InvokeScriptAsync(string scriptName, params string[] args)
         {

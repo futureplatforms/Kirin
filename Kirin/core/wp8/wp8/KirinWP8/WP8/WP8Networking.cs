@@ -1,12 +1,9 @@
 ﻿using KirinWindows.Core;
 using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace KirinWP8
 {
@@ -14,12 +11,15 @@ namespace KirinWP8
     {
         private string payload, onError, toPost;
         private bool isGet;
+        private JObject _lastRequest;
+
         public WP8Networking(string s, Kirin k) : base(s, k)
         {
         }
 
         public void downloadString_(JObject o)
         {
+            _lastRequest = o;
             var method = o["method"].ToString().ToUpper();
             isGet = "GET".Equals(method);
             if (!isGet)
@@ -55,15 +55,9 @@ namespace KirinWP8
                     }
                 }
             }
+
             req.Method = method;
-            if (isGet)
-            {
-                req.BeginGetResponse(new AsyncCallback(Net_Resp), req);
-            }
-            else
-            {
-                req.BeginGetRequestStream(new AsyncCallback(Net_Req), req);
-            }
+            PerformRequest(req);
         }
 
         private void Net_Req(IAsyncResult res)
@@ -81,10 +75,14 @@ namespace KirinWP8
                 }
                 req.BeginGetResponse(new AsyncCallback(Net_Resp), req);
             }
-            catch (Exception e)
+            catch (WebException wex)
             {
-                KirinAssistant.executeCallback(onError, "WebPost.Post_ReqStream() Just caught exception: " + e.GetType() + ", " + e.Message);
+                handleWebException(wex, res.AsyncState as HttpWebRequest);
             }
+            //catch (Exception e)
+            //{
+            //    KirinAssistant.executeCallback(onError, "WebPost.Post_ReqStream() Just caught exception: " + e.GetType() + ", " + e.Message);
+            //}
         }
 
         private void Net_Resp(IAsyncResult res)
@@ -116,14 +114,38 @@ namespace KirinWP8
 
                 KirinAssistant.executeCallback(payload, sb.ToString());
             }
-            catch (WebException e)
+            catch (WebException wex)
             {
-                KirinAssistant.executeCallback(onError, "WebException: " + e.ToString());
+                handleWebException(wex, res.AsyncState as HttpWebRequest);
             }
-            catch (Exception e)
+            //catch (Exception e)
+            //{
+            //    KirinAssistant.executeCallback(onError, "Exception: " + e.ToString());
+            //}
+        }
+
+        //MS place a RequestCanceled that must be collected before networking can resume
+        //http://blogs.msdn.com/b/wpukcoe/archive/2012/01/06/fast-application-switching-and-acquired-os-resources.aspx
+        private void handleWebException(WebException wex, HttpWebRequest req)
+        {
+            if (wex.Status == WebExceptionStatus.RequestCanceled)
             {
-                KirinAssistant.executeCallback(onError, "Exception: " + e.ToString());
+                //Fast Application Switching - re-issue request
+                //we attempt up to three wake up requests
+                downloadString_(_lastRequest);
+                return;
             }
+            KirinAssistant.executeCallback(onError, "Exception: " + wex.ToString());
+        }
+
+        private void PerformRequest(HttpWebRequest request)
+        {
+            if (request == null) return;
+
+            if (request.Method.ToUpper() == "GET")
+                request.BeginGetResponse(new AsyncCallback(Net_Resp), request);
+            else
+                request.BeginGetRequestStream(new AsyncCallback(Net_Req), request);
         }
     }
 }

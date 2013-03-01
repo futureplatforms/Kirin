@@ -20,7 +20,10 @@ namespace KirinWindows.Core
 
         public void RegisterNativeObject(object obj, string name, bool isGwt)
         {
-            objects.Add(name, new NativeObjectHolder(obj, isGwt));
+            if (objects.ContainsKey(name))
+                objects[name] = new NativeObjectHolder(obj, isGwt);
+            else
+                objects.Add(name, new NativeObjectHolder(obj, isGwt));
         }
 
         private object ConvertParameter(object param, Type expectedType)
@@ -126,6 +129,9 @@ namespace KirinWindows.Core
                 objs[i] = ConvertParameter(objs[i], holder.GetMethodParamType(methodName, i));
             }
 
+#if DEBUG
+            System.Diagnostics.Debug.WriteLine("{0}", methodName);
+#endif
             holder.InvokeMethod(methodName, objs);
         }
 
