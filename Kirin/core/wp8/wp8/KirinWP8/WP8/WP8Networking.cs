@@ -4,6 +4,8 @@ using System;
 using System.IO;
 using System.Net;
 using System.Text;
+using System.Net.NetworkInformation;
+using System.Threading;
 
 namespace KirinWP8
 {
@@ -123,7 +125,6 @@ namespace KirinWP8
             if (wex.Status == WebExceptionStatus.RequestCanceled)
             {
                 //Fast Application Switching - re-issue request
-                //we attempt up to three wake up requests
                 downloadString_(_lastRequest);
                 return;
             }
@@ -133,6 +134,12 @@ namespace KirinWP8
         private void PerformRequest(HttpWebRequest request)
         {
             if (request == null) return;
+
+            //If woken up then spin on network state as we need it - max 5 seconds and then operations will fail
+            //if the network is still not available
+            int waitForNetwork = 10;
+            while (!NetworkInterface.GetIsNetworkAvailable() && waitForNetwork-- > 0)
+                Thread.Sleep(500);
 
             if (request.Method.ToUpper() == "GET")
                 request.BeginGetResponse(new AsyncCallback(Net_Resp), request);
