@@ -135,12 +135,6 @@ namespace KirinWP8
         {
             if (request == null) return;
 
-            //If woken up then spin on network state as we need it - max 5 seconds and then operations will fail
-            //if the network is still not available
-            int waitForNetwork = 10;
-            while (!NetworkInterface.GetIsNetworkAvailable() && waitForNetwork-- > 0)
-                Thread.Sleep(500);
-
             if (request.Method.ToUpper() == "GET")
                 request.BeginGetResponse(new AsyncCallback(Net_Resp), request);
             else
