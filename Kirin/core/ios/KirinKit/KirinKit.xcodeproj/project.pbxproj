@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		091D1AC316F071E3001400FF /* NSObject+Kirin.h in Headers */ = {isa = PBXBuildFile; fileRef = 091D1AC116F071E3001400FF /* NSObject+Kirin.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		091D1AC416F071E3001400FF /* NSObject+Kirin.m in Sources */ = {isa = PBXBuildFile; fileRef = 091D1AC216F071E3001400FF /* NSObject+Kirin.m */; };
 		1A00C8B614B2E2FD00211F34 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1A00C8B414B2E2FD00211F34 /* InfoPlist.strings */; };
 		1A00C8C014B2E2FD00211F34 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A00C8BF14B2E2FD00211F34 /* UIKit.framework */; };
 		1A00C8C214B2E2FD00211F34 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A00C8C114B2E2FD00211F34 /* Foundation.framework */; };
@@ -142,6 +144,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		091D1AC116F071E3001400FF /* NSObject+Kirin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Kirin.h"; sourceTree = "<group>"; };
+		091D1AC216F071E3001400FF /* NSObject+Kirin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Kirin.m"; sourceTree = "<group>"; };
 		1A00C8AF14B2E2FD00211F34 /* KirinKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KirinKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A00C8B314B2E2FD00211F34 /* KirinKit-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "KirinKit-Info.plist"; sourceTree = "<group>"; };
 		1A00C8B514B2E2FD00211F34 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -332,6 +336,8 @@
 		1A00C8B114B2E2FD00211F34 /* KirinKit */ = {
 			isa = PBXGroup;
 			children = (
+				091D1AC116F071E3001400FF /* NSObject+Kirin.h */,
+				091D1AC216F071E3001400FF /* NSObject+Kirin.m */,
 				1A00C99814B2EE8800211F34 /* KirinKit.h */,
 				1A4F7CD61549666D00A010E0 /* KirinKitUI.h */,
 				1A00C8DB14B2E32600211F34 /* Core */,
@@ -625,6 +631,7 @@
 				1A00C94E14B2E32600211F34 /* SQLOperation.h in Headers */,
 				1A00C95114B2E32600211F34 /* Transaction.h in Headers */,
 				1A00C99A14B2EE8900211F34 /* KirinKit.h in Headers */,
+				091D1AC316F071E3001400FF /* NSObject+Kirin.h in Headers */,
 				1A02010214BCFFED00CB9765 /* KirinUiFragmentHelper.h in Headers */,
 				1A02010714BD025E00CB9765 /* KirinScreenHelper.h in Headers */,
 				1A02010D14BD072C00CB9765 /* KirinExtensionHelper.h in Headers */,
@@ -847,6 +854,7 @@
 				1A4F7CDB1549692A00A010E0 /* KirinProxyWithModule.m in Sources */,
 				1A4F7CDF15496D0000A010E0 /* KirinProxyWithDictionary.m in Sources */,
 				1AEE8DA4154EC8DD00B8C0D7 /* KirinUITableViewController.m in Sources */,
+				091D1AC416F071E3001400FF /* NSObject+Kirin.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
