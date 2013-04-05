@@ -13,6 +13,7 @@
 #import "NetworkingBackend.h"
 #import "KirinImagePicker.h"
 #import "DatabasesBackend.h"
+#import "LocalNotificationsBackend.h"
 #import "KirinLocationBackend.h"
 #import "KirinImageTransformer.h"
 
@@ -41,6 +42,7 @@
     [services registerExtension:[[[NetworkingBackend alloc] init] autorelease]];
     [services registerExtension:[[[KirinImagePicker alloc] init] autorelease]];
     [services registerExtension:[[[DatabasesBackend alloc] init] autorelease]];
+    [services registerExtension:[[[LocalNotificationsBackend alloc] init] autorelease]];
     [services registerExtension:[KirinLocationBackend instance]];
     [services registerExtension:[KirinImageTransformer instance]];
     return services;

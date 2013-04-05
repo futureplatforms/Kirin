@@ -14,10 +14,19 @@
    limitations under the License.
 */
 
-defineModule("LocalNotifications", function (require, exports) {
+defineServiceModule("LocalNotifications", function (require, exports) {
 	
 	var api = require("api-utils"),
-		kirin = require("kirin");
+		kirin = require("kirin"),
+		backend;
+	
+	exports.onLoad = function (proxy) {
+		backend = proxy;
+	};
+	
+   	exports.onUnload = function () {
+   		backend = null;
+   	};
 	
 	exports.scheduleNotifications = function (notification1, notification2) {
 		var notifications = Array.prototype.slice.call(arguments, 0);
@@ -46,8 +55,7 @@ defineModule("LocalNotifications", function (require, exports) {
 			}, notifications[i]);
 			notifications[i].displayTimestamp = notifications[i].displayTimestamp || notifications[i].timeMillisSince1970; 
 		}
-
-		kirin.proxy("LocalNotifications-backend").scheduleNotifications_(notifications);
+		backend.scheduleNotifications_(notifications);
 	};
 	
 	exports.cancelNotifications = function (id1, id2, id3) {
@@ -57,7 +65,7 @@ defineModule("LocalNotifications", function (require, exports) {
 				throw new Error("Notification '" + ids[i] + "'  must be numeric, it's actually " + typeof(ids[i]) + "!");
 			}
 		}
-		kirin.proxy("LocalNotifications-backend").cancelNotifications_(ids);
+		backend.cancelNotifications_(ids);
 	};
 	
 	

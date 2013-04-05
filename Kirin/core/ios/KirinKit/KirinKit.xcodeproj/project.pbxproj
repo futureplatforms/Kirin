@@ -131,6 +131,9 @@
 		1AEE8DA3154EC8DD00B8C0D7 /* KirinUITableViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AEE8DA1154EC8DD00B8C0D7 /* KirinUITableViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1AEE8DA4154EC8DD00B8C0D7 /* KirinUITableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AEE8DA2154EC8DD00B8C0D7 /* KirinUITableViewController.m */; };
 		1AF8396714CA13FA00E0D436 /* NetworkingTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AF8396614CA13FA00E0D436 /* NetworkingTest.m */; };
+		24BD525E170DEE63000E3C64 /* LocalNotifications.h in Headers */ = {isa = PBXBuildFile; fileRef = 24BD525B170DEE63000E3C64 /* LocalNotifications.h */; };
+		24BD525F170DEE63000E3C64 /* LocalNotificationsBackend.h in Headers */ = {isa = PBXBuildFile; fileRef = 24BD525C170DEE63000E3C64 /* LocalNotificationsBackend.h */; };
+		24BD5260170DEE63000E3C64 /* LocalNotificationsBackend.m in Sources */ = {isa = PBXBuildFile; fileRef = 24BD525D170DEE63000E3C64 /* LocalNotificationsBackend.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -285,6 +288,9 @@
 		1AEE8DA2154EC8DD00B8C0D7 /* KirinUITableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KirinUITableViewController.m; sourceTree = "<group>"; };
 		1AF8396514CA13FA00E0D436 /* NetworkingTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkingTest.h; sourceTree = "<group>"; };
 		1AF8396614CA13FA00E0D436 /* NetworkingTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkingTest.m; sourceTree = "<group>"; };
+		24BD525B170DEE63000E3C64 /* LocalNotifications.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalNotifications.h; sourceTree = "<group>"; };
+		24BD525C170DEE63000E3C64 /* LocalNotificationsBackend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalNotificationsBackend.h; sourceTree = "<group>"; };
+		24BD525D170DEE63000E3C64 /* LocalNotificationsBackend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalNotificationsBackend.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -437,6 +443,7 @@
 				1A02011914BD617700CB9765 /* Networking */,
 				1A02011814BD615700CB9765 /* Settings */,
 				1A4384B814E2CAE70012CD5A /* FileSystem */,
+				24BD5254170DE68C000E3C64 /* Notifications */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -602,6 +609,16 @@
 			name = Camera;
 			sourceTree = "<group>";
 		};
+		24BD5254170DE68C000E3C64 /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				24BD525B170DEE63000E3C64 /* LocalNotifications.h */,
+				24BD525C170DEE63000E3C64 /* LocalNotificationsBackend.h */,
+				24BD525D170DEE63000E3C64 /* LocalNotificationsBackend.m */,
+			);
+			name = Notifications;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -670,6 +687,8 @@
 				1A4F7CDA1549692A00A010E0 /* KirinProxyWithModule.h in Headers */,
 				1A4F7CDE15496D0000A010E0 /* KirinProxyWithDictionary.h in Headers */,
 				1AEE8DA3154EC8DD00B8C0D7 /* KirinUITableViewController.h in Headers */,
+				24BD525E170DEE63000E3C64 /* LocalNotifications.h in Headers */,
+				24BD525F170DEE63000E3C64 /* LocalNotificationsBackend.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -855,6 +874,7 @@
 				1A4F7CDF15496D0000A010E0 /* KirinProxyWithDictionary.m in Sources */,
 				1AEE8DA4154EC8DD00B8C0D7 /* KirinUITableViewController.m in Sources */,
 				091D1AC416F071E3001400FF /* NSObject+Kirin.m in Sources */,
+				24BD5260170DEE63000E3C64 /* LocalNotificationsBackend.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
