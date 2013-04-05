@@ -17,7 +17,7 @@
 #pragma mark -
 #pragma mark External Interface Methods
 
-- (void) scheduleNotification: (NSString*) text atTime: (NSNumber*) millisSince1970 withId: (NSString*) notificationId {
+- (void) scheduleNotification: (NSNumber*) text atTime: (NSNumber*) millisSince1970 withId: (NSString*) notificationId {
     NSDate *itemDate = [NSDate dateWithTimeIntervalSince1970:millisSince1970.longValue / 1000];
     
     NSLog(@"LocalNotificationsBackend.scheduleNotification %@ at time %@ with id %@", text, itemDate, notificationId);
@@ -35,11 +35,13 @@
 
     localNotif.alertAction = @"OK";
 
+    localNotif.userInfo = [NSDictionary dictionaryWithObject:notificationId forKey:@"id"];
+    
     [[UIApplication sharedApplication] scheduleLocalNotification:localNotif];
     [localNotif release];
 }
 
-- (void) cancelNotification: (NSString*) notificationId {
+- (void) cancelNotification: (NSNumber*) notificationId {
     NSLog(@"LocalNotificationsBackend.cancelNotification %@", notificationId);
     
     NSArray* allEvents = [[UIApplication sharedApplication] scheduledLocalNotifications];
@@ -48,7 +50,7 @@
     NSEnumerator* e = [allEvents objectEnumerator];
     
     while((loc = [e nextObject])) {
-        if([[[loc userInfo] objectForKey:@"id"] isEqualToString:notificationId]) {
+        if([[[loc userInfo] objectForKey:@"id"] isEqualToNumber:notificationId]) {
             [[UIApplication sharedApplication] cancelLocalNotification: loc];
         }
     }

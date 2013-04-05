@@ -31,11 +31,11 @@ defineServiceModule("LocalNotifications", function (require, exports) {
 	exports.scheduleNotification = function (notificationConfig) {
 		notificationConfig = api.normalizeAPI({
 			'string': {
-				mandatory: ['text', 'id']
+				mandatory: ['text']
 			},
 			
 			'number': {
-				mandatory: ['timeMillisSince1970']
+				mandatory: ['id', 'timeMillisSince1970']
 			}
 			
 			/*
