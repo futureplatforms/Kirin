@@ -2,7 +2,7 @@
 
 @protocol LocalNotifications <NSObject>
 
-- (void) scheduleNotifications: (NSDictionary *) config;
-- (void) cancelNotifications: (int) id;
+- (void) scheduleNotification: (NSString*) text atTime: (NSNumber*) secondsSince1970 withId: (NSString*) notificationId;
+- (void) cancelNotification: (NSString*) notificationId;
 
 @end

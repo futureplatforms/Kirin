@@ -28,44 +28,31 @@ defineServiceModule("LocalNotifications", function (require, exports) {
    		backend = null;
    	};
 	
-	exports.scheduleNotifications = function (notification1, notification2) {
-		var notifications = Array.prototype.slice.call(arguments, 0);
-		for (var i=0, max=notifications.length; i<max; i++) {
-			notifications[i] = api.normalizeAPI({
-				'string': {
-					mandatory: ['title', 'body'],
-					defaults:  {'icon':'icon'},
-					optional: ['displayTimestring']
-				},
-				
-				'number': {
-					mandatory: ['id', 'timeMillisSince1970'],
-					// the number of ms after which we start prioritising more recent things above you.
-					defaults: {'epsilon': 1000 * 60 * 24 * 365},
-					optional: ['displayTimestamp']
-				},
-				
-				'boolean': {
-					defaults: {
-							'vibrate': false,
-							'sound': false
-					}
+	exports.scheduleNotification = function (notificationConfig) {
+		notificationConfig = api.normalizeAPI({
+			'string': {
+				mandatory: ['text', 'id']
+			},
+			
+			'number': {
+				mandatory: ['timeMillisSince1970']
+			}
+			
+			/*
+			'boolean': {
+				defaults: {
+						'vibrate': false,
+						'sound': false
 				}
-				
-			}, notifications[i]);
-			notifications[i].displayTimestamp = notifications[i].displayTimestamp || notifications[i].timeMillisSince1970; 
-		}
-		backend.scheduleNotifications_(notifications);
+			}
+			*/
+		}, notificationConfig );
+		
+		backend.scheduleNotification_atTime_withId_(notificationConfig.text, notificationConfig.timeMillisSince1970, notificationConfig.id);
 	};
 	
-	exports.cancelNotifications = function (id1, id2, id3) {
-		var ids = Array.prototype.slice.call(arguments, 0);
-		for (var i=ids.length-1; i>=0; i--) {
-			if (!_.isNumber(ids[i])) {
-				throw new Error("Notification '" + ids[i] + "'  must be numeric, it's actually " + typeof(ids[i]) + "!");
-			}
-		}
-		backend.cancelNotifications_(ids);
+	exports.cancelNotification = function (id) {
+		backend.cancelNotification_(id);
 	};
 	
 	
