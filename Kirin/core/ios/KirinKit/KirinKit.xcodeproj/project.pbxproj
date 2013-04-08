@@ -134,6 +134,7 @@
 		24BD525E170DEE63000E3C64 /* LocalNotifications.h in Headers */ = {isa = PBXBuildFile; fileRef = 24BD525B170DEE63000E3C64 /* LocalNotifications.h */; };
 		24BD525F170DEE63000E3C64 /* LocalNotificationsBackend.h in Headers */ = {isa = PBXBuildFile; fileRef = 24BD525C170DEE63000E3C64 /* LocalNotificationsBackend.h */; };
 		24BD5260170DEE63000E3C64 /* LocalNotificationsBackend.m in Sources */ = {isa = PBXBuildFile; fileRef = 24BD525D170DEE63000E3C64 /* LocalNotificationsBackend.m */; };
+		24BD526517131066000E3C64 /* Sharing.h in Headers */ = {isa = PBXBuildFile; fileRef = 24BD526217131066000E3C64 /* Sharing.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -291,6 +292,7 @@
 		24BD525B170DEE63000E3C64 /* LocalNotifications.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalNotifications.h; sourceTree = "<group>"; };
 		24BD525C170DEE63000E3C64 /* LocalNotificationsBackend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalNotificationsBackend.h; sourceTree = "<group>"; };
 		24BD525D170DEE63000E3C64 /* LocalNotificationsBackend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalNotificationsBackend.m; sourceTree = "<group>"; };
+		24BD526217131066000E3C64 /* Sharing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sharing.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -443,6 +445,7 @@
 				1A02011914BD617700CB9765 /* Networking */,
 				1A02011814BD615700CB9765 /* Settings */,
 				1A4384B814E2CAE70012CD5A /* FileSystem */,
+				24BD526117130FBB000E3C64 /* Sharing */,
 				24BD5254170DE68C000E3C64 /* Notifications */,
 			);
 			path = Extensions;
@@ -619,6 +622,14 @@
 			name = Notifications;
 			sourceTree = "<group>";
 		};
+		24BD526117130FBB000E3C64 /* Sharing */ = {
+			isa = PBXGroup;
+			children = (
+				24BD526217131066000E3C64 /* Sharing.h */,
+			);
+			name = Sharing;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -626,6 +637,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				24BD526517131066000E3C64 /* Sharing.h in Headers */,
 				1A00C92414B2E32600211F34 /* Kirin.h in Headers */,
 				1A00C92714B2E32600211F34 /* KirinDropbox.h in Headers */,
 				1A00C92A14B2E32600211F34 /* KirinHelper.h in Headers */,
