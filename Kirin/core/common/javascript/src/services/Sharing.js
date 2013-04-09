@@ -13,10 +13,6 @@ defineServiceModule("Sharing", function (require, exports) {
    	};
 	
 	exports.share = function (serviceNameHint, text, optionalUrl) {
-		if(optionalUrl) {
-			backend.share_withThisLink_usingService_(text, optionalUrl, serviceNameHint);
-		} else {
-			backend.share_usingService_(text, serviceNameHint);						
-		}
+		backend.share_withThisLink_usingService_(text, optionalUrl, serviceNameHint);
 	};
 });

@@ -7,6 +7,5 @@
 @protocol Sharing <NSObject>
 
 - (void) share: (NSString*) text withThisLink: (NSString*) linkUrl usingService: (NSString*) serviceNameHint;
-- (void) share: (NSString*) text usingService: (NSString*) serviceNameHint;
 
 @end
