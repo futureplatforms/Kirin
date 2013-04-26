@@ -17,7 +17,10 @@
 #pragma mark -
 #pragma mark External Interface Methods
 
-- (void) scheduleNotification: (NSNumber*) text atTime: (NSNumber*) millisSince1970 withId: (NSString*) notificationId {
+- (void) scheduleNotification: (NSString*) text
+                    withTitle: (NSString*) title
+                       atTime: (NSNumber*) millisSince1970
+                       withId: (NSNumber*) notificationId {
     NSDate *itemDate = [NSDate dateWithTimeIntervalSince1970:millisSince1970.longValue / 1000];
     
     NSLog(@"LocalNotificationsBackend.scheduleNotification %@ at time %@ with id %@", text, itemDate, notificationId);
@@ -30,7 +33,7 @@
     localNotif.fireDate = itemDate;
     localNotif.timeZone = [NSTimeZone defaultTimeZone];
 
-    localNotif.alertBody = text;
+    localNotif.alertBody = [title stringByAppendingFormat:@": %@", text];
     localNotif.soundName = UILocalNotificationDefaultSoundName;
 
     localNotif.alertAction = @"OK";

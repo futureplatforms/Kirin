@@ -31,7 +31,7 @@ defineServiceModule("LocalNotifications", function (require, exports) {
 	exports.scheduleNotification = function (notificationConfig) {
 		notificationConfig = api.normalizeAPI({
 			'string': {
-				mandatory: ['text']
+				mandatory: ['text', 'title']
 			},
 			
 			'number': {
@@ -48,7 +48,7 @@ defineServiceModule("LocalNotifications", function (require, exports) {
 			*/
 		}, notificationConfig );
 		
-		backend.scheduleNotification_atTime_withId_(notificationConfig.text, notificationConfig.timeMillisSince1970, notificationConfig.id);
+		backend.scheduleNotification_withTitle_atTime_withId_(notificationConfig.text, notificationConfig.title, notificationConfig.timeMillisSince1970, notificationConfig.id);
 	};
 	
 	exports.cancelNotification = function (id) {
