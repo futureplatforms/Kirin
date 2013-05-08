@@ -21,9 +21,9 @@
                     withTitle: (NSString*) title
                        atTime: (NSNumber*) millisSince1970
                        withId: (NSNumber*) notificationId {
-    NSDate *itemDate = [NSDate dateWithTimeIntervalSince1970:millisSince1970.longValue / 1000];
+    NSDate *itemDate = [NSDate dateWithTimeIntervalSince1970:(millisSince1970.doubleValue / 1000)];
     
-    NSLog(@"LocalNotificationsBackend.scheduleNotification %@ at time %@ with id %@", text, itemDate, notificationId);
+    NSLog(@"LocalNotificationsBackend.scheduleNotification %@ at time %@ where millisSince1970 is %@ with id %@", text, itemDate, millisSince1970, notificationId);
 
     UILocalNotification *localNotif = [[UILocalNotification alloc] init];
 
