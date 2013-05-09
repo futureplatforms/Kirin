@@ -173,7 +173,7 @@
 
 
 - (void) locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
-    NSLog(@"%@ %@: Location failed: %@", __PRETTY_FUNCTION__, __LINE__, [error localizedDescription]);
+    NSLog(@"%s %d: Location failed: %@", __PRETTY_FUNCTION__, __LINE__, [error localizedDescription]);
     if (error.code == kCLErrorDenied) {
         [self denyAccess];
     } else if (error.code != kCLErrorLocationUnknown) {
