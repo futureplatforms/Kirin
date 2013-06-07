@@ -66,8 +66,6 @@
     NSArray* files = [config objectForKey:@"attachments"];
     NSString* contentType = [config objectForKey:@"contentType"];
 
-    
-    
     if (!files || [files count] == 0) {
         // so we're not doing file upload.
         NSData* postData = nil;
@@ -75,8 +73,12 @@
         if (postDataString && [postDataString length] > 0) {
             postData = [postDataString dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
         }
-    
-        [request setValue:contentType forHTTPHeaderField:@"Content-Type"];
+        
+        NSString *currentContentType = [request valueForHTTPHeaderField:@"Content-Type"];
+        if (currentContentType && [currentContentType length] == 0) {
+            [request setValue:contentType forHTTPHeaderField:@"Content-Type"];
+        }
+        
         return postData;
     }
     
