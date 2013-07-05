@@ -131,7 +131,7 @@ defineServiceModule("Networking", function (require, exports) {
             if (hasFiles) {
                 throw new Error("Cannot upload files with a GET request");
             }    
-        } else if('POST' === config.method) {
+        } else if('POST' === config.method || 'PUT' === config.method) {
             if(typeof config.postData !== "undefined") {
                 // We have raw POST data to send up so we give it no further treatment.
                 config.params = config.postData;
