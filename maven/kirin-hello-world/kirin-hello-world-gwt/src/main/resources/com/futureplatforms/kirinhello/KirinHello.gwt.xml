@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module rename-to='KirinHelloGwt'>
+  <!-- Inherit the core Web Toolkit stuff.                        -->
+  <!-- JSON library required to do JSON -->
+  <inherits name="com.google.gwt.json.JSON" /> 
+  <inherits name='com.google.gwt.core.Core'/>
+  <!-- GWT Exporter to create Javascript bindings -->
+  <inherits name='org.timepedia.exporter.Exporter'/>
+  <!-- The main Kirin GWT bundle that contains the entrypoint and JS codes -->
+  <inherits name='com.futureplatforms.Kirin'/>
+  <inherits name='com.futureplatforms.kirin.gwt.KirinGwt'/>
+  <!-- The core module for this project -->
+  <inherits name='com.futureplatforms.KirinHello'/>
+  
+  <!-- We need the JUnit module in the main module,               -->
+  <!-- otherwise eclipse complains (Google plugin bug?)           -->
+  <inherits name='com.google.gwt.junit.JUnit' />
+  
+  <!-- This needs setting or GWT Exporter won't do any exporting! -->
+  <set-property name="export" value="yes"/>
+
+  <!-- Specify the app entry point class.                         -->
+  <entry-point class='com.futureplatforms.kirin.gwt.client.KirinEP' />  
+
+  <!-- We need to use our special linker -->
+  
+  <!-- Generate native bindings for all native objects -->
+  <generate-with class="com.futureplatforms.kirin.gwt.compile.NativeObjectDeferredBindingGenerator">
+    <when-type-assignable class="com.futureplatforms.kirin.gwt.client.modules.IKirinNativeObject" />
+  </generate-with>
+  
+  <!-- Generate native bindings for all modules -->
+  <generate-with class="com.futureplatforms.kirin.gwt.compile.NativeProxyInterfaceGenerator">
+    <when-type-assignable class="com.futureplatforms.kirin.gwt.client.modules.KirinModule" />
+  </generate-with>
+</module>

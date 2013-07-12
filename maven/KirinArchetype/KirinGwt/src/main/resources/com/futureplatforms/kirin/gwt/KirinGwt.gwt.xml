@@ -1,0 +1,36 @@
+<!DOCTYPE module PUBLIC "//gwt-module/" "http://google-web-toolkit.googlecode.com/svn/tags/1.6.2/distro-source/core/src/gwt-module.dtd">
+<module rename-to='KirinGwt'>
+  <!-- Inherit the core Web Toolkit stuff.                        -->
+  <inherits name='com.google.gwt.core.Core'/>
+  <inherits name='org.timepedia.exporter.Exporter'/>
+  <inherits name='com.futureplatforms.Kirin'/>
+  
+  <!-- We need the JUnit module in the main module,               -->
+  <!-- otherwise eclipse complains (Google plugin bug?)           -->
+  <inherits name='com.google.gwt.junit.JUnit' />
+
+  <!-- Other module inherits                                      -->
+
+  <!-- Specify the app entry point class.                         -->
+  <entry-point class='com.futureplatforms.kirin.gwt.client.KirinEP' />
+
+  <!-- Specify the paths for translatable code                    -->
+  <source path='client' />
+  
+  <generate-with class="com.futureplatforms.kirin.gwt.compile.NativeObjectDeferredBindingGenerator">
+    <when-type-assignable class="com.futureplatforms.kirin.gwt.client.modules.IKirinNativeObject" />
+  </generate-with>
+  
+  <generate-with class="com.futureplatforms.kirin.gwt.compile.NativeProxyInterfaceGenerator">
+    <when-type-assignable class="com.futureplatforms.kirin.gwt.client.modules.KirinModule" />
+  </generate-with>
+  
+  <script src="lib/json2.js"></script>
+  <script src="lib/underscore.js"></script>
+  <script src="core/client-modules.js"></script>
+  <script src="core/kirin-webview.js"></script>
+  <script src="core/Native.js"></script>
+  <script src="services/Location.js"></script>
+  <script src="services/Networking.js"></script>
+  <script src="services/Settings.js"></script>
+</module>
