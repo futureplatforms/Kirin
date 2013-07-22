@@ -4,10 +4,11 @@
   <inherits name='com.google.gwt.core.Core'/>
   <inherits name='org.timepedia.exporter.Exporter'/>
   <inherits name='com.futureplatforms.Kirin'/>
+  <inherits name="com.google.gwt.json.JSON" /> 
   
   <!-- We need the JUnit module in the main module,               -->
   <!-- otherwise eclipse complains (Google plugin bug?)           -->
-  <inherits name='com.google.gwt.junit.JUnit' />
+  <!-- <inherits name='com.google.gwt.junit.JUnit' /> -->
 
   <!-- Other module inherits                                      -->
 
@@ -25,6 +26,12 @@
     <when-type-assignable class="com.futureplatforms.kirin.gwt.client.modules.KirinModule" />
   </generate-with>
   
+  <!-- This needs setting or GWT Exporter won't do any exporting! -->
+  <set-property name="export" value="yes"/>
+  
+  <!-- Turn stack traces on -->
+  <set-property name="compiler.stackMode" value="emulated" />
+   
   <script src="lib/json2.js"></script>
   <script src="lib/underscore.js"></script>
   <script src="core/client-modules.js"></script>

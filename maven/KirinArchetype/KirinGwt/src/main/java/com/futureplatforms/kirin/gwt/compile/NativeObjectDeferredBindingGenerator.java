@@ -17,8 +17,8 @@ import com.google.gwt.user.rebind.SourceWriter;
 public class NativeObjectDeferredBindingGenerator extends Generator {
 
 	private final InterfaceGenerator[] mProtocolGenerators = {
-			new CSInterfaceGenerator("windows/toNative/"),
-			new ObjectiveCProtocolGenerator("ios/toNative/")
+			new CSInterfaceGenerator("../BINDINGS/windows/toNative/"),
+			new ObjectiveCProtocolGenerator("../BINDINGS/ios/toNative/")
 	};
 	
 	@Override

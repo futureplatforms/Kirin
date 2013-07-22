@@ -12,8 +12,8 @@ import com.google.gwt.core.ext.typeinfo.TypeOracle;
 public class NativeProxyInterfaceGenerator extends Generator {
 
 	private final InterfaceGenerator[] mProtocolGenerators = {
-			new CSClassGenerator("windows/fromNative/"),
-			new ObjectiveCProtocolGenerator("ios/fromNative/")
+			new CSClassGenerator("../BINDINGS/windows/fromNative/"),
+			new ObjectiveCProtocolGenerator("../BINDINGS/ios/fromNative/")
 	};
 	 
 	private final ExporterGenerator mExporter = new ExporterGenerator();
