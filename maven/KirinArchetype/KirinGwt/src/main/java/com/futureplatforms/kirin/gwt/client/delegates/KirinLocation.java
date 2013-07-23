@@ -1,6 +1,6 @@
 package com.futureplatforms.kirin.gwt.client.delegates;
 
-import com.futureplatforms.kirin.dependencies.StaticDependencies.LocationDelegate;
+import com.futureplatforms.kirin.dependencies.LocationDelegate;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.LocationResponse;
 
 public class KirinLocation implements LocationDelegate {
@@ -8,7 +8,6 @@ public class KirinLocation implements LocationDelegate {
     private LocationResponse resp;
     private boolean continuous;
     
-    @Override
     public void getLocation(LocationResponse resp, Accuracy accuracy, boolean continuous) {
         this.resp = resp;
         this.continuous = continuous;
@@ -51,4 +50,47 @@ public class KirinLocation implements LocationDelegate {
         
         location.refreshLocation();
     }-*/;
+
+    @Override
+    public void getLocation(Accuracy accuracy, LocationCallback callback) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void getLocationContinuous(Accuracy accuracy, int intervalMs,
+            LocationCallback callback) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void stopListening() {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public boolean getIsListening() {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public double getLatitude() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    @Override
+    public double getLongitude() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    @Override
+    public float getAccuracy() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
 }

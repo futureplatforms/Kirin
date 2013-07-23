@@ -22,10 +22,6 @@ public final class StaticDependencies {
         public void onSuccess(double lat, double lng);
         public void onFail(String errDesc);
     }
-    public static interface LocationDelegate {
-        public enum Accuracy { Fine, Coarse }
-        public void getLocation(LocationResponse resp, Accuracy accuracy, boolean continuous);
-    }
     public static interface NetworkDelegate {
         public static enum HttpVerb { GET, POST, PUT };
         public static interface NetworkResponse {

@@ -26,5 +26,6 @@
     <module>KirinCore</module>
     <module>KirinGwtStub</module>
     <module>KirinGwt</module>
+    <module>KirinAndroid</module>
   </modules>
 </project>

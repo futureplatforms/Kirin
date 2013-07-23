@@ -24,7 +24,7 @@ public class TestModule extends KirinModule<TestModuleNative> {
 
     public void testyMethod(String str, int i) { 
         getNativeObject().testyNativeMethod("Hello from kirin!! " + str + ", " + i);
-        
+        getNativeObject().testyNativeMethod2("Hello again");
         final StaticDependencies deps = StaticDependencies.getInstance();
         deps.getLogDelegate().log("Logging via the logging delegate");
         

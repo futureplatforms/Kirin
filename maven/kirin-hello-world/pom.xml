@@ -25,5 +25,6 @@
   <modules>
     <module>kirin-hello-world-core</module>
     <module>kirin-hello-world-gwt</module>
+    <module>kirin-hello-world-android</module>
   </modules>
 </project>
