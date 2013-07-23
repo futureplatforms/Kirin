@@ -80,12 +80,6 @@
             <include>**/*.js</include>
           </includes>
         </resource>
-        <resource>
-          <directory>src/main/webapp</directory>
-          <includes>
-            <include>**/*.html</include>
-          </includes>
-        </resource>
       </resources>
   <!-- Copied this stuff off the webs http://stackoverflow.com/a/8535461/64505 -->
     <pluginManagement>
