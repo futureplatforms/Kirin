@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<module rename-to="KirinHelloCore">
-<!-- Inherit the core Web Toolkit stuff.                        -->
-  <inherits name='com.google.gwt.core.Core'/>
-  <!-- Specify the paths for translatable code                    -->
-  <source path='kirinhello'/>
-</module>

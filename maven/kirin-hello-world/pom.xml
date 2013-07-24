@@ -23,8 +23,8 @@
     </dependency>
   </dependencies>
   <modules>
-    <module>kirin-hello-world-core</module>
-    <module>kirin-hello-world-gwt</module>
-    <module>kirin-hello-world-android</module>
+    <module>common/core</module>
+    <module>common/gwt</module>
+    <module>android</module>
   </modules>
 </project>

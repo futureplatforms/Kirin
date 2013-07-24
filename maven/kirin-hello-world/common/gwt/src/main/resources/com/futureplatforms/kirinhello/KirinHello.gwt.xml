@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module rename-to='KirinHelloGwt'>
+  <!-- The main Kirin GWT bundle that contains the entrypoint and JS codes -->
+  <inherits name='com.futureplatforms.kirin.gwt.KirinGwt'/>
+  <!-- The core module for this project -->
+  <inherits name='com.futureplatforms.KirinHello'/>
+</module>
