@@ -29,7 +29,7 @@ public class TestModule extends KirinModule<TestModuleNative> {
         deps.getLogDelegate().log("Logging via the logging delegate");
         
         NetworkDelegate net = deps.getNetworkDelegate();
-        net.doHttp(HttpVerb.GET, "http://proxocube-devtest.appspot.com/proxo/dev_data/lineup/0", null, null, new NetworkResponse() {
+        net.doHttp(HttpVerb.GET, "http://proxocube-devtest.appspot.com/proxo/dev_data/lineup/0", new NetworkResponse() {
             
             public void onSuccess(int res, String result, Map<String, String> headers) {
                 LogDelegate log = deps.getLogDelegate();

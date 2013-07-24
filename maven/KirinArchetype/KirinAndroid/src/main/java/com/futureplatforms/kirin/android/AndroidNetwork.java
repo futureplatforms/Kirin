@@ -18,7 +18,7 @@ import android.os.AsyncTask;
 
 import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate;
 
-public class AndroidNetwork implements NetworkDelegate
+public class AndroidNetwork extends NetworkDelegate
 {
 	private class GetAsyncTask extends AsyncTask<Object, Void, Boolean>
 	{

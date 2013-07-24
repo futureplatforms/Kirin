@@ -6,7 +6,7 @@ import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate
 import com.futureplatforms.kirin.gwt.client.KirinEP;
 import com.google.gwt.core.client.JavaScriptObject;
 
-public class KirinNetworking implements NetworkDelegate {
+public class KirinNetworking extends NetworkDelegate {
     private static class NetworkRunner {
         private NetworkResponse mCB;
         public NetworkRunner(NetworkResponse cb) {

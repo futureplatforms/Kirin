@@ -1,5 +1,6 @@
 package com.futureplatforms.kirin.dependencies;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import com.futureplatforms.kirin.dependencies.TimerTask.TimerDelegate;
@@ -23,13 +24,22 @@ public final class StaticDependencies {
         public void onSuccess(double lat, double lng);
         public void onFail(String errDesc);
     }
-    public static interface NetworkDelegate {
+    public static abstract class NetworkDelegate {
         public static enum HttpVerb { GET, POST, PUT };
         public static interface NetworkResponse {
             public void onSuccess(int res, String result, Map<String, String> headers);
             public void onFail(String code);
         }
-        public void doHttp(HttpVerb verb, String url, String payload, Map<String, String> headers, NetworkResponse callback);
+        
+        public final void doHttp(HttpVerb verb, String url, NetworkResponse callback) {
+            doHttp(verb, url, null, new HashMap<String, String>(), callback);
+        }
+        
+        public final void doHttp(HttpVerb verb, String url, String payload, NetworkResponse callback) {
+            doHttp(verb, url, payload, new HashMap<String, String>(), callback);
+        }
+        
+        public abstract void doHttp(HttpVerb verb, String url, String payload, Map<String, String> headers, NetworkResponse callback);
     }
 
     private LogDelegate mLogDelegate;
