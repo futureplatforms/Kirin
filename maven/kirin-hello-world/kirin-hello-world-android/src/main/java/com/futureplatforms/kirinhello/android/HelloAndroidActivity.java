@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 
-import com.futureplatforms.kirin.android.Main;
+import com.futureplatforms.kirin.android.Kirin;
 import com.futureplatforms.kirinhello.modules.TestModule;
 import com.futureplatforms.kirinhello.modules.natives.TestModuleNative;
 
@@ -21,7 +21,7 @@ public class HelloAndroidActivity extends Activity implements TestModuleNative {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Main.kickOff(this);
+        Kirin.kickOff(this);
         TestModule tm = new TestModule();
         tm.onPrototypeLoad(this);
         tm.testyMethod("here's a string from android native", 1337);

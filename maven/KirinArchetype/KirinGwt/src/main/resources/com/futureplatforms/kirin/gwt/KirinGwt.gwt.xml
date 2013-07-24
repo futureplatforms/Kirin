@@ -2,6 +2,7 @@
 <module rename-to='KirinGwt'>
   <!-- Inherit the core Web Toolkit stuff.                        -->
   <inherits name='com.google.gwt.core.Core'/>
+  <inherits name="com.google.gwt.xml.XML" />
   <inherits name='org.timepedia.exporter.Exporter'/>
   <inherits name='com.futureplatforms.Kirin'/>
   <inherits name="com.google.gwt.json.JSON" /> 

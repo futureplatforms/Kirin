@@ -3,9 +3,10 @@ package com.futureplatforms.kirin.android;
 import android.content.Context;
 
 import com.futureplatforms.kirin.android.json.AndroidJson;
+import com.futureplatforms.kirin.android.xml.JaxpXmlParser;
 import com.futureplatforms.kirin.dependencies.StaticDependencies;
 
-public final class Main {
+public final class Kirin {
     public static void kickOff(Context context) {
         StaticDependencies.getInstance().setDependencies(
                 new AndroidLog(), 
@@ -13,6 +14,7 @@ public final class Main {
                 new AndroidTimer(), 
                 new AndroidLocation(context), 
                 new AndroidNetwork(), 
-                new AndroidJson());
+                new AndroidJson(),
+                new JaxpXmlParser());
     }
 }

@@ -4,6 +4,7 @@ import java.util.Map;
 
 import com.futureplatforms.kirin.dependencies.TimerTask.TimerDelegate;
 import com.futureplatforms.kirin.dependencies.json.JSONDelegate;
+import com.futureplatforms.kirin.dependencies.xml.parser.XMLParser;
 
 public final class StaticDependencies {
     private static StaticDependencies instance;
@@ -37,6 +38,7 @@ public final class StaticDependencies {
     private LocationDelegate mLocationDelegate;
     private JSONDelegate mJsonDelegate;
     private NetworkDelegate mNetworkDelegate;
+    private XMLParser mXmlParser;
     private boolean mInitialised;
     
     public LogDelegate getLogDelegate() { return mLogDelegate; }
@@ -45,6 +47,7 @@ public final class StaticDependencies {
     public LocationDelegate getLocationDelegate() { return mLocationDelegate; }
     public NetworkDelegate getNetworkDelegate() { return mNetworkDelegate; }
     public JSONDelegate getJsonDelegate() { return mJsonDelegate; }
+    public XMLParser getXmlParser() { return mXmlParser; }
     
     public boolean initialised() { return mInitialised; }
     
@@ -53,13 +56,15 @@ public final class StaticDependencies {
                                     TimerDelegate timerDelegate,
                                     LocationDelegate locationDelegate, 
                                     NetworkDelegate networkDelegate,
-                                    JSONDelegate jsonDelegate) {
+                                    JSONDelegate jsonDelegate,
+                                    XMLParser xmlParser) {
         this.mLogDelegate = logDelegate;
         this.mSettingsDelegate = settingsDelegate;
         this.mTimerDelegate = timerDelegate;
         this.mLocationDelegate = locationDelegate;
         this.mNetworkDelegate = networkDelegate;
         this.mJsonDelegate = jsonDelegate;
+        this.mXmlParser = xmlParser;
         this.mInitialised = true;
     }
 }
