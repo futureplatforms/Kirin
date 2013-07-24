@@ -3,14 +3,14 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <artifactId>KirinArchetype</artifactId>
+    <artifactId>kirin-archetype</artifactId>
     <groupId>com.futureplatforms.kirin</groupId>
     <version>1.0-SNAPSHOT</version>
   </parent>
   <groupId>com.futureplatforms.kirin.core</groupId>
-  <artifactId>KirinCore</artifactId>
+  <artifactId>kirin-core</artifactId>
   <packaging>jar</packaging>
-  <name>KirinCore</name>
+  <name>kirin-core</name>
   <url>http://maven.apache.org</url>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

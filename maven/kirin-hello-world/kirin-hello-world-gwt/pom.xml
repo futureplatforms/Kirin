@@ -57,7 +57,7 @@
     </dependency>
     <dependency>
       <groupId>com.futureplatforms.kirin.gwt</groupId>
-      <artifactId>KirinGwt</artifactId>
+      <artifactId>kirin-gwt</artifactId>
       <version>1.0-SNAPSHOT</version>
     </dependency>
     <dependency>
