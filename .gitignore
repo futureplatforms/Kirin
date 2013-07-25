@@ -46,3 +46,4 @@ node_modules
 /Kirin/core/wp8/wp8/KirinWP8/Bin
 maven/kirin-hello-world/kirin-hello-world-android/target
 maven/kirin-hello-world/common/gwt/target
+maven/kirin-hello-world/common/core/target

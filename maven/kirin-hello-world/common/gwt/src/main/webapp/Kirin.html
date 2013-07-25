@@ -8,7 +8,37 @@
 <html>
   <head>
   <script>
-    var kirinUA = navigator.userAgent.toLowerCase();
+    
+	var kirinNative = function() {
+		var kirinUA = navigator.userAgent.toLowerCase();
+		var isIos = function() {
+			if (kirinUA.indexOf("ipad") >= 0 ||
+				kirinUA.indexOf("iphone") >= 0 ||
+				kirinUA.indexOf("ipod") >= 0) {
+				return true;
+			}
+			return false;
+		};
+		
+		var isWindows = function() {
+			return (window.external && window.external.notify);
+		};
+		
+		return {
+			tellNative: function(url) {
+				if (isIos()) {
+					document.location = url;
+				} else if (isWindows()) {
+					window.external.notify(url);
+				} else {
+					console.log(url);
+				}
+			},
+			ready: function() {
+				this.tellNative("ready://ready");
+			}
+		};
+	}();
 	
   	function isIos() {
 		if (kirinUA.indexOf("ipad") >= 0 ||
@@ -23,9 +53,7 @@
   		console.log("about to load kirin");
         var kirin = require("kirin");
         console.log("That's us kicked off"); 
-        if (isIos()) {
-        	document.location = "ready://ready";
-        }
+        kirinNative.ready();
   	}
   </script>
   <script type="text/javascript" language="javascript" src="KirinHelloGwt/KirinHelloGwt.nocache.js"></script>

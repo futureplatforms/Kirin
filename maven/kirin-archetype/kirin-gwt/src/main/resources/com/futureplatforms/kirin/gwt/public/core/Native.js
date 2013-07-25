@@ -33,16 +33,6 @@ defineModule("Native", function (require, exports) {
 		timer: null
 	};
 	
-	var ua = navigator.userAgent.toLowerCase();
-	var isIos = function() {
-		if (ua.indexOf("ipad") >= 0 ||
-			ua.indexOf("iphone") >= 0 ||
-			ua.indexOf("ipod") >= 0) {
-			return true;
-		}
-		return false;
-	};
-	
 	/**
 	 * Internal function used to dispatch the request to Native.  It processes the
 	 * command queue and executes the next command on the list.  Simple parameters are passed
@@ -66,13 +56,7 @@ defineModule("Native", function (require, exports) {
 	
 		var parts = Array.prototype.slice.call(args, 1);
 		var url = "native://" + args[0] + "/?" + encodeURIComponent(JSON.stringify(parts));	
-		if (isIos()) {
-			document.location = url;		    
-		} else {
-			if (oldConsoleLog) {
-				oldConsoleLog(url);
-			}
-		}
+		kirinNative.tellNative(url);
 	};
 	
 	/**
