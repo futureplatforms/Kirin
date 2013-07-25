@@ -21,21 +21,28 @@
 		};
 		
 		var isWindows = function() {
-			return (window.external && window.external.notify);
+			// Ideally we would check for existence of window.external, 
+			// but this doesn't work because window.external is actually
+			// VBScript, and just mentioning it invokes the fuction!
+			// http://stackoverflow.com/questions/2797913/no-argument-method-on-window-external-is-invoked-when-checking-with-typeof
+			return kirinUA.indexOf("iemobile") >= 0;
 		};
 		
 		return {
-			tellNative: function(url) {
+			getTellNativeFn: function() {
 				if (isIos()) {
-					document.location = url;
+					return function() {
+						document.location = url;
+					};
 				} else if (isWindows()) {
-					window.external.notify(url);
+					return function() {
+						window.external.notify(url);
+					};
 				} else {
-					console.log(url);
+					return function() {
+						console.log(url);
+					}
 				}
-			},
-			ready: function() {
-				this.tellNative("ready://ready");
 			}
 		};
 	}();
@@ -53,7 +60,7 @@
   		console.log("about to load kirin");
         var kirin = require("kirin");
         console.log("That's us kicked off"); 
-        kirinNative.ready();
+        kirinNative.getTellNativeFn()("ready://ready");
   	}
   </script>
   <script type="text/javascript" language="javascript" src="KirinHelloGwt/KirinHelloGwt.nocache.js"></script>

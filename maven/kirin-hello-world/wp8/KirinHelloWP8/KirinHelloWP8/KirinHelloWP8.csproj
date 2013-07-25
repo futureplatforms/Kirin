@@ -1,0 +1,227 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.20506</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{BBC53A1E-0943-4C2B-87D9-F3D7DDBC7E4D}</ProjectGuid>
+    <ProjectTypeGuids>{C089C8C0-30E0-4E22-80C0-CE093F111A43};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>KirinHelloWP8</RootNamespace>
+    <AssemblyName>KirinHelloWP8</AssemblyName>
+    <TargetFrameworkIdentifier>WindowsPhone</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v8.0</TargetFrameworkVersion>
+    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
+    <SilverlightApplication>true</SilverlightApplication>
+    <SupportedCultures>
+    </SupportedCultures>
+    <XapOutputs>true</XapOutputs>
+    <GenerateSilverlightManifest>true</GenerateSilverlightManifest>
+    <XapFilename>KirinHelloWP8_$(Configuration)_$(Platform).xap</XapFilename>
+    <SilverlightManifestTemplate>Properties\AppManifest.xml</SilverlightManifestTemplate>
+    <SilverlightAppEntry>KirinHelloWP8.App</SilverlightAppEntry>
+    <ValidateXaml>true</ValidateXaml>
+    <MinimumVisualStudioVersion>11.0</MinimumVisualStudioVersion>
+    <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\Release</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Bin\x86\Debug</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\x86\Release</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|ARM' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Bin\ARM\Debug</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|ARM' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\ARM\Release</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="app\BINDINGS\windows\fromNative\TestModule.cs" />
+    <Compile Include="app\BINDINGS\windows\toNative\TestModuleNative.cs" />
+    <Compile Include="LocalizedStrings.cs" />
+    <Compile Include="MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\AppResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AppResources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </ApplicationDefinition>
+    <Page Include="MainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app\WEB-INF\deploy\KirinHelloGwt\symbolMaps\226AC3BB27FA108DA927D9D60ED5480C.symbolMap" />
+    <None Include="app\WEB-INF\deploy\KirinHelloGwt\symbolMaps\37E6288B5EE4C6520E0E34D308325863.symbolMap" />
+    <None Include="app\WEB-INF\deploy\KirinHelloGwt\symbolMaps\B8F2C4189E20D539FD7E79D987BD24BA.symbolMap" />
+    <None Include="app\WEB-INF\deploy\KirinHelloGwt\symbolMaps\C83EDB29B71EA7DE150F44CCD5BAE5C0.symbolMap" />
+    <None Include="app\WEB-INF\deploy\KirinHelloGwt\symbolMaps\D5F7DA3CCEBA88A727713AABF82FD354.symbolMap" />
+    <None Include="app\WEB-INF\deploy\KirinHelloGwt\symbolMaps\E35D00D54FAF75CAC873632074990F03.symbolMap" />
+    <None Include="packages.config" />
+    <None Include="Properties\AppManifest.xml" />
+    <None Include="Properties\WMAppManifest.xml">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="app\BINDINGS\ios\fromNative\TestModule.h" />
+    <Content Include="app\BINDINGS\ios\toNative\TestModuleNative.h" />
+    <Content Include="app\Kirin.html" />
+    <Content Include="app\KirinHelloGwt\226AC3BB27FA108DA927D9D60ED5480C.cache.html" />
+    <Content Include="app\KirinHelloGwt\37E6288B5EE4C6520E0E34D308325863.cache.html" />
+    <Content Include="app\KirinHelloGwt\B8F2C4189E20D539FD7E79D987BD24BA.cache.html" />
+    <Content Include="app\KirinHelloGwt\C83EDB29B71EA7DE150F44CCD5BAE5C0.cache.html" />
+    <Resource Include="app\KirinHelloGwt\clear.cache.gif" />
+    <Content Include="app\KirinHelloGwt\core\client-modules.js" />
+    <Content Include="app\KirinHelloGwt\core\kirin-webview.js" />
+    <Content Include="app\KirinHelloGwt\core\Native.js" />
+    <Content Include="app\KirinHelloGwt\D5F7DA3CCEBA88A727713AABF82FD354.cache.html" />
+    <Content Include="app\KirinHelloGwt\E35D00D54FAF75CAC873632074990F03.cache.html" />
+    <Content Include="app\KirinHelloGwt\hosted.html" />
+    <Content Include="app\KirinHelloGwt\KirinHelloGwt.nocache.js" />
+    <Content Include="app\KirinHelloGwt\lib\json2.js" />
+    <Content Include="app\KirinHelloGwt\lib\underscore.js" />
+    <Content Include="app\KirinHelloGwt\services\Analytics.js" />
+    <Content Include="app\KirinHelloGwt\services\Camera.js" />
+    <Content Include="app\KirinHelloGwt\services\Databases.js" />
+    <Content Include="app\KirinHelloGwt\services\Facebook.js" />
+    <Content Include="app\KirinHelloGwt\services\FileSystem.js" />
+    <Content Include="app\KirinHelloGwt\services\ImageTransform.js" />
+    <Content Include="app\KirinHelloGwt\services\LocalNotifications.js" />
+    <Content Include="app\KirinHelloGwt\services\Location.js" />
+    <Content Include="app\KirinHelloGwt\services\Networking.js" />
+    <Content Include="app\KirinHelloGwt\services\Proxocube.js" />
+    <Content Include="app\KirinHelloGwt\services\Settings.js" />
+    <Content Include="app\KirinHelloGwt\services\Sharing.js" />
+    <Content Include="app\KirinHelloGwt\services\Timers-webview.js" />
+    <Content Include="app\KirinHelloGwt\services\window-webview.js" />
+    <Content Include="app\KirinHelloGwt\utils\api-utils.js" />
+    <Content Include="app\KirinHelloGwt\utils\dates.js" />
+    <Content Include="app\KirinHelloGwt\utils\FunctionalUtils.js" />
+    <Content Include="app\KirinHelloGwt\utils\ImageUtils.js" />
+    <Content Include="app\KirinHelloGwt\utils\JSONUtils.js" />
+    <Content Include="app\KirinHelloGwt\utils\StringUtils.js" />
+    <Content Include="app\WEB-INF\classes\com\futureplatforms\kirinhello\KirinHello.gwt.xml" />
+    <Content Include="app\WEB-INF\deploy\KirinHelloGwt\rpcPolicyManifest\manifest.txt" />
+    <Content Include="app\WEB-INF\lib\kirin-core-1.0-SNAPSHOT.jar" />
+    <Content Include="app\WEB-INF\lib\kirin-gwt-1.0-SNAPSHOT.jar" />
+    <Content Include="app\WEB-INF\lib\kirin-gwt-stub-1.0-SNAPSHOT.jar" />
+    <Content Include="app\WEB-INF\lib\kirin-hello-world-core-1.0-SNAPSHOT.jar" />
+    <Content Include="Assets\AlignmentGrid.png" />
+    <Content Include="Assets\ApplicationIcon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Tiles\FlipCycleTileLarge.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Tiles\FlipCycleTileMedium.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Tiles\FlipCycleTileSmall.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Tiles\IconicTileMediumLarge.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Tiles\IconicTileSmall.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\AppResources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AppResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="app\META-INF\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="KirinWP8">
+      <HintPath>.\KirinWP8.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ProjectExtensions />
+  <PropertyGroup>
+    <PreBuildEvent>cd ..\..\..\..
+wp8_prebuild.bat</PreBuildEvent>
+  </PropertyGroup>
+</Project>

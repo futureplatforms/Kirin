@@ -26,6 +26,6 @@
     <module>kirin-core</module>
     <module>kirin-gwt-stub</module>
     <module>kirin-gwt</module>
-    <module>kirin-android</module>
+    <!-- <module>kirin-android</module> -->
   </modules>
 </project>

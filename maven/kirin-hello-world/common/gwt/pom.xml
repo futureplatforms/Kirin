@@ -6,6 +6,7 @@
     <artifactId>kirin-hello-world</artifactId>
     <groupId>com.futureplatforms.kirinhello</groupId>
     <version>1.0-SNAPSHOT</version>
+    <relativePath>../../pom.xml</relativePath>
   </parent>
   <groupId>com.futureplatforms.kirinhello.gwt</groupId>
   <artifactId>kirin-hello-world-gwt</artifactId>

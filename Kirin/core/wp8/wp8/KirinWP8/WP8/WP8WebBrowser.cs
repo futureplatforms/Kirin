@@ -87,7 +87,7 @@ namespace KirinWP8
 
         public void NavigateKirin()
         {
-            Navigate(new Uri("/generated-javascript/index-wp8.html", UriKind.Relative));
+            Navigate(new Uri("/app/Kirin.html", UriKind.Relative));
         }
 
         public event EventHandler<INotifyEventArgsWrapper> ScriptNotify;

@@ -33,6 +33,8 @@ defineModule("Native", function (require, exports) {
 		timer: null
 	};
 	
+	var tellNativeFn = kirinNative.getTellNativeFn();
+	
 	/**
 	 * Internal function used to dispatch the request to Native.  It processes the
 	 * command queue and executes the next command on the list.  Simple parameters are passed
@@ -56,7 +58,7 @@ defineModule("Native", function (require, exports) {
 	
 		var parts = Array.prototype.slice.call(args, 1);
 		var url = "native://" + args[0] + "/?" + encodeURIComponent(JSON.stringify(parts));	
-		kirinNative.tellNative(url);
+		tellNativeFn(url);
 	};
 	
 	/**

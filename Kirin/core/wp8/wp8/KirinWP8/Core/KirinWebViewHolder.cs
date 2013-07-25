@@ -51,7 +51,7 @@ namespace KirinWindows.Core
 
         void wb_ScriptNotify(object sender, INotifyEventArgsWrapper e)
         {
-            if (!navigated && ">>> READY >>>".Equals(e.Value))
+            if (!navigated && e.Value.StartsWith("ready"))
             {
                 navigated = true;
                 while (queue.Count > 0)

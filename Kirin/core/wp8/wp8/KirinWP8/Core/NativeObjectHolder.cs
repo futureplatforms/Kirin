@@ -25,18 +25,26 @@ namespace KirinWindows.Core
             {
                 foreach (var method in RuntimeReflectionExtensions.GetRuntimeMethods(t))
                 {
-                    if (method.IsPublic && !Names.Any(method.DeclaringType.FullName.StartsWith) && !method.IsAbstract)
+                    try
                     {
-                        var methodNameForJS = method.Name;
-                        var numParams = method.GetParameters().Length;
-                        if (isGwt)
+                        if (method.IsPublic && !Names.Any(method.DeclaringType.FullName.StartsWith) && !method.IsAbstract)
                         {
-                            for (var i = 0; i < numParams; i++)
+                            var methodNameForJS = method.Name;
+                            var parameterInfo = method.GetParameters();
+                            var numParams = parameterInfo.Length;
+                            if (isGwt)
                             {
-                                methodNameForJS += "_";
+                                for (var i = 0; i < numParams; i++)
+                                {
+                                    methodNameForJS += "_";
+                                }
                             }
+                            Methods.Add(methodNameForJS, method);
                         }
-                        Methods.Add(methodNameForJS, method);
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.WriteLine(e.ToString());
                     }
                 }
             }
