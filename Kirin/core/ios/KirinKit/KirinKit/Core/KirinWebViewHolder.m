@@ -91,7 +91,17 @@
      * We are looking for URLS that match native://<Class>/<command>[?<arguments>]
      * We have to strip off the leading slash for the options.
      */
-	if ([[url scheme] isEqualToString:@"native"]) {
+    if ([[url scheme] isEqualToString:@"ready"]) {
+        NSLog(@"WebView is reported finished. %d commands to tell JS", [jsQueue count]);
+		[self _execJSImmediately:@"console.log('Webview is loaded')"];
+		for (int i=0; i < [jsQueue count]; i++) {
+			[self _execJSImmediately:[jsQueue objectAtIndex:i]];
+		}
+		
+		webViewIsReady = YES;
+		[jsQueue removeAllObjects];
+        return NO;
+    } else if ([[url scheme] isEqualToString:@"native"]) {
     	
         // Tell the JS code that we've gotten this command, and we're ready for another
         [theWebView stringByEvaluatingJavaScriptFromString:@"EXPOSED_TO_NATIVE.js_ObjC_bridge.ready = true;"];
@@ -125,21 +135,6 @@
 	}
 	
 	return YES;
-}
-
-
-- (void)webViewDidFinishLoad:(UIWebView *)awebView {
-	
-	if (!webViewIsReady) {
-		NSLog(@"WebView is reported finished. %d commands to tell JS", [jsQueue count]);
-		[self _execJSImmediately:@"console.log('Webview is loaded')"];
-		for (int i=0; i < [jsQueue count]; i++) {
-			[self _execJSImmediately:[jsQueue objectAtIndex:i]];
-		}
-		
-		webViewIsReady = YES;
-		[jsQueue removeAllObjects];
-	}
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {

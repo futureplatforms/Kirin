@@ -13,11 +13,11 @@
 
 
 + (NSString*) indexFilename {
-	return @"index-ios.html";
+	return @"Kirin.html";
 }
 
 + (NSString*) javascriptDirectory {
-	return @"generated-javascript";
+	return @"app";
 }
 
 + (NSString*) join: (NSString*) areaPath andFilePath: (NSString*) filePath {

@@ -18,9 +18,7 @@ defineModule("kirin", function (require, exports) {
 		slice = Array.prototype.slice,
 		native2js = {},
 		callbacks = {},
-		gwtObjects = {}, 
-		// XXX 'screens' is set by GWT-Exporter. 
-		gwtClasses = window.screens;
+		gwtObjects = {};
 	
 	/**********************************************************************/
 	/* Utility methods to help calling native from Javascript and vice versa.
@@ -142,6 +140,7 @@ defineModule("kirin", function (require, exports) {
 	}
 	
 	function resolveModule(moduleName) {
+		var gwtClasses = window.screens;
 		if (gwtClasses) {
 			if (gwtObjects[moduleName]) {
 				return gwtObjects[moduleName];

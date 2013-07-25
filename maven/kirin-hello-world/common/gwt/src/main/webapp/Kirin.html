@@ -7,11 +7,26 @@
 
 <html>
   <head>
-  <script type="text/javascript">
-  function doOnLoad() {
-    var kirin = require("kirin");
-    console.log("Javascript says: webview loaded");
-  }
+  <script>
+    var kirinUA = navigator.userAgent.toLowerCase();
+	
+  	function isIos() {
+		if (kirinUA.indexOf("ipad") >= 0 ||
+			kirinUA.indexOf("iphone") >= 0 ||
+			kirinUA.indexOf("ipod") >= 0) {
+			return true;
+		}
+		return false;
+	}
+  
+  	function kirinKickOff() {
+  		console.log("about to load kirin");
+        var kirin = require("kirin");
+        console.log("That's us kicked off"); 
+        if (isIos()) {
+        	document.location = "ready://ready";
+        }
+  	}
   </script>
   <script type="text/javascript" language="javascript" src="KirinHelloGwt/KirinHelloGwt.nocache.js"></script>
   </head>
@@ -21,6 +36,6 @@
   <!-- you can leave the body empty if you want  -->
   <!-- to create a completely dynamic UI.        -->
   <!--                                           -->
-  <body onLoad="doOnLoad()">
+  <body>
   </body>
 </html>

@@ -38,13 +38,8 @@
     KirinExtensions* services = [KirinExtensions empty];
     NSLog(@"Core KirinExtensions");
     [services registerExtension:[[[SettingsBackend alloc] init] autorelease]];
-    [services registerExtension:[[[FileSystemBackend alloc] init] autorelease]];
     [services registerExtension:[[[NetworkingBackend alloc] init] autorelease]];
-    [services registerExtension:[[[KirinImagePicker alloc] init] autorelease]];
-    [services registerExtension:[[[DatabasesBackend alloc] init] autorelease]];
-    [services registerExtension:[[[LocalNotificationsBackend alloc] init] autorelease]];
     [services registerExtension:[KirinLocationBackend instance]];
-    [services registerExtension:[KirinImageTransformer instance]];
     return services;
 }
 

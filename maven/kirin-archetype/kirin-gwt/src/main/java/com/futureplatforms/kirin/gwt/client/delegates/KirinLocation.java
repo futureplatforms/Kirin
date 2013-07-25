@@ -34,7 +34,7 @@ public class KirinLocation implements LocationDelegate {
     }-*/;
     
     private static native void doIt(boolean isFine, KirinLocation p) /*-{
-        var location = require("Location")
+        var location = $wnd.require("Location")
         location.unregisterAllListeners()
         location.registerLocationListener(isFine, function(newLocation) {
             var lat = newLocation.latitude;

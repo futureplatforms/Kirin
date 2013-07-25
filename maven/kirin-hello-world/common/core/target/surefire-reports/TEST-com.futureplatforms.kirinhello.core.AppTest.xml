@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite failures="0" time="0.01" errors="0" skipped="0" tests="1" name="com.futureplatforms.kirinhello.core.AppTest">
+<testsuite failures="0" time="0.009" errors="0" skipped="0" tests="1" name="com.futureplatforms.kirinhello.core.AppTest">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Libraries"/>
@@ -22,7 +22,7 @@
     <property name="basedir" value="/Users/douglashoskins/Documents/workspace/Kirin-fragments/KirinJS/maven/kirin-hello-world/common/core"/>
     <property name="java.endorsed.dirs" value="/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/endorsed"/>
     <property name="os.arch" value="x86_64"/>
-    <property name="surefire.real.class.path" value="/Users/douglashoskins/Documents/workspace/Kirin-fragments/KirinJS/maven/kirin-hello-world/common/core/target/surefire/surefirebooter1527037958337011448.jar"/>
+    <property name="surefire.real.class.path" value="/Users/douglashoskins/Documents/workspace/Kirin-fragments/KirinJS/maven/kirin-hello-world/common/core/target/surefire/surefirebooter1934900404386076718.jar"/>
     <property name="java.io.tmpdir" value="/var/folders/j4/h57zl64d4md2fckh06bzn9fc0000gn/T/"/>
     <property name="line.separator" value="
 "/>
@@ -46,7 +46,7 @@
     <property name="java.vm.specification.version" value="1.0"/>
     <property name="sun.arch.data.model" value="64"/>
     <property name="java.home" value="/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home"/>
-    <property name="sun.java.command" value="/Users/douglashoskins/Documents/workspace/Kirin-fragments/KirinJS/maven/kirin-hello-world/common/core/target/surefire/surefirebooter1527037958337011448.jar /Users/douglashoskins/Documents/workspace/Kirin-fragments/KirinJS/maven/kirin-hello-world/common/core/target/surefire/surefire5208734905379385315tmp /Users/douglashoskins/Documents/workspace/Kirin-fragments/KirinJS/maven/kirin-hello-world/common/core/target/surefire/surefire6601381520535238882tmp"/>
+    <property name="sun.java.command" value="/Users/douglashoskins/Documents/workspace/Kirin-fragments/KirinJS/maven/kirin-hello-world/common/core/target/surefire/surefirebooter1934900404386076718.jar /Users/douglashoskins/Documents/workspace/Kirin-fragments/KirinJS/maven/kirin-hello-world/common/core/target/surefire/surefire1115836372515983854tmp /Users/douglashoskins/Documents/workspace/Kirin-fragments/KirinJS/maven/kirin-hello-world/common/core/target/surefire/surefire2062262722640465255tmp"/>
     <property name="java.specification.vendor" value="Sun Microsystems Inc."/>
     <property name="user.language" value="en"/>
     <property name="awt.toolkit" value="apple.awt.CToolkit"/>

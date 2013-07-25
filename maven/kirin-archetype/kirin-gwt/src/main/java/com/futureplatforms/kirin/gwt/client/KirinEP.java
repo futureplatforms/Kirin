@@ -14,6 +14,7 @@ import com.futureplatforms.kirin.gwt.client.delegates.KirinNetworking;
 import com.futureplatforms.kirin.gwt.client.delegates.json.GwtJSON;
 import com.futureplatforms.kirin.gwt.client.delegates.xml.GwtXMLParserImpl;
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JavaScriptObject;
 
 /**
@@ -39,24 +40,30 @@ public class KirinEP implements EntryPoint {
    * This is the entry point method.
    */
   public void onModuleLoad() {
-    LogDelegate ld = new LogDelegate() {
-        @Override
-        public native void log(String s) /*-{
-            if ($wnd['console']) {
-                $wnd.console.log(s);
-            }
-        }-*/;
-    };
-    
-    StaticDependencies.getInstance().setDependencies(
-            ld, 
-            new GwtSettingsDelegate(), 
-            new GwtTimerDelegate(), 
-            new KirinLocation(), 
-            new KirinNetworking(), 
-            new GwtJSON(), 
-            new GwtXMLParserImpl());
-    
-    ExporterUtil.exportAll();
+        _execute();
+        LogDelegate ld = new LogDelegate() {
+            @Override
+            public native void log(String s) /*-{
+                if ($wnd['console']) {
+                    $wnd.console.log(s);
+                }
+            }-*/;
+        };
+        StaticDependencies.getInstance().setDependencies(
+                ld, 
+                new GwtSettingsDelegate(), 
+                new GwtTimerDelegate(), 
+                new KirinLocation(), 
+                new KirinNetworking(), 
+                new GwtJSON(), 
+                new GwtXMLParserImpl());
+        
+        ExporterUtil.exportAll();
+        
+        ld.log(GWT.getPermutationStrongName());
   }
+    private static native void _execute() /*-{
+        $wnd.kirinKickOff();
+    }-*/;
+  
 }

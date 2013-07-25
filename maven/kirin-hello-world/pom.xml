@@ -25,6 +25,6 @@
   <modules>
     <module>common/core</module>
     <module>common/gwt</module>
-    <module>android</module>
+    <!-- <module>android</module>  -->
   </modules>
 </project>

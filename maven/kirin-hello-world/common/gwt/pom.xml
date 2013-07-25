@@ -14,8 +14,8 @@
   <properties>
     <!-- Convenience property to set the GWT version -->
     <gwtVersion>2.5.1</gwtVersion>
-    <!-- GWT needs at least java 1.5 -->
-    <webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
+    <!-- The iOS and Windows Kirin libs will be looking for the "app" folder -->
+    <webappDirectory>${project.build.directory}/${project.build.finalName}/app</webappDirectory>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
   <dependencies>
@@ -128,6 +128,7 @@
           <execution>
             <configuration>
               <module>com.futureplatforms.kirinhello.KirinHello</module>
+              <style>DETAILED</style>
             </configuration>
             <goals>
               <goal>compile</goal>
@@ -139,6 +140,7 @@
         <configuration>
           <runTarget>Kirin.html</runTarget>
           <hostedWebapp>${webappDirectory}</hostedWebapp>
+          <webappDirectory>${webappDirectory}</webappDirectory>
         </configuration>
       </plugin>
 

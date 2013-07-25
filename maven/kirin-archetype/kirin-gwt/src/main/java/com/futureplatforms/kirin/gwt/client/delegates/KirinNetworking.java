@@ -31,7 +31,7 @@ public class KirinNetworking extends NetworkDelegate {
         }
 
         private static native void doIt(String method, String url, JavaScriptObject headers, String postData, NetworkRunner p) /*-{
-            var networking = require("Networking");
+            var networking = $wnd.require("Networking");
             var config = {
                 method:method,
                 url:url,

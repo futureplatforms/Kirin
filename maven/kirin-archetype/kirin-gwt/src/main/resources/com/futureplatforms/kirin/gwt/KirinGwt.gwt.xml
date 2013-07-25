@@ -41,4 +41,6 @@
   <script src="services/Location.js"></script>
   <script src="services/Networking.js"></script>
   <script src="services/Settings.js"></script>
+  <script src="services/FileSystem.js"></script>
+  <script src="utils/api-utils.js"></script>
 </module>

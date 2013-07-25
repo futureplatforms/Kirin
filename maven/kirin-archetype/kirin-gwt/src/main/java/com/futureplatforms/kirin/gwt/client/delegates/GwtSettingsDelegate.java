@@ -9,7 +9,7 @@ public class GwtSettingsDelegate implements SettingsDelegate {
             return null;
         }
     
-        var settings = require("Settings");
+        var settings = $wnd.require("Settings");
         return settings.get(key);
     }-*/;
     
@@ -19,7 +19,7 @@ public class GwtSettingsDelegate implements SettingsDelegate {
             return;
         }
         
-        var settings = require("Settings");
+        var settings = $wnd.require("Settings");
         if (value == null) {
             settings.remove(key);
         } else {
