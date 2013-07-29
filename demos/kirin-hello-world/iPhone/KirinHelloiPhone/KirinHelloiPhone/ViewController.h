@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "toNative/TestModuleNative.h"
 
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController <TestModuleNative>
 
 @end

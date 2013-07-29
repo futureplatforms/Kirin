@@ -1,2 +1,0 @@
-# Kirin development quick start
-

@@ -225,7 +225,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# copy generated javascript files to iPhone proj so they can be included\ncd ../..\nmvn install";
+			shellScript = "cd ../..\nmvn install";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -383,6 +383,7 @@
 				09FF3C5E179FF8DA00612C98 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
