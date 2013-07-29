@@ -23,8 +23,9 @@
     </dependency>
   </dependencies>
   <modules>
-    <module>kirin-core</module>
-    <module>kirin-gwt-stub</module>
-    <module>kirin-gwt</module>
+    <module>common/kirin-core</module>
+    <module>common/kirin-gwt-stub</module>
+    <module>android</module>
+    <module>common/kirin-gwt</module>
   </modules>
 </project>
