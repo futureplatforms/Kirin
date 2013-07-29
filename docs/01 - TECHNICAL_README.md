@@ -1,7 +1,5 @@
 # Kirin technical overview
 
-A knowledge of the library's workings is necessary before working on a Kirin project.
-
 This document lists some technical considerations the developer must be aware of before using Kirin.
 
 ## Delegates

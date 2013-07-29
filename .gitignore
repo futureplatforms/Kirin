@@ -59,3 +59,5 @@ src/common/kirin-gwt-stub/target
 src/common/kirin-gwt/target
 *.csproj.user
 *.suo
+archetype/target
+demos/kirin-hello-world/target

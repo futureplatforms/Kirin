@@ -1,0 +1,10 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+<?xml version="1.0" encoding="UTF-8"?>
+<module rename-to="${rootArtifactId}_core">
+<!-- Inherit the core Web Toolkit stuff.                        -->
+  <inherits name='com.google.gwt.core.Core'/>
+  <!-- Specify the paths for translatable code                    -->
+  <source path='core'/>
+</module>

@@ -1,0 +1,79 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+<!doctype html>
+<!-- The DOCTYPE declaration above will set the    -->
+<!-- browser's rendering engine into               -->
+<!-- "Standards Mode". Replacing this declaration  -->
+<!-- with a "Quirks Mode" doctype may lead to some -->
+<!-- differences in layout.                        -->
+
+<html>
+  <head>
+  <script>
+    
+	var kirinNative = function() {
+		var kirinUA = navigator.userAgent.toLowerCase();
+		var isIos = function() {
+			if (kirinUA.indexOf("ipad") >= 0 ||
+				kirinUA.indexOf("iphone") >= 0 ||
+				kirinUA.indexOf("ipod") >= 0) {
+				return true;
+			}
+			return false;
+		};
+		
+		var isWindows = function() {
+			// Ideally we would check for existence of window.external, 
+			// but this doesn't work because window.external is actually
+			// VBScript, and just mentioning it invokes the fuction!
+			// http://stackoverflow.com/questions/2797913/no-argument-method-on-window-external-is-invoked-when-checking-with-typeof
+			return kirinUA.indexOf("iemobile") >= 0;
+		};
+		
+		return {
+			getTellNativeFn: function() {
+				if (isIos()) {
+					return function() {
+						document.location = url;
+					};
+				} else if (isWindows()) {
+					return function() {
+						window.external.notify(url);
+					};
+				} else {
+					return function() {
+						console.log(url);
+					}
+				}
+			}
+		};
+	}();
+	
+  	function isIos() {
+		if (kirinUA.indexOf("ipad") >= 0 ||
+			kirinUA.indexOf("iphone") >= 0 ||
+			kirinUA.indexOf("ipod") >= 0) {
+			return true;
+		}
+		return false;
+	}
+  
+  	function kirinKickOff() {
+  		console.log("about to load kirin");
+        var kirin = require("kirin");
+        console.log("That's us kicked off"); 
+        kirinNative.getTellNativeFn()("ready://ready");
+  	}
+  </script>
+  <script type="text/javascript" language="javascript" src="${rootArtifactId}/${rootArtifactId}.nocache.js"></script>
+  </head>
+
+  <!--                                           -->
+  <!-- The body can have arbitrary html, or      -->
+  <!-- you can leave the body empty if you want  -->
+  <!-- to create a completely dynamic UI.        -->
+  <!--                                           -->
+  <body>
+  </body>
+</html>

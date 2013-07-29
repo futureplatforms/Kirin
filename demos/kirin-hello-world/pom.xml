@@ -24,6 +24,7 @@
   </dependencies>
   <modules>
     <module>common/core</module>
+    <module>android</module>
     <module>common/gwt</module>
   </modules>
 </project>
