@@ -49,3 +49,13 @@ maven/kirin-hello-world/common/gwt/target
 maven/kirin-hello-world/common/core/target
 maven\kirin-hello-world\wp8\KirinHelloWP8\KirinHelloWP8\app/
 maven/kirin-hello-world/wp8/KirinHelloWP8/KirinHelloWP8/app/
+src/ios/KirinKit/build
+src/common/kirin-core/target
+src/android/target
+demos/kirin-hello-world/common/gwt/target
+demos/kirin-hello-world/android/target
+demos/kirin-hello-world/common/core/target
+src/common/kirin-gwt-stub/target
+src/common/kirin-gwt/target
+*.csproj.user
+*.suo
