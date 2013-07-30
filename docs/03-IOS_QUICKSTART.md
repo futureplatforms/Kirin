@@ -21,7 +21,12 @@ Follow the steps in [`CORE-QUICKSTART`](01-CORE-QUICKSTART.md).
 
 ###Build the Kirin iOS library 
 
-Execute `./rebuild_kirinkit.sh` from within the `Kirin/src` folder.
+    cd "Kirin/src/ios/KirinKit"
+    
+Build this in both `Debug` and `Release` configurations
+    
+    xcodebuild -sdk iphoneos6.1 -project KirinKit.xcodeproj -target KirinKit -configuration Debug -verbose clean build
+    xcodebuild -sdk iphoneos6.1 -project KirinKit.xcodeproj -target KirinKit -configuration Release -verbose clean build
 
 ### Create a new app in Xcode in the usual manner.
 

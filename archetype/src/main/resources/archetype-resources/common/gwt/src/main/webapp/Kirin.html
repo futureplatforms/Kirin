@@ -34,15 +34,15 @@
 		return {
 			getTellNativeFn: function() {
 				if (isIos()) {
-					return function() {
+					return function(url) {
 						document.location = url;
 					};
 				} else if (isWindows()) {
-					return function() {
+					return function(url) {
 						window.external.notify(url);
 					};
 				} else {
-					return function() {
+					return function(url) {
 						console.log(url);
 					}
 				}

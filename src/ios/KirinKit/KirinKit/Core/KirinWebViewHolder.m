@@ -86,7 +86,6 @@
 - (BOOL)webView:(UIWebView *)theWebView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
     
 	NSURL *url = [request URL];
-    NSLog(@"Kirin::shouldStartLoadWithRequest: here's a URL %@", url);
     /*
      * Get Command and Options From URL
      * We are looking for URLS that match native://<Class>/<command>[?<arguments>]
