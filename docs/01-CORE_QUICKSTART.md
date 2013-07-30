@@ -5,7 +5,7 @@ Get a new Kirin project with Android, iPhone and WP8 targets.
 ## Prerequisites
 
 * Check out the kirin-maven branch
-* Ensure you have Java installed (`java --version` must work on command line)
+* Ensure you have Java installed (`java -version` must work on command line)
 * Ensure you have maven installed (`mvn --version` must work on command line)
 * For eclipse development, install the [M2E plugin](http://eclipse.org/m2e/).
 * Ensure you have your platform's development tools installed (XCode for iOS, MS Visual Studio Express for Windows Phone).
