@@ -24,7 +24,25 @@
   </dependencies>
   <modules>
     <module>common/core</module>
-    <module>android</module>
     <module>common/gwt</module>
+    <module>android</module>
   </modules>
+  <!--
+  <profiles>
+    <profile>
+      <id>gwt</id>
+      <modules>
+        <module>common/core</module>
+        <module>common/gwt</module>
+      </modules>
+    </profile>
+    <profile>
+      <id>android</id>
+      <modules>
+        <module>common/core</module>
+        <module>android</module>
+      </modules>
+    </profile>
+  </profiles>
+  -->
 </project>

@@ -35,8 +35,4 @@
     NSLog(@"testyNativeMethod: %@", str);
 }
 
-- (void) testyNativeMethod2: (NSString*) str {
-    NSLog(@"testyNativeMethod2: %@", str);
-}
-
 @end

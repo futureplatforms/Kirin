@@ -9,25 +9,25 @@ Refer also to the `kirin-hello-world` project in the `demos` folder to see this 
 You must have the following installed on your system:
 
 * Eclipse
-* XCode
+* Xcode
 
 And you must have the kirin project checked out.
 
-## Getting started
+##Getting started
 
-### Build your project's core
+###Build your project's core
 
-Follow the steps in [`01-CORE-QUICKSTART.md`](01-CORE-QUICKSTART.md).
+Follow the steps in [`CORE-QUICKSTART`](01-CORE-QUICKSTART.md).
 
-### Build the Kirin iOS library 
+###Build the Kirin iOS library 
 
-Execute `./rebuild_kirinkit.sh` from within the `Kirin\src` folder.
+Execute `./rebuild_kirinkit.sh` from within the `Kirin/src` folder.
 
 ### Create a new app in Xcode in the usual manner.
 
 If you're building an iOS app which targets both iPhone and iPad then create your app in an `ios` folder at the same level as `android`, `common` etc.  If not then put your apps in separate `iPhone` and `iPad` folders.
 
-### Define `KIRIN_HOME`
+### Define `KIRIN_HOME` in Xcode
 In xcode, type `cmd`-`,`, and select Source Trees.  Ensure `KIRIN_HOME` is defined and points to the folder where Kirin is checked out
 
 ### Add the Kirin iOS library to your app
@@ -43,22 +43,41 @@ Select the project name in `PROJECT`, then choose `Build Settings`.  In `Other L
 
 Select the project name in `PROJECT`, then choose `Build Settings`.  In `Framework search paths` add `$(KIRIN_HOME)/core/ios/KirinKit/build/Release-iphoneos`.
 
+#### Add other required libraries
+In `Targets` -> `Build Phases` -> `Link Binary With Libraries` ensure all these libraries are present:
+
+* KirinKit.framework (added above)
+* libsqlite3.dylib
+* UIKit.framework
+* CoreLocation.framework
+* MobileCoreServices.framework
+* Foundation.framework
+* CoreGraphics.framework
 
 ### Add the GWT target's `app` folder to the project
 
 Locate your project's `app` folder in `common/gwt/target/<app-name>-<version>` (in finder).  Drag and drop this onto your xcode project, and choose `Create folder references for any added folders`.
 
-#### Add the `app` folder to the project's header search paths
+#### Add the bindings to the project's header search paths
 
 Select the project name in `PROJECT`, then choose `Build Settings`.  In `Header Search Paths` add `"$(PROJECT_DIR)/../../common/gwt/target/<project-name>-<version>/app/bindings/ios`.
 
 ### Add Pre-build event command line:
 
- Select the project name  in `Targets`, then choose the `Build Phases` tab.  In `Run Script` add the lines:
+ Select the project name  in `Targets`, then choose the `Build Phases` tab.  Choose `Add Build Phase` -> `Add Run Script`, then in `Run Script` add the lines:
  
     cd ../..
-    mvn install
+    mvn clean install -pl common/gwt
+                       # THIS LINE WILL CHANGE ONCE
+                       # HOSKINS HAS FIGURED OUT HOW
+                       # TO INVOKE MAVEN SO THAT GWT
+                       # ONLY BUILDS WHEN NEEDED
 
+This ensures only the `gwt` project and its dependencies are built (and not the android project).
+
+Place this `Run Script` above `Compile Sources` (drag and drop).
+
+You can rename this `Run Script` phase to `Kirin Build` or something similar.
 
 ### Ensure you can access the generated object bindings
 
@@ -71,21 +90,45 @@ should contain the folder `BINDINGS/ios`, this will contain another two folders
 `fromNative` contains an Objective C protocol for each of your Kirin modules.
 `toNative` contains an Objective C protocol for each of your Kirin natives.
 
-
-To use a Kirin module you must create an implementation of its native interface (in 
+You must provide an implementation of each module's native component (in 
 `toNative`, and ought to end with `native`).
 
-In 
-Then, get the Kirin singleton like so:
-`Kirin kirin = Kirin.getInstance();`
-and bind the implementation to the module name:
-`KirinAssistant ka = kirin.BindScreen(<MyModuleNativeImpl>, "MyModule");`
-Finally, create an instance of the module class (located in `fromNative`) like so:
-`Generated.MyModule myModule = new MyModule(ka);`
+### Implement `TestModule`
 
-Now you can invoke methods on your Kirin module!
+Your iPhone project should provide a `ViewController` object.  This will be our `TestModule` implementation.
 
-`myModule.helloWorld("amazing");`
+In `ViewController.h` import `TestModuleNative` like so:
 
-and any asynchronous return methods will be invoked by Kirin on your native implementation
-which you passed in to `BindScreen`.
+    #import "toNative/TestModuleNative.h"
+
+And specify `TestModuleNative` on the class like so:
+
+    @interface ViewController : UIViewController <TestModuleNative>
+
+In `ViewController.m` we must provide an implementation of `TestModuleNative`'s `testyNativeMethod` method:
+
+    - (void) testyNativeMethod: (NSString*) str {
+        NSLog(@"testyNativeMethod: %@", str);
+    }
+
+In `ViewController.m`, import `TestModule`, and also the Kirin `NSObject` category:
+
+    #import <KirinKit/NSObject+Kirin.h>
+    #import "fromNative/TestModule.h"
+
+Declare a `kirinModule` property in the `@interface` part:
+
+    @interface ViewController ()
+    @property (strong) id <TestModule> kirinModule;
+    @end
+
+In `viewDidLoad`, bind `ViewController` to the `TestModule` class like so:
+
+    [self kirinStartModule:@"TestModule" withProtocol:@protocol(TestModule)];
+    
+
+Now, we can access our module through `self.kirinModule`:
+
+    [self.kirinModule testyMethod:@"Hey hey hey!" :1337];
+
+Building and running this app should demonstrate end-to-end native to Kirin method calling.

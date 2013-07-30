@@ -65,8 +65,8 @@ project in Visual Studio before you can do this.
 
 ### Add Pre-build event command line:
 
-`cd ..\..\..\..`
-`wp8_prebuild.bat`
+    cd ..\..\..\..
+    wp8_prebuild.bat
 
 **Edit** `wp8_prebuild.bat` to put your project's 
 correct folder names in there.

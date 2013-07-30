@@ -4,5 +4,4 @@ import com.futureplatforms.kirin.gwt.client.modules.IKirinNativeObject;
 
 public interface TestModuleNative extends IKirinNativeObject {
     void testyNativeMethod(String str); 
-    void testyNativeMethod2(String str); 
 }

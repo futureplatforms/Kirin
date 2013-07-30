@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0976979E17A6D06D000EB5B0 /* KirinKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0976979D17A6D06D000EB5B0 /* KirinKit.framework */; };
+		097697A017A6D119000EB5B0 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0976979F17A6D119000EB5B0 /* libsqlite3.dylib */; };
 		09FF3C3A179FF8DA00612C98 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09FF3C39179FF8DA00612C98 /* UIKit.framework */; };
 		09FF3C3C179FF8DA00612C98 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09FF3C3B179FF8DA00612C98 /* Foundation.framework */; };
 		09FF3C3E179FF8DA00612C98 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09FF3C3D179FF8DA00612C98 /* CoreGraphics.framework */; };
@@ -20,18 +22,15 @@
 		09FF3C56179FF8DA00612C98 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 09FF3C54179FF8DA00612C98 /* MainStoryboard_iPad.storyboard */; };
 		09FF3C59179FF8DA00612C98 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09FF3C58179FF8DA00612C98 /* ViewController.m */; };
 		09FF3C6417A0422800612C98 /* app in Resources */ = {isa = PBXBuildFile; fileRef = 09FF3C6317A0422800612C98 /* app */; };
-		09FF3C6717A044CB00612C98 /* KirinKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09FF3C6617A044CB00612C98 /* KirinKit.framework */; };
 		09FF3C6917A0453C00612C98 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09FF3C6817A0453C00612C98 /* SystemConfiguration.framework */; };
-		09FF3C6B17A0454200612C98 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09FF3C6A17A0454200612C98 /* AdSupport.framework */; };
-		09FF3C6D17A0454500612C98 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09FF3C6C17A0454500612C98 /* Accounts.framework */; };
-		09FF3C6F17A0454900612C98 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09FF3C6E17A0454900612C98 /* Social.framework */; };
 		09FF3C7117A0454E00612C98 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09FF3C7017A0454E00612C98 /* QuartzCore.framework */; };
 		09FF3C7317A0455400612C98 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09FF3C7217A0455400612C98 /* MobileCoreServices.framework */; };
 		09FF3C7517A0455900612C98 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09FF3C7417A0455900612C98 /* CoreLocation.framework */; };
-		09FF3C7717A0456000612C98 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 09FF3C7617A0456000612C98 /* libsqlite3.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0976979D17A6D06D000EB5B0 /* KirinKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = KirinKit.framework; path = "../../../../src/ios/KirinKit/build/Debug-iphoneos/KirinKit.framework"; sourceTree = "<group>"; };
+		0976979F17A6D119000EB5B0 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		09FF3C36179FF8DA00612C98 /* KirinHelloiPhone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KirinHelloiPhone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		09FF3C39179FF8DA00612C98 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		09FF3C3B179FF8DA00612C98 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -50,7 +49,6 @@
 		09FF3C57179FF8DA00612C98 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		09FF3C58179FF8DA00612C98 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		09FF3C6317A0422800612C98 /* app */ = {isa = PBXFileReference; lastKnownFileType = folder; name = app; path = "../../common/gwt/target/kirin-hello-world-gwt-1.0-SNAPSHOT/app"; sourceTree = "<group>"; };
-		09FF3C6617A044CB00612C98 /* KirinKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = KirinKit.framework; path = "../../../../Kirin/core/ios/KirinKit/build/Debug-iphonesimulator/KirinKit.framework"; sourceTree = "<group>"; };
 		09FF3C6817A0453C00612C98 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		09FF3C6A17A0454200612C98 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		09FF3C6C17A0454500612C98 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
@@ -58,7 +56,6 @@
 		09FF3C7017A0454E00612C98 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		09FF3C7217A0455400612C98 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		09FF3C7417A0455900612C98 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		09FF3C7617A0456000612C98 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,16 +63,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				097697A017A6D119000EB5B0 /* libsqlite3.dylib in Frameworks */,
+				0976979E17A6D06D000EB5B0 /* KirinKit.framework in Frameworks */,
 				09FF3C3A179FF8DA00612C98 /* UIKit.framework in Frameworks */,
-				09FF3C7717A0456000612C98 /* libsqlite3.dylib in Frameworks */,
 				09FF3C7517A0455900612C98 /* CoreLocation.framework in Frameworks */,
 				09FF3C7317A0455400612C98 /* MobileCoreServices.framework in Frameworks */,
 				09FF3C7117A0454E00612C98 /* QuartzCore.framework in Frameworks */,
-				09FF3C6F17A0454900612C98 /* Social.framework in Frameworks */,
-				09FF3C6D17A0454500612C98 /* Accounts.framework in Frameworks */,
-				09FF3C6B17A0454200612C98 /* AdSupport.framework in Frameworks */,
 				09FF3C6917A0453C00612C98 /* SystemConfiguration.framework in Frameworks */,
-				09FF3C6717A044CB00612C98 /* KirinKit.framework in Frameworks */,
 				09FF3C3C179FF8DA00612C98 /* Foundation.framework in Frameworks */,
 				09FF3C3E179FF8DA00612C98 /* CoreGraphics.framework in Frameworks */,
 			);
@@ -105,7 +99,8 @@
 		09FF3C38179FF8DA00612C98 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				09FF3C7617A0456000612C98 /* libsqlite3.dylib */,
+				0976979F17A6D119000EB5B0 /* libsqlite3.dylib */,
+				0976979D17A6D06D000EB5B0 /* KirinKit.framework */,
 				09FF3C7417A0455900612C98 /* CoreLocation.framework */,
 				09FF3C7217A0455400612C98 /* MobileCoreServices.framework */,
 				09FF3C7017A0454E00612C98 /* QuartzCore.framework */,
@@ -113,7 +108,6 @@
 				09FF3C6C17A0454500612C98 /* Accounts.framework */,
 				09FF3C6A17A0454200612C98 /* AdSupport.framework */,
 				09FF3C6817A0453C00612C98 /* SystemConfiguration.framework */,
-				09FF3C6617A044CB00612C98 /* KirinKit.framework */,
 				09FF3C39179FF8DA00612C98 /* UIKit.framework */,
 				09FF3C3B179FF8DA00612C98 /* Foundation.framework */,
 				09FF3C3D179FF8DA00612C98 /* CoreGraphics.framework */,
@@ -225,7 +219,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd ../..\nmvn install";
+			shellScript = "cd ../..\nmvn clean install -pl common/gwt";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -284,7 +278,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = "$(KIRIN_HOME)/core/ios/KirinKit/build/Release-iphoneos";
+				FRAMEWORK_SEARCH_PATHS = "$(KIRIN_HOME)/src/ios/KirinKit/build/Release-iphoneos";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -319,7 +313,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(KIRIN_HOME)/core/ios/KirinKit/build/Release-iphoneos";
+				FRAMEWORK_SEARCH_PATHS = "$(KIRIN_HOME)/src/ios/KirinKit/build/Release-iphoneos";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -340,6 +334,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../../Kirin/core/ios/KirinKit/build/Debug-iphonesimulator\"",
+					"\"$(SRCROOT)/../../../../src/ios/KirinKit/build/Debug-iphoneos\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "KirinHelloiPhone/KirinHelloiPhone-Prefix.pch";
@@ -355,6 +350,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../../Kirin/core/ios/KirinKit/build/Debug-iphonesimulator\"",
+					"\"$(SRCROOT)/../../../../src/ios/KirinKit/build/Debug-iphoneos\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "KirinHelloiPhone/KirinHelloiPhone-Prefix.pch";

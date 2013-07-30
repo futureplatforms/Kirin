@@ -70,7 +70,9 @@ All being well your new projects should build, ending with:
 
 In `android/target` you should find an `.apk` for installing on an Android device.  Yes, this means you've created a Kirin app!
 
+You can install this on a device by executing `mvn android:deploy` if you like.
+
 ## Create a new project for your native platform
 
-See [`WINDOWS_QUICKSTART.md`](02-WINDOWS_QUICKSTART.md) or `IOS_QUICKSTART.md`.
+See [`WINDOWS_QUICKSTART`](02-WINDOWS_QUICKSTART.md) or [`IOS_QUICKSTART`](03-IOS_QUICKSTART.md).
 
