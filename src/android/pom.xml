@@ -4,7 +4,6 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.futureplatforms.kirin.android</groupId>
     <artifactId>kirin-android</artifactId>
-    <version>1.0-SNAPSHOT</version>
     <name>kirin-android</name>
     <packaging>apklib</packaging> 
 
