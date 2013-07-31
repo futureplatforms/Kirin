@@ -73,10 +73,9 @@ Select the project name in `PROJECT`, then choose `Build Settings`.  In `Header 
  
     cd ../..
     mvn clean install -pl common/gwt
-                       # THIS LINE WILL CHANGE ONCE
-                       # HOSKINS HAS FIGURED OUT HOW
-                       # TO INVOKE MAVEN SO THAT GWT
-                       # ONLY BUILDS WHEN NEEDED
+    
+(This line will change once Hoskins has figured out how to invoke Maven so that GWT 
+only builds when needed.)
 
 This ensures only the `gwt` project and its dependencies are built (and not the android project).
 
