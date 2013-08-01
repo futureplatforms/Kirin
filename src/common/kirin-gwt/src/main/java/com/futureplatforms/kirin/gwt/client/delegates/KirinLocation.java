@@ -1,21 +1,20 @@
 package com.futureplatforms.kirin.gwt.client.delegates;
 
 import com.futureplatforms.kirin.dependencies.LocationDelegate;
-import com.futureplatforms.kirin.dependencies.StaticDependencies.LocationResponse;
 
 public class KirinLocation implements LocationDelegate {
 
-    private LocationResponse resp;
+    private LocationCallback resp;
     private boolean continuous;
     
-    public void getLocation(LocationResponse resp, Accuracy accuracy, boolean continuous) {
+    public void getLocation(LocationCallback resp, Accuracy accuracy, boolean continuous) {
         this.resp = resp;
         this.continuous = continuous;
         doIt(accuracy == Accuracy.Fine, this);
     }
     
     private void locationSuccess(double lat, double lng) {
-        resp.onSuccess(lat, lng);
+        resp.onSuccess(lat, lng, 0);
         if (!continuous) {
             unregister();
         }

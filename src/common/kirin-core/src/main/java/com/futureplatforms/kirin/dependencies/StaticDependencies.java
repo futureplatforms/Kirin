@@ -20,10 +20,6 @@ public final class StaticDependencies {
         public String get(String key);
         public void put(String key, String value);
     }
-    public static interface LocationResponse {
-        public void onSuccess(double lat, double lng);
-        public void onFail(String errDesc);
-    }
     public static abstract class NetworkDelegate {
         public static enum HttpVerb { GET, POST, PUT };
         public static interface NetworkResponse {
@@ -49,6 +45,7 @@ public final class StaticDependencies {
     private JSONDelegate mJsonDelegate;
     private NetworkDelegate mNetworkDelegate;
     private XMLParser mXmlParser;
+    private Formatter mFormatter;
     private boolean mInitialised;
     
     public LogDelegate getLogDelegate() { return mLogDelegate; }
@@ -58,7 +55,7 @@ public final class StaticDependencies {
     public NetworkDelegate getNetworkDelegate() { return mNetworkDelegate; }
     public JSONDelegate getJsonDelegate() { return mJsonDelegate; }
     public XMLParser getXmlParser() { return mXmlParser; }
-    
+    public Formatter getFormatter() { return mFormatter; }
     public boolean initialised() { return mInitialised; }
     
     public void setDependencies(    LogDelegate logDelegate,
@@ -67,7 +64,8 @@ public final class StaticDependencies {
                                     LocationDelegate locationDelegate, 
                                     NetworkDelegate networkDelegate,
                                     JSONDelegate jsonDelegate,
-                                    XMLParser xmlParser) {
+                                    XMLParser xmlParser, 
+                                    Formatter formatter) {
         this.mLogDelegate = logDelegate;
         this.mSettingsDelegate = settingsDelegate;
         this.mTimerDelegate = timerDelegate;
@@ -75,6 +73,7 @@ public final class StaticDependencies {
         this.mNetworkDelegate = networkDelegate;
         this.mJsonDelegate = jsonDelegate;
         this.mXmlParser = xmlParser;
+        this.mFormatter = formatter;
         this.mInitialised = true;
     }
 }

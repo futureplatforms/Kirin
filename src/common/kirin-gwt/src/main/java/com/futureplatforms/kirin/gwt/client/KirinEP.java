@@ -7,6 +7,7 @@ import org.timepedia.exporter.client.ExporterUtil;
 
 import com.futureplatforms.kirin.dependencies.StaticDependencies;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.LogDelegate;
+import com.futureplatforms.kirin.gwt.client.delegates.GwtFormatter;
 import com.futureplatforms.kirin.gwt.client.delegates.GwtSettingsDelegate;
 import com.futureplatforms.kirin.gwt.client.delegates.GwtTimerDelegate;
 import com.futureplatforms.kirin.gwt.client.delegates.KirinLocation;
@@ -41,7 +42,7 @@ public class KirinEP implements EntryPoint {
    */
   public void onModuleLoad() {
         _execute();
-        LogDelegate ld = new LogDelegate() {
+        final LogDelegate ld = new LogDelegate() {
             @Override
             public native void log(String s) /*-{
                 if ($wnd['console']) {
@@ -56,11 +57,23 @@ public class KirinEP implements EntryPoint {
                 new KirinLocation(), 
                 new KirinNetworking(), 
                 new GwtJSON(), 
-                new GwtXMLParserImpl());
+                new GwtXMLParserImpl(),
+                new GwtFormatter());
         
         ExporterUtil.exportAll();
         
         ld.log(GWT.getPermutationStrongName());
+        
+        GWT.setUncaughtExceptionHandler(new GWT.UncaughtExceptionHandler() {
+            
+            @Override
+            public void onUncaughtException(Throwable e) {
+                StackTraceElement[] stes = e.getStackTrace();
+                for (StackTraceElement ste : stes) {
+                    ld.log(ste.toString());
+                }
+            }
+        });
   }
     private static native void _execute() /*-{
         $wnd.kirinKickOff();
