@@ -1,0 +1,5 @@
+The Android Kirin Fragment and Activity classes depend on the Android support libraries. 
+This means you're required to have them in your Maven repository. 
+To be able to set this up you need to download the 'Android Support Repository' Android SDK Manager (located in Extras). 
+The files will be located in the android-sdk/extras/android/m2repository directory.
+Copy those files into your local repo and Maven will be able to locate them at build time.
