@@ -16,6 +16,6 @@ public final class Kirin {
                 new AndroidNetwork(), 
                 new AndroidJson(),
                 new JaxpXmlParser(),
-                null);
+                new AndroidFormatter());
     }
 }
