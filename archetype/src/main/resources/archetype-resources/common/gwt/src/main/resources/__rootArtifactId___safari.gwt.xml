@@ -1,0 +1,9 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+<?xml version="1.0" encoding="UTF-8"?>
+<module rename-to='${rootArtifactId}'>
+  <!-- The core module for this project -->
+  <inherits name='${package}.${rootArtifactId}'/>
+  <set-property name="user.agent" value="safari"/> 
+</module>

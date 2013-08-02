@@ -21,7 +21,7 @@ Follow the steps in [`CORE-QUICKSTART`](01-CORE-QUICKSTART.md).
 
 ###Build the Kirin iOS library 
 
-    cd "Kirin/src/ios/KirinKit"
+    cd "src/ios/KirinKit"
     
 Build this in both `Debug` and `Release` configurations
     
@@ -32,8 +32,8 @@ Build this in both `Debug` and `Release` configurations
 
 If you're building an iOS app which targets both iPhone and iPad then create your app in an `ios` folder at the same level as `android`, `common` etc.  If not then put your apps in separate `iPhone` and `iPad` folders.
 
-### Define `KIRIN_HOME` in Xcode
-In xcode, type `cmd`-`,`, and select Source Trees.  Ensure `KIRIN_HOME` is defined and points to the folder where Kirin is checked out
+### Define `NEW_KIRIN_HOME` in Xcode
+In xcode, type `cmd`-`,` (or go to Preferences -> Locations), and select Source Trees.  Ensure `NEW_KIRIN_HOME` is defined and points to the folder where Kirin is checked out
 
 ### Add the Kirin iOS library to your app
 
@@ -46,7 +46,7 @@ Select the project name in `PROJECT`, then choose `Build Settings`.  In `Other L
 
 #### Add Kirin to Framework search paths
 
-Select the project name in `PROJECT`, then choose `Build Settings`.  In `Framework search paths` add `$(KIRIN_HOME)/core/ios/KirinKit/build/Release-iphoneos`.
+Select the project name in `PROJECT`, then choose `Build Settings`.  In `Framework search paths` add `$(NEW_KIRIN_HOME)/src/ios/KirinKit/build/Release-iphoneos`.
 
 #### Add other required libraries
 In `Targets` -> `Build Phases` -> `Link Binary With Libraries` ensure all these libraries are present:
@@ -72,12 +72,11 @@ Select the project name in `PROJECT`, then choose `Build Settings`.  In `Header 
  Select the project name  in `Targets`, then choose the `Build Phases` tab.  Choose `Add Build Phase` -> `Add Run Script`, then in `Run Script` add the lines:
  
     cd ../..
-    mvn clean install -pl common/gwt
-    
-(This line will change once Hoskins has figured out how to invoke Maven so that GWT 
-only builds when needed.)
+    mvn -pl common/gwt -DgwtModule=com.yourproj.yourmodule_gwt_safari  -am clean install
 
-This ensures only the `gwt` project and its dependencies are built (and not the android project).
+`-pl common/gwt` ensures that only the GWT project is build (and not the Android project), and `-am` ensures that all dependencies are compiled first, i.e. the app core project.
+
+(This process will change once Hoskins has figured out how to invoke Maven so that GWT only builds when needed.)
 
 Place this `Run Script` above `Compile Sources` (drag and drop).
 

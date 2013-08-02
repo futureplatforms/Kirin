@@ -7,4 +7,11 @@
   <inherits name='com.futureplatforms.kirin.gwt.KirinGwt'/>
   <!-- The core module for this project -->
   <inherits name='${package}.${rootArtifactId}_core'/>
+  
+  <!-- 
+  This module will build the project for all six possible user agents.
+  This will take a while.  If you just want iOS use the _safari module, and
+  if you just want WP8 or Windows8 use the _ie6 module.
+  -->
+  
 </module>
