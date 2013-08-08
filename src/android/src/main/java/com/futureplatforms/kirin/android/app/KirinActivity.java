@@ -2,16 +2,14 @@ package com.futureplatforms.kirin.android.app;
 
 import java.lang.reflect.ParameterizedType;
 
-import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.ActionBarActivity;
 
 import com.futureplatforms.kirin.gwt.client.modules.IKirinNativeObject;
 import com.futureplatforms.kirin.gwt.client.modules.KirinModule;
 
 abstract public class KirinActivity<Module extends KirinModule<NativeObject>, NativeObject extends IKirinNativeObject>
-		extends ActionBarActivity implements IKirinNativeObject {
+		extends FragmentActivity implements IKirinNativeObject {
 	private Module module;
 
 	@SuppressWarnings("unchecked")

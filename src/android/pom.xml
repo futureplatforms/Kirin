@@ -40,12 +40,6 @@
 			<artifactId>compatibility-v4</artifactId>
 			<version>18</version>
 		</dependency>
-		<dependency>
-			<groupId>android.support</groupId>
-			<artifactId>compatibility-v7-appcompat</artifactId>
-			<version>18</version>
-			<type>jar</type>
-		</dependency>
 
 
 	</dependencies>
