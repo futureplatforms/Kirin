@@ -26,9 +26,9 @@ namespace KirinWP8
             isGet = "GET".Equals(method);
             if (!isGet)
             {
-                if (!"POST".Equals(method))
+                if (!"POST".Equals(method) && !"PUT".Equals(method))
                 {
-                    throw new InvalidOperationException(method + " is not a valid method, only GET or POST supported");
+                    throw new InvalidOperationException(method + " is not a valid method, only GET, POST or PUT supported");
                 }
             }
             var url = o["url"].ToString();
