@@ -17,6 +17,7 @@
     <!-- The iOS and Windows Kirin libs will be looking for the "app" folder -->
     <webappDirectory>${project.build.directory}/${project.build.finalName}/app</webappDirectory>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <gwtModule>${package}.${rootArtifactId}</gwtModule>
   </properties>
   <dependencies>
     <dependency>
@@ -127,7 +128,7 @@
         <executions>
           <execution>
             <configuration>
-              <module>${package}.${rootArtifactId}</module>
+              <module>${gwtModule}</module>
             </configuration>
             <goals>
               <goal>compile</goal>
