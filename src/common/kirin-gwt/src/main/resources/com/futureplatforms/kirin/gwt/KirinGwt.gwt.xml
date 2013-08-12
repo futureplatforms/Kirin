@@ -32,7 +32,10 @@
   
   <!-- Turn stack traces on -->
   <set-property name="compiler.stackMode" value="emulated" />
-   
+  
+  <!-- Prevent the user agent alert on Windows Phone --> 
+  <set-configuration-property name="user.agent.runtimeWarning" value="false"/>
+  
   <script src="lib/json2.js"></script>
   <script src="lib/underscore.js"></script>
   <script src="core/client-modules.js"></script>
