@@ -36,22 +36,42 @@ public abstract class JSONObject {
     
     
     public Boolean safeGetBoolean(String key) {
-        return Boolean.valueOf(getBoolean(key));
+        try {
+            return Boolean.valueOf(getBoolean(key));
+        } catch (Throwable t) {
+            return null;
+        }
     }
     
     public Double safeGetDouble(String key) {
-        return Double.valueOf(getDouble(key));
+        try {
+            return Double.valueOf(getDouble(key));
+        } catch (Throwable t) {
+            return null;
+        }
     }
     
     public String safeGetString(String key) {
-        return getString(key);
+        try {
+            return getString(key);
+        } catch (Throwable t) {
+            return null;
+        }
     }
     
     public JSONObject safeGetObject(String key) {
-        return getJSONObject(key);
+        try {
+            return getJSONObject(key);
+        } catch (Throwable t) {
+            return null;
+        }
     }
     
     public JSONArray safeGetArray(String key) {
-        return getJSONArray(key);
+        try {
+            return getJSONArray(key);
+        } catch (Throwable t) {
+            return null;
+        }
     }
 }

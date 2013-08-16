@@ -31,12 +31,16 @@ public class GwtJSONObject extends com.futureplatforms.kirin.dependencies.json.J
         return jsonObj.containsKey(key);
     }
 
+    private boolean isNull(JSONValue value) {
+        return value == null || value instanceof JSONNull;
+    }
+    
     @Override
     public boolean getBoolean(String key) {
         boolean has = jsonObj.containsKey(key);
         if (has) {
             JSONValue value = jsonObj.get(key);
-            boolean isNull = value == null;
+            boolean isNull = isNull(value);
             if (!isNull) {
                 JSONBoolean jb = value.isBoolean();
                 if (jb != null) {
@@ -57,7 +61,7 @@ public class GwtJSONObject extends com.futureplatforms.kirin.dependencies.json.J
         boolean has = jsonObj.containsKey(key);
         if (has) {
             JSONValue value = jsonObj.get(key);
-            boolean isNull = value == null;
+            boolean isNull = isNull(value);
             if (!isNull) {
                 JSONNumber jn = value.isNumber();
                 if (jn != null) {
@@ -77,7 +81,7 @@ public class GwtJSONObject extends com.futureplatforms.kirin.dependencies.json.J
     public String getString(String key) {
         if (jsonObj.containsKey(key)) {
             JSONValue value = jsonObj.get(key);
-            boolean isNull = value == null;
+            boolean isNull = isNull(value);
             if (!isNull) {
                 JSONString js = value.isString();
                 if (js != null) {
@@ -86,7 +90,7 @@ public class GwtJSONObject extends com.futureplatforms.kirin.dependencies.json.J
                     throw new IllegalStateException(key + " isn't String");
                 }
             } else {
-                throw new IllegalStateException(key + " is null");
+                return null;
             }
         } else {
             throw new IllegalStateException(key + " doesn't exist");
@@ -96,7 +100,7 @@ public class GwtJSONObject extends com.futureplatforms.kirin.dependencies.json.J
     @Override
     public boolean isNull(String key) {
         JSONValue value = jsonObj.get(key);
-        boolean isNull = value == null;
+        boolean isNull = isNull(value);
         if (isNull) { return true; }
         return value.isNull() != null;
     }
@@ -104,7 +108,7 @@ public class GwtJSONObject extends com.futureplatforms.kirin.dependencies.json.J
     @Override
     public com.futureplatforms.kirin.dependencies.json.JSONArray getJSONArray(String key) {
         JSONValue value = jsonObj.get(key);
-        boolean isNull = value == null;
+        boolean isNull = isNull(value);
         if (!isNull) {
             com.google.gwt.json.client.JSONArray ja = value.isArray();
             if (ja != null) {
@@ -120,7 +124,7 @@ public class GwtJSONObject extends com.futureplatforms.kirin.dependencies.json.J
     @Override
     public com.futureplatforms.kirin.dependencies.json.JSONObject getJSONObject(String key) {
         JSONValue value = jsonObj.get(key);
-        boolean isNull = value == null;
+        boolean isNull = isNull(value);
         if (!isNull) {
             com.google.gwt.json.client.JSONObject jo = value.isObject();
             if (jo != null) {
