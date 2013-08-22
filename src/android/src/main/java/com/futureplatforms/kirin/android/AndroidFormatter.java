@@ -1,5 +1,6 @@
 package com.futureplatforms.kirin.android;
 
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
@@ -63,7 +64,12 @@ public class AndroidFormatter extends Formatter {
 
 	@Override
 	public String encodeURIComponent(String str) {
-		return URLEncoder.encode(str);
+		try {
+			return URLEncoder.encode(str, "utf-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }

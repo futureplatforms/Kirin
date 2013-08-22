@@ -6,7 +6,7 @@
 	<groupId>com.futureplatforms.kirin.android</groupId>
 	<artifactId>kirin-android</artifactId>
 	<name>kirin-android</name>
-	<packaging>apklib</packaging>
+	<packaging>jar</packaging>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -40,6 +40,7 @@
 			<artifactId>compatibility-v4</artifactId>
 			<version>18</version>
 		</dependency>
+
 
 
 	</dependencies>
