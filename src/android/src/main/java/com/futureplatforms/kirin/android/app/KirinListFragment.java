@@ -9,7 +9,7 @@ import com.futureplatforms.kirin.gwt.client.modules.IKirinNativeObject;
 import com.futureplatforms.kirin.gwt.client.modules.KirinModule;
 
 abstract public class KirinListFragment<Module extends KirinModule<NativeObject>, NativeObject extends IKirinNativeObject>
-		extends ListFragment implements IKirinNativeObject {
+		extends ListFragment implements IKirinNativeObject, IKirinFragment<Module> {
 	private Module module;
 
 	@SuppressWarnings("unchecked")
