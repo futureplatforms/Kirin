@@ -2,24 +2,25 @@ package com.futureplatforms.kirin.android;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 
 import com.futureplatforms.kirin.android.app.IKirinFragment;
 import com.futureplatforms.kirin.gwt.client.modules.KirinModule;
 
-public class KirinActivityUtils{
+public class KirinActivityUtils {
 
-	public static String loadBackgroundModule(FragmentActivity activity,
+	public static String loadBackgroundModule(FragmentManager fragmentManager,
 			IKirinFragment<?> fragment) {
 		String tag = fragment.getClass().getSimpleName();
-		activity.getSupportFragmentManager().beginTransaction()
-				.add((Fragment) fragment, tag).commit();
+		fragmentManager.beginTransaction().add((Fragment) fragment, tag)
+				.commit();
 		return tag;
 	}
 
-	public static <Module extends KirinModule<?>> Module getBackgroundModule(FragmentActivity activity, String tag)
+	public static <Module extends KirinModule<?>> Module getBackgroundModule(
+			FragmentManager fragmentManager, String tag)
 			throws KirinFragmentException {
-		Fragment f = activity.getSupportFragmentManager()
-				.findFragmentByTag(tag);
+		Fragment f = fragmentManager.findFragmentByTag(tag);
 		if (f instanceof IKirinFragment<?>) {
 			return (Module) ((IKirinFragment) f).getModule();
 		} else
