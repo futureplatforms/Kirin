@@ -42,6 +42,14 @@
 	        <include>**/*.gwt.xml</include>
 	      </includes>
 	    </resource>
+		<resource>
+          <directory>src/main/resources</directory>
+          <includes>
+            <include>**/*.properties</include>
+            <include>**/*.gwt.xml</include>
+            <include>**/*.js</include>
+          </includes>
+        </resource>
 	  </resources>
   <!-- Copied this stuff off the webs http://stackoverflow.com/a/8535461/64505 -->
     <pluginManagement>
