@@ -27,6 +27,10 @@
     <when-type-assignable class="com.futureplatforms.kirin.gwt.client.modules.KirinModule" />
   </generate-with>
   
+  <generate-with class="com.futureplatforms.kirin.gwt.compile.ConfigurationGenerator">
+    <when-type-assignable class="com.futureplatforms.kirin.gwt.client.GwtConfiguration" />
+  </generate-with>
+  
   <!-- This needs setting or GWT Exporter won't do any exporting! -->
   <set-property name="export" value="yes"/>
   
@@ -35,6 +39,8 @@
   
   <!-- Prevent the user agent alert on Windows Phone --> 
   <set-configuration-property name="user.agent.runtimeWarning" value="false"/>
+  
+  <set-configuration-property name="kirin.config" value="Debug"/>
   
   <script src="lib/json2.js"></script>
   <script src="lib/underscore.js"></script>

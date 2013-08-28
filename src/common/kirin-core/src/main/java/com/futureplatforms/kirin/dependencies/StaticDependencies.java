@@ -8,6 +8,8 @@ import com.futureplatforms.kirin.dependencies.json.JSONDelegate;
 import com.futureplatforms.kirin.dependencies.xml.parser.XMLParser;
 
 public final class StaticDependencies {
+    public enum Configuration { Debug, Release } ;
+    
     private static StaticDependencies instance;
     public static StaticDependencies getInstance() {
         if (instance == null) { instance = new StaticDependencies(); }
@@ -47,6 +49,7 @@ public final class StaticDependencies {
     private XMLParser mXmlParser;
     private Formatter mFormatter;
     private boolean mInitialised;
+    private Configuration _Profile;
     
     public LogDelegate getLogDelegate() { return mLogDelegate; }
     public SettingsDelegate getSettingsDelegate() { return mSettingsDelegate; }
@@ -57,6 +60,7 @@ public final class StaticDependencies {
     public XMLParser getXmlParser() { return mXmlParser; }
     public Formatter getFormatter() { return mFormatter; }
     public boolean initialised() { return mInitialised; }
+    public Configuration getProfile() { return _Profile; }
     
     public void setDependencies(    LogDelegate logDelegate,
                                     SettingsDelegate settingsDelegate,
@@ -65,7 +69,8 @@ public final class StaticDependencies {
                                     NetworkDelegate networkDelegate,
                                     JSONDelegate jsonDelegate,
                                     XMLParser xmlParser, 
-                                    Formatter formatter) {
+                                    Formatter formatter, 
+                                    Configuration profile) {
         this.mLogDelegate = logDelegate;
         this.mSettingsDelegate = settingsDelegate;
         this.mTimerDelegate = timerDelegate;
@@ -74,6 +79,7 @@ public final class StaticDependencies {
         this.mJsonDelegate = jsonDelegate;
         this.mXmlParser = xmlParser;
         this.mFormatter = formatter;
+        this._Profile = profile;
         this.mInitialised = true;
     }
 }

@@ -6,6 +6,7 @@ import java.util.Set;
 import org.timepedia.exporter.client.ExporterUtil;
 
 import com.futureplatforms.kirin.dependencies.StaticDependencies;
+import com.futureplatforms.kirin.dependencies.StaticDependencies.Configuration;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.LogDelegate;
 import com.futureplatforms.kirin.gwt.client.delegates.GwtFormatter;
 import com.futureplatforms.kirin.gwt.client.delegates.GwtSettingsDelegate;
@@ -37,19 +38,30 @@ public class KirinEP implements EntryPoint {
         map[key] = value;
     }-*/;
     
+    private final LogDelegate realLogDelegate = new LogDelegate() {
+        @Override
+        public native void log(String s) /*-{
+            if ($wnd['console']) {
+                $wnd.console.log(s);
+            }
+        }-*/;
+    };
+    
+    private final LogDelegate noopLogDelegate = new LogDelegate() {
+        
+        @Override
+        public void log(String s) { }
+    };
+    
   /**
    * This is the entry point method.
    */
   public void onModuleLoad() {
+        GwtConfiguration gp = GWT.create(GwtConfiguration.class);
+        final Configuration profile = gp.getConfiguration();
         _execute();
-        final LogDelegate ld = new LogDelegate() {
-            @Override
-            public native void log(String s) /*-{
-                if ($wnd['console']) {
-                    $wnd.console.log(s);
-                }
-            }-*/;
-        };
+        final LogDelegate ld = profile == Configuration.Debug ? realLogDelegate : noopLogDelegate;
+        
         StaticDependencies.getInstance().setDependencies(
                 ld, 
                 new GwtSettingsDelegate(), 
@@ -58,12 +70,12 @@ public class KirinEP implements EntryPoint {
                 new KirinNetworking(), 
                 new GwtJSON(), 
                 new GwtXMLParserImpl(),
-                new GwtFormatter());
+                new GwtFormatter(),
+                profile);
         
         ExporterUtil.exportAll();
         
         ld.log(GWT.getPermutationStrongName());
-        
         GWT.setUncaughtExceptionHandler(new GWT.UncaughtExceptionHandler() {
             
             @Override
