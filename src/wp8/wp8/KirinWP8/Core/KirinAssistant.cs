@@ -37,6 +37,11 @@ namespace KirinWindows.Core
             jsMethod("onResume");
         }
 
+        public void onPause()
+        {
+            jsMethod("onPause");
+        }
+
         public void jsMethod(string methodName)
         {
             jsMethod(methodName, null);
