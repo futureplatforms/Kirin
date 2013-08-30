@@ -11,5 +11,6 @@ public abstract class Formatter {
     public abstract String formatNumber(String format, Number number);
     public abstract String formatCurrency(String currency, BigDecimal amount);
     public abstract String urlDecode(String toDecode);
+    public abstract String urlEncode(String toEncode);
     public abstract String encodeURIComponent(String str);
 }

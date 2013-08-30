@@ -34,20 +34,19 @@ public abstract class JSONObject {
     public abstract String toString();
     public abstract boolean equals(JSONObject other);
     
-    
-    public Boolean safeGetBoolean(String key) {
+    public boolean safeGetBoolean(String key) {
         try {
             return Boolean.valueOf(getBoolean(key));
         } catch (Throwable t) {
-            return null;
+            return false;
         }
     }
     
-    public Double safeGetDouble(String key) {
+    public double safeGetDouble(String key) {
         try {
             return Double.valueOf(getDouble(key));
         } catch (Throwable t) {
-            return null;
+            return 0d;
         }
     }
     

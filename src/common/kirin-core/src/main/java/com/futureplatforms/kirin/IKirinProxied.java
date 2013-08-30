@@ -1,4 +1,5 @@
-package com.futureplatforms.kirin.gwt.client.modules;
+package com.futureplatforms.kirin;
+
 
 import com.google.gwt.core.client.JavaScriptObject;
 

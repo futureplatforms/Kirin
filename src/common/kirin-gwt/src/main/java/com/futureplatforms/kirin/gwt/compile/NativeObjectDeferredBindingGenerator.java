@@ -2,7 +2,7 @@ package com.futureplatforms.kirin.gwt.compile;
 
 import java.io.PrintWriter;
 
-import com.futureplatforms.kirin.gwt.client.modules.IKirinProxied;
+import com.futureplatforms.kirin.IKirinProxied;
 import com.google.gwt.core.ext.Generator;
 import com.google.gwt.core.ext.GeneratorContext;
 import com.google.gwt.core.ext.TreeLogger;

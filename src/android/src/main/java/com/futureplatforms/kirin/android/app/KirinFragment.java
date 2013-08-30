@@ -5,11 +5,11 @@ import java.lang.reflect.ParameterizedType;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
-import com.futureplatforms.kirin.gwt.client.modules.IKirinNativeObject;
-import com.futureplatforms.kirin.gwt.client.modules.KirinModule;
+import com.futureplatforms.kirin.IKirinNativeObject;
+import com.futureplatforms.kirin.KirinModule;
 
-abstract public class KirinFragment<Module extends KirinModule<NativeObject>, NativeObject extends IKirinNativeObject>
-		extends Fragment implements IKirinNativeObject, IKirinFragment<Module> {
+abstract public class KirinFragment<Module extends KirinModule<KirinNativeObj>, KirinNativeObj extends IKirinNativeObject>
+		extends Fragment implements com.futureplatforms.kirin.IKirinNativeObject, IKirinFragment<Module> {
 	private Module module;
 
 	@SuppressWarnings("unchecked")
@@ -19,15 +19,19 @@ abstract public class KirinFragment<Module extends KirinModule<NativeObject>, Na
 
 		// Instantiate the module
 		try {
-			module = (Module) ((Class<?>) ((ParameterizedType) this.getClass()
-					.getGenericSuperclass()).getActualTypeArguments()[0])
-					.newInstance();
+		    module = (Module) ((Class<?>) ((ParameterizedType) this.getClass()
+                    .getGenericSuperclass()).getActualTypeArguments()[0])
+                    .newInstance();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		module.onPrototypeLoad((NativeObject) this);
-
 	}
+	
+	   @Override
+	    public void onActivityCreated(Bundle savedInstanceState) {
+	        super.onActivityCreated(savedInstanceState);
+	        module.onPrototypeLoad((KirinNativeObj) this);
+	    }
 
 	@Override
 	public void onDestroyView() {

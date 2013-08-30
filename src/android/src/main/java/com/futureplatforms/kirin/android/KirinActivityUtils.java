@@ -1,11 +1,10 @@
 package com.futureplatforms.kirin.android;
 
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 
+import com.futureplatforms.kirin.KirinModule;
 import com.futureplatforms.kirin.android.app.IKirinFragment;
-import com.futureplatforms.kirin.gwt.client.modules.KirinModule;
 
 public class KirinActivityUtils {
 

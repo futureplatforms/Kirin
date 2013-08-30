@@ -20,11 +20,11 @@
   <source path='client' />
   
   <generate-with class="com.futureplatforms.kirin.gwt.compile.NativeObjectDeferredBindingGenerator">
-    <when-type-assignable class="com.futureplatforms.kirin.gwt.client.modules.IKirinNativeObject" />
+    <when-type-assignable class="com.futureplatforms.kirin.IKirinNativeObject" />
   </generate-with>
   
   <generate-with class="com.futureplatforms.kirin.gwt.compile.NativeProxyInterfaceGenerator">
-    <when-type-assignable class="com.futureplatforms.kirin.gwt.client.modules.KirinModule" />
+    <when-type-assignable class="com.futureplatforms.kirin.KirinModule" />
   </generate-with>
   
   <generate-with class="com.futureplatforms.kirin.gwt.compile.ConfigurationGenerator">

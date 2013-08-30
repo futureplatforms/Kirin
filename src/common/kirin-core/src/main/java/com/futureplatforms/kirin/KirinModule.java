@@ -1,4 +1,4 @@
-package com.futureplatforms.kirin.gwt.client.modules;
+package com.futureplatforms.kirin;
 
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.Exportable;
@@ -29,6 +29,12 @@ public abstract class KirinModule<T extends IKirinNativeObject> implements Expor
 		_onLoad();
 	}
 	
+    @NoExport
+    public final void onPrototypeLoad(T screen) {
+        mNativeObject = screen;
+        _onLoad();
+    }
+    
 	protected void _onLoad() {}
 	
 	@Export

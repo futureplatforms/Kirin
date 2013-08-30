@@ -46,6 +46,10 @@ public class GwtFormatter extends Formatter {
         return URL.decode(toDecode);
     }
     
+    public String urlEncode(String toEncode) {
+        return URL.encode(toEncode);
+    }
+    
     @Override
     public native String encodeURIComponent(String key) /*-{
         return encodeURIComponent(key);

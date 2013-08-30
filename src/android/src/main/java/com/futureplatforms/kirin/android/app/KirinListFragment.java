@@ -5,8 +5,8 @@ import java.lang.reflect.ParameterizedType;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 
-import com.futureplatforms.kirin.gwt.client.modules.IKirinNativeObject;
-import com.futureplatforms.kirin.gwt.client.modules.KirinModule;
+import com.futureplatforms.kirin.IKirinNativeObject;
+import com.futureplatforms.kirin.KirinModule;
 
 abstract public class KirinListFragment<Module extends KirinModule<NativeObject>, NativeObject extends IKirinNativeObject>
 		extends ListFragment implements IKirinNativeObject, IKirinFragment<Module> {
@@ -25,8 +25,7 @@ abstract public class KirinListFragment<Module extends KirinModule<NativeObject>
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		module.onPrototypeLoad((NativeObject) this);
-
+	    module.onPrototypeLoad((NativeObject) this);
 	}
 
 	@Override

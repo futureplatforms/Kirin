@@ -11,8 +11,6 @@ import java.text.SimpleDateFormat;
 import java.util.Currency;
 import java.util.Date;
 
-import org.apache.http.client.utils.URLEncodedUtils;
-
 import com.futureplatforms.kirin.dependencies.Formatter;
 
 public class AndroidFormatter extends Formatter {
@@ -72,4 +70,9 @@ public class AndroidFormatter extends Formatter {
 		return null;
 	}
 
+    @Override
+    public String urlEncode(String toEncode) {
+        // MAKESHIFT IMPLEMENTATION, PLEASE TEST
+        return encodeURIComponent(toEncode);
+    }
 }
