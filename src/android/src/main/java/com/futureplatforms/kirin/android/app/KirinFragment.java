@@ -25,13 +25,8 @@ abstract public class KirinFragment<Module extends KirinModule<KirinNativeObj>, 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		module.onPrototypeLoad((KirinNativeObj) this);
 	}
-	
-	   @Override
-	    public void onActivityCreated(Bundle savedInstanceState) {
-	        super.onActivityCreated(savedInstanceState);
-	        module.onPrototypeLoad((KirinNativeObj) this);
-	    }
 
 	@Override
 	public void onDestroyView() {
