@@ -13,7 +13,7 @@ import com.futureplatforms.kirin.dependencies.StaticDependencies.LogDelegate;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate.HttpVerb;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate.NetworkResponse;
-import com.futureplatforms.kirin.gwt.client.modules.KirinModule;
+import com.futureplatforms.kirin.KirinModule;
 import ${package}.core.modules.natives.TestModuleNative;
 import com.google.gwt.core.client.GWT;
 
