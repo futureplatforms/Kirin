@@ -2,6 +2,7 @@
 <module rename-to="KirinCore">
 <!-- Inherit the core Web Toolkit stuff.                        -->
   <inherits name='com.google.gwt.core.Core'/>
+  <inherits name="com.google.common.collect.Collect"/>
   <!-- Specify the paths for translatable code                    -->
   <source path='kirin'/>
 </module>

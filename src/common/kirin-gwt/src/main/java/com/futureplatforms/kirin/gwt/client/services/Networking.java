@@ -3,25 +3,16 @@ package com.futureplatforms.kirin.gwt.client.services;
 import java.util.Map;
 
 import org.timepedia.exporter.client.Export;
-import org.timepedia.exporter.client.ExportClosure;
 import org.timepedia.exporter.client.ExportPackage;
-import org.timepedia.exporter.client.Exportable;
 
-import com.futureplatforms.kirin.KirinModule;
+import com.futureplatforms.kirin.gwt.client.KirinService;
 import com.futureplatforms.kirin.gwt.client.services.natives.NetworkingNative;
 import com.google.common.collect.Maps;
 import com.google.gwt.core.client.GWT;
 
 @Export(value = "Networking", all = true)
 @ExportPackage("services")
-public class Networking extends KirinModule<NetworkingNative> {
-    
-    @Export
-    @ExportClosure
-    public static interface NetworkingResult extends Exportable {
-        public void result(int code, String[][] headers, String payload);
-        public void error(int code);
-    }
+public class Networking extends KirinService<NetworkingNative> {
     
     public Networking() {
         super(GWT.<NetworkingNative>create(NetworkingNative.class));

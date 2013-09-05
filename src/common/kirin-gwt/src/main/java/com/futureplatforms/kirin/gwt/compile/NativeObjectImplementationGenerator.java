@@ -3,7 +3,6 @@ package com.futureplatforms.kirin.gwt.compile;
 import java.io.PrintWriter;
 
 import com.futureplatforms.kirin.IKirinProxied;
-import com.futureplatforms.kirin.gwt.client.IKirinNativeService;
 import com.google.gwt.core.ext.Generator;
 import com.google.gwt.core.ext.GeneratorContext;
 import com.google.gwt.core.ext.TreeLogger;
@@ -15,36 +14,15 @@ import com.google.gwt.core.ext.typeinfo.TypeOracle;
 import com.google.gwt.user.rebind.ClassSourceFileComposerFactory;
 import com.google.gwt.user.rebind.SourceWriter;
 
-public class NativeObjectDeferredBindingGenerator extends Generator {
+public class NativeObjectImplementationGenerator extends Generator {
 
-	private final InterfaceGenerator[] mAppProtocolGenerators = {
-			new CSInterfaceGenerator("../BINDINGS/windows/toNative/"),
-			new ObjectiveCProtocolGenerator("../BINDINGS/ios/toNative/")
-	};
-	
-    private final InterfaceGenerator[] mServiceProtocolGenerators = {
-            new CSInterfaceGenerator("../SERVICE_BINDINGS/windows/toNative/"),
-            new ObjectiveCProtocolGenerator("../SERVICE_BINDINGS/ios/toNative/")
-    };
-	
 	@Override
 	public String generate(TreeLogger logger, GeneratorContext context,
 			String typeName) throws UnableToCompleteException {
-		System.out.println("----> Generating: " + typeName);
+	    System.out.println("----> NativeObjectImplementationGenerator:" + typeName);
 		TypeOracle oracle = context.getTypeOracle();
 		JClassType nativeObjectType = oracle.findType(typeName);
 
-		// The nativeObjectType should be an implementation of IKirinNativeObject.
-		// If it's an IKirinNativeService then use a different generator
-		InterfaceGenerator[] generators;
-		JClassType nativeServiceType = oracle.findType(IKirinNativeService.class.getName());
-		
-		if (nativeServiceType.isAssignableTo(nativeObjectType)) {
-		    generators = mServiceProtocolGenerators;
-		} else {		    
-		    generators = mAppProtocolGenerators;
-		}
-		
 		JClassType genericNativeObjectType = oracle.findType(IKirinProxied.class.getName());
 		final String genPackageName = nativeObjectType.getPackage().getName();
 		final String genClassName = nativeObjectType.getSimpleSourceName() + "Impl";
@@ -83,9 +61,6 @@ public class NativeObjectDeferredBindingGenerator extends Generator {
 			sourceWriter.commit(logger);
 		}
 
-		for (InterfaceGenerator generator : generators) {
-			generator.generateProtocolResource(logger, context, nativeObjectType);
-		}
 		return composer.getCreatedClassName();
 	}
 

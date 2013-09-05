@@ -59,6 +59,11 @@
       <version>2.4.0</version>
       <scope>provided</scope>
     </dependency>
+    <dependency>
+        <groupId>com.google.guava</groupId>
+        <artifactId>guava-gwt</artifactId>
+        <version>14.0</version>
+    </dependency>
   </dependencies>
   
   <build>
@@ -162,6 +167,9 @@
           <hostedWebapp>${webappDirectory}</hostedWebapp>
           <webappDirectory>${webappDirectory}</webappDirectory>
           <deploy>${deployDirectory}</deploy>
+          <!-- 
+          <validateOnly>true</validateOnly>
+           -->
         </configuration>
       </plugin>
       

@@ -12,7 +12,6 @@ public class ObjectiveCProtocolGenerator extends InterfaceGenerator {
 	public ObjectiveCProtocolGenerator(String partialPath) {
 		super(partialPath);
 	}
-	
 
 	@Override
 	public String preambleForClass(String name) {

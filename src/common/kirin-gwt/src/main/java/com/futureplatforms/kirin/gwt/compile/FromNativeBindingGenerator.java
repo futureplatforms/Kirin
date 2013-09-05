@@ -10,7 +10,7 @@ import com.google.gwt.core.ext.UnableToCompleteException;
 import com.google.gwt.core.ext.typeinfo.JClassType;
 import com.google.gwt.core.ext.typeinfo.TypeOracle;
 
-public class NativeProxyInterfaceGenerator extends Generator {
+public class FromNativeBindingGenerator extends Generator {
 
 	private final InterfaceGenerator[] mAppProtocolGenerators = {
 			new CSClassGenerator("../BINDINGS/windows/fromNative/"),
@@ -27,8 +27,7 @@ public class NativeProxyInterfaceGenerator extends Generator {
 	@Override
 	public String generate(TreeLogger logger, GeneratorContext context,
 			String typeName) throws UnableToCompleteException {
-		//System.out.println("Generating protocol for " + typeName);
-		
+	    System.out.println("----> FromNativeBindingGenerator:" + typeName);
 		TypeOracle oracle = context.getTypeOracle();
 		 
 		JClassType moduleObjectType = oracle.findType(typeName);
@@ -36,7 +35,7 @@ public class NativeProxyInterfaceGenerator extends Generator {
 		InterfaceGenerator[] generators;
         JClassType serviceObjectType = oracle.findType(KirinService.class.getName());
         
-        if (serviceObjectType.isAssignableTo(moduleObjectType)) {
+        if (moduleObjectType.isAssignableTo(serviceObjectType)) {
             generators = mServiceProtocolGenerators;
         } else {            
             generators = mAppProtocolGenerators;
