@@ -9,7 +9,8 @@
 #import <Foundation/Foundation.h>
 #import <NSObject+Kirin.h>
 #import "KirinGwtServiceStub.h"
+#import "toNative/NetworkingServiceNative.h"
 
-@interface NewNetworkingImpl : KirinGwtServiceStub
+@interface NewNetworkingImpl : KirinGwtServiceStub<NetworkingServiceNative>
 
 @end

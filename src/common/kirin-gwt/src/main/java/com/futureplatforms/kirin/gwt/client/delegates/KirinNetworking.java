@@ -31,16 +31,10 @@ public class KirinNetworking extends NetworkDelegate {
         }
 
         private static native void doIt(String method, String url, JavaScriptObject headers, String postData, NetworkRunner p) /*-{
-            var networking = $wnd.require("Networking");
-            var config = {
-                method:method,
-                url:url,
-                postData:postData,
-                headers: headers,
-                payload: function(payload) { $entry( p.@com.futureplatforms.kirin.gwt.client.delegates.KirinNetworking$NetworkRunner::payload(Ljava/lang/String;)(payload) )},
-                onError: function(err) { $entry( p.@com.futureplatforms.kirin.gwt.client.delegates.KirinNetworking$NetworkRunner::onError(Ljava/lang/String;)(err) )}
+            var networking = EXPOSED_TO_NATIVE.native2js.resolveService("NetworkingService");
+            var callback = function(code, headers, payload) {
             };
-            networking.downloadString(config);
+            networking._retrieve(method, url, null, postData, callback);
         }-*/;
     }
     

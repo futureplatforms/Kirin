@@ -16,6 +16,8 @@
 #import "LocalNotificationsBackend.h"
 #import "KirinLocationBackend.h"
 #import "KirinImageTransformer.h"
+#import "NewNetworkingImpl.h"
+#import "KirinGwtServiceProtocol.h"
 
 @interface KirinExtensions()
 
@@ -39,6 +41,7 @@
     NSLog(@"Core KirinExtensions");
     [services registerExtension:[[[SettingsBackend alloc] init] autorelease]];
     [services registerExtension:[[[NetworkingBackend alloc] init] autorelease]];
+    [services registerGwtService:[[NewNetworkingImpl alloc] init]];
     [services registerExtension:[KirinLocationBackend instance]];
     return services;
 }
@@ -49,6 +52,11 @@
         self.allExtensions = [NSMutableArray array];
     }
     return self;
+}
+
+- (void) registerGwtService: (id<KirinGwtServiceProtocol>) service {
+    [self.allExtensions addObject:service];
+    [service onRegister];
 }
 
 - (void) registerExtension: (id<KirinExtensionProtocol>) service {

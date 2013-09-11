@@ -6,16 +6,16 @@ import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.ExportPackage;
 
 import com.futureplatforms.kirin.gwt.client.KirinService;
-import com.futureplatforms.kirin.gwt.client.services.natives.NetworkingNative;
+import com.futureplatforms.kirin.gwt.client.services.natives.NetworkingServiceNative;
 import com.google.common.collect.Maps;
 import com.google.gwt.core.client.GWT;
 
 @Export(value = "Networking", all = true)
 @ExportPackage("services")
-public class Networking extends KirinService<NetworkingNative> {
+public class NetworkingService extends KirinService<NetworkingServiceNative> {
     
-    public Networking() {
-        super(GWT.<NetworkingNative>create(NetworkingNative.class));
+    public NetworkingService() {
+        super(GWT.<NetworkingServiceNative>create(NetworkingServiceNative.class));
     }
     
     private Map<Integer, NetworkingResult> results = Maps.newHashMap();

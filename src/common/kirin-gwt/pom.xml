@@ -164,6 +164,7 @@
         <!-- Plugin configuration. There are many available options, see 
           gwt-maven-plugin documentation at codehaus.org -->
         <configuration>
+          <runTarget>Kirin.html</runTarget>
           <hostedWebapp>${webappDirectory}</hostedWebapp>
           <webappDirectory>${webappDirectory}</webappDirectory>
           <deploy>${deployDirectory}</deploy>

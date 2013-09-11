@@ -1,3 +1,3 @@
 package com.futureplatforms.kirin;
 
-public interface IKirinNativeObject { }
+public interface IKirinNativeObject extends IKirinNativeObjectBindingMarker { }
