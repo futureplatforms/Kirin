@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		091D1AC316F071E3001400FF /* NSObject+Kirin.h in Headers */ = {isa = PBXBuildFile; fileRef = 091D1AC116F071E3001400FF /* NSObject+Kirin.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		091D1AC416F071E3001400FF /* NSObject+Kirin.m in Sources */ = {isa = PBXBuildFile; fileRef = 091D1AC216F071E3001400FF /* NSObject+Kirin.m */; };
+		09D8177217E21D6E00611BBE /* UIViewController+Hybrid.h in Headers */ = {isa = PBXBuildFile; fileRef = 09D8177017E21D6E00611BBE /* UIViewController+Hybrid.h */; };
+		09D8177317E21D6E00611BBE /* UIViewController+Hybrid.m in Sources */ = {isa = PBXBuildFile; fileRef = 09D8177117E21D6E00611BBE /* UIViewController+Hybrid.m */; };
 		1A00C8B614B2E2FD00211F34 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1A00C8B414B2E2FD00211F34 /* InfoPlist.strings */; };
 		1A00C8C014B2E2FD00211F34 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A00C8BF14B2E2FD00211F34 /* UIKit.framework */; };
 		1A00C8C214B2E2FD00211F34 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A00C8C114B2E2FD00211F34 /* Foundation.framework */; };
@@ -150,6 +152,8 @@
 /* Begin PBXFileReference section */
 		091D1AC116F071E3001400FF /* NSObject+Kirin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Kirin.h"; sourceTree = "<group>"; };
 		091D1AC216F071E3001400FF /* NSObject+Kirin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Kirin.m"; sourceTree = "<group>"; };
+		09D8177017E21D6E00611BBE /* UIViewController+Hybrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Hybrid.h"; sourceTree = "<group>"; };
+		09D8177117E21D6E00611BBE /* UIViewController+Hybrid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Hybrid.m"; sourceTree = "<group>"; };
 		1A00C8AF14B2E2FD00211F34 /* KirinKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KirinKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A00C8B314B2E2FD00211F34 /* KirinKit-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "KirinKit-Info.plist"; sourceTree = "<group>"; };
 		1A00C8B514B2E2FD00211F34 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -346,6 +350,8 @@
 			children = (
 				091D1AC116F071E3001400FF /* NSObject+Kirin.h */,
 				091D1AC216F071E3001400FF /* NSObject+Kirin.m */,
+				09D8177017E21D6E00611BBE /* UIViewController+Hybrid.h */,
+				09D8177117E21D6E00611BBE /* UIViewController+Hybrid.m */,
 				1A00C99814B2EE8800211F34 /* KirinKit.h */,
 				1A4F7CD61549666D00A010E0 /* KirinKitUI.h */,
 				1A00C8DB14B2E32600211F34 /* Core */,
@@ -649,7 +655,6 @@
 				1A00C93314B2E32600211F34 /* NativeExecutor.h in Headers */,
 				1A00C93414B2E32600211F34 /* SynthesizeSingleton.h in Headers */,
 				1A00C93514B2E32600211F34 /* Connection.h in Headers */,
-				1A00C93614B2E32600211F34 /* Database.h in Headers */,
 				1A00C93714B2E32600211F34 /* DatabasesBackend.h in Headers */,
 				1A00C93A14B2E32600211F34 /* DatabasesBackendProtocol.h in Headers */,
 				1A00C94114B2E32600211F34 /* Networking.h in Headers */,
@@ -674,6 +679,7 @@
 				1A06437714CF0DB500FB7EE3 /* KirinImagePicker.h in Headers */,
 				1A06437814CF0DB500FB7EE3 /* CameraProtocol.h in Headers */,
 				1A61952A14D22105004FDD8E /* KirinFileSystem.h in Headers */,
+				1A00C93614B2E32600211F34 /* Database.h in Headers */,
 				1A9FE0A114D5F745008C0565 /* NativeObjectHolder.h in Headers */,
 				1A9FE0A514D5FA51008C0565 /* KirinExtensionOnMainThread.h in Headers */,
 				1A4384B614E2CAE00012CD5A /* FileSystem.h in Headers */,
@@ -701,6 +707,7 @@
 				1AEE8DA3154EC8DD00B8C0D7 /* KirinUITableViewController.h in Headers */,
 				24BD525E170DEE63000E3C64 /* LocalNotifications.h in Headers */,
 				24BD525F170DEE63000E3C64 /* LocalNotificationsBackend.h in Headers */,
+				09D8177217E21D6E00611BBE /* UIViewController+Hybrid.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -887,6 +894,7 @@
 				1AEE8DA4154EC8DD00B8C0D7 /* KirinUITableViewController.m in Sources */,
 				091D1AC416F071E3001400FF /* NSObject+Kirin.m in Sources */,
 				24BD5260170DEE63000E3C64 /* LocalNotificationsBackend.m in Sources */,
+				09D8177317E21D6E00611BBE /* UIViewController+Hybrid.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -943,7 +951,6 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
