@@ -7,12 +7,6 @@ public class KirinLocation implements LocationDelegate {
     private LocationCallback resp;
     private boolean continuous;
     
-    public void getLocation(LocationCallback resp, Accuracy accuracy, boolean continuous) {
-        this.resp = resp;
-        this.continuous = continuous;
-        doIt(accuracy == Accuracy.Fine, this);
-    }
-    
     private void locationSuccess(double lat, double lng) {
         resp.onSuccess(lat, lng, 0);
         if (!continuous) {
@@ -27,8 +21,8 @@ public class KirinLocation implements LocationDelegate {
         }
     }
     
-    public native void unregister() /*-{
-        var location = require("Location")
+    private static native void unregister() /*-{
+        ;var location = $wnd.require("Location")
         location.unregisterAllListeners();
     }-*/;
     
@@ -52,8 +46,9 @@ public class KirinLocation implements LocationDelegate {
 
     @Override
     public void getLocation(Accuracy accuracy, LocationCallback callback) {
-        // TODO Auto-generated method stub
-        
+        this.resp = callback;
+        continuous = false;
+        doIt(accuracy == Accuracy.Fine, this);
     }
 
     @Override
