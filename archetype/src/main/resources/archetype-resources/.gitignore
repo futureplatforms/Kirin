@@ -1,6 +1,4 @@
-.project
-kirin-hello-world-core/.classpath
-kirin-hello-world-core/.project
-kirin-hello-world-core/target
-kirin-hello-world-gwt/target
 .classpath
+.project
+.settings/
+target/
