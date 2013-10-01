@@ -1,7 +1,5 @@
 package com.futureplatforms.kirin.dependencies;
 
-
-
 /**
  * Equivalent of java.util.Timer/java.util.TimerTask -- represents a task that
  * can be scheduled for one-time or repeated execution.
@@ -58,8 +56,8 @@ public abstract class TimerTask {
     
     private PlatformTimerTask mPtt;
     
-    public TimerTask() {
-        mPtt = StaticDependencies.getInstance().getTimerDelegate().getPlatformTimerTask();
+    public TimerTask(StaticDependencies deps) {
+        mPtt = deps.getTimerDelegate().getPlatformTimerTask();
         // Pass this TimerTask into the native dependency, and our run method will be invoked later
         mPtt.setRealTimerTask(this);
     }

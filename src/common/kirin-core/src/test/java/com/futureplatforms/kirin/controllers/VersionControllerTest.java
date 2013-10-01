@@ -1,22 +1,21 @@
-package com.futureplatforms.kirin;
-
-import static org.junit.Assert.*;
+package com.futureplatforms.kirin.controllers;
 
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jmock.integration.junit4.JUnit4Mockery;
 import org.junit.Test;
 
-import com.futureplatforms.kirin.KirinVersionController.KirinVersionDelegate;
+import com.futureplatforms.kirin.controllers.KirinVersionController.KirinVersionDelegate;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.SettingsDelegate;
-import com.futureplatforms.kirin.test.SettingsDelegateImpl;
 
 public class VersionControllerTest {
     private Mockery context = new JUnit4Mockery();
 
     @Test
     public void testFirstRun() {
-        final SettingsDelegate settings = new SettingsDelegateImpl();
+        //Kirin.kickOff();
+        
+        final SettingsDelegate settings = new ConsoleSettings();
         final KirinVersionDelegate version = context.mock(KirinVersionDelegate.class);
         KirinVersionController cont = new KirinVersionController(settings);
         

@@ -3,6 +3,8 @@ package com.futureplatforms.kirin.dependencies;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate.HttpVerb;
+import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate.NetworkResponse;
 import com.futureplatforms.kirin.dependencies.TimerTask.TimerDelegate;
 import com.futureplatforms.kirin.dependencies.json.JSONDelegate;
 import com.futureplatforms.kirin.dependencies.xml.parser.XMLParser;
@@ -22,8 +24,24 @@ public final class StaticDependencies {
         public String get(String key);
         public void put(String key, String value);
     }
-    public static abstract class NetworkDelegate {
-        public static enum HttpVerb { GET, POST, PUT };
+    public static interface NetworkDelegateClient {
+        public void doHttp(HttpVerb verb, String url, String payload, Map<String, String> headers, NetworkResponse callback);
+    }
+    
+    public static class NetworkDelegate {
+        private NetworkDelegateClient _Client;
+        public NetworkDelegate(NetworkDelegateClient client) {
+            this._Client = client;
+        }
+        
+        public static enum HttpVerb { 
+            DELETE(false), GET(false), POST(true), PUT(true);
+            public final boolean _HasPayload;
+            private HttpVerb(boolean hasPayload) {
+                this._HasPayload = hasPayload;
+            }
+        };
+        
         public static interface NetworkResponse {
             public void onSuccess(int res, String result, Map<String, String> headers);
             public void onFail(String code);
@@ -37,7 +55,9 @@ public final class StaticDependencies {
             doHttp(verb, url, payload, new HashMap<String, String>(), callback);
         }
         
-        public abstract void doHttp(HttpVerb verb, String url, String payload, Map<String, String> headers, NetworkResponse callback);
+        public final void doHttp(HttpVerb verb, String url, String payload, Map<String, String> headers, NetworkResponse callback) {
+            _Client.doHttp(verb, url, payload, headers, callback);
+        }
     }
 
     private LogDelegate mLogDelegate;
@@ -66,7 +86,7 @@ public final class StaticDependencies {
                                     SettingsDelegate settingsDelegate,
                                     TimerDelegate timerDelegate,
                                     LocationDelegate locationDelegate, 
-                                    NetworkDelegate networkDelegate,
+                                    NetworkDelegateClient networkDelegateClient,
                                     JSONDelegate jsonDelegate,
                                     XMLParser xmlParser, 
                                     Formatter formatter, 
@@ -75,7 +95,7 @@ public final class StaticDependencies {
         this.mSettingsDelegate = settingsDelegate;
         this.mTimerDelegate = timerDelegate;
         this.mLocationDelegate = locationDelegate;
-        this.mNetworkDelegate = networkDelegate;
+        this.mNetworkDelegate = new NetworkDelegate(networkDelegateClient);
         this.mJsonDelegate = jsonDelegate;
         this.mXmlParser = xmlParser;
         this.mFormatter = formatter;

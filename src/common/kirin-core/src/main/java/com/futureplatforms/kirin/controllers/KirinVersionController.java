@@ -1,4 +1,4 @@
-package com.futureplatforms.kirin;
+package com.futureplatforms.kirin.controllers;
 
 import com.futureplatforms.kirin.dependencies.StaticDependencies;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.SettingsDelegate;
