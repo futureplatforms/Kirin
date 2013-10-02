@@ -5,7 +5,7 @@ import java.util.Map;
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.ExportPackage;
 
-import com.futureplatforms.kirin.controllers.gwt.client.modules.KirinModule;
+import com.futureplatforms.kirin.KirinModule;
 import com.futureplatforms.kirin.dependencies.StaticDependencies;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.LogDelegate;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate;
@@ -15,6 +15,7 @@ import com.futureplatforms.kirin.dependencies.json.JSONArray;
 import com.futureplatforms.kirin.dependencies.json.JSONDelegate;
 import com.futureplatforms.kirinhello.modules.natives.TestModuleNative;
 import com.google.gwt.core.client.GWT;
+
 
 @Export(value = "TestModule", all = true)
 @ExportPackage("screens") 
