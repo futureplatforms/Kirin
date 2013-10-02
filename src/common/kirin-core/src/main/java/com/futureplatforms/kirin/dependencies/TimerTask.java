@@ -56,6 +56,10 @@ public abstract class TimerTask {
     
     private PlatformTimerTask mPtt;
     
+    public TimerTask() {
+        this(StaticDependencies.getInstance());
+    }
+    
     public TimerTask(StaticDependencies deps) {
         mPtt = deps.getTimerDelegate().getPlatformTimerTask();
         // Pass this TimerTask into the native dependency, and our run method will be invoked later
