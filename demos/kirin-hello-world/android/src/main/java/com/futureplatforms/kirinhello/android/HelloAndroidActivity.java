@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 
-import com.futureplatforms.kirin.android.Kirin;
+import com.futureplatforms.kirin.controllers.android.Kirin;
 import com.futureplatforms.kirinhello.modules.TestModule;
 import com.futureplatforms.kirinhello.modules.natives.TestModuleNative;
 

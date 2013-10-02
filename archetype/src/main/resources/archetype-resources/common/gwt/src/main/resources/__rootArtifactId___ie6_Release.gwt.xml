@@ -6,4 +6,5 @@
   <!-- The core module for this project -->
   <inherits name='${package}.${rootArtifactId}'/>
   <set-property name="user.agent" value="ie6"/> 
+  <set-configuration-property name="kirin.config" value="Release"/>
 </module>

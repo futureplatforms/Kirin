@@ -17,7 +17,13 @@ This library is currently used to build the Domino's WP8 project.
 ## This document
 This document outlines the pattern for using Kirin within a WP8 app.
 
-Refer also to the `kirin-hello-world` project in the `demos` folder to see this in action.
+The kirin archetype does NOT provide a skeleton Visual Studio project.
+
+* The format of these project files is not well specified and could change in subsequent versions
+* The project files contain lots of generated unique IDs which would clearly no longer be unique if you used a project we supplied.  Who knows what the consequences of that would be?  <sub>(Genuine question)</sub>
+* It can be quite instructive to add all the components to your project yourself.
+
+Refer to the `kirin-hello-world` project in the `demos` folder to see a working setup in action.
 
 ## Prerequisites
 You must have the following installed on your system:
@@ -40,16 +46,19 @@ Execute `rebuild_kirinkit.bat` from within the `Kirin\src` folder.
 
 ### Create a new app in Visual Studio Express in the usual manner.
 
-This should live in a `wp8` or `w8` folder at the same level as android, core, iPhone etc.
+This should live in a `wp8` or `w8` folder at the same level as android, core, iPhone etc.  
+
+#### >> Top tip! <<
+
+Visual Studio likes to put this project in a separate folder within your `wp8`/`w8` subfolder.  This means your project path will look like: `ProjectName\wp8\ProjectName\ProjectName`!  Move the `.sln` and `.suo` into `wp8` folder alongside `wp8_prebuild.bat`.
+
 
 ### Add the Kirin W8 or WP8 library to your app
 
 <sub>
 Unlike iOS, Windows and Windows Phone seem incapable of referencing libraries using a 
 string containing a property.  In other words, it seems impossible to point your WP8 
-project to `%KIRIN_HOME%\src\wp8\KirinWP8\Bin\Debug\KirinWP8.dll`.  I have tried manually
-editing the `.csproj` file to no avail.  If you can discover a way of doing this then it 
-should be preferred!
+project to `%KIRIN_HOME%\src\wp8\KirinWP8\Bin\Debug\KirinWP8.dll`.  I have tried manually editing the `.csproj` file to no avail.  If you can discover a way of doing this then it should be preferred!
 </sub>
 
 Until then, copy the latest `KirinWP8.dll` into your project folder, and add a reference 
@@ -61,15 +70,40 @@ DLL after each change and copy it in again.  It appears that you need to close y
 project in Visual Studio before you can do this.
 </sub>
 
-### Add the GWT target's `app` folder to the project
+### Add the GWT target's `BINDINGS` folder to the project
 
 ### Add Pre-build event command line:
 
-    cd ..\..\..\..
-    wp8_prebuild.bat
+    cd ..\..\..
+    wp8_prebuild.bat $(ConfigurationName)
 
-**Edit** `wp8_prebuild.bat` to put your project's 
-correct folder names in there.
+`$(ConfigurationName)` will pass Debug or Release as appropriate into the script to build the correct variety of the project.  
+
+**View** `wp8_prebuild.bat` and ensure your project's correct folder names are in there.
+
+### Ensure the GWT generated files are copied in to the build
+
+Edit your project's `.csproj` file in a text editor.  Near the bottom (but in the `<Project>` block), add the following: 
+
+    <Target Name="AfterResolveReferences">
+        <ItemGroup>
+            <Content Include="**\*.js" />
+            <Content Include="**\*.html" />
+            <Content Include="**\*.symbolmap" />
+        </ItemGroup>
+    </Target>
+
+This ensures that all the GWT generated files (some of whose names change on every build) are copied in to the build.
+
+These files are copied in to the project in the prebuild batch file (specified in the previous step).  Hooking in to `AfterResolveReferences` means these files can be copied at the correct time.
+
+See [this stackoverflow question](http://stackoverflow.com/questions/5926311/) for more information. 
+
+
+### Add `Json.NET` to your project (Kirin needs this)
+* Right-click "References"
+* Click "Manage NuGet packages..."
+* Select "Json.NET" from "NuGet official package source"
 
 ### Initialise Kirin
 
@@ -93,15 +127,21 @@ These classes and interfaces all live under the `Generated` namespace.
 To use a Kirin module you must create an implementation of its native interface (in 
 `toNative`, and ought to end with `native`).
 Then, get the Kirin singleton like so:
-`Kirin kirin = Kirin.getInstance();`
-and bind the implementation to the module name:
-`KirinAssistant ka = kirin.BindScreen(<MyModuleNativeImpl>, "MyModule");`
+
+    Kirin kirin = Kirin.getInstance();
+
+Bind the implementation to the module name and call `onLoad`:
+
+    KirinAssistant ka = kirin.BindScreen(<MyModuleNativeImpl>, "MyModule");
+    ka.onLoad();
+
 Finally, create an instance of the module class (located in `fromNative`) like so:
-`Generated.MyModule myModule = new MyModule(ka);`
+
+    Generated.MyModule myModule = new MyModule(ka);
 
 Now you can invoke methods on your Kirin module!
 
-`myModule.helloWorld("amazing");`
+    myModule.helloWorld("amazing");
 
 and any asynchronous return methods will be invoked by Kirin on your native implementation
 which you passed in to `BindScreen`.

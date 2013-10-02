@@ -16,9 +16,11 @@ import org.apache.http.util.EntityUtils;
 
 import android.os.AsyncTask;
 
-import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate;
+import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate.HttpVerb;
+import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate.NetworkResponse;
+import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegateClient;
 
-public class AndroidNetwork extends NetworkDelegate {
+public class AndroidNetwork implements NetworkDelegateClient {
 	private class GetAsyncTask extends AsyncTask<Object, Void, Boolean> {
 		String url;
 		Map<String, String> headers;

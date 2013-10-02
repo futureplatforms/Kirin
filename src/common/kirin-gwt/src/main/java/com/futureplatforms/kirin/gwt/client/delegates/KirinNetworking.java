@@ -3,10 +3,12 @@ package com.futureplatforms.kirin.gwt.client.delegates;
 import java.util.Map;
 
 import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate;
+import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate.NetworkResponse;
+import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegateClient;
 import com.futureplatforms.kirin.gwt.client.KirinEP;
 import com.google.gwt.core.client.JavaScriptObject;
 
-public class KirinNetworking extends NetworkDelegate {
+public class KirinNetworking implements NetworkDelegateClient {
     private static class NetworkRunner {
         private NetworkResponse mCB;
         public NetworkRunner(NetworkResponse cb) {
