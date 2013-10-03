@@ -9,13 +9,27 @@
 #import "NSObject+Kirin.h"
 #import <objc/runtime.h>
 
-static char kirinHelperKey;
+static char kirinModuleKey;
+static char kirinServiceKey;
 
 @implementation NSObject (Kirin)
 
 - (void) kirinStartModule: (NSString *) moduleName withProtocol: (Protocol *) protocol {
     if(nil != moduleName) {
         self.kirinHelper = [KIRIN bindScreen:self toModule:moduleName];
+    }
+    
+    if(nil != protocol) {
+        [self callSubclassSetterForKirinModule: [self.kirinHelper proxyForJavascriptObject:protocol]];
+    }
+    
+    NSLog(@"calling kirinhelper %@ onLoad", moduleName);
+    [self.kirinHelper onLoad];
+}
+
+- (void) kirinStartService: (NSString *) moduleName withProtocol: (Protocol *) protocol {
+    if(nil != moduleName) {
+        self.kirinServiceHelper = [KIRIN bindService:self toModule:moduleName];
     }
     
     if(nil != protocol) {
@@ -36,14 +50,26 @@ static char kirinHelperKey;
     }
 }
 
+- (void) setKirinServiceHelper:(KirinExtensionHelper *)kirinService
+{
+    objc_setAssociatedObject(self, &kirinServiceKey, kirinService, OBJC_ASSOCIATION_RETAIN);
+}
+
+- (KirinScreenHelper *) kirinServiceHelper
+{
+    KirinScreenHelper *ref= objc_getAssociatedObject(self, &kirinServiceKey);
+    NSAssert(ref, @"Object was nil");
+    return ref;
+}
+
 - (void) setKirinHelper:(KirinHelper *)kirinHelper
 {
-    objc_setAssociatedObject(self, &kirinHelperKey, kirinHelper, OBJC_ASSOCIATION_RETAIN);
+    objc_setAssociatedObject(self, &kirinModuleKey, kirinHelper, OBJC_ASSOCIATION_RETAIN);
 }
 
 - (KirinScreenHelper *) kirinHelper
 {
-    KirinScreenHelper *ref= objc_getAssociatedObject(self, &kirinHelperKey);
+    KirinScreenHelper *ref= objc_getAssociatedObject(self, &kirinModuleKey);
     NSAssert(ref, @"Object was nil");
     return ref;
 }

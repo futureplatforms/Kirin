@@ -1,4 +1,4 @@
-package com.futureplatforms.kirin.gwt.compile;
+package com.futureplatforms.kirin.gwt.compile.tonative;
 
 import java.io.PrintWriter;
 
@@ -14,6 +14,14 @@ import com.google.gwt.core.ext.typeinfo.TypeOracle;
 import com.google.gwt.user.rebind.ClassSourceFileComposerFactory;
 import com.google.gwt.user.rebind.SourceWriter;
 
+/**
+ * Creates implementations of the interfaces that represent native objects.
+ * Adds a $setKirinNativeObject method to allow the native proxy object
+ * to associate itself.  Then creates implementations of each method
+ * and invokes the proxy object therein.
+ * @author douglashoskins
+ *
+ */
 public class NativeObjectImplementationGenerator extends Generator {
 
 	@Override

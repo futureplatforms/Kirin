@@ -1,7 +1,8 @@
-package com.futureplatforms.kirin.gwt.compile;
+package com.futureplatforms.kirin.gwt.compile.bindings;
 
 import java.text.MessageFormat;
 
+import com.futureplatforms.kirin.gwt.compile.InterfaceGenerator;
 import com.google.gwt.core.ext.typeinfo.JClassType;
 import com.google.gwt.core.ext.typeinfo.JMethod;
 import com.google.gwt.core.ext.typeinfo.JParameter;

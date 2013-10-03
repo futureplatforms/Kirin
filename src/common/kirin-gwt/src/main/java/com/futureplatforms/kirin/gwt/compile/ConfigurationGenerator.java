@@ -17,6 +17,12 @@ import com.google.gwt.core.ext.typeinfo.TypeOracle;
 import com.google.gwt.user.rebind.ClassSourceFileComposerFactory;
 import com.google.gwt.user.rebind.SourceWriter;
 
+/**
+ * This sets GwtConfiguration's Configuration value depending on the .gwt.xml's 
+ * kirin.config property.
+ * @author douglashoskins
+ *
+ */
 public class ConfigurationGenerator extends Generator {
     private static final String KIRIN_CONFIG_PROPERTY = "kirin.config";
     @Override

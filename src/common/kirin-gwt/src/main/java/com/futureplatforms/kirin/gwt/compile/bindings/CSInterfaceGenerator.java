@@ -1,5 +1,6 @@
-package com.futureplatforms.kirin.gwt.compile;
+package com.futureplatforms.kirin.gwt.compile.bindings;
 
+import com.futureplatforms.kirin.gwt.compile.InterfaceGenerator;
 import com.google.gwt.core.ext.typeinfo.JArrayType;
 import com.google.gwt.core.ext.typeinfo.JClassType;
 import com.google.gwt.core.ext.typeinfo.JMethod;
@@ -69,7 +70,6 @@ public class CSInterfaceGenerator extends InterfaceGenerator {
 		if (csTypeName != null) {
 			return csTypeName;
 		} else {
-			System.out.println("Cannot find a corresponding type for " + javaTypeName);
 			return null;
 		}
 	}

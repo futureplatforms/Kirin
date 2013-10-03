@@ -1,8 +1,11 @@
-package com.futureplatforms.kirin.gwt.compile;
+package com.futureplatforms.kirin.gwt.compile.fromnative;
 
 import org.timepedia.exporter.rebind.ExporterGenerator;
 
 import com.futureplatforms.kirin.gwt.client.KirinService;
+import com.futureplatforms.kirin.gwt.compile.InterfaceGenerator;
+import com.futureplatforms.kirin.gwt.compile.bindings.CSClassGenerator;
+import com.futureplatforms.kirin.gwt.compile.bindings.ObjectiveCProtocolGenerator;
 import com.google.gwt.core.ext.Generator;
 import com.google.gwt.core.ext.GeneratorContext;
 import com.google.gwt.core.ext.TreeLogger;
@@ -22,8 +25,6 @@ public class FromNativeBindingGenerator extends Generator {
             new ObjectiveCProtocolGenerator("../SERVICE_BINDINGS/ios/fromNative/")
     };
 	 
-	private final ExporterGenerator mExporter = new ExporterGenerator();
-	
 	@Override
 	public String generate(TreeLogger logger, GeneratorContext context,
 			String typeName) throws UnableToCompleteException {
@@ -44,6 +45,8 @@ public class FromNativeBindingGenerator extends Generator {
 		for (InterfaceGenerator generator : generators) {
 			generator.generateProtocolResource(logger, context, moduleObjectType);
 		}
-		return mExporter.generate(logger, context, typeName);
+		
+		// We need GWT-Exporter's generator to run on this class too.
+		return new ExporterGenerator().generate(logger, context, typeName);
 	}
 }

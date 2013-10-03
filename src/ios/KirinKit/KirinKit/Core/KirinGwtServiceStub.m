@@ -8,27 +8,28 @@
 
 #import "KirinGwtServiceStub.h"
 #import <KirinKit/Kirin.h>
-#import "NSObject+Kirin.h"
+//#import "NSObject+Kirin.h"
 
 @implementation KirinGwtServiceStub
 
-@synthesize kirinHelper;
-@synthesize serviceName;
-
-- (id) initWithServiceName: (NSString*) serviceName_ {
+- (id) initWithServiceName: (NSString*) inServiceName {
     self = [super init];
     if (self) {
-        self.serviceName = serviceName_;
+        self.serviceName = inServiceName;
     }
     return self;
 }
 
 - (void) onRegister {
+   /* if(nil != self.serviceName && nil != self.kirinModuleProtocol) {
+        [self kirinStartService:self.serviceName withProtocol:self.kirinModuleProtocol];
+        
+        NSLog(@"KGSS startedModule");
+    }*/
     self.kirinHelper = [KIRIN bindService:self toModule:self.serviceName];
+    [self.kirinHelper onLoad];
     
-    if(nil != self.kirinModuleName && nil != self.kirinModuleProtocol) {
-        [self kirinStartModule:self.kirinModuleName withProtocol:self.kirinModuleProtocol];
-    }
+    NSLog(@"KGSS onLoaded");
 }
 
 @end

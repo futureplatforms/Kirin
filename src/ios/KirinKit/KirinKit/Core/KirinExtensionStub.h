@@ -15,8 +15,9 @@
 }
 
 @property(retain, nonatomic) NSString* moduleName;
+@property(retain, nonatomic) NSString* serviceName;
 @property(retain, nonatomic) KirinExtensionHelper* kirinHelper;
 
 - (id) initWithModuleName: (NSString*) moduleName;
-
+- (id) initWithServiceName: (NSString*) serviceName;
 @end

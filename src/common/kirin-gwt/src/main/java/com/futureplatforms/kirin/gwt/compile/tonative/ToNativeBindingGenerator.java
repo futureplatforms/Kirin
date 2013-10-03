@@ -1,14 +1,18 @@
-package com.futureplatforms.kirin.gwt.compile;
+package com.futureplatforms.kirin.gwt.compile.tonative;
 
 
 import com.futureplatforms.kirin.gwt.client.IKirinNativeService;
+import com.futureplatforms.kirin.gwt.compile.InterfaceGenerator;
+import com.futureplatforms.kirin.gwt.compile.bindings.CSInterfaceGenerator;
+import com.futureplatforms.kirin.gwt.compile.bindings.ObjectiveCProtocolGenerator;
+import com.google.gwt.core.ext.Generator;
 import com.google.gwt.core.ext.GeneratorContext;
 import com.google.gwt.core.ext.TreeLogger;
 import com.google.gwt.core.ext.UnableToCompleteException;
 import com.google.gwt.core.ext.typeinfo.JClassType;
 import com.google.gwt.core.ext.typeinfo.TypeOracle;
 
-public class ToNativeBindingGenerator {
+public class ToNativeBindingGenerator extends Generator {
 
     private final InterfaceGenerator[] mAppProtocolGenerators = {
             new CSInterfaceGenerator("../BINDINGS/windows/toNative/"),
@@ -20,7 +24,7 @@ public class ToNativeBindingGenerator {
             new ObjectiveCProtocolGenerator("../SERVICE_BINDINGS/ios/toNative/")
     };
 	 
-	public void generate(TreeLogger logger, GeneratorContext context,
+	public String generate(TreeLogger logger, GeneratorContext context,
 			String typeName) throws UnableToCompleteException {
 	    System.out.println("----> ToNativeBindingGenerator: " + typeName);
 	    TypeOracle oracle = context.getTypeOracle();
@@ -38,5 +42,7 @@ public class ToNativeBindingGenerator {
 		for (InterfaceGenerator generator : generators) {
 			generator.generateProtocolResource(logger, context, nativeObjectType);
 		}
+		
+		return null;
 	}
 }

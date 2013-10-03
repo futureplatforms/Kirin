@@ -10,10 +10,10 @@
   <entry-point class='com.futureplatforms.kirin.gwt.client.KirinServiceExportEP' />
   <source path='client' />
     
-  <generate-with class="com.futureplatforms.kirin.gwt.compile.NativeObjectGenerator">
+  <generate-with class="com.futureplatforms.kirin.gwt.compile.tonative.NativeObjectGenerator">
     <when-type-assignable class="com.futureplatforms.kirin.gwt.client.IKirinNativeService" />
   </generate-with>
-  <generate-with class="com.futureplatforms.kirin.gwt.compile.FromNativeBindingGenerator">
+  <generate-with class="com.futureplatforms.kirin.gwt.compile.fromnative.FromNativeBindingGenerator">
     <when-type-assignable class="com.futureplatforms.kirin.gwt.client.KirinService" />
   </generate-with>
   

@@ -10,5 +10,8 @@
 
 @interface NSObject (Kirin)
 @property (nonatomic, copy) KirinScreenHelper* kirinHelper;
+@property (nonatomic, copy) KirinExtensionHelper* kirinServiceHelper;
 - (void) kirinStartModule: (NSString *) moduleName withProtocol: (Protocol *) protocol;
+- (void) kirinStartService: (NSString *) moduleName withProtocol: (Protocol *) protocol;
 @end
+ 

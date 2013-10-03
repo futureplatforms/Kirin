@@ -7,6 +7,5 @@ import org.timepedia.exporter.client.Exportable;
 @Export
 @ExportClosure
 public interface NetworkingResult extends Exportable {
-    @Export
     public void result(int code, String headers, String payload);
 }

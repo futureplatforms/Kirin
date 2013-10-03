@@ -11,6 +11,7 @@ import com.google.gwt.core.ext.TreeLogger;
 import com.google.gwt.core.ext.UnableToCompleteException;
 import com.google.gwt.core.ext.typeinfo.JClassType;
 import com.google.gwt.core.ext.typeinfo.JMethod;
+import com.google.gwt.core.ext.typeinfo.TypeOracle;
 
 public abstract class InterfaceGenerator {
 	protected String partialPath;
@@ -28,7 +29,8 @@ public abstract class InterfaceGenerator {
 	public final void generateProtocolResource(TreeLogger logger,
 			GeneratorContext context, JClassType nativeObjectType)
 			throws UnableToCompleteException {
-		jsObjType = context.getTypeOracle().findType(JavaScriptObject.class.getName());
+	    TypeOracle oracle = context.getTypeOracle();
+		jsObjType = oracle.findType(JavaScriptObject.class.getName());
 		final OutputStream outStream = context.tryCreateResource(logger, partialPath + nativeObjectType.getSimpleSourceName() + filenameExtension());
 		
 		if(outStream == null) {
@@ -46,6 +48,10 @@ public abstract class InterfaceGenerator {
 					
 					if (!method.getReturnType().getSimpleSourceName().equals("void")) {
 						continue;
+					}
+					
+					if (method.isAnnotationPresent(NoBind.class)) {
+					    continue;
 					}
 					
 					// TODO filter out the lifecycle methods.

@@ -22,6 +22,14 @@
     return self;
 }
 
+- (id) initWithServiceName:(NSString *)inServiceName {
+    self = [super init];
+    if (self) {
+        self.serviceName = inServiceName;
+    }
+    return self;
+}
+
 - (void) onLoad {
     self.kirinHelper = [KIRIN bindService:self toModule:self.moduleName];
     [self.kirinHelper onLoad];

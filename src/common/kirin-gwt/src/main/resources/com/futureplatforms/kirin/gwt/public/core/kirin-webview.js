@@ -46,6 +46,7 @@ defineModule("kirin", function (require, exports) {
 	})();
 	
 	var wrapCallback = function (callback, jsName, methodName) {
+		console.log('wrapCallback(' + callback + ', ' + jsName + ', ' + methodName + ')');
 		if (typeof callback !== 'function') {
 			return null;
 		}
@@ -66,6 +67,7 @@ defineModule("kirin", function (require, exports) {
 		for (key in config) {
 			if (config.hasOwnProperty(key)) {
 				value = config[key];
+				console.log('wrapCallbacks -- ' + moduleName + ' config.' + key + ' = ' + value);
 				if (typeof value === 'function') {
 					config[key] = wrapCallback(value, moduleName, key);
 				}
@@ -151,7 +153,7 @@ defineModule("kirin", function (require, exports) {
 		}
 		return require(moduleName);
 	}
-
+	
 	native2js.loadProxyForModule = function (moduleName, methodNames) {
 		var proxy = createProxy(moduleName, methodNames);
 		var module;
@@ -253,7 +255,7 @@ defineModule("kirin", function (require, exports) {
 	/**********************************************************************/
 	/* Expose the proxies to Javascript.
 	 **********************************************************************/
-	
+	native2js.resolveModule = resolveModule;
 	exports.wrapCallback = wrapCallback;
 	exports.wrapCallbacks = wrapCallbacks;
 	exports.exposeToNative = Native.exposeToNative;

@@ -9,6 +9,13 @@
 /* Begin PBXBuildFile section */
 		091D1AC316F071E3001400FF /* NSObject+Kirin.h in Headers */ = {isa = PBXBuildFile; fileRef = 091D1AC116F071E3001400FF /* NSObject+Kirin.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		091D1AC416F071E3001400FF /* NSObject+Kirin.m in Sources */ = {isa = PBXBuildFile; fileRef = 091D1AC216F071E3001400FF /* NSObject+Kirin.m */; };
+		0924AA4217FD4AC300B8E560 /* NewNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = 0924AA3F17FD4AC300B8E560 /* NewNetworking.h */; };
+		0924AA4317FD4AC300B8E560 /* NewNetworkingImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = 0924AA4017FD4AC300B8E560 /* NewNetworkingImpl.h */; };
+		0924AA4417FD4AC300B8E560 /* NewNetworkingImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 0924AA4117FD4AC300B8E560 /* NewNetworkingImpl.m */; };
+		0924AA4817FD824F00B8E560 /* KirinGwtServiceProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 0924AA4517FD824F00B8E560 /* KirinGwtServiceProtocol.h */; };
+		0924AA4917FD824F00B8E560 /* KirinGwtServiceStub.h in Headers */ = {isa = PBXBuildFile; fileRef = 0924AA4617FD824F00B8E560 /* KirinGwtServiceStub.h */; };
+		0924AA4A17FD824F00B8E560 /* KirinGwtServiceStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 0924AA4717FD824F00B8E560 /* KirinGwtServiceStub.m */; };
+		0924AA4C17FD897800B8E560 /* SERVICE_BINDINGS in Resources */ = {isa = PBXBuildFile; fileRef = 0924AA4B17FD897700B8E560 /* SERVICE_BINDINGS */; };
 		09D8177217E21D6E00611BBE /* UIViewController+Hybrid.h in Headers */ = {isa = PBXBuildFile; fileRef = 09D8177017E21D6E00611BBE /* UIViewController+Hybrid.h */; };
 		09D8177317E21D6E00611BBE /* UIViewController+Hybrid.m in Sources */ = {isa = PBXBuildFile; fileRef = 09D8177117E21D6E00611BBE /* UIViewController+Hybrid.m */; };
 		1A00C8B614B2E2FD00211F34 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1A00C8B414B2E2FD00211F34 /* InfoPlist.strings */; };
@@ -152,6 +159,13 @@
 /* Begin PBXFileReference section */
 		091D1AC116F071E3001400FF /* NSObject+Kirin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Kirin.h"; sourceTree = "<group>"; };
 		091D1AC216F071E3001400FF /* NSObject+Kirin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Kirin.m"; sourceTree = "<group>"; };
+		0924AA3F17FD4AC300B8E560 /* NewNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewNetworking.h; sourceTree = "<group>"; };
+		0924AA4017FD4AC300B8E560 /* NewNetworkingImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewNetworkingImpl.h; sourceTree = "<group>"; };
+		0924AA4117FD4AC300B8E560 /* NewNetworkingImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewNetworkingImpl.m; sourceTree = "<group>"; };
+		0924AA4517FD824F00B8E560 /* KirinGwtServiceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KirinGwtServiceProtocol.h; path = KirinKit/Core/KirinGwtServiceProtocol.h; sourceTree = SOURCE_ROOT; };
+		0924AA4617FD824F00B8E560 /* KirinGwtServiceStub.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KirinGwtServiceStub.h; path = KirinKit/Core/KirinGwtServiceStub.h; sourceTree = SOURCE_ROOT; };
+		0924AA4717FD824F00B8E560 /* KirinGwtServiceStub.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KirinGwtServiceStub.m; path = KirinKit/Core/KirinGwtServiceStub.m; sourceTree = SOURCE_ROOT; };
+		0924AA4B17FD897700B8E560 /* SERVICE_BINDINGS */ = {isa = PBXFileReference; lastKnownFileType = folder; name = SERVICE_BINDINGS; path = "../../common/kirin-gwt/target/kirin-gwt-1.0-SNAPSHOT/app/SERVICE_BINDINGS"; sourceTree = "<group>"; };
 		09D8177017E21D6E00611BBE /* UIViewController+Hybrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Hybrid.h"; sourceTree = "<group>"; };
 		09D8177117E21D6E00611BBE /* UIViewController+Hybrid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Hybrid.m"; sourceTree = "<group>"; };
 		1A00C8AF14B2E2FD00211F34 /* KirinKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KirinKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -323,6 +337,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0924AA3D17FD49D600B8E560 /* GwtServices */ = {
+			isa = PBXGroup;
+			children = (
+				0924AA4517FD824F00B8E560 /* KirinGwtServiceProtocol.h */,
+				0924AA4617FD824F00B8E560 /* KirinGwtServiceStub.h */,
+				0924AA4717FD824F00B8E560 /* KirinGwtServiceStub.m */,
+				0924AA3E17FD4AB600B8E560 /* Networking */,
+			);
+			name = GwtServices;
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		0924AA3E17FD4AB600B8E560 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				0924AA3F17FD4AC300B8E560 /* NewNetworking.h */,
+				0924AA4017FD4AC300B8E560 /* NewNetworkingImpl.h */,
+				0924AA4117FD4AC300B8E560 /* NewNetworkingImpl.m */,
+			);
+			name = Networking;
+			sourceTree = "<group>";
+		};
 		1A00C8A114B2E2FD00211F34 = {
 			isa = PBXGroup;
 			children = (
@@ -333,6 +369,7 @@
 				1A00C8C814B2E2FD00211F34 /* KirinKitTests */,
 				1A00C8BE14B2E2FD00211F34 /* Frameworks */,
 				1A00C8B014B2E2FD00211F34 /* Products */,
+				0924AA4B17FD897700B8E560 /* SERVICE_BINDINGS */,
 			);
 			sourceTree = "<group>";
 		};
@@ -355,6 +392,7 @@
 				1A00C99814B2EE8800211F34 /* KirinKit.h */,
 				1A4F7CD61549666D00A010E0 /* KirinKitUI.h */,
 				1A00C8DB14B2E32600211F34 /* Core */,
+				0924AA3D17FD49D600B8E560 /* GwtServices */,
 				1A00C8EF14B2E32600211F34 /* Extensions */,
 				1A00C90614B2E32600211F34 /* JSON */,
 				1A00C8B214B2E2FD00211F34 /* Supporting Files */,
@@ -708,6 +746,10 @@
 				24BD525E170DEE63000E3C64 /* LocalNotifications.h in Headers */,
 				24BD525F170DEE63000E3C64 /* LocalNotificationsBackend.h in Headers */,
 				09D8177217E21D6E00611BBE /* UIViewController+Hybrid.h in Headers */,
+				0924AA4217FD4AC300B8E560 /* NewNetworking.h in Headers */,
+				0924AA4317FD4AC300B8E560 /* NewNetworkingImpl.h in Headers */,
+				0924AA4817FD824F00B8E560 /* KirinGwtServiceProtocol.h in Headers */,
+				0924AA4917FD824F00B8E560 /* KirinGwtServiceStub.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -786,6 +828,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1A00C8B614B2E2FD00211F34 /* InfoPlist.strings in Resources */,
+				0924AA4C17FD897800B8E560 /* SERVICE_BINDINGS in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -895,6 +938,8 @@
 				091D1AC416F071E3001400FF /* NSObject+Kirin.m in Sources */,
 				24BD5260170DEE63000E3C64 /* LocalNotificationsBackend.m in Sources */,
 				09D8177317E21D6E00611BBE /* UIViewController+Hybrid.m in Sources */,
+				0924AA4417FD4AC300B8E560 /* NewNetworkingImpl.m in Sources */,
+				0924AA4A17FD824F00B8E560 /* KirinGwtServiceStub.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -955,6 +1000,7 @@
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "../../common/kirin-gwt/target/**";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				SDKROOT = iphoneos;
 			};
@@ -969,6 +1015,7 @@
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "../../common/kirin-gwt/target/**";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				SDKROOT = iphoneos;
 			};

@@ -116,7 +116,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(Kirin)
                                                  andJsContext:self.jsContext 
                                              andNativeContext:self.nativeContext
                                                    andState:self.state] autorelease];
-
 }
 
 - (KirinExtensionHelper*) bindService: (id) nativeObject toModule:(NSString*) moduleName {

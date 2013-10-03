@@ -18,10 +18,13 @@
 @synthesize kirinModule = kirinModule_;
 
 - (id) init {
-    return [super initWithServiceName: @"NetworkingService"];
+    self.serviceName = @"NetworkingService";
+    self.kirinModuleProtocol = @protocol(NetworkingService);
+    return [super initWithServiceName: self.serviceName];
 }
 
-- (void) retrieve: (int) ref : (NSString*) method : (NSString*) url : (NSString*) postData : (NSArray*) headers {
+- (void) retrieve: (int) ref : (NSString*) method : (NSString*) url : (NSString*) postData : (NSArray*) headerKeys : (NSArray*) headerVals {
     NSLog(@"Yep, that's us trying to retrieve %@, ref %d", url, ref);
+    [self.kirinModule payload:ref :@"here's your response"];
 }
 @end
