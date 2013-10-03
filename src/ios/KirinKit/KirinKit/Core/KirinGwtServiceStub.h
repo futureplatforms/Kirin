@@ -15,7 +15,6 @@
 }
 
 @property(retain, nonatomic) NSString* serviceName;
-@property(retain, nonatomic) KirinHelper* kirinHelper;
 @property(strong) Protocol* kirinModuleProtocol;
 
 - (id) initWithServiceName: (NSString*) inServiceName;

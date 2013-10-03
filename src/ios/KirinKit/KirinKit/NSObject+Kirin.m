@@ -33,11 +33,11 @@ static char kirinServiceKey;
     }
     
     if(nil != protocol) {
-        [self callSubclassSetterForKirinModule: [self.kirinHelper proxyForJavascriptObject:protocol]];
+        [self callSubclassSetterForKirinModule: [self.kirinServiceHelper proxyForJavascriptObject:protocol]];
     }
     
-    NSLog(@"calling kirinhelper %@ onLoad", moduleName);
-    [self.kirinHelper onLoad];
+    NSLog(@"calling kirinServiceHelper %@ onLoad", moduleName);
+    [self.kirinServiceHelper onLoad];
 }
 
 - (void) callSubclassSetterForKirinModule: (id) withThisArgument {
