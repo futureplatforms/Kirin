@@ -30,7 +30,7 @@ public class AndroidSettings implements SettingsDelegate
 	{
 		Editor e = mSharedPreferences.edit();
 		e.putString(key, value);
-		e.commit();
+		e.apply();
 	}
 	
 }
