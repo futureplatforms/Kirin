@@ -8,7 +8,7 @@ import com.futureplatforms.kirin.dependencies.TimerTask;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate.HttpVerb;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate.NetworkResponse;
 
-public class NetworkHelper {
+public final class NetworkHelper {
     
     private final StaticDependencies _Dependencies;
     private boolean _Cancelled = false;

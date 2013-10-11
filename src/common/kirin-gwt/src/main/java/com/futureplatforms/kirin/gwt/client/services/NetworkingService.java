@@ -3,7 +3,9 @@ package com.futureplatforms.kirin.gwt.client.services;
 import java.util.Map;
 
 import org.timepedia.exporter.client.Export;
+import org.timepedia.exporter.client.ExportClosure;
 import org.timepedia.exporter.client.ExportPackage;
+import org.timepedia.exporter.client.Exportable;
 
 import com.futureplatforms.kirin.dependencies.StaticDependencies;
 import com.futureplatforms.kirin.gwt.client.KirinService;
@@ -16,39 +18,52 @@ import com.google.gwt.core.client.GWT;
 @ExportPackage("screens")
 public class NetworkingService extends KirinService<NetworkingServiceNative> {
     
+    @Export
+    @ExportClosure
+    public static interface NetworkingSuccess extends Exportable {
+        @Export
+        public void onSuccess(int code, String headers, String payload);
+    }
+    
+    @Export
+    @ExportClosure
+    public static interface NetworkingFailure extends Exportable {
+        @Export
+        public void onFail();
+    }
+    
+    private static class NetworkingCB {
+        public final NetworkingSuccess _Success;
+        public final NetworkingFailure _Fail;
+        public NetworkingCB(NetworkingSuccess success, NetworkingFailure fail) {
+            this._Success = success; this._Fail = fail;
+        }
+    }
+    
     public NetworkingService() {
         super(GWT.<NetworkingServiceNative>create(NetworkingServiceNative.class));
     }
     
-    private Map<Integer, NetworkingResult> results = Maps.newHashMap();
+    private Map<Integer, NetworkingCB> results = Maps.newHashMap();
     private int nextId = Integer.MIN_VALUE;
 
     // This is the method that KirinNetworking uses to talk to us
     @NoBind
-    public void _retrieve(String method, String url, String postData, String[] headerKeys, String[] headerVals, NetworkingResult res) {
+    public void _retrieve(String method, String url, String postData, String[] headerKeys, String[] headerVals, NetworkingSuccess win, NetworkingFailure fail) {
         int id = nextId;
         nextId++;
-        results.put(id, res);
+        results.put(id, new NetworkingCB(win, fail));
         
-        if (getNativeObject() == null) {
-            StaticDependencies.getInstance().getLogDelegate().log("native object is null");
-        } else {
-            getNativeObject().retrieve(id, method, url, postData, headerKeys, headerVals);
-        }
-    }
-    
-    @NoBind
-    public void _tryThis(String hey) {
-        StaticDependencies.getInstance().getLogDelegate().log(hey);
+        getNativeObject().retrieve(id, method, url, postData, headerKeys, headerVals);
     }
     
     // These are the methods that native uses to call back to us
     public void payload(int id, String str) {
         StaticDependencies.getInstance().getLogDelegate().log("payload " + id + ", " + str);
-        results.remove(id).result(200, null, str);
+        results.remove(id)._Success.onSuccess(200, null, str);
     }
     
-    public void onError(int id, int code) {
-        
+    public void onError(int id) {
+        results.remove(id)._Fail.onFail();
     }
 }

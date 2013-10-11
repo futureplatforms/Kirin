@@ -24,7 +24,6 @@
 }
 
 - (void) retrieve: (int) ref : (NSString*) method : (NSString*) url : (NSString*) postData : (NSArray*) headerKeys : (NSArray*) headerVals {
-    NSLog(@"Yep, that's us trying to retrieve %@, ref %d", url, ref);
     [self.kirinModule payload:ref :@"here's your response"];
 }
 @end

@@ -69,6 +69,13 @@
     
 }
 
+
+- (void)tx:(NSString *)txId appendToTransactionScript:(NSArray *)log
+{
+    [self tx:txId appendToScript:log];
+}
+
+
 - (void)tx:(NSString *)id appendToOpenerScript:(NSArray *)log
 {
 	//NSLog(@"DatabasesBackend.tx:%@ appendToOpenerScript:%@", id, log);
@@ -229,12 +236,6 @@
     
     
 }
-
-- (void)tx:(NSString *)txId appendToTransactionScript:(NSArray *)log
-{
-    [self tx:txId appendToScript:log];    
-}
-
 
 - (void) cleanupAfterEndTransaction:(Transaction*) tx 
 {    

@@ -17,6 +17,7 @@
 #import "KirinLocationBackend.h"
 #import "KirinImageTransformer.h"
 #import "NewNetworkingImpl.h"
+#import "NewDatabasesImpl.h"
 #import "KirinGwtServiceProtocol.h"
 
 @interface KirinExtensions()
@@ -42,6 +43,7 @@
     [services registerExtension:[[[SettingsBackend alloc] init] autorelease]];
     [services registerExtension:[[[NetworkingBackend alloc] init] autorelease]];
     [services registerGwtService:[[NewNetworkingImpl alloc] init]];
+    [services registerGwtService:[[NewDatabasesImpl alloc] init]];
     [services registerExtension:[KirinLocationBackend instance]];
     return services;
 }
