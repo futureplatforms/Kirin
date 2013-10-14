@@ -1,4 +1,5 @@
-package com.futureplatforms.kirin.dependencies;
+package com.futureplatforms.kirin.dependencies.internal;
+
 
 /**
  * Equivalent of java.util.Timer/java.util.TimerTask -- represents a task that
@@ -57,10 +58,10 @@ public abstract class TimerTask {
     private PlatformTimerTask mPtt;
     
     public TimerTask() {
-        this(StaticDependencies.getInstance());
+        this(InternalDependencies.getInstance());
     }
     
-    public TimerTask(StaticDependencies deps) {
+    public TimerTask(InternalDependencies deps) {
         mPtt = deps.getTimerDelegate().getPlatformTimerTask();
         // Pass this TimerTask into the native dependency, and our run method will be invoked later
         mPtt.setRealTimerTask(this);

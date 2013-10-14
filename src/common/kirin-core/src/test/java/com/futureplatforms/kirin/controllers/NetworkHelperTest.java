@@ -11,8 +11,9 @@ import com.futureplatforms.kirin.dependencies.StaticDependencies;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate.HttpVerb;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate.NetworkResponse;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegateClient;
-import com.futureplatforms.kirin.dependencies.TimerTask.PlatformTimerTask;
-import com.futureplatforms.kirin.dependencies.TimerTask.TimerDelegate;
+import com.futureplatforms.kirin.dependencies.internal.InternalDependencies;
+import com.futureplatforms.kirin.dependencies.internal.TimerTask.PlatformTimerTask;
+import com.futureplatforms.kirin.dependencies.internal.TimerTask.TimerDelegate;
 import com.google.common.collect.Maps;
 
 public class NetworkHelperTest {
@@ -42,10 +43,13 @@ public class NetworkHelperTest {
 
         StaticDependencies deps = StaticDependencies.getInstance();
         deps.setDependencies(deps.getLogDelegate(), deps.getSettingsDelegate(),
-                timer, deps.getLocationDelegate(), netClient,
+        		deps.getLocationDelegate(), netClient,
                 deps.getJsonDelegate(), deps.getXmlParser(),
                 deps.getFormatter(), deps.getProfile());
 
+        InternalDependencies intDeps = InternalDependencies.getInstance();
+        intDeps.setDependencies(timer, null);
+        
         NetworkHelper helper = new NetworkHelper(deps);
 
         context.checking(new Expectations() {

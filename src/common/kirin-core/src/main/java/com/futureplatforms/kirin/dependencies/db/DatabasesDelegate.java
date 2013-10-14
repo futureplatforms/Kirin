@@ -1,31 +1,42 @@
 package com.futureplatforms.kirin.dependencies.db;
 
-import com.futureplatforms.kirin.dependencies.db.DatabasesDelegate.TxContainer.TxContainerCallback;
+import com.futureplatforms.kirin.dependencies.internal.DatabaseBackend;
+import com.futureplatforms.kirin.dependencies.internal.DatabaseBackend.DatabaseBackendCallback;
+import com.futureplatforms.kirin.dependencies.internal.InternalDependencies;
 
 /**
  * This is the app developer's view of a database
  * @author douglashoskins
  *
  */
-public interface DatabasesDelegate {
+public class DatabasesDelegate {
     public static interface DatabaseCB {
-        public void onCreate(Transaction tx);
-        public void onUpdate(Transaction tx);
+        public void onOpened(Database db);
         public void onError();
     }
     
-    public static interface TxContainer {
+    public static abstract class TxContainer {
         public static interface TxContainerCallback {
             public void onComplete();
             public void onError(String err);
         }
-        public void execute(Transaction tx);
+        
+        public abstract void execute(Transaction tx);
     }
     
-    public interface Database {
-        public void transaction(TxContainer txContainer, TxContainerCallback callback);
-        public void readTransaction(TxContainer txContainer);
+    public static void openDatabase(String name, final DatabaseCB callback) {
+    	final DatabaseBackend backend = InternalDependencies.getInstance().getDatabaseBackend();
+    	backend.openOrCreate(name, new DatabaseBackendCallback() {
+			
+			@Override
+			public void onOpened(String dbId) {
+				callback.onOpened(new Database(dbId, backend));
+			}
+			
+			@Override
+			public void onError() {
+				callback.onError();
+			}
+		});
     }
-    
-    public Database openDatabase(String filename, int version, DatabaseCB callback);
 }

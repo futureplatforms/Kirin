@@ -4,9 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.futureplatforms.kirin.dependencies.StaticDependencies;
-import com.futureplatforms.kirin.dependencies.TimerTask;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate.HttpVerb;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate.NetworkResponse;
+import com.futureplatforms.kirin.dependencies.internal.TimerTask;
 
 public final class NetworkHelper {
     
@@ -26,7 +26,7 @@ public final class NetworkHelper {
     }
     
     public final void execute(HttpVerb verb, String url, String payload, Map<String, String> headers, final NetworkResponse callback) {
-        final TimerTask tt = new TimerTask(_Dependencies) {
+        final TimerTask tt = new TimerTask() {
 
             @Override
             public void run() {

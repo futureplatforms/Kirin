@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate.HttpVerb;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate.NetworkResponse;
-import com.futureplatforms.kirin.dependencies.TimerTask.TimerDelegate;
+import com.futureplatforms.kirin.dependencies.internal.TimerTask.TimerDelegate;
 import com.futureplatforms.kirin.dependencies.json.JSONDelegate;
 import com.futureplatforms.kirin.dependencies.xml.parser.XMLParser;
 
@@ -62,7 +62,6 @@ public final class StaticDependencies {
 
     private LogDelegate mLogDelegate;
     private SettingsDelegate mSettingsDelegate;
-    private TimerDelegate mTimerDelegate;
     private LocationDelegate mLocationDelegate;
     private JSONDelegate mJsonDelegate;
     private NetworkDelegate mNetworkDelegate;
@@ -73,7 +72,6 @@ public final class StaticDependencies {
     
     public LogDelegate getLogDelegate() { return mLogDelegate; }
     public SettingsDelegate getSettingsDelegate() { return mSettingsDelegate; }
-    protected TimerDelegate getTimerDelegate() { return mTimerDelegate; }
     public LocationDelegate getLocationDelegate() { return mLocationDelegate; }
     public NetworkDelegate getNetworkDelegate() { return mNetworkDelegate; }
     public JSONDelegate getJsonDelegate() { return mJsonDelegate; }
@@ -84,7 +82,6 @@ public final class StaticDependencies {
     
     public void setDependencies(    LogDelegate logDelegate,
                                     SettingsDelegate settingsDelegate,
-                                    TimerDelegate timerDelegate,
                                     LocationDelegate locationDelegate, 
                                     NetworkDelegateClient networkDelegateClient,
                                     JSONDelegate jsonDelegate,
@@ -93,7 +90,6 @@ public final class StaticDependencies {
                                     Configuration profile) {
         this.mLogDelegate = logDelegate;
         this.mSettingsDelegate = settingsDelegate;
-        this.mTimerDelegate = timerDelegate;
         this.mLocationDelegate = locationDelegate;
         this.mNetworkDelegate = new NetworkDelegate(networkDelegateClient);
         this.mJsonDelegate = jsonDelegate;
