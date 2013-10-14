@@ -1,27 +1,25 @@
 package com.futureplatforms.kirin.dependencies.db;
 
 import java.util.List;
+import java.util.Map;
+
 import com.futureplatforms.kirin.dependencies.internal.DatabaseBackend;
-import com.futureplatforms.kirin.dependencies.internal.DatabaseBackend.DatabaseBackendTxCallback;
+import com.futureplatforms.kirin.dependencies.internal.DatabaseBackend.DatabaseBackendTxRowsCallback;
+import com.futureplatforms.kirin.dependencies.internal.DatabaseBackend.DatabaseBackendTxTokenCallback;
+import com.futureplatforms.kirin.dependencies.internal.DatabaseBackend.DatabaseClosedCallback;
 import com.google.common.collect.Lists;
 
 public class Transaction {
-    public static interface Row {
-        public enum Type { TypeString, TypeInt }
-        
-        public Type columnType(int i);
-        public int columnInt(int i);
-        public String columnString(int i);
+    public static interface TxCB {
+    	public void onError();
     }
     
-    public static interface TxCB {}
-    
-    public static interface TxUniqueReturnCB extends TxCB {
-        public void result(Row row);
+    public static interface TxReturnCB extends TxCB {
+        public void onSuccess(List<Map<String, String>> rowset);
     }
     
     public static interface TxTokenCB extends TxCB {
-    	public void result(String token);
+    	public void onSuccess(String token);
     }
     
     public static abstract class Statement {
@@ -41,9 +39,9 @@ public class Transaction {
     	}
     }
     
-    public static class StatementWithRowReturn extends Statement {
-    	public final TxUniqueReturnCB _Callback;
-    	public StatementWithRowReturn(String sql, String[] params, TxUniqueReturnCB cb) {
+    public static class StatementWithRowsReturn extends Statement {
+    	public final TxReturnCB _Callback;
+    	public StatementWithRowsReturn(String sql, String[] params, TxReturnCB cb) {
     		super(sql, params);
     		this._Callback = cb;
     	}
@@ -73,17 +71,19 @@ public class Transaction {
     
     protected static void getTransaction(String dbID, DatabaseBackend backend, Mode mode, final TransactionCallback cb) {
     	final Transaction tx = new Transaction(dbID, backend, mode);
-    	backend.beginTransaction(dbID, tx._TxID, new DatabaseBackendTxCallback() {
-			
+    	backend.beginTransaction(dbID, tx._TxID, new DatabaseBackendTxRowsCallback() {
+
 			@Override
-			public void onSuccess() {
-				cb.onSuccess(tx);
+			public void onSuccess(List<Map<String, String>> rows) {
+				// TODO Auto-generated method stub
+				
 			}
-			
+
 			@Override
 			public void onError() {
 				cb.onError();
 			}
+			
 		});
     }
     
@@ -100,8 +100,8 @@ public class Transaction {
     	_TxElements.add(TxElementType.Statement); 
     }
     
-    public void execStatementWithUniqueReturn(String sql, String[] params, TxUniqueReturnCB cb) { 
-    	_Statements.add(new StatementWithRowReturn(sql, params, cb));
+    public void execStatementWithUniqueReturn(String sql, String[] params, TxReturnCB cb) { 
+    	_Statements.add(new StatementWithRowsReturn(sql, params, cb));
     	_TxElements.add(TxElementType.Statement); 
     }
     
@@ -110,8 +110,10 @@ public class Transaction {
     	_TxElements.add(TxElementType.File); 
     }
     
-    protected void done() {
+    protected void done(DatabaseClosedCallback closedCallback) {
     	int fileCount = 0, statementCount = 0;
+    	
+    	// run through each transaction element and register it with native
     	for (TxElementType type : _TxElements) {
     		if (type == TxElementType.File) {
     			String file = _Files.get(fileCount);
@@ -120,22 +122,40 @@ public class Transaction {
     		} else {
     			final Statement statement = _Statements.get(statementCount);
     			statementCount++;
-    			_Backend.appendStatementToTransaction(_DbID, _TxID, statement._SQL, statement._Params, new DatabaseBackendTxCallback() {
-					
-					@Override
-					public void onSuccess() {
-						if (statement instanceof StatementWithTokenReturn) {
-							
-						}
-					}
-					
-					@Override
-					public void onError() {
-						// TODO Auto-generated method stub
+    			if (statement instanceof StatementWithTokenReturn) {
+    				final StatementWithTokenReturn casted = (StatementWithTokenReturn) statement;
+    				DatabaseBackendTxTokenCallback cb = new DatabaseBackendTxTokenCallback() {
 						
-					}
-				});
+						@Override
+						public void onSuccess(String token) {
+							casted._Callback.onSuccess(token);
+						}
+						
+						@Override
+						public void onError() {
+							casted._Callback.onError();
+						}
+					};
+					_Backend.appendStatementToTransaction(_DbID, _TxID, statement._SQL, statement._Params, cb);
+    			} else {
+    				final StatementWithRowsReturn casted = (StatementWithRowsReturn) statement;
+    				DatabaseBackendTxRowsCallback cb = new DatabaseBackendTxRowsCallback() {
+						
+						@Override
+						public void onSuccess(List<Map<String, String>> rows) {
+							casted._Callback.onSuccess(rows);
+						}
+						
+						@Override
+						public void onError() {
+							casted._Callback.onError();
+						}
+					};
+					_Backend.appendStatementToTransaction(_DbID, _TxID, statement._SQL, statement._Params, cb);
+    			}
     		}
     	}
+    	
+    	_Backend.endTransaction(_DbID, closedCallback);
     }
 }

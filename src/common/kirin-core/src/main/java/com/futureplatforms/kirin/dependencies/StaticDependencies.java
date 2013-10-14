@@ -5,7 +5,6 @@ import java.util.Map;
 
 import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate.HttpVerb;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate.NetworkResponse;
-import com.futureplatforms.kirin.dependencies.internal.TimerTask.TimerDelegate;
 import com.futureplatforms.kirin.dependencies.json.JSONDelegate;
 import com.futureplatforms.kirin.dependencies.xml.parser.XMLParser;
 

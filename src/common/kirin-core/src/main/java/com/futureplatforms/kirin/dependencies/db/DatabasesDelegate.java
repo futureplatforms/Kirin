@@ -1,7 +1,7 @@
 package com.futureplatforms.kirin.dependencies.db;
 
 import com.futureplatforms.kirin.dependencies.internal.DatabaseBackend;
-import com.futureplatforms.kirin.dependencies.internal.DatabaseBackend.DatabaseBackendCallback;
+import com.futureplatforms.kirin.dependencies.internal.DatabaseBackend.DatabaseOpenedCallback;
 import com.futureplatforms.kirin.dependencies.internal.InternalDependencies;
 
 /**
@@ -18,7 +18,7 @@ public class DatabasesDelegate {
     public static abstract class TxContainer {
         public static interface TxContainerCallback {
             public void onComplete();
-            public void onError(String err);
+            public void onError();
         }
         
         public abstract void execute(Transaction tx);
@@ -26,7 +26,7 @@ public class DatabasesDelegate {
     
     public static void openDatabase(String name, final DatabaseCB callback) {
     	final DatabaseBackend backend = InternalDependencies.getInstance().getDatabaseBackend();
-    	backend.open(name, new DatabaseBackendCallback() {
+    	backend.open(name, new DatabaseOpenedCallback() {
 			
 			@Override
 			public void onOpened(String dbId) {

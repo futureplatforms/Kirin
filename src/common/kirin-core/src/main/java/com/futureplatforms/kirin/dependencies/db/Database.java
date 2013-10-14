@@ -5,6 +5,7 @@ import com.futureplatforms.kirin.dependencies.db.DatabasesDelegate.TxContainer.T
 import com.futureplatforms.kirin.dependencies.db.Transaction.Mode;
 import com.futureplatforms.kirin.dependencies.db.Transaction.TransactionCallback;
 import com.futureplatforms.kirin.dependencies.internal.DatabaseBackend;
+import com.futureplatforms.kirin.dependencies.internal.DatabaseBackend.DatabaseClosedCallback;;
 
 public class Database {
 	private DatabaseBackend _Backend;
@@ -20,29 +21,24 @@ public class Database {
 			@Override
 			public void onSuccess(Transaction t) {
 				txContainer.execute(t);
-				t.done();
-				callback.onComplete();
+				t.done(new DatabaseClosedCallback() {
+					
+					@Override
+					public void onError() {
+						callback.onError();
+					}
+					
+					@Override
+					public void onClosed() {
+						callback.onComplete();
+					}
+				});
 			}
 			
 			@Override
 			public void onError() {
-				callback.onError("");
+				callback.onError();
 			}
 		});
     }
-    
-    public void readTransaction(final TxContainer txContainer) {
-    	Transaction.getTransaction(_DbID, _Backend, Mode.ReadOnly, new TransactionCallback() {
-			
-    		@Override
-			public void onSuccess(Transaction t) {
-				txContainer.execute(t);
-			}
-			
-			@Override
-			public void onError() {
-			}
-		});
-    }
-
 }
