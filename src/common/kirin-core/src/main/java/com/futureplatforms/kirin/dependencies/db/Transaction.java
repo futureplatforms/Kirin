@@ -71,7 +71,7 @@ public class Transaction {
     	public void onError();
     }
     
-    public static void getTransaction(String dbID, DatabaseBackend backend, Mode mode, final TransactionCallback cb) {
+    protected static void getTransaction(String dbID, DatabaseBackend backend, Mode mode, final TransactionCallback cb) {
     	final Transaction tx = new Transaction(dbID, backend, mode);
     	backend.beginTransaction(dbID, tx._TxID, new DatabaseBackendTxCallback() {
 			
@@ -108,5 +108,34 @@ public class Transaction {
     public void execSqlFile(String file) { 
     	_Files.add(file); 
     	_TxElements.add(TxElementType.File); 
+    }
+    
+    protected void done() {
+    	int fileCount = 0, statementCount = 0;
+    	for (TxElementType type : _TxElements) {
+    		if (type == TxElementType.File) {
+    			String file = _Files.get(fileCount);
+    			fileCount++;
+    			_Backend.appendFileToTransaction(_DbID, _TxID, file);
+    		} else {
+    			final Statement statement = _Statements.get(statementCount);
+    			statementCount++;
+    			_Backend.appendStatementToTransaction(_DbID, _TxID, statement._SQL, statement._Params, new DatabaseBackendTxCallback() {
+					
+					@Override
+					public void onSuccess() {
+						if (statement instanceof StatementWithTokenReturn) {
+							
+						}
+					}
+					
+					@Override
+					public void onError() {
+						// TODO Auto-generated method stub
+						
+					}
+				});
+    		}
+    	}
     }
 }

@@ -26,7 +26,7 @@ public class DatabasesDelegate {
     
     public static void openDatabase(String name, final DatabaseCB callback) {
     	final DatabaseBackend backend = InternalDependencies.getInstance().getDatabaseBackend();
-    	backend.openOrCreate(name, new DatabaseBackendCallback() {
+    	backend.open(name, new DatabaseBackendCallback() {
 			
 			@Override
 			public void onOpened(String dbId) {

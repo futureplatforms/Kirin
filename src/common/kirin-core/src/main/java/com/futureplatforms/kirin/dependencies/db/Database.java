@@ -20,6 +20,7 @@ public class Database {
 			@Override
 			public void onSuccess(Transaction t) {
 				txContainer.execute(t);
+				t.done();
 				callback.onComplete();
 			}
 			
@@ -31,7 +32,7 @@ public class Database {
     }
     
     public void readTransaction(final TxContainer txContainer) {
-    	Transaction.getTransaction(_DbID,_Backend, Mode.ReadOnly, new TransactionCallback() {
+    	Transaction.getTransaction(_DbID, _Backend, Mode.ReadOnly, new TransactionCallback() {
 			
     		@Override
 			public void onSuccess(Transaction t) {
