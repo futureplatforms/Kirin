@@ -1,7 +1,5 @@
 package com.futureplatforms.kirin.android.app;
 
-import java.lang.reflect.ParameterizedType;
-
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 
@@ -9,40 +7,30 @@ import com.futureplatforms.kirin.IKirinNativeObject;
 import com.futureplatforms.kirin.KirinModule;
 
 abstract public class KirinDialogFragment<Module extends KirinModule<KirinNativeObj>, KirinNativeObj extends IKirinNativeObject>
-		extends DialogFragment implements com.futureplatforms.kirin.IKirinNativeObject, IKirinFragment<Module> {
+		extends DialogFragment implements IKirinNativeObject,
+		IKirinFragment<Module> {
 	private Module module;
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		// Instantiate the module
-		try {
-		    module = (Module) ((Class<?>) ((ParameterizedType) this.getClass()
-                    .getGenericSuperclass()).getActualTypeArguments()[0])
-                    .newInstance();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		module.onPrototypeLoad((KirinNativeObj) this);
+		KirinFragmentMethods.onCreate(this);
 	}
 
 	@Override
-	public void onDestroyView() {
-		super.onDestroyView();
-		module.onUnload();
+	public void onDestroy() {
+		super.onDestroy();
+		KirinFragmentMethods.onUnload(this);
 	}
 
+	@Override
 	public Module getModule() {
 		return module;
 	}
 
 	@Override
-	public void onSaveInstanceState(Bundle outState) {
-		outState.putString("WORKAROUND_FOR_BUG_19917_KEY",
-				"WORKAROUND_FOR_BUG_19917_VALUE");
-		super.onSaveInstanceState(outState);
+	public void setModule(Module module) {
+		this.module = module;
 	}
 
 }

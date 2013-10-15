@@ -10,8 +10,8 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<platform.version>4.3_r1</platform.version>
-		<android.plugin.version>3.6.1</android.plugin.version>
+		<platform.version>4.3_r2</platform.version>
+		<android.plugin.version>3.7.0</android.plugin.version>
 	</properties>
 	<parent>
 		<artifactId>kirin</artifactId>
