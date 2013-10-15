@@ -1,7 +1,5 @@
 package com.futureplatforms.kirin.gwt.client.delegates.db;
 
-import com.futureplatforms.kirin.dependencies.db.DatabasesDelegate.TxContainer;
-import com.futureplatforms.kirin.dependencies.db.DatabasesDelegate.TxContainer.TxContainerCallback;
 
 public class PerformTransaction {
     private TxContainerCallback _TxContainerCallback;

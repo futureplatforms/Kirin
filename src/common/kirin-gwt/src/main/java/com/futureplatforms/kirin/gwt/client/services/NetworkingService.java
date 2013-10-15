@@ -8,6 +8,9 @@ import org.timepedia.exporter.client.ExportPackage;
 import org.timepedia.exporter.client.Exportable;
 
 import com.futureplatforms.kirin.dependencies.StaticDependencies;
+import com.futureplatforms.kirin.gwt.client.KirinService;
+import com.futureplatforms.kirin.gwt.client.services.natives.NetworkingServiceNative;
+import com.futureplatforms.kirin.gwt.compile.NoBind;
 import com.google.common.collect.Maps;
 import com.google.gwt.core.client.GWT;
 

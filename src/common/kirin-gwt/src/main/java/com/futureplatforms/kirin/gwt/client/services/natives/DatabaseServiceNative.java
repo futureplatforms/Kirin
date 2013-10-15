@@ -3,8 +3,12 @@ package com.futureplatforms.kirin.gwt.client.services.natives;
 import com.futureplatforms.kirin.gwt.client.IKirinNativeService;
 
 public interface DatabaseServiceNative extends IKirinNativeService {
-    public void openOrCreate(String filename, int version, String txId, String onOpenedToken, String onErrorToken);
-    public void beginTransaction(String filename, String txId, int errToken, int successToken);
-    public void endTransaction(String txId);
-    public void appendToTransaction(String txId, String type, String statement, );
+
+	public void open(String filename, String dbId);
+    public void beginTx(String dbId, String txId);
+    public void endTx(String dbId, String txId);
+    public void appendStatementToTxForRows(String dbId, String txId, String statementId, String type, String statement, String[] params);
+    public void appendStatementToTxForToken(String dbId, String txId, String statementId, String type, String statement, String[] params);
+    public void appendFileToTx(String dbId, String txId, String statementId, String type, String filename);
+
 }

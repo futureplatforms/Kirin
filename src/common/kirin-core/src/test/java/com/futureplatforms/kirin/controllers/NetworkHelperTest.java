@@ -7,13 +7,13 @@ import org.jmock.Mockery;
 import org.jmock.integration.junit4.JUnit4Mockery;
 import org.junit.Test;
 
+import com.futureplatforms.kirin.controllers.TimerTask.PlatformTimerTask;
+import com.futureplatforms.kirin.controllers.TimerTask.TimerDelegate;
 import com.futureplatforms.kirin.dependencies.StaticDependencies;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate.HttpVerb;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate.NetworkResponse;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegateClient;
 import com.futureplatforms.kirin.dependencies.internal.InternalDependencies;
-import com.futureplatforms.kirin.dependencies.internal.TimerTask.PlatformTimerTask;
-import com.futureplatforms.kirin.dependencies.internal.TimerTask.TimerDelegate;
 import com.google.common.collect.Maps;
 
 public class NetworkHelperTest {

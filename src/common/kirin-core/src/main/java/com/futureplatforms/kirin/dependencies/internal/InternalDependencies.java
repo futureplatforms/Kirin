@@ -1,6 +1,6 @@
 package com.futureplatforms.kirin.dependencies.internal;
 
-import com.futureplatforms.kirin.dependencies.internal.TimerTask.TimerDelegate;
+import com.futureplatforms.kirin.controllers.TimerTask.TimerDelegate;
 
 // Apps should not use this!
 public class InternalDependencies {
@@ -14,12 +14,12 @@ public class InternalDependencies {
 		return _TimerDelegate;
 	}
 	
-	private DatabaseBackend _DatabaseBackend;
-	public DatabaseBackend getDatabaseBackend(){
+	private DatabaseAccessorBackend _DatabaseBackend;
+	public DatabaseAccessorBackend getDatabaseAccessor(){
 		return _DatabaseBackend;
 	}
 	
-	public void setDependencies(TimerDelegate timerDelegate, DatabaseBackend databaseBackend) {
+	public void setDependencies(TimerDelegate timerDelegate, DatabaseAccessorBackend databaseBackend) {
 		this._TimerDelegate = timerDelegate;
 		this._DatabaseBackend = databaseBackend;
 	}

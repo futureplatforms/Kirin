@@ -1,7 +1,7 @@
 package com.futureplatforms.kirin.gwt.client.delegates;
 
-import com.futureplatforms.kirin.dependencies.internal.TimerTask.PlatformTimerTask;
-import com.futureplatforms.kirin.dependencies.internal.TimerTask.TimerDelegate;
+import com.futureplatforms.kirin.controllers.TimerTask.PlatformTimerTask;
+import com.futureplatforms.kirin.controllers.TimerTask.TimerDelegate;
 import com.google.gwt.user.client.Timer;
 
 /**

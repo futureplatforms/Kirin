@@ -2,10 +2,10 @@ package com.futureplatforms.kirin.gwt.client.services.db;
 
 import org.timepedia.exporter.client.Exportable;
 
+import com.futureplatforms.kirin.controllers.DatabasesDelegate.Database;
+import com.futureplatforms.kirin.controllers.DatabasesDelegate.TxContainer;
+import com.futureplatforms.kirin.controllers.DatabasesDelegate.TxContainer.TxContainerCallback;
 import com.futureplatforms.kirin.dependencies.StaticDependencies;
-import com.futureplatforms.kirin.dependencies.db.DatabasesDelegate.Database;
-import com.futureplatforms.kirin.dependencies.db.DatabasesDelegate.TxContainer;
-import com.futureplatforms.kirin.dependencies.db.DatabasesDelegate.TxContainer.TxContainerCallback;
 import com.futureplatforms.kirin.gwt.client.services.natives.DatabaseServiceNative;
 
 public class DatabasePrototype implements Database, Exportable {

@@ -3,10 +3,10 @@ package com.futureplatforms.kirin.dependencies.db;
 import java.util.List;
 import java.util.Map;
 
-import com.futureplatforms.kirin.dependencies.internal.DatabaseBackend;
-import com.futureplatforms.kirin.dependencies.internal.DatabaseBackend.DatabaseBackendTxRowsCallback;
-import com.futureplatforms.kirin.dependencies.internal.DatabaseBackend.DatabaseBackendTxTokenCallback;
-import com.futureplatforms.kirin.dependencies.internal.DatabaseBackend.DatabaseClosedCallback;
+import com.futureplatforms.kirin.dependencies.internal.TransactionBackend;
+import com.futureplatforms.kirin.dependencies.internal.TransactionBackend.TxClosedCallback;
+import com.futureplatforms.kirin.dependencies.internal.TransactionBackend.TxRowsCallback;
+import com.futureplatforms.kirin.dependencies.internal.TransactionBackend.TxTokenCallback;
 import com.google.common.collect.Lists;
 
 public class Transaction {
@@ -59,17 +59,15 @@ public class Transaction {
     public enum Mode {
     	ReadOnly, ReadWrite
     }
-    private DatabaseBackend _Backend;
-    private Mode _Mode;
-    private static int _TxCount = 0;
-    public final String _TxID, _DbID;
+    private TransactionBackend _Backend;
     
     public static interface TransactionCallback {
     	public void onSuccess(Transaction t);
     	public void onError();
     }
     
-    protected static void getTransaction(String dbID, DatabaseBackend backend, Mode mode, final TransactionCallback cb) {
+    /*
+    protected static void getTransaction(String dbID, DatabaseAccessorBackend backend, Mode mode, final TransactionCallback cb) {
     	final Transaction tx = new Transaction(dbID, backend, mode);
     	backend.beginTransaction(dbID, tx._TxID, new DatabaseBackendTxRowsCallback() {
 
@@ -85,22 +83,18 @@ public class Transaction {
 			}
 			
 		});
-    }
+    }*/
     
-    private Transaction(String dbID, DatabaseBackend backend, Mode mode) {
+    protected Transaction(TransactionBackend backend) {
     	this._Backend = backend;
-    	this._Mode = mode;
-    	this._DbID = dbID;
-    	this._TxID = dbID + _TxCount;
-    	_TxCount++;
     }
     
-    public void execStatement(String sql, String[] params, TxTokenCB cb) { 
+    public void execStatementWithTokenReturn(String sql, String[] params, TxTokenCB cb) { 
     	_Statements.add(new StatementWithTokenReturn(sql, params, cb));
     	_TxElements.add(TxElementType.Statement); 
     }
     
-    public void execStatementWithUniqueReturn(String sql, String[] params, TxReturnCB cb) { 
+    public void execStatementWithRowsReturn(String sql, String[] params, TxReturnCB cb) { 
     	_Statements.add(new StatementWithRowsReturn(sql, params, cb));
     	_TxElements.add(TxElementType.Statement); 
     }
@@ -110,7 +104,7 @@ public class Transaction {
     	_TxElements.add(TxElementType.File); 
     }
     
-    protected void done(DatabaseClosedCallback closedCallback) {
+    protected void pullTrigger(TxClosedCallback closedCallback) {
     	int fileCount = 0, statementCount = 0;
     	
     	// run through each transaction element and register it with native
@@ -118,13 +112,13 @@ public class Transaction {
     		if (type == TxElementType.File) {
     			String file = _Files.get(fileCount);
     			fileCount++;
-    			_Backend.appendFileToTransaction(_DbID, _TxID, file);
+    			_Backend.appendFileToTransaction(file);
     		} else {
     			final Statement statement = _Statements.get(statementCount);
     			statementCount++;
     			if (statement instanceof StatementWithTokenReturn) {
     				final StatementWithTokenReturn casted = (StatementWithTokenReturn) statement;
-    				DatabaseBackendTxTokenCallback cb = new DatabaseBackendTxTokenCallback() {
+    				TxTokenCallback cb = new TxTokenCallback() {
 						
 						@Override
 						public void onSuccess(String token) {
@@ -136,10 +130,10 @@ public class Transaction {
 							casted._Callback.onError();
 						}
 					};
-					_Backend.appendStatementToTransaction(_DbID, _TxID, statement._SQL, statement._Params, cb);
+					_Backend.appendStatementToTransaction(statement._SQL, statement._Params, cb);
     			} else {
     				final StatementWithRowsReturn casted = (StatementWithRowsReturn) statement;
-    				DatabaseBackendTxRowsCallback cb = new DatabaseBackendTxRowsCallback() {
+    				TxRowsCallback cb = new TxRowsCallback() {
 						
 						@Override
 						public void onSuccess(List<Map<String, String>> rows) {
@@ -151,11 +145,11 @@ public class Transaction {
 							casted._Callback.onError();
 						}
 					};
-					_Backend.appendStatementToTransaction(_DbID, _TxID, statement._SQL, statement._Params, cb);
+					_Backend.appendStatementToTransaction(statement._SQL, statement._Params, cb);
     			}
     		}
     	}
     	
-    	_Backend.endTransaction(_DbID, closedCallback);
+    	_Backend.endTransaction(closedCallback);
     }
 }

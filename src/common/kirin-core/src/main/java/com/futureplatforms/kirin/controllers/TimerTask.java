@@ -1,4 +1,6 @@
-package com.futureplatforms.kirin.dependencies.internal;
+package com.futureplatforms.kirin.controllers;
+
+import com.futureplatforms.kirin.dependencies.internal.InternalDependencies;
 
 
 /**

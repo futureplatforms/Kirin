@@ -33,10 +33,18 @@ public class KirinNetworking implements NetworkDelegateClient {
 
         private static native void doIt(String method, String url, String[] headerKeys, String[] headerVals, String postData, NetworkRunner p) /*-{
             var networking = $wnd.EXPOSED_TO_NATIVE.native2js.resolveModule("NetworkingService");
-            var callback = function(code, headers, payload) {
+            
+            // This closure is an "instance" of NetworkingSuccess
+            var success = function(code, headers, payload) {
                 console.log("callback! " + payloaad);
             };
-            networking._retrieve(method, url, postData, headerKeys, headerVals, callback);
+            
+            // This closure is an "instance" of NetworkingFailure
+            var failure = function() {
+            	console.log("failure!");
+            };
+            
+            networking._retrieve(method, url, postData, headerKeys, headerVals, success, failure);
         }-*/;
     }
     

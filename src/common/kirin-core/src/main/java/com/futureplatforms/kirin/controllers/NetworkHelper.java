@@ -6,7 +6,6 @@ import java.util.Map;
 import com.futureplatforms.kirin.dependencies.StaticDependencies;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate.HttpVerb;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate.NetworkResponse;
-import com.futureplatforms.kirin.dependencies.internal.TimerTask;
 
 public final class NetworkHelper {
     

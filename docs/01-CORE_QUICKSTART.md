@@ -9,7 +9,7 @@ Get a new Kirin project with Android, iPhone and WP8 targets.
 * Ensure you have maven installed (`mvn -version` must work on command line)
 * For eclipse development, install the [M2E plugin](http://eclipse.org/m2e/)
 * For android development, ensure you have the Android SDK installed, and the `ANDROID_HOME` environment variable is set -- make sure this is up-to-date by running `android update sdk`
-* Ensure you have your platform's development tools installed (XCode for iOS, MS Visual Studio Express for Windows Phone)
+* Ensure you have your platform's development tools installed (xcode for iOS, MS Visual Studio Express for Windows Phone)
 
 ## Build the core kirin libraries
 
@@ -20,7 +20,7 @@ You should see a bunch of compile logs, followed by a message similar to:
     [INFO] ------------------------------------------------------------------------
     [INFO] Reactor Summary:
     [INFO] 
-    [INFO] kirin-archetype ................................... SUCCESS [0.376s]
+    [INFO] kirin ............................................. SUCCESS [0.376s]
     [INFO] kirin-core ........................................ SUCCESS [3.825s]
     [INFO] kirin-gwt-stub .................................... SUCCESS [0.878s]
     [INFO] kirin-android ..................................... SUCCESS [3.615s]
