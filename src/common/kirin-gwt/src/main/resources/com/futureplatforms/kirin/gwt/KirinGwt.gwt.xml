@@ -7,6 +7,9 @@
   <inherits name='com.futureplatforms.Kirin'/>
   <inherits name="com.google.gwt.json.JSON" /> 
   
+  <!--  Guava -->
+  <inherits name="com.google.common.collect.Collect"/>
+  
   <!-- We need the JUnit module in the main module,               -->
   <!-- otherwise eclipse complains (Google plugin bug?)           -->
   <!-- <inherits name='com.google.gwt.junit.JUnit' /> -->

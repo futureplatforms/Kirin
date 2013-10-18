@@ -36,7 +36,7 @@ public class NetworkHelper {
             
         };
         tt.schedule(30000);
-        
+        _Dependencies.getLogDelegate().log("connecting to " + url);
         _Dependencies.getNetworkDelegate().doHttp(verb, url, payload, headers, new NetworkResponse() {
             
             public void onSuccess(int res, String result, Map<String, String> headers) {

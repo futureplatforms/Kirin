@@ -16,7 +16,7 @@ public abstract class KirinModule<T extends IKirinNativeObject> implements Expor
 	}
 	
 	@NoExport
-	protected KirinModule(T nativeObject) {
+	public KirinModule(T nativeObject) {
 		this();
 		mNativeObject = nativeObject;
 	}

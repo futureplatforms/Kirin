@@ -10,7 +10,7 @@
   </parent>
   <groupId>com.futureplatforms.kirin.console</groupId>
   <artifactId>kirin-console</artifactId>
-  <packaging>pom</packaging>
+  <packaging>jar</packaging>
   <name>kirin-console</name>
   <url>http://maven.apache.org</url>
   <properties>
