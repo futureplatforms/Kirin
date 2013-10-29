@@ -13,7 +13,11 @@ public class GwtFormatter extends Formatter {
 
     @Override
     public Date parseDate(String format, String text) {
-        return DateTimeFormat.getFormat(format).parse(text);
+    	Date date = new Date(0);
+    	int success = DateTimeFormat.getFormat(format).parse(text, 0, date);
+    	
+    	if (success == 0) return null;
+    	return date;
     }
 
     @Override
