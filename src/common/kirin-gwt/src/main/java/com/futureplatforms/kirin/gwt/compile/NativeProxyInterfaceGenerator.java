@@ -13,7 +13,8 @@ public class NativeProxyInterfaceGenerator extends Generator {
 
 	private final InterfaceGenerator[] mProtocolGenerators = {
 			new CSClassGenerator("../BINDINGS/windows/fromNative/"),
-			new ObjectiveCProtocolGenerator("../BINDINGS/ios/fromNative/")
+			new ObjectiveCProtocolGenerator("../BINDINGS/ios/fromNative/"),
+			new JSBindingGenerator("../BINDINGS/js/fromNative/")
 	};
 	 
 	private final ExporterGenerator mExporter = new ExporterGenerator();
