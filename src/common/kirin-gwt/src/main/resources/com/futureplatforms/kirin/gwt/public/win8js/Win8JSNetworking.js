@@ -23,6 +23,8 @@ defineModule("Win8JSNetworking", function (require, exports) {
 					if (xhr.readyState === 4) {
 						if (xhr.status === 200) {
 							kirinHelper.executeCallback(payload, [encodeURIComponent(xhr.responseText)]);
+						} else {
+						    kirinHelper.executeCallback(onError);
 						}
 					}
 				};

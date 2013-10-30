@@ -16,10 +16,22 @@ defineModule("Win8JSKirin", function (require, exports) {
 								// For GWT modules we want to stick an underscore per parameter on to the method name
 								if (isGwt) { 
 									var numParams = obj[prop].prototype.constructor.length;
-									for (var j=0; j<numParams; j++) {
-										prop += "_";
+									for (var i=0; i<numParams; i++) {
+										// HACKERY AHOY
+										// Some Kirin modules have methods with the same name but
+										// different number of parameters.  How can Javascript tell the
+										// difference?  Underscores for parameters.  But we don't know which 
+										// methods are duplicated in this way.  SO.  If a method has parameters,
+										// create versions for all numbers of parameters up to the maximum.
+										var propWithUnderscores = prop
+										
+										for (var j=0; j<(i + 1); j++) {
+											propWithUnderscores += "_";
+										}
+										
+										methods.push(propWithUnderscores);
 									}
-								}
+								} 
 								methods.push(prop);
 							}
 						}
