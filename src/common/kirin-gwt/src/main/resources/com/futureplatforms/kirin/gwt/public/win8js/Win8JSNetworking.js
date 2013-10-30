@@ -8,25 +8,25 @@ defineModule("Win8JSNetworking", function (require, exports) {
 				var headers = params.headers;
 				var payload = params.payload;
 				var onError = params.onError;
+				var postData = params.postData;
 				
 				var xhr = new XMLHttpRequest();
-				
+				xhr.open(method, url, true);
 				for (var header in headers) {
 					if (headers.hasOwnProperty(header)) {
 						xhr.setRequestHeader(header, headers[header]);
 					}
 				}
-				
-				xhr.open(method, url, true);
+
 				xhr.onreadystatechange = function() {
 					console.log("onreadystatechange: " + xhr.readyState + ", " + xhr.status);
 					if (xhr.readyState === 4) {
 						if (xhr.status === 200) {
-							kirinHelper.executeCallback(payload, xhr.responseText);
+							kirinHelper.executeCallback(payload, [encodeURIComponent(xhr.responseText)]);
 						}
 					}
 				};
-				xhr.send();
+				xhr.send(postData);
 			}
 		};
 

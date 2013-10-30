@@ -13,9 +13,12 @@ defineModule("Win8JSKirin", function (require, exports) {
 					for (var prop in obj) {
 						if (obj.hasOwnProperty(prop)) {
 							if (typeof obj[prop] === 'function') {
-								var numParams = obj[prop].prototype.constructor.length;
-								for (var j=0; j<numParams; j++) {
-									prop += "_";
+								// For GWT modules we want to stick an underscore per parameter on to the method name
+								if (isGwt) { 
+									var numParams = obj[prop].prototype.constructor.length;
+									for (var j=0; j<numParams; j++) {
+										prop += "_";
+									}
 								}
 								methods.push(prop);
 							}
