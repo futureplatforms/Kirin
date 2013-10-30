@@ -7,13 +7,6 @@ defineModule("Win8JSKirin", function (require, exports) {
 				obj: obj,
 				isGwt: isGwt
 			};
-			var invokeMethod = function invokeMethod(methodName, params) {
-				if (!params || params.length === 0) {
-					EXPOSED_TO_NATIVE.native2js.execMethod(moduleName, methodName);
-				} else {
-					EXPOSED_TO_NATIVE.native2js.execMethod(moduleName, methodName, params);
-				}
-			};
 			return {
 				onLoad: function onLoad() {
 					var methods = [];
@@ -32,7 +25,19 @@ defineModule("Win8JSKirin", function (require, exports) {
 				},
 				
 				invokeMethod: function(methodName, params) {
-					invokeMethod.apply(invokeMethod, arguments);
+					if (!params || params.length === 0) {
+						EXPOSED_TO_NATIVE.native2js.execMethod(moduleName, methodName);
+					} else {
+						EXPOSED_TO_NATIVE.native2js.execMethod(moduleName, methodName, params);
+					}
+				}, 
+				
+				executeCallback: function(callback, params) {
+					if (!params || params.length === 0) {
+						EXPOSED_TO_NATIVE.native2js.execCallback(callback);
+					} else {
+						EXPOSED_TO_NATIVE.native2js.execCallback(callback, params);
+					}
 				}
 			};
 		})();

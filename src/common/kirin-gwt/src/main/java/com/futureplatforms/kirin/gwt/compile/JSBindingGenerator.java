@@ -20,6 +20,11 @@ public class JSBindingGenerator extends InterfaceGenerator {
 		sb.append("    kirinHelper = kirin.bindModule(native, moduleName, true);");
 		sb.append("    kirinHelper.onLoad();");
 		sb.append("  };");
+		
+		// Synthesize an onResume method, all modules need it but for some arcane reason it gets treated specially by Kirin
+		sb.append("  exports.onResume = function() {");
+		sb.append("    kirinHelper.invokeMethod('onResume');");
+		sb.append("  };");
 		return sb.toString();
 	}
 
