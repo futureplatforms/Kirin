@@ -3,6 +3,7 @@ package com.futureplatforms.kirin.gwt.compile;
 import java.io.PrintWriter;
 
 import com.futureplatforms.kirin.IKirinProxied;
+import com.futureplatforms.kirin.gwt.compile.js.JSToNativeGenerator;
 import com.google.gwt.core.ext.Generator;
 import com.google.gwt.core.ext.GeneratorContext;
 import com.google.gwt.core.ext.TreeLogger;
@@ -18,7 +19,8 @@ public class NativeObjectDeferredBindingGenerator extends Generator {
 
 	private final InterfaceGenerator[] mProtocolGenerators = {
 			new CSInterfaceGenerator("../BINDINGS/windows/toNative/"),
-			new ObjectiveCProtocolGenerator("../BINDINGS/ios/toNative/")
+			new ObjectiveCProtocolGenerator("../BINDINGS/ios/toNative/"),
+			new JSToNativeGenerator("../BINDINGS/js/toNative/")
 	};
 	
 	@Override

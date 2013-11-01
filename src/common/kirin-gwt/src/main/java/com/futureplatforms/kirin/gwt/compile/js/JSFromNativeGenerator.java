@@ -1,10 +1,11 @@
-package com.futureplatforms.kirin.gwt.compile;
+package com.futureplatforms.kirin.gwt.compile.js;
 
+import com.futureplatforms.kirin.gwt.compile.InterfaceGenerator;
 import com.google.gwt.core.ext.typeinfo.JMethod;
 
-public class JSBindingGenerator extends InterfaceGenerator {
-
-	public JSBindingGenerator(String partialPath) {
+public class JSFromNativeGenerator extends InterfaceGenerator {
+	
+	public JSFromNativeGenerator(String partialPath) {
 		super(partialPath);
 	}
 
