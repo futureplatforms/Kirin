@@ -28,13 +28,22 @@ public class JSToNativeGenerator extends InterfaceGenerator {
 	@Override
 	public String getMethodSignature(JMethod method) {
 		StringBuilder sb = new StringBuilder();
-		sb.append("  exports." + method.getName() + " = function(");
+		
+		StringBuilder _s = new StringBuilder();
+		for (JParameter param : method.getParameters()) {
+			_s.append('_');
+		}
+		
+		sb.append("  exports." + method.getName() + _s.toString() + " = function(");
 		JParameter[] params = method.getParameters();
 		for (int i=0, len=params.length; i<len; i++) {
 			sb.append("arg" + i);
+			if (i < (params.length - 1)) {
+				sb.append(", ");
+			}
 		}
 		sb.append(") {");
-		sb.append("    console.log('" + _Name + "." + method.getName() + "('");
+		sb.append("    console.log('" + _Name + "." + method.getName() + _s.toString() + "('");
 		for (int i=0, len=params.length; i<len; i++) {
 			sb.append(" + arg" + i + " + ', '");
 		}
