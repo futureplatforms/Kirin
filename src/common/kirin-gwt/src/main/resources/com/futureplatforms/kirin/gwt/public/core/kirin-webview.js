@@ -152,6 +152,8 @@ defineModule("kirin", function (require, exports) {
 		return require(moduleName);
 	}
 
+	native2js.resolveModule = resolveModule;
+
 	native2js.loadProxyForModule = function (moduleName, methodNames) {
 		var proxy = createProxy(moduleName, methodNames);
 		var module;

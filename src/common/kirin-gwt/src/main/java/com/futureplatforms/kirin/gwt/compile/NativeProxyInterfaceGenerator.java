@@ -2,6 +2,7 @@ package com.futureplatforms.kirin.gwt.compile;
 
 import org.timepedia.exporter.rebind.ExporterGenerator;
 
+import com.futureplatforms.kirin.gwt.compile.js.JSFromNativeGenerator;
 import com.google.gwt.core.ext.Generator;
 import com.google.gwt.core.ext.GeneratorContext;
 import com.google.gwt.core.ext.TreeLogger;
@@ -13,7 +14,8 @@ public class NativeProxyInterfaceGenerator extends Generator {
 
 	private final InterfaceGenerator[] mProtocolGenerators = {
 			new CSClassGenerator("../BINDINGS/windows/fromNative/"),
-			new ObjectiveCProtocolGenerator("../BINDINGS/ios/fromNative/")
+			new ObjectiveCProtocolGenerator("../BINDINGS/ios/fromNative/"),
+			new JSFromNativeGenerator("../BINDINGS/js/fromNative/")
 	};
 	 
 	private final ExporterGenerator mExporter = new ExporterGenerator();
