@@ -9,14 +9,16 @@ using System.Threading;
 
 namespace KirinWP8
 {
-    public class WP8Networking : KirinExtension, INetworking
+    public class WP8NetworkingRunner
     {
         private string payload, onError, toPost;
         private bool isGet;
         private JObject _lastRequest;
+        private KirinAssistant _Assistant;
 
-        public WP8Networking(string s, Kirin k) : base(s, k)
+        public WP8NetworkingRunner(KirinAssistant assistant)
         {
+            this._Assistant = assistant;
         }
 
         public void downloadString_(JObject o)
@@ -42,7 +44,8 @@ namespace KirinWP8
             onError = o["onError"].ToString();
 
             HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
-            if (headers != null) {
+            if (headers != null)
+            {
                 foreach (JProperty prop in headers)
                 {
                     var val = prop.Value.ToString();
@@ -61,6 +64,7 @@ namespace KirinWP8
             req.Method = method;
             PerformRequest(req);
         }
+
 
         private void Net_Req(IAsyncResult res)
         {
@@ -89,7 +93,7 @@ namespace KirinWP8
             {
                 var req = (HttpWebRequest)res.AsyncState;
                 var resp = (HttpWebResponse)req.EndGetResponse(res);
-                 
+
                 var streamReader = new StreamReader(resp.GetResponseStream());
                 string s = streamReader.ReadToEnd();
 
@@ -110,7 +114,7 @@ namespace KirinWP8
                     }
                 }
 
-                KirinAssistant.executeCallback(payload, sb.ToString());
+                _Assistant.executeCallback(payload, sb.ToString());
             }
             catch (WebException wex)
             {
@@ -128,7 +132,7 @@ namespace KirinWP8
                 downloadString_(_lastRequest);
                 return;
             }
-            KirinAssistant.executeCallback(onError, "Exception: " + wex.ToString());
+            _Assistant.executeCallback(onError, "Exception: " + wex.ToString());
         }
 
         private void PerformRequest(HttpWebRequest request)
@@ -139,6 +143,19 @@ namespace KirinWP8
                 request.BeginGetResponse(new AsyncCallback(Net_Resp), request);
             else
                 request.BeginGetRequestStream(new AsyncCallback(Net_Req), request);
+        }
+    }
+
+    public class WP8Networking : KirinExtension, INetworking
+    {
+        
+        public WP8Networking(string s, Kirin k) : base(s, k)
+        {
+        }
+
+        public void downloadString_(JObject o)
+        {
+            new WP8NetworkingRunner(this.KirinAssistant).downloadString_(o);
         }
     }
 }
