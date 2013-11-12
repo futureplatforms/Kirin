@@ -92,7 +92,7 @@ public abstract class JSONObject {
 
 	public int getInt(String key) {
 		try {
-			return getInt(key);
+			return (int)getDouble(key);
 		} catch (Throwable t) {
 			return -1;
 		}
