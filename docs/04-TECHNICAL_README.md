@@ -22,7 +22,7 @@ Kirin provides the following delegates by default
 
 ## GWT
 
-**Absolutely all common code in a Kirin project must be GWT compatible.**
+### Absolutely all common code in a Kirin project must be GWT compatible.
 
 This has various implications for the app code you write.  Information about this can be found online <link to follow>, however here are the most important differences to regular Java development.
 

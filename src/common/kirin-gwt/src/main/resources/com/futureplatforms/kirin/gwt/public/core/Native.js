@@ -21,7 +21,6 @@ var EXPOSED_TO_NATIVE = {
 };
 
 defineModule("Native", function (require, exports) {
-	var oldConsoleLog = console.log;
 	/*
 	 * First: make sure we can call native.
 	 * We'll make commands go from Native.exec("NativeObject.make_for_", "something", "me");
@@ -82,7 +81,6 @@ defineModule("Native", function (require, exports) {
 	// reasonable logging.
 	
 	// we're going to be a little messy here, and rewrite 
-	var log = console.log;
 	// assume the presence of console and document.
 	console.log = function (message) {
 		exec("DebugConsole.log_atLevel_", message, "INFO");

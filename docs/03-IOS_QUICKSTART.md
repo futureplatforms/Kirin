@@ -35,6 +35,9 @@ If you're building an iOS app which targets both iPhone and iPad then create you
 ### Define `NEW_KIRIN_HOME` in Xcode
 In xcode, type `cmd`-`,` (or go to Preferences -> Locations), and select Source Trees.  Ensure `NEW_KIRIN_HOME` is defined and points to the folder where Kirin is checked out
 
+### Define `M2` in Xcode
+In addition to `NEW_KIRIN_HOME`, add an `M2` variable pointing to the folder in which `mvn` is located -- type `which mvn` in a terminal to find out what this is.
+
 ### Add the Kirin iOS library to your app
 
 Select your project in xcode, and choose the project name  in `Targets`, then choose the `Build Phases` tab.
@@ -73,8 +76,6 @@ Select the project name in `PROJECT`, then choose `Build Settings`.  In `Header 
  
     cd ..
     ./ios_prebuild.sh
-
-
 
 (This process will change once Hoskins has figured out how to invoke Maven so that GWT only builds when needed.)
 
