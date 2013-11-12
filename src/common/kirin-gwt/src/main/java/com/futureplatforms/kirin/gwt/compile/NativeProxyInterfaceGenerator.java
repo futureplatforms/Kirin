@@ -2,6 +2,8 @@ package com.futureplatforms.kirin.gwt.compile;
 
 import org.timepedia.exporter.rebind.ExporterGenerator;
 
+import com.futureplatforms.kirin.gwt.compile.bindings.CSClassGenerator;
+import com.futureplatforms.kirin.gwt.compile.bindings.ObjectiveCProtocolGenerator;
 import com.futureplatforms.kirin.gwt.compile.js.JSFromNativeGenerator;
 import com.google.gwt.core.ext.Generator;
 import com.google.gwt.core.ext.GeneratorContext;

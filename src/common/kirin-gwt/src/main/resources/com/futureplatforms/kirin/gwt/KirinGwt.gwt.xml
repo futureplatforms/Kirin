@@ -1,4 +1,4 @@
-<!DOCTYPE module PUBLIC "//gwt-module/" "http://google-web-toolkit.googlecode.com/svn/tags/1.6.2/distro-source/core/src/gwt-module.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
 <module rename-to='KirinGwt'>
   <!-- Inherit the core Web Toolkit stuff.                        -->
   <inherits name='com.google.gwt.core.Core'/>
@@ -6,7 +6,6 @@
   <inherits name='org.timepedia.exporter.Exporter'/>
   <inherits name='com.futureplatforms.Kirin'/>
   <inherits name="com.google.gwt.json.JSON" /> 
-  
   <!--  Guava -->
   <inherits name="com.google.common.collect.Collect"/>
   

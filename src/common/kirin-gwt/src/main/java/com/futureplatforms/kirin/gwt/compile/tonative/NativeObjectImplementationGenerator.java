@@ -1,8 +1,11 @@
-package com.futureplatforms.kirin.gwt.compile;
+package com.futureplatforms.kirin.gwt.compile.tonative;
 
 import java.io.PrintWriter;
 
 import com.futureplatforms.kirin.IKirinProxied;
+import com.futureplatforms.kirin.gwt.compile.InterfaceGenerator;
+import com.futureplatforms.kirin.gwt.compile.bindings.CSInterfaceGenerator;
+import com.futureplatforms.kirin.gwt.compile.bindings.ObjectiveCProtocolGenerator;
 import com.futureplatforms.kirin.gwt.compile.js.JSToNativeGenerator;
 import com.google.gwt.core.ext.Generator;
 import com.google.gwt.core.ext.GeneratorContext;
@@ -15,7 +18,7 @@ import com.google.gwt.core.ext.typeinfo.TypeOracle;
 import com.google.gwt.user.rebind.ClassSourceFileComposerFactory;
 import com.google.gwt.user.rebind.SourceWriter;
 
-public class NativeObjectDeferredBindingGenerator extends Generator {
+public class NativeObjectImplementationGenerator extends Generator {
 
 	private final InterfaceGenerator[] mProtocolGenerators = {
 			new CSInterfaceGenerator("../BINDINGS/windows/toNative/"),

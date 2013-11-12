@@ -2,7 +2,7 @@ package com.futureplatforms.kirin.gwt.client.delegates.db;
 
 
 public class PerformTransaction {
-    private TxContainerCallback _TxContainerCallback;
+   /* private TxContainerCallback _TxContainerCallback;
     
     public PerformTransaction(TxContainer txContainer,
             TxContainerCallback callback) {
@@ -16,7 +16,7 @@ public class PerformTransaction {
     private void transactionError(String err) {
         this._TxContainerCallback.onError(err);
     }
-    
+    */
     private static native void _transaction() /*-{
         var databases = $wnd.EXPOSED_TO_NATIVE.native2js.resolveModule("DatabaseService");
         databases._transaction

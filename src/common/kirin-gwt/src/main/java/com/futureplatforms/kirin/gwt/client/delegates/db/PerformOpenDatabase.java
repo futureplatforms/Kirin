@@ -4,7 +4,7 @@ import com.futureplatforms.kirin.controllers.DatabasesDelegate.DatabaseCB;
 
 public class PerformOpenDatabase {
     private DatabaseCB _Callback;
-    
+    /*
     public DatabasePrototype openDatabase(String filename, int version, DatabaseCB callback) {
         return _openDatabase(filename, version, this);
     }

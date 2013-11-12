@@ -9,6 +9,13 @@
 /* Begin PBXBuildFile section */
 		091D1AC316F071E3001400FF /* NSObject+Kirin.h in Headers */ = {isa = PBXBuildFile; fileRef = 091D1AC116F071E3001400FF /* NSObject+Kirin.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		091D1AC416F071E3001400FF /* NSObject+Kirin.m in Sources */ = {isa = PBXBuildFile; fileRef = 091D1AC216F071E3001400FF /* NSObject+Kirin.m */; };
+		0991834D1832325E00A35AF8 /* NewDatabasesImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = 0991834B1832325E00A35AF8 /* NewDatabasesImpl.h */; };
+		0991834E1832325E00A35AF8 /* NewDatabasesImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 0991834C1832325E00A35AF8 /* NewDatabasesImpl.m */; };
+		099183511832326600A35AF8 /* NewNetworkingImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = 0991834F1832326600A35AF8 /* NewNetworkingImpl.h */; };
+		099183521832326600A35AF8 /* NewNetworkingImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 099183501832326600A35AF8 /* NewNetworkingImpl.m */; };
+		09918357183232BC00A35AF8 /* KirinGwtServiceProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 09918354183232BC00A35AF8 /* KirinGwtServiceProtocol.h */; };
+		09918358183232BC00A35AF8 /* KirinGwtServiceStub.h in Headers */ = {isa = PBXBuildFile; fileRef = 09918355183232BC00A35AF8 /* KirinGwtServiceStub.h */; };
+		09918359183232BC00A35AF8 /* KirinGwtServiceStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 09918356183232BC00A35AF8 /* KirinGwtServiceStub.m */; };
 		09D8177217E21D6E00611BBE /* UIViewController+Hybrid.h in Headers */ = {isa = PBXBuildFile; fileRef = 09D8177017E21D6E00611BBE /* UIViewController+Hybrid.h */; };
 		09D8177317E21D6E00611BBE /* UIViewController+Hybrid.m in Sources */ = {isa = PBXBuildFile; fileRef = 09D8177117E21D6E00611BBE /* UIViewController+Hybrid.m */; };
 		1A00C8B614B2E2FD00211F34 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1A00C8B414B2E2FD00211F34 /* InfoPlist.strings */; };
@@ -152,6 +159,13 @@
 /* Begin PBXFileReference section */
 		091D1AC116F071E3001400FF /* NSObject+Kirin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Kirin.h"; sourceTree = "<group>"; };
 		091D1AC216F071E3001400FF /* NSObject+Kirin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Kirin.m"; sourceTree = "<group>"; };
+		0991834B1832325E00A35AF8 /* NewDatabasesImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewDatabasesImpl.h; path = GWTServices/NewDatabasesImpl.h; sourceTree = "<group>"; };
+		0991834C1832325E00A35AF8 /* NewDatabasesImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewDatabasesImpl.m; path = GWTServices/NewDatabasesImpl.m; sourceTree = "<group>"; };
+		0991834F1832326600A35AF8 /* NewNetworkingImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewNetworkingImpl.h; path = GWTServices/NewNetworkingImpl.h; sourceTree = "<group>"; };
+		099183501832326600A35AF8 /* NewNetworkingImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewNetworkingImpl.m; path = GWTServices/NewNetworkingImpl.m; sourceTree = "<group>"; };
+		09918354183232BC00A35AF8 /* KirinGwtServiceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KirinGwtServiceProtocol.h; sourceTree = "<group>"; };
+		09918355183232BC00A35AF8 /* KirinGwtServiceStub.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KirinGwtServiceStub.h; sourceTree = "<group>"; };
+		09918356183232BC00A35AF8 /* KirinGwtServiceStub.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KirinGwtServiceStub.m; sourceTree = "<group>"; };
 		09D8177017E21D6E00611BBE /* UIViewController+Hybrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Hybrid.h"; sourceTree = "<group>"; };
 		09D8177117E21D6E00611BBE /* UIViewController+Hybrid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Hybrid.m"; sourceTree = "<group>"; };
 		1A00C8AF14B2E2FD00211F34 /* KirinKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KirinKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -323,6 +337,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		09918353183232BC00A35AF8 /* GwtServices */ = {
+			isa = PBXGroup;
+			children = (
+				09918354183232BC00A35AF8 /* KirinGwtServiceProtocol.h */,
+				09918355183232BC00A35AF8 /* KirinGwtServiceStub.h */,
+				09918356183232BC00A35AF8 /* KirinGwtServiceStub.m */,
+			);
+			path = GwtServices;
+			sourceTree = "<group>";
+		};
 		1A00C8A114B2E2FD00211F34 = {
 			isa = PBXGroup;
 			children = (
@@ -426,6 +450,7 @@
 				1A02011B14BD628300CB9765 /* KirinExtensionStub.h */,
 				1A02011C14BD628400CB9765 /* KirinExtensionStub.m */,
 				1A9FE0A414D5FA4F008C0565 /* KirinExtensionOnMainThread.h */,
+				09918353183232BC00A35AF8 /* GwtServices */,
 				1A02011014BD08B800CB9765 /* Helpers */,
 				1A0200FE14BCF7A600CB9765 /* Internal */,
 				1A02012214BD782000CB9765 /* KirinPaths.h */,
@@ -541,6 +566,8 @@
 		1A02011914BD617700CB9765 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				0991834F1832326600A35AF8 /* NewNetworkingImpl.h */,
+				099183501832326600A35AF8 /* NewNetworkingImpl.m */,
 				1A00C8F914B2E32600211F34 /* Networking.h */,
 				1A00C8FA14B2E32600211F34 /* NetworkingBackend.h */,
 				1A00C8FB14B2E32600211F34 /* NetworkingBackend.m */,
@@ -553,6 +580,8 @@
 		1A02011A14BD619600CB9765 /* Databases */ = {
 			isa = PBXGroup;
 			children = (
+				0991834B1832325E00A35AF8 /* NewDatabasesImpl.h */,
+				0991834C1832325E00A35AF8 /* NewDatabasesImpl.m */,
 				1A00C8F414B2E32600211F34 /* DatabasesBackendProtocol.h */,
 				1A00C8F014B2E32600211F34 /* Connection.h */,
 				1A00C8F114B2E32600211F34 /* Database.h */,
@@ -657,16 +686,19 @@
 				1A00C93514B2E32600211F34 /* Connection.h in Headers */,
 				1A00C93714B2E32600211F34 /* DatabasesBackend.h in Headers */,
 				1A00C93A14B2E32600211F34 /* DatabasesBackendProtocol.h in Headers */,
+				09918358183232BC00A35AF8 /* KirinGwtServiceStub.h in Headers */,
 				1A00C94114B2E32600211F34 /* Networking.h in Headers */,
 				1A00C94214B2E32600211F34 /* NetworkingBackend.h in Headers */,
 				1A00C94514B2E32600211F34 /* SettingsBackend.h in Headers */,
 				1A00C94814B2E32600211F34 /* SQLiteConnection.h in Headers */,
 				1A00C94B14B2E32600211F34 /* SQLiteDatabase.h in Headers */,
 				1A00C94E14B2E32600211F34 /* SQLOperation.h in Headers */,
+				0991834D1832325E00A35AF8 /* NewDatabasesImpl.h in Headers */,
 				1A00C95114B2E32600211F34 /* Transaction.h in Headers */,
 				1A00C99A14B2EE8900211F34 /* KirinKit.h in Headers */,
 				091D1AC316F071E3001400FF /* NSObject+Kirin.h in Headers */,
 				1A02010214BCFFED00CB9765 /* KirinUiFragmentHelper.h in Headers */,
+				09918357183232BC00A35AF8 /* KirinGwtServiceProtocol.h in Headers */,
 				1A02010714BD025E00CB9765 /* KirinScreenHelper.h in Headers */,
 				1A02010D14BD072C00CB9765 /* KirinExtensionHelper.h in Headers */,
 				1A02011214BD09B000CB9765 /* KirinExtensionProtocol.h in Headers */,
@@ -695,6 +727,7 @@
 				1A2EF3C714FA9B9300D00DE2 /* SBJsonStreamWriter.h in Headers */,
 				1A2EF3C914FA9B9300D00DE2 /* SBJsonStreamWriterState.h in Headers */,
 				1A2EF3CB14FA9B9300D00DE2 /* SBJsonTokeniser.h in Headers */,
+				099183511832326600A35AF8 /* NewNetworkingImpl.h in Headers */,
 				1A2EF3CD14FA9B9300D00DE2 /* SBJsonWriter.h in Headers */,
 				1A7B90C914FFDA390090DF19 /* KirinLocation.h in Headers */,
 				1A7B90CA14FFDA390090DF19 /* KirinLocationBackend.h in Headers */,
@@ -871,6 +904,7 @@
 				1A8C032F14C86AF8000829F2 /* StringDownloader.m in Sources */,
 				1AE3FD8E14C9A41D009C2F3B /* KirinState.m in Sources */,
 				1A06437614CF0DB500FB7EE3 /* KirinImagePicker.m in Sources */,
+				099183521832326600A35AF8 /* NewNetworkingImpl.m in Sources */,
 				1A61952B14D22105004FDD8E /* KirinFileSystem.m in Sources */,
 				1A9FE0A214D5F745008C0565 /* NativeObjectHolder.m in Sources */,
 				1A4384BC14E2CCA40012CD5A /* FileSystemBackend.m in Sources */,
@@ -881,7 +915,9 @@
 				1A2EF3C214FA9B9300D00DE2 /* SBJsonStreamParser.m in Sources */,
 				1A2EF3C414FA9B9300D00DE2 /* SBJsonStreamParserAdapter.m in Sources */,
 				1A2EF3C614FA9B9300D00DE2 /* SBJsonStreamParserState.m in Sources */,
+				0991834E1832325E00A35AF8 /* NewDatabasesImpl.m in Sources */,
 				1A2EF3C814FA9B9300D00DE2 /* SBJsonStreamWriter.m in Sources */,
+				09918359183232BC00A35AF8 /* KirinGwtServiceStub.m in Sources */,
 				1A2EF3CA14FA9B9300D00DE2 /* SBJsonStreamWriterState.m in Sources */,
 				1A2EF3CC14FA9B9300D00DE2 /* SBJsonTokeniser.m in Sources */,
 				1A2EF3CE14FA9B9300D00DE2 /* SBJsonWriter.m in Sources */,
