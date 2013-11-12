@@ -23,6 +23,7 @@ public class ConsoleNetwork implements NetworkDelegateClient {
            @Override
            public void run() {
                try {
+            	   System.out.println("URL is " + url);
                    URL theURL = new URL(url);
                    HttpURLConnection conn = (HttpURLConnection) theURL.openConnection();
                    conn.setRequestMethod(verb.toString());
@@ -32,26 +33,30 @@ public class ConsoleNetwork implements NetworkDelegateClient {
                    }
                    
                    if (verb._HasPayload) {
+                	   conn.setDoOutput(true);
                        OutputStream os = conn.getOutputStream();
                        os.write(payload.getBytes());
                        os.close();
                    } 
                    
+                   int code = conn.getResponseCode();
                    InputStream is = conn.getInputStream();
                    int i;
                    String str = "";
                    while ((i=is.read()) != -1) {
-                       str += (byte)i;
+                       str += (char)i;
                    }
+                   
+                   Map<String, List<String>> reqProps = conn.getHeaderFields();
                    Map<String, String> retHeaders = Maps.newHashMap();
-                   Map<String, List<String>> reqProps = conn.getRequestProperties();
                    Set<String> reqKeys = reqProps.keySet();
                    for (String reqKey : reqKeys) {
                        retHeaders.put(reqKey, reqProps.get(reqKey).get(0));
                    }
                    
-                   callback.onSuccess(conn.getResponseCode(), str, retHeaders);
+                   callback.onSuccess(code, str, retHeaders);
                } catch (IOException e) {
+            	   e.printStackTrace();
                    callback.onFail("err");
                }
            }

@@ -7,6 +7,9 @@
   <inherits name='com.futureplatforms.Kirin'/>
   <inherits name="com.google.gwt.json.JSON" /> 
   
+  <!--  Guava -->
+  <inherits name="com.google.common.collect.Collect"/>
+  
   <!-- We need the JUnit module in the main module,               -->
   <!-- otherwise eclipse complains (Google plugin bug?)           -->
   <!-- <inherits name='com.google.gwt.junit.JUnit' /> -->
@@ -37,6 +40,10 @@
   
   <!-- Prevent the user agent alert on Windows Phone --> 
   <set-configuration-property name="user.agent.runtimeWarning" value="false"/>
+  
+  <define-configuration-property name="kirin.config" is-multi-valued="true" />
+  <extend-configuration-property name="kirin.config" value="Debug"/>
+  <extend-configuration-property name="kirin.config" value="Release"/>
   
   <set-configuration-property name="kirin.config" value="Debug"/>
   

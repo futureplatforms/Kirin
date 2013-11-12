@@ -17,9 +17,9 @@
   <properties>
     <!-- Convenience property to set the GWT version -->
     <gwtVersion>2.5.1</gwtVersion>
-    <webappDirectory>${project.build.directory}/${project.build.finalName}/app</webappDirectory>
+    <!-- GWT needs at least java 1.5 -->
+    <webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <gwtModule>com.futureplatforms.kirin.gwt.KirinServiceExport</gwtModule>
   </properties>
 
   <dependencies>
@@ -60,9 +60,9 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-        <groupId>com.google.guava</groupId>
-        <artifactId>guava-gwt</artifactId>
-        <version>14.0</version>
+	  <groupId>com.google.guava</groupId>
+	  <artifactId>guava-gwt</artifactId>
+	  <version>14.0</version>
     </dependency>
   </dependencies>
   
@@ -87,7 +87,7 @@
           </includes>
         </resource>
       </resources>
-  <!-- Copied this stuff off the webs http://stackoverflow.com/a/8535461 -->
+  <!-- Copied this stuff off the webs http://stackoverflow.com/a/8535461/64505 -->
     <pluginManagement>
         <plugins>
             <plugin>
@@ -132,7 +132,6 @@
         </plugins>
     </pluginManagement>
     <plugins>
-        <!-- 
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>gwt-maven-plugin</artifactId>
@@ -144,36 +143,6 @@
             </execution>
           </executions>
         </plugin>
-         -->
-         
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>gwt-maven-plugin</artifactId>
-        <version>${gwtVersion}</version>
-        <executions>
-          <execution>
-            <configuration>
-              <module>${gwtModule}</module>
-            </configuration>
-            <goals>
-              <goal>compile</goal>
-            </goals>
-          </execution>
-        </executions>
-        
-        <!-- Plugin configuration. There are many available options, see 
-          gwt-maven-plugin documentation at codehaus.org -->
-        <configuration>
-          <runTarget>Kirin.html</runTarget>
-          <hostedWebapp>${webappDirectory}</hostedWebapp>
-          <webappDirectory>${webappDirectory}</webappDirectory>
-          <deploy>${deployDirectory}</deploy>
-          <!-- 
-          <validateOnly>true</validateOnly>
-           -->
-        </configuration>
-      </plugin>
-      
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>

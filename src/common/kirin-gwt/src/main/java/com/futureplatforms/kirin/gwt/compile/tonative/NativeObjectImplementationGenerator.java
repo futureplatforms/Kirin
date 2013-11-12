@@ -1,8 +1,9 @@
-package com.futureplatforms.kirin.gwt.compile.tonative;
+package com.futureplatforms.kirin.gwt.compile;
 
 import java.io.PrintWriter;
 
 import com.futureplatforms.kirin.IKirinProxied;
+import com.futureplatforms.kirin.gwt.compile.js.JSToNativeGenerator;
 import com.google.gwt.core.ext.Generator;
 import com.google.gwt.core.ext.GeneratorContext;
 import com.google.gwt.core.ext.TreeLogger;
@@ -14,23 +15,20 @@ import com.google.gwt.core.ext.typeinfo.TypeOracle;
 import com.google.gwt.user.rebind.ClassSourceFileComposerFactory;
 import com.google.gwt.user.rebind.SourceWriter;
 
-/**
- * Creates implementations of the interfaces that represent native objects.
- * Adds a $setKirinNativeObject method to allow the native proxy object
- * to associate itself.  Then creates implementations of each method
- * and invokes the proxy object therein.
- * @author douglashoskins
- *
- */
-public class NativeObjectImplementationGenerator extends Generator {
+public class NativeObjectDeferredBindingGenerator extends Generator {
 
+	private final InterfaceGenerator[] mProtocolGenerators = {
+			new CSInterfaceGenerator("../BINDINGS/windows/toNative/"),
+			new ObjectiveCProtocolGenerator("../BINDINGS/ios/toNative/"),
+			new JSToNativeGenerator("../BINDINGS/js/toNative/")
+	};
+	
 	@Override
 	public String generate(TreeLogger logger, GeneratorContext context,
 			String typeName) throws UnableToCompleteException {
-	    System.out.println("----> NativeObjectImplementationGenerator:" + typeName);
+		System.out.println("----> Generating: " + typeName);
 		TypeOracle oracle = context.getTypeOracle();
 		JClassType nativeObjectType = oracle.findType(typeName);
-
 		JClassType genericNativeObjectType = oracle.findType(IKirinProxied.class.getName());
 		final String genPackageName = nativeObjectType.getPackage().getName();
 		final String genClassName = nativeObjectType.getSimpleSourceName() + "Impl";
@@ -69,6 +67,9 @@ public class NativeObjectImplementationGenerator extends Generator {
 			sourceWriter.commit(logger);
 		}
 
+		for (InterfaceGenerator generator : mProtocolGenerators) {
+			generator.generateProtocolResource(logger, context, nativeObjectType);
+		}
 		return composer.getCreatedClassName();
 	}
 

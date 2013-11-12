@@ -8,6 +8,8 @@ public class JaxpNode implements Node {
     
     public JaxpNode(org.w3c.dom.Node node) {
         mNode = node;
+        if(node != null)
+        mNode.normalize();
     }
     
     @Override

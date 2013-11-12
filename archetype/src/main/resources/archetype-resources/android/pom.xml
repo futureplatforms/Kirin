@@ -5,12 +5,6 @@
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<parent>
-    	<artifactId>${rootArtifactId}</artifactId>
-    	<groupId>${groupId}</groupId>
-    	<version>${version}</version>
-    	<relativePath>../pom.xml</relativePath>
-    </parent>
     <groupId>${package}.android</groupId>
 	<artifactId>${artifactId}</artifactId>
 	<packaging>apk</packaging>
@@ -38,7 +32,6 @@
           <groupId>com.futureplatforms.kirin.android</groupId>
           <artifactId>kirin-android</artifactId>
           <version>${version}</version>
-          <type>apklib</type>
         </dependency>
 	</dependencies>
 	<build>
@@ -59,7 +52,7 @@
 				<artifactId>android-maven-plugin</artifactId>
 				<configuration>
 					<sdk>
-						<platform>16</platform>
+						<platform>18</platform>
 					</sdk>
 				</configuration>
 			</plugin>

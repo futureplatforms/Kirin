@@ -11,6 +11,7 @@ public class KirinActivityUtils {
 	public static String loadBackgroundModule(FragmentManager fragmentManager,
 			IKirinFragment<?> fragment) {
 		String tag = fragment.getClass().getSimpleName();
+		if(fragmentManager.findFragmentByTag(tag) == null)
 		fragmentManager.beginTransaction().add((Fragment) fragment, tag)
 				.commit();
 		return tag;
