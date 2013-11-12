@@ -46,11 +46,11 @@ Execute `rebuild_kirinkit.bat` from within the `Kirin\src` folder.
 
 ### Create a new app in Visual Studio Express in the usual manner.
 
-This should live in a `wp8` or `w8` folder at the same level as android, core, iPhone etc.  
+This can live in a `wp8` or `w8` folder at the same level as android, core, iPhone etc.
 
 #### >> Top tip! <<
 
-Visual Studio likes to put this project in a separate folder within your `wp8`/`w8` subfolder.  This means your project path will look like: `ProjectName\wp8\ProjectName\ProjectName`!  Move the `.sln` and `.suo` into `wp8` folder alongside `wp8_prebuild.bat`.
+Visual Studio likes to put this project in a separate folder within your `wp8` or `w8` subfolder.  This means your project path will look like: `ProjectName\wp8\ProjectName\ProjectName`!  Move the `.sln` and `.suo` into `wp8` folder alongside `wp8_prebuild.bat`.
 
 
 ### Add the Kirin W8 or WP8 library to your app
@@ -104,6 +104,7 @@ See [this stackoverflow question](http://stackoverflow.com/questions/5926311/) f
 * Right-click "References"
 * Click "Manage NuGet packages..."
 * Select "Json.NET" from "NuGet official package source"
+* If this is a brand new Visual Studio install you may need to upgrade Visual Studio and NuGet before you can do this
 
 ### Initialise Kirin
 
