@@ -1,13 +1,27 @@
+REM This script should be invoked with a parameter of Debug or Release
+REM (this is what %1 on the mvn invoke line refers to)
+REM Windows uses backslash for path separators and they need escaping when they come
+REM before a maven variable
+
 cd ..
 
-call mvn -pl common/gwt -DgwtModule=${package}.${rootArtifactId}_ie6_%1  -am clean install
+SET CONFIGURATION=%1
+
+IF NOT %CONFIGURATION%=="Debug" (
+	IF NOT %CONFIGURATION%=="Release" (
+		ECHO "Usage: wp8_prebuild [Debug|Release] :: defaulting to Debug"
+		SET CONFIGURATION="Debug"
+	)
+)
+
+call mvn -pl common/gwt -DgwtModule=${package}.${rootArtifactId}_ie6_%CONFIGURATION% -am clean install
 
 
-set PROJECT_HOME="%cd%"
-set GWT_HOME="%PROJECT_HOME%\common\gwt"
-set WP8_HOME="%PROJECT_HOME%\wp8\${artifactId}"
+SET PROJECT_HOME="%cd%"
+SET GWT_HOME="%PROJECT_HOME%\common\gwt"
+SET WP8_HOME="%PROJECT_HOME%\wp8\\${rootArtifactId}"
 
 rmdir /s /q "%WP8_HOME%\app"
 mkdir "%WP8_HOME%\app"
 REM  Everything needs COPYING into the project folder every time.  Visual Studio Express does not maintain soft links.
-echo f | xcopy "%GWT_HOME%\target\${artifactId}-gwt-1.0-SNAPSHOT\app" "%WP8_HOME%\app" /e /i /y
+echo f | xcopy "%GWT_HOME%\target\\${rootArtifactId}-gwt-1.0-SNAPSHOT\app" "%WP8_HOME%\app" /e /i /y

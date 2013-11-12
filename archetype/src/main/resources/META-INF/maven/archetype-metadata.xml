@@ -3,7 +3,13 @@
     xmlns="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <fileSets>
-    <fileSet encoding="UTF-8">
+    <fileSet encoding="UTF-8" filtered="true">
+      <directory>ios</directory>
+      <includes>
+        <include>**/*</include>
+      </includes>
+    </fileSet>
+    <fileSet encoding="UTF-8" filtered="true">
       <directory>wp8</directory>
       <includes>
         <include>**/*.bat</include>
@@ -29,7 +35,7 @@
     </fileSet>
   </fileSets>
   <modules>
-    <module id="${rootArtifactId}-core" dir="common/core" name="${rootArtifactId}-core">
+    <module id="${rootArtifactId}-core" dir="core" name="${rootArtifactId}-core">
       <fileSets>
         <fileSet filtered="true" packaged="true" encoding="UTF-8">
           <directory>src/main/java</directory>
@@ -174,7 +180,7 @@
         </fileSet>
       </fileSets>
     </module>
-    <module id="${rootArtifactId}-gwt" dir="common/gwt" name="${rootArtifactId}-gwt">
+    <module id="${rootArtifactId}-gwt" dir="gwt" name="${rootArtifactId}-gwt">
       <fileSets>
         <fileSet filtered="true" encoding="UTF-8">
           <directory>src/main/webapp</directory>

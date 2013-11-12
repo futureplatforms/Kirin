@@ -43,6 +43,10 @@
   <!-- Prevent the user agent alert on Windows Phone --> 
   <set-configuration-property name="user.agent.runtimeWarning" value="false"/>
   
+  <define-configuration-property name="kirin.config" is-multi-valued="true" />
+  <extend-configuration-property name="kirin.config" value="Debug"/>
+  <extend-configuration-property name="kirin.config" value="Release"/>
+  
   <set-configuration-property name="kirin.config" value="Debug"/>
   
   <script src="lib/json2.js"></script>
