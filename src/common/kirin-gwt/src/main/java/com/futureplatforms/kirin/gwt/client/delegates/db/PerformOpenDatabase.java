@@ -1,7 +1,6 @@
 package com.futureplatforms.kirin.gwt.client.delegates.db;
 
 import com.futureplatforms.kirin.controllers.DatabasesDelegate.DatabaseCB;
-import com.futureplatforms.kirin.gwt.client.services.db.DatabasePrototype;
 
 public class PerformOpenDatabase {
     private DatabaseCB _Callback;

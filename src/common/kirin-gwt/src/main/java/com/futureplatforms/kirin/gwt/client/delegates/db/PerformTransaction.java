@@ -7,7 +7,7 @@ public class PerformTransaction {
     public PerformTransaction(TxContainer txContainer,
             TxContainerCallback callback) {
         _transaction();
-    }
+    } 
     
     private void transactionComplete() {
         this._TxContainerCallback.onComplete();

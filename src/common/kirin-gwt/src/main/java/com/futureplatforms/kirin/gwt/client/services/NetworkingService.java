@@ -50,11 +50,11 @@ public class NetworkingService extends KirinService<NetworkingServiceNative> {
     // This is the method that KirinNetworking uses to talk to us
     @NoBind
     public void _retrieve(String method, String url, String postData, String[] headerKeys, String[] headerVals, NetworkingSuccess win, NetworkingFailure fail) {
-        int id = nextId;
+        int thisId = nextId;
         nextId++;
-        results.put(id, new NetworkingCB(win, fail));
+        results.put(thisId, new NetworkingCB(win, fail));
         
-        getNativeObject().retrieve(id, method, url, postData, headerKeys, headerVals);
+        getNativeObject().retrieve(thisId, method, url, postData, headerKeys, headerVals);
     }
     
     // These are the methods that native uses to call back to us

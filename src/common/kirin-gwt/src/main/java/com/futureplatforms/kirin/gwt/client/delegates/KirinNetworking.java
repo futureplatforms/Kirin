@@ -35,13 +35,15 @@ public class KirinNetworking implements NetworkDelegateClient {
             var networking = $wnd.EXPOSED_TO_NATIVE.native2js.resolveModule("NetworkingService");
             
             // This closure is an "instance" of NetworkingSuccess
-            var success = function(code, headers, payload) {
-                console.log("callback! " + payloaad);
+            var success = function(payload) {
+            	var fn = p.@com.futureplatforms.kirin.gwt.client.delegates.KirinNetworking$NetworkingRunner::payload(Ljava/lang/String;);
+                fn(payload);
             };
             
             // This closure is an "instance" of NetworkingFailure
-            var failure = function() {
-            	console.log("failure!");
+            var failure = function(err) {
+            	var fn = p.@com.futureplatforms.kirin.gwt.client.delegates.KirinNetworking$NetworkingRunner::onError(Ljava/lang/String;);
+                fn(err);
             };
             
             networking._retrieve(method, url, postData, headerKeys, headerVals, success, failure);
