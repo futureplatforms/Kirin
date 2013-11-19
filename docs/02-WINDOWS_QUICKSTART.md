@@ -129,7 +129,7 @@ To use a Kirin module you must create an implementation of its native interface 
 `toNative`, and ought to end with `native`).
 Then, get the Kirin singleton like so:
 
-    Kirin kirin = Kirin.getInstance();
+    Kirin kirin = Kirin.GetInstance();
 
 Bind the implementation to the module name and call `onLoad`:
 
