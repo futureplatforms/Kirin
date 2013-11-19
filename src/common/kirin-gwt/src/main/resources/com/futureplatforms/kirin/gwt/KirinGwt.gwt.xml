@@ -1,4 +1,3 @@
-<!DOCTYPE module PUBLIC "//gwt-module/" "http://google-web-toolkit.googlecode.com/svn/tags/1.6.2/distro-source/core/src/gwt-module.dtd">
 <module rename-to='KirinGwt'>
   <!-- Inherit the core Web Toolkit stuff.                        -->
   <inherits name='com.google.gwt.core.Core'/>
@@ -9,6 +8,7 @@
   
   <!--  Guava -->
   <inherits name="com.google.common.collect.Collect"/>
+  <inherits name="com.google.common.io.Io"/>
   
   <!-- We need the JUnit module in the main module,               -->
   <!-- otherwise eclipse complains (Google plugin bug?)           -->
@@ -48,7 +48,6 @@
   <extend-configuration-property name="kirin.config" value="Release"/>
   
   <set-configuration-property name="kirin.config" value="Debug"/>
-  
   <script src="lib/json2.js"></script>
   <script src="lib/underscore.js"></script>
   <script src="core/client-modules.js"></script>
@@ -59,4 +58,5 @@
   <script src="services/Settings.js"></script>
   <script src="services/FileSystem.js"></script>
   <script src="utils/api-utils.js"></script>
+  <script src="utils/hmac-sha1.js"></script>
 </module>

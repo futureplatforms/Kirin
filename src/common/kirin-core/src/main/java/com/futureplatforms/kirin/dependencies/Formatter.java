@@ -21,4 +21,5 @@ public abstract class Formatter {
     public abstract String urlDecode(String toDecode);
     public abstract String urlEncode(String toEncode);
     public abstract String encodeURIComponent(String str);
+    public abstract byte[] hmacSHA1(String message, String passphrase);
 }
