@@ -6,11 +6,11 @@ import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.ExportPackage;
 
 import com.futureplatforms.kirin.gwt.client.KirinService;
-import com.futureplatforms.kirin.gwt.client.services.db.DatabaseService.CloseCallback;
-import com.futureplatforms.kirin.gwt.client.services.db.DatabaseService.CloseSuccess;
-import com.futureplatforms.kirin.gwt.client.services.db.DatabaseService.Failure;
-import com.futureplatforms.kirin.gwt.client.services.db.DatabaseService.OpenCallback;
-import com.futureplatforms.kirin.gwt.client.services.db.DatabaseService.OpenSuccess;
+import com.futureplatforms.kirin.gwt.client.services.db.DatabaseOpenService.CloseCallback;
+import com.futureplatforms.kirin.gwt.client.services.db.DatabaseOpenService.CloseSuccess;
+import com.futureplatforms.kirin.gwt.client.services.db.DatabaseOpenService.Failure;
+import com.futureplatforms.kirin.gwt.client.services.db.DatabaseOpenService.OpenCallback;
+import com.futureplatforms.kirin.gwt.client.services.db.DatabaseOpenService.OpenSuccess;
 import com.futureplatforms.kirin.gwt.client.services.db.natives.TransactionServiceNative;
 import com.futureplatforms.kirin.gwt.compile.NoBind;
 import com.google.common.collect.Maps;

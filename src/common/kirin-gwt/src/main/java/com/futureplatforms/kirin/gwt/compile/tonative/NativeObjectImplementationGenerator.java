@@ -29,7 +29,6 @@ public class NativeObjectImplementationGenerator extends Generator {
 	@Override
 	public String generate(TreeLogger logger, GeneratorContext context,
 			String typeName) throws UnableToCompleteException {
-		System.out.println("----> Generating: " + typeName);
 		TypeOracle oracle = context.getTypeOracle();
 		JClassType nativeObjectType = oracle.findType(typeName);
 		JClassType genericNativeObjectType = oracle.findType(IKirinProxied.class.getName());

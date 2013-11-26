@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-
-  <!-- POM file generated with GWT webAppCreator -->
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <artifactId>kirin</artifactId>
@@ -11,15 +9,17 @@
   </parent>
   <groupId>com.futureplatforms.kirin.gwt</groupId>
   <artifactId>kirin-gwt</artifactId>
-  <packaging>jar</packaging>
   <name>kirin-gwt</name>
 
   <properties>
     <!-- Convenience property to set the GWT version -->
     <gwtVersion>2.5.1</gwtVersion>
     <!-- GWT needs at least java 1.5 -->
-    <webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
+    <webappDirectory>${project.build.directory}/${project.build.finalName}/app</webappDirectory>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <gwtModule>com.futureplatforms.kirin.gwt.KirinServiceExport</gwtModule>
+    <deployDirectory>${webappDirectory}/WEB-INF</deployDirectory>
+    
   </properties>
 
   <dependencies>
@@ -137,11 +137,20 @@
           <artifactId>gwt-maven-plugin</artifactId>
           <executions>
             <execution>
+              <configuration>
+                <module>${gwtModule}</module>
+              </configuration>
               <goals>
-                <goal>resources</goal>
+                <goal>compile</goal>
               </goals>
             </execution>
           </executions>
+          
+          <configuration>
+            <hostedWebapp>${webappDirectory}</hostedWebapp>
+            <webappDirectory>${webappDirectory}</webappDirectory>
+            <deploy>${deployDirectory}</deploy>
+          </configuration>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>

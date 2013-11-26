@@ -7,10 +7,10 @@
 //
 
 #import "NewDatabasesImpl.h"
-#import "fromNative/DatabaseService.h"
+#import "fromNative/DatabaseOpenService.h"
 
 @interface NewDatabasesImpl()
-@property(strong) id<DatabaseService> kirinModule;
+@property(strong) id<DatabaseOpenService> kirinModule;
 @end
 
 @implementation NewDatabasesImpl
@@ -18,8 +18,8 @@
 @synthesize kirinModule = kirinModule_;
 
 - (id) init {
-    self.serviceName = @"DatabaseService";
-    self.kirinModuleProtocol = @protocol(DatabaseService);
+    self.serviceName = @"DatabaseOpenService";
+    self.kirinModuleProtocol = @protocol(DatabaseOpenService);
     return [super initWithServiceName: self.serviceName];
 }
 

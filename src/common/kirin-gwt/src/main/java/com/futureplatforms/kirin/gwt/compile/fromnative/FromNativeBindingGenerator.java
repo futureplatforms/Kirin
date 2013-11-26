@@ -6,6 +6,7 @@ import com.futureplatforms.kirin.gwt.client.KirinService;
 import com.futureplatforms.kirin.gwt.compile.InterfaceGenerator;
 import com.futureplatforms.kirin.gwt.compile.bindings.CSClassGenerator;
 import com.futureplatforms.kirin.gwt.compile.bindings.ObjectiveCProtocolGenerator;
+import com.futureplatforms.kirin.gwt.compile.js.JSFromNativeGenerator;
 import com.google.gwt.core.ext.Generator;
 import com.google.gwt.core.ext.GeneratorContext;
 import com.google.gwt.core.ext.TreeLogger;
@@ -17,12 +18,14 @@ public class FromNativeBindingGenerator extends Generator {
 
 	private final InterfaceGenerator[] mAppProtocolGenerators = {
 			new CSClassGenerator("../BINDINGS/windows/fromNative/"),
-			new ObjectiveCProtocolGenerator("../BINDINGS/ios/fromNative/")
+			new ObjectiveCProtocolGenerator("../BINDINGS/ios/fromNative/"),
+			new JSFromNativeGenerator("../BINDINGS/js/fromNative")
 	};
 	
     private final InterfaceGenerator[] mServiceProtocolGenerators = {
             new CSClassGenerator("../SERVICE_BINDINGS/windows/fromNative/"),
-            new ObjectiveCProtocolGenerator("../SERVICE_BINDINGS/ios/fromNative/")
+            new ObjectiveCProtocolGenerator("../SERVICE_BINDINGS/ios/fromNative/"),
+            new JSFromNativeGenerator("../SERVICE_BINDINGS/js/fromNative/")
     };
 	 
 	@Override

@@ -15,7 +15,7 @@ import com.google.gwt.core.client.GWT;
 
 @Export(value = "DatabaseOpenService", all = true)
 @ExportPackage("screens")
-public class DatabaseService extends KirinService<DatabaseOpenServiceNative> {
+public class DatabaseOpenService extends KirinService<DatabaseOpenServiceNative> {
     
     @Export
     @ExportClosure
@@ -56,7 +56,7 @@ public class DatabaseService extends KirinService<DatabaseOpenServiceNative> {
     	}
     }
     
-    public DatabaseService() {
+    public DatabaseOpenService() {
         super(GWT.<DatabaseOpenServiceNative>create(DatabaseOpenServiceNative.class));
     }
     
