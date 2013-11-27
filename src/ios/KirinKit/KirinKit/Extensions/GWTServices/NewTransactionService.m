@@ -63,6 +63,7 @@
 }
 
 - (void) appendFile: (int) dbId : (int) txId : (NSString*) filename {
+    NSLog(@"IMPLEMENT ME PLEASE");
     //NSMutableArray *statements = [self getStatements:dbId :txId];
    // [statements addObject:[[NewTransactionStatement alloc] initWithType:token andId:statementId andStatement:statement andParameters:params]];
 }
@@ -73,31 +74,25 @@
         NSMutableArray * statements = [self getStatements:dbId :txId];
         for (NewTransactionStatement * st in statements) {
             FMResultSet * s = [db executeQuery:st.statement withArgumentsInArray:st.parameters];
-            NSLog(@"executed it");
             if (st.type == SQL_rowset) {
-                NSLog(@"it's a rowset");
                 NSMutableArray * columnNames = [[NSMutableArray alloc] init];
                 int colCount = [s columnCount];
                 for (int i=0; i<colCount; i++) {
                     [columnNames addObject:[s columnNameForIndex:i]];
                 }
-                NSLog(@"got column names");
                 [self.kirinModule statementRowSuccessColumnNames:dbId :txId :st.statementId :columnNames];
                 
                 while ([s next]) {
-                    NSLog(@"s next");
                     NSMutableArray * row = [[NSMutableArray alloc] init];
                     for (int i=0; i<colCount; i++) {
                         [row addObject:[s stringForColumnIndex:i]];
                     }
-                    NSLog(@"got row details");
                     [self.kirinModule statementRowSuccess:dbId :txId :st.statementId :row];
                 }
                 [self.kirinModule statementRowSuccessEnd:dbId :txId :st.statementId];
             }
-            NSLog(@"end statement");
         }
-        NSLog(@"end in transaction");
+        [self.kirinModule endSuccess:dbId :txId];
     }];
 }
 

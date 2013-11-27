@@ -19,7 +19,7 @@ import com.futureplatforms.kirin.dependencies.db.Transaction.TxRowsCB;
 import com.futureplatforms.kirin.dependencies.db.Transaction.TxTokenCB;
 import com.futureplatforms.kirin.dependencies.internal.TransactionBundle;
 import com.futureplatforms.kirin.gwt.client.KirinService;
-import com.futureplatforms.kirin.gwt.client.delegates.db.GwtTransactionBackend2;
+import com.futureplatforms.kirin.gwt.client.delegates.db.GwtTransactionBackend;
 import com.futureplatforms.kirin.gwt.client.services.db.natives.TransactionServiceNative;
 import com.futureplatforms.kirin.gwt.compile.NoBind;
 import com.google.common.collect.ImmutableList;
@@ -71,7 +71,7 @@ public class TransactionService extends KirinService<TransactionServiceNative>{
 	
 	// NATIVE CALLS THIS BACK WHEN TRANSACTION BEGIN IS SUCCESSFUL
 	public void transactionBeginOnSuccess(int dbId, int txId) {
-		_OpenCallbacks.get(dbId).remove(txId).onSuccess(new GwtTransactionBackend2(dbId, txId));
+		_OpenCallbacks.get(dbId).remove(txId).onSuccess(new GwtTransactionBackend(dbId, txId));
 	}
 	// END  Callback function for transaction open
 	

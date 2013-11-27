@@ -5,9 +5,11 @@ import java.util.Map;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate.NetworkResponse;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegateClient;
+import com.futureplatforms.kirin.gwt.client.KirinEP;
+import com.google.gwt.core.client.JavaScriptObject;
 
 public class KirinNetworking implements NetworkDelegateClient {
-    private static class NetworkRunner {
+	private static class NetworkRunner {
         private NetworkResponse mCB;
         public NetworkRunner(NetworkResponse cb) {
             mCB = cb;
@@ -26,27 +28,21 @@ public class KirinNetworking implements NetworkDelegateClient {
         }
         
         public void doIt(String method, String url, Map<String, String> headers, String postData) {
-            String[] keyArr = headers.keySet().toArray(new String[0]);
-            String[] valArr = headers.values().toArray(new String[0]);
-            NetworkRunner.doIt(method, url, keyArr, valArr, postData, this);
+            JavaScriptObject headersJS = KirinEP.createMap(headers);
+            NetworkRunner.doIt(method, url, headersJS, postData, this);
         }
 
-        private static native void doIt(String method, String url, String[] headerKeys, String[] headerVals, String postData, NetworkRunner p) /*-{
-            var networking = $wnd.EXPOSED_TO_NATIVE.native2js.resolveModule("NetworkingService");
-            
-            // This closure is an "instance" of NetworkingSuccess
-            var success = function(payload) {
-            	var fn = p.@com.futureplatforms.kirin.gwt.client.delegates.KirinNetworking$NetworkRunner::payload(Ljava/lang/String;);
-                fn(payload);
+        private static native void doIt(String method, String url, JavaScriptObject headers, String postData, NetworkRunner p) /*-{
+            var networking = $wnd.require("Networking");
+            var config = {
+                method:method,
+                url:url,
+                postData:postData,
+                headers: headers,
+                payload: function(payload) { $entry( p.@com.futureplatforms.kirin.gwt.client.delegates.KirinNetworking$NetworkRunner::payload(Ljava/lang/String;)(payload) )},
+                onError: function(err) { $entry( p.@com.futureplatforms.kirin.gwt.client.delegates.KirinNetworking$NetworkRunner::onError(Ljava/lang/String;)(err) )}
             };
-            
-            // This closure is an "instance" of NetworkingFailure
-            var failure = function(err) {
-            	var fn = p.@com.futureplatforms.kirin.gwt.client.delegates.KirinNetworking$NetworkRunner::onError(Ljava/lang/String;);
-                fn(err);
-            };
-            
-            networking._retrieve(method, url, postData, headerKeys, headerVals, success, failure);
+            networking.downloadString(config);
         }-*/;
     }
     

@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.futureplatforms.kirin.dependencies.StaticDependencies.LogDelegate;
 import com.futureplatforms.kirin.dependencies.db.Database.TxRunner;
-import com.futureplatforms.kirin.dependencies.internal.TransactionBackend2;
+import com.futureplatforms.kirin.dependencies.internal.TransactionBackend;
 import com.futureplatforms.kirin.dependencies.internal.TransactionBundle;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
@@ -107,14 +107,14 @@ public class Transaction {
     public enum Mode {
     	ReadOnly, ReadWrite
     }
-    private TransactionBackend2 _Backend;
+    private TransactionBackend _Backend;
     
     public static interface TransactionCallback {
     	public void onSuccess(Transaction t);
     	public void onError();
     }
     
-    protected Transaction(TransactionBackend2 backend) {
+    protected Transaction(TransactionBackend backend) {
     	this._Backend = backend;
     }
     
@@ -150,6 +150,11 @@ public class Transaction {
     }
     
     protected void pullTrigger(TxRunner closedCallback) {
-    	_Backend.pullTrigger(new TransactionBundle(_TxElements, _Statements, _SqlFiles, closedCallback));
+    	// Package all the queries the user wants to do in this statement
+    	// into a bundle
+    	TransactionBundle bundle = new TransactionBundle(_TxElements, _Statements, _SqlFiles, closedCallback);
+    	
+    	// Now pass it to the native platform's flavour of pulling trigger
+    	_Backend.pullTrigger(bundle);
     }
 }
