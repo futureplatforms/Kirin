@@ -68,7 +68,7 @@ Locate your project's `app` folder in `gwt/target/<app-name>-<version>` (in find
 
 #### Add the bindings to the project's header search paths
 
-Select the project name in `PROJECT`, then choose `Build Settings`.  In `Header Search Paths` add `"$(PROJECT_DIR)/../../gwt/target/<project-name>-<version>/app/bindings/ios"`.
+Select the project name in `PROJECT`, then choose `Build Settings`.  In `Header Search Paths` add `"$(PROJECT_DIR)/../../gwt/target/<project-name>-<version>/app/BINDINGS/ios"`.
 
 ### Add Pre-build event command line:
 

@@ -17,7 +17,7 @@
 #import "KirinLocationBackend.h"
 #import "KirinImageTransformer.h"
 #import "NewNetworkingImpl.h"
-#import "NewDatabasesImpl.h"
+#import "NewDatabaseAccessService.h"
 #import "KirinGwtServiceProtocol.h"
 
 @interface KirinExtensions()
@@ -42,8 +42,9 @@
     NSLog(@"Core KirinExtensions");
     [services registerExtension:[[[SettingsBackend alloc] init] autorelease]];
     [services registerExtension:[[[NetworkingBackend alloc] init] autorelease]];
-    [services registerGwtService:[[NewNetworkingImpl alloc] init]];
-    [services registerGwtService:[[NewDatabasesImpl alloc] init]];
+    NewDatabaseAccessService *dbAccess = [[NewDatabaseAccessService alloc] init];
+    [services registerGwtService:dbAccess];
+    [services registerGwtService:dbAccess.NewTransactionService];
     [services registerExtension:[KirinLocationBackend instance]];
     return services;
 }

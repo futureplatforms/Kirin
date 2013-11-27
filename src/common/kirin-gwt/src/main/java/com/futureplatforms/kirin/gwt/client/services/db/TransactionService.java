@@ -6,6 +6,9 @@ import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.ExportPackage;
 import org.timepedia.exporter.client.NoExport;
 
+import com.futureplatforms.kirin.dependencies.StaticDependencies;
+import com.futureplatforms.kirin.dependencies.StaticDependencies.LogDelegate;
+import com.futureplatforms.kirin.dependencies.db.Database.TransactionCallback;
 import com.futureplatforms.kirin.dependencies.db.Database.TxRunner;
 import com.futureplatforms.kirin.dependencies.db.Transaction.RowSet;
 import com.futureplatforms.kirin.dependencies.db.Transaction.Statement;
@@ -16,8 +19,10 @@ import com.futureplatforms.kirin.dependencies.db.Transaction.TxRowsCB;
 import com.futureplatforms.kirin.dependencies.db.Transaction.TxTokenCB;
 import com.futureplatforms.kirin.dependencies.internal.TransactionBundle;
 import com.futureplatforms.kirin.gwt.client.KirinService;
+import com.futureplatforms.kirin.gwt.client.delegates.db.GwtTransactionBackend2;
 import com.futureplatforms.kirin.gwt.client.services.db.natives.TransactionServiceNative;
 import com.futureplatforms.kirin.gwt.compile.NoBind;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.gwt.core.client.GWT;
@@ -33,10 +38,45 @@ public class TransactionService extends KirinService<TransactionServiceNative>{
     
 	public TransactionService() {
 		super(GWT.<TransactionServiceNative>create(TransactionServiceNative.class));
+		_Instance = this;
 	}
 	
-	private Map<Integer, Map<Integer, TransactionBundle>> _Map = Maps.newHashMap();
+	// Map DB -> latest TX ID for that DB
+	private Map<Integer, Integer> _LatestTxIdForDbId = Maps.newHashMap();
+	
+	// Map DB -> (Map TxID -> TxOpen Callback)
+	private Map<Integer, Map<Integer, TransactionCallback>> _OpenCallbacks = Maps.newHashMap();
 
+	private LogDelegate log = StaticDependencies.getInstance().getLogDelegate();
+	
+	@NoBind
+	@NoExport
+	// INVOKED VIA BACKDOOR
+	public void _BeginTransaction(int dbId, TransactionCallback callback) {
+		int nextId;
+		if (_LatestTxIdForDbId.containsKey(dbId)) {
+			int latest = _LatestTxIdForDbId.get(dbId);
+			nextId = latest + 1;
+		} else {
+			nextId = Integer.MIN_VALUE;
+		}
+		if (!_OpenCallbacks.containsKey(dbId)) {
+			_OpenCallbacks.put(dbId, Maps.<Integer, TransactionCallback>newHashMap());
+		}
+		Map<Integer, TransactionCallback> callbackMap = _OpenCallbacks.get(dbId);
+		callbackMap.put(nextId, callback);
+		_LatestTxIdForDbId.put(dbId, nextId);
+		getNativeObject().begin(dbId, nextId);
+	}
+	
+	// NATIVE CALLS THIS BACK WHEN TRANSACTION BEGIN IS SUCCESSFUL
+	public void transactionBeginOnSuccess(int dbId, int txId) {
+		_OpenCallbacks.get(dbId).remove(txId).onSuccess(new GwtTransactionBackend2(dbId, txId));
+	}
+	// END  Callback function for transaction open
+	
+	// Map database -> (Map transaction -> txBundle)
+	private Map<Integer, Map<Integer, TransactionBundle>> _Map = Maps.newHashMap();
 	private void map(TransactionBundle bundle, int dbId, int txId) {
 		if (!_Map.containsKey(dbId)) {
 			_Map.put(dbId, Maps.<Integer, TransactionBundle>newHashMap());
@@ -47,12 +87,11 @@ public class TransactionService extends KirinService<TransactionServiceNative>{
 	
 	@NoBind
 	@NoExport
-	// THIS GETS INVOKED FROM THE BACKDOOR!
+	// THIS GETS INVOKED FROM THE BACKDOOR
 	public void pullTrigger(
 			TransactionBundle bundle, 
 			int dbId, int txId) {
 		map(bundle, dbId, txId);
-		
 		int fileCount = 0, statementCount = 0;
     	
     	// run through each transaction element and register it with native
@@ -60,22 +99,22 @@ public class TransactionService extends KirinService<TransactionServiceNative>{
     		if (type == TxElementType.File) {
     			String filename = bundle._SqlFiles.get(fileCount);
     			fileCount++;
-    			getNativeObject().appendFileToTx(dbId, txId, filename);
+    			getNativeObject().appendFile(dbId, txId, filename);
     		} else {
     			final Statement statement = bundle._Statements.get(statementCount);
     			if (statement instanceof StatementWithTokenReturn) {
-					getNativeObject().appendStatementToTxForToken(dbId, txId, statementCount, statement._SQL, statement._Params);
+					getNativeObject().appendStatementForToken(dbId, txId, statementCount, statement._SQL, statement._Params);
     			} else {
-					getNativeObject().appendStatementToTxForRows(dbId, txId, statementCount, statement._SQL, statement._Params);
+					getNativeObject().appendStatementForRows(dbId, txId, statementCount, statement._SQL, statement._Params);
     			}
     			statementCount++;
     		}
     	}
-    	
+
     	getNativeObject().end(dbId, txId);
 	}
 	
-	// CALL THIS IF A STATEMENT FAILED
+	// CALL THIS FROM NATIVE IF A STATEMENT FAILED
 	public void statementFailure(int dbId, int txId, int statementId) {
 		Statement s = _Map.get(dbId).get(txId)._Statements.get(statementId);
 		if (s instanceof StatementWithTokenReturn) {
@@ -96,7 +135,7 @@ public class TransactionService extends KirinService<TransactionServiceNative>{
 	
 	// BECAUSE WE CAN'T PASS ARRAYS OF ARRAYS, ROW SUCCESSES NEED TO BE PASSED ROW BY ROW
 	// SORRY
-	private Map<Integer, Map<Integer, Map<Integer, RowSet>>> _RowCallback;
+	private Map<Integer, Map<Integer, Map<Integer, RowSet>>> _RowCallback = Maps.newHashMap();
 	private Map<Integer, RowSet> getRowsetMap(int dbId, int txId) {
 		if (!_RowCallback.containsKey(dbId)) {
 			_RowCallback.put(dbId, Maps.<Integer, Map<Integer, RowSet>>newHashMap());
@@ -110,11 +149,11 @@ public class TransactionService extends KirinService<TransactionServiceNative>{
 	}
 	
 	public void statementRowSuccessColumnNames(int dbId, int txId, int statementId, String[] columnNames) {
-		getRowsetMap(dbId, txId).put(statementId, new RowSet(Lists.newArrayList(columnNames)));
+		getRowsetMap(dbId, txId).put(statementId, new RowSet(ImmutableList.copyOf(columnNames)));
 	}
 	
 	public void statementRowSuccess(int dbId, int txId, int statementId, String[] row) {
-		getRowsetMap(dbId, txId).get(statementId)._RowValues.add(Lists.newArrayList(row));
+		getRowsetMap(dbId, txId).get(statementId).addRow(Lists.newArrayList(row));
 	}
 	
 	// THIS MEANS WE'VE REACHED THE END OF A ROW SUCCESSES CALLBACK

@@ -2,17 +2,60 @@ package com.futureplatforms.kirin.dependencies.db;
 
 import java.util.List;
 
+import com.futureplatforms.kirin.dependencies.StaticDependencies.LogDelegate;
 import com.futureplatforms.kirin.dependencies.db.Database.TxRunner;
 import com.futureplatforms.kirin.dependencies.internal.TransactionBackend2;
 import com.futureplatforms.kirin.dependencies.internal.TransactionBundle;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 
 public class Transaction {
 	public static class RowSet {
-		public final List<String> _ColumnNames;
-		public final List<List<String>> _RowValues = Lists.newArrayList();
-		public RowSet(List<String> columnNames) {
+		public class Row {
+			public final List<String> _Values;
+			public Row(List<String> values) {
+				this._Values = values;
+			}
+			public String valueForColumn(String column) {
+				return this._Values.get(_ColumnNames.indexOf(column));
+			}
+		}
+		public final ImmutableList<String> _ColumnNames;
+		public final List<Row> _Rows = Lists.newArrayList();
+		public RowSet(ImmutableList<String> columnNames) {
 			_ColumnNames = columnNames;
+		}
+		public void addRow(List<String> values) {
+			_Rows.add(new Row(values));
+		}
+		
+		private static String str(String str, int colWidth, char pad) {
+			String s = str;
+			if (str.length() > colWidth) {
+				s = s.substring(0, colWidth);
+			} else {
+				for (int i=str.length(); i<colWidth; i++) {
+					s += pad;
+				}
+			}
+			return s;
+		}
+		
+		public void log(LogDelegate log) {
+			String header = "";
+			for (String colName : _ColumnNames) {
+				header += str(colName, 15, ' ');
+			}
+			log.log(header);
+			log.log(str("", 15 * _ColumnNames.size(), '='));
+			
+			for (Row row : _Rows) {
+				String rowStr = "";
+				for (String value : row._Values) {
+					rowStr += str(value, 15, ' ');
+				}
+				log.log(rowStr);
+			}
 		}
 	}
 	

@@ -13,7 +13,6 @@ public abstract class Database {
     
 	public static interface TransactionCallback {
 		public void onSuccess(TransactionBackend2 tx);
-		public void onError();
 	}
 	
 	// This is the main method developers use to perform some database stuffs
@@ -25,11 +24,6 @@ public abstract class Database {
 				Transaction tx = new Transaction(txBackend);
 				txRunner.run(tx);
 				tx.pullTrigger(txRunner);
-			}
-			
-			@Override
-			public void onError() {
-				txRunner.onError();
 			}
 		});
     }
