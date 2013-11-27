@@ -8,14 +8,14 @@ import org.timepedia.exporter.client.ExportPackage;
 import org.timepedia.exporter.client.Exportable;
 
 import com.futureplatforms.kirin.gwt.client.KirinService;
-import com.futureplatforms.kirin.gwt.client.services.db.natives.DatabaseOpenServiceNative;
+import com.futureplatforms.kirin.gwt.client.services.db.natives.DatabaseAccessServiceNative;
 import com.futureplatforms.kirin.gwt.compile.NoBind;
 import com.google.common.collect.Maps;
 import com.google.gwt.core.client.GWT;
 
-@Export(value = "DatabaseOpenService", all = true)
+@Export(value = "DatabaseService", all = true)
 @ExportPackage("screens")
-public class DatabaseOpenService extends KirinService<DatabaseOpenServiceNative> {
+public class DatabaseAccessService extends KirinService<DatabaseAccessServiceNative> {
     
     @Export
     @ExportClosure
@@ -56,14 +56,13 @@ public class DatabaseOpenService extends KirinService<DatabaseOpenServiceNative>
     	}
     }
     
-    public DatabaseOpenService() {
-        super(GWT.<DatabaseOpenServiceNative>create(DatabaseOpenServiceNative.class));
+    public DatabaseAccessService() {
+        super(GWT.<DatabaseAccessServiceNative>create(DatabaseAccessServiceNative.class));
     }
     
     private int _NextDbId = Integer.MIN_VALUE;
-    
     private Map<Integer, OpenCallback> _OpenCallbacks = Maps.newHashMap();
-    private Map<Integer, CloseCallback> _CloseCallbacks = Maps.newHashMap();
+    
     @NoBind
     public void _openDatabase(String filename, OpenSuccess success, Failure failure) {
         int thisId = _NextDbId;
@@ -85,17 +84,8 @@ public class DatabaseOpenService extends KirinService<DatabaseOpenServiceNative>
     
     
     @NoBind
-    public void _closeDatabase(int dbId, CloseSuccess success, Failure failure) {
-    	_CloseCallbacks.put(dbId, new CloseCallback(success, failure));
+    public void _closeDatabase(int dbId) {
     	getNativeObject().close(dbId);
     }
     
-    // BEGIN  Callback functions for database closed
-    public void databaseClosedSuccess(int dbId) {
-    	_CloseCallbacks.remove(dbId)._Success.execute();
-    }
-    public void databaseClosedFailure(int dbId) {
-    	_CloseCallbacks.remove(dbId)._Failure.execute();
-    }
-    // END  Callback functions for database closed
 }

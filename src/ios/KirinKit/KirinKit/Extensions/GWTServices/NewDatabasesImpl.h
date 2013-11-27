@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 #import <NSObject+Kirin.h>
 #import "KirinGwtServiceStub.h"
-#import "toNative/DatabaseServiceNative.h"
 
 @interface NewDatabasesImpl : KirinGwtServiceStub<DatabaseServiceNative>
 

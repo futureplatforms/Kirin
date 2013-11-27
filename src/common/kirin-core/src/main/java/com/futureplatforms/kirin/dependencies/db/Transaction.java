@@ -14,7 +14,7 @@ public class Transaction {
     	public void onError();
     }
     
-    public static interface TxReturnCB extends TxCB {
+    public static interface TxRowsCB extends TxCB {
         public void onSuccess(List<Map<String, String>> rowset);
     }
     
@@ -40,8 +40,8 @@ public class Transaction {
     }
     
     public static class StatementWithRowsReturn extends Statement {
-    	public final TxReturnCB _Callback;
-    	public StatementWithRowsReturn(String sql, String[] params, TxReturnCB cb) {
+    	public final TxRowsCB _Callback;
+    	public StatementWithRowsReturn(String sql, String[] params, TxRowsCB cb) {
     		super(sql, params);
     		this._Callback = cb;
     	}
@@ -52,7 +52,6 @@ public class Transaction {
     }
 
     private List<TxElementType> _TxElements = Lists.newArrayList();
-    
     private List<Statement> _Statements = Lists.newArrayList();
     private List<String> _Files = Lists.newArrayList();
     
@@ -66,35 +65,32 @@ public class Transaction {
     	public void onError();
     }
     
-    /*
-    protected static void getTransaction(String dbID, DatabaseAccessorBackend backend, Mode mode, final TransactionCallback cb) {
-    	final Transaction tx = new Transaction(dbID, backend, mode);
-    	backend.beginTransaction(dbID, tx._TxID, new DatabaseBackendTxRowsCallback() {
-
-			@Override
-			public void onSuccess(List<Map<String, String>> rows) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void onError() {
-				cb.onError();
-			}
-			
-		});
-    }*/
-    
     protected Transaction(TransactionBackend backend) {
     	this._Backend = backend;
     }
     
-    public void execStatementWithTokenReturn(String sql, String[] params, TxTokenCB cb) { 
+    public void execQueryWithTokenReturn(String sql, TxTokenCB cb) {
+    	execQueryWithTokenReturn(sql, null, cb);
+    }
+    
+    public void execQueryWithTokenReturn(String sql, String[] params, TxTokenCB cb) { 
     	_Statements.add(new StatementWithTokenReturn(sql, params, cb));
     	_TxElements.add(TxElementType.Statement); 
     }
     
-    public void execStatementWithRowsReturn(String sql, String[] params, TxReturnCB cb) { 
+    public void execUpdate(String sql) {
+    	execQueryWithRowsReturn(sql, null);
+    }
+    
+    public void execUpdate(String sql, String[] params) {
+    	execQueryWithRowsReturn(sql, params, null);
+    }
+    
+    public void execQueryWithRowsReturn(String sql, TxRowsCB cb) { 
+    	execQueryWithRowsReturn(sql, null, cb);
+    }
+    
+    public void execQueryWithRowsReturn(String sql, String[] params, TxRowsCB cb) { 
     	_Statements.add(new StatementWithRowsReturn(sql, params, cb));
     	_TxElements.add(TxElementType.Statement); 
     }
@@ -112,7 +108,7 @@ public class Transaction {
     		if (type == TxElementType.File) {
     			String file = _Files.get(fileCount);
     			fileCount++;
-    			_Backend.appendFileToTransaction(file);
+    			_Backend.appendFileToTx(file);
     		} else {
     			final Statement statement = _Statements.get(statementCount);
     			statementCount++;
@@ -122,30 +118,38 @@ public class Transaction {
 						
 						@Override
 						public void onSuccess(String token) {
-							casted._Callback.onSuccess(token);
+							if (casted._Callback != null) {
+								casted._Callback.onSuccess(token);
+							}
 						}
 						
 						@Override
 						public void onError() {
-							casted._Callback.onError();
+							if (casted._Callback != null) {
+								casted._Callback.onError();
+							}
 						}
 					};
-					_Backend.appendStatementToTransaction(statement._SQL, statement._Params, cb);
+					_Backend.appendStatementToTx(statement._SQL, statement._Params, cb);
     			} else {
     				final StatementWithRowsReturn casted = (StatementWithRowsReturn) statement;
     				TxRowsCallback cb = new TxRowsCallback() {
 						
 						@Override
 						public void onSuccess(List<Map<String, String>> rows) {
-							casted._Callback.onSuccess(rows);
+							if (casted._Callback != null) {
+								casted._Callback.onSuccess(rows);
+							}
 						}
 						
 						@Override
 						public void onError() {
-							casted._Callback.onError();
+							if (casted._Callback != null) {
+								casted._Callback.onError();
+							}
 						}
 					};
-					_Backend.appendStatementToTransaction(statement._SQL, statement._Params, cb);
+					_Backend.appendStatementToTx(statement._SQL, statement._Params, cb);
     			}
     		}
     	}

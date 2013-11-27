@@ -14,6 +14,7 @@ import com.futureplatforms.kirin.gwt.client.delegates.GwtSettingsDelegate;
 import com.futureplatforms.kirin.gwt.client.delegates.GwtTimerDelegate;
 import com.futureplatforms.kirin.gwt.client.delegates.KirinLocation;
 import com.futureplatforms.kirin.gwt.client.delegates.KirinNetworking;
+import com.futureplatforms.kirin.gwt.client.delegates.db.GwtDatabaseDelegate;
 import com.futureplatforms.kirin.gwt.client.delegates.json.GwtJSON;
 import com.futureplatforms.kirin.gwt.client.delegates.xml.GwtXMLParserImpl;
 import com.google.gwt.core.client.EntryPoint;
@@ -71,7 +72,8 @@ public class KirinEP implements EntryPoint {
                 new GwtJSON(), 
                 new GwtXMLParserImpl(),
                 new GwtFormatter(),
-                profile);
+                profile,
+                new GwtDatabaseDelegate());
         
         InternalDependencies.getInstance().setDependencies(new GwtTimerDelegate(), null);
         

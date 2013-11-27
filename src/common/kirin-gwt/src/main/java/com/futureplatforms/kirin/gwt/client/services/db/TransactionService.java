@@ -6,11 +6,7 @@ import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.ExportPackage;
 
 import com.futureplatforms.kirin.gwt.client.KirinService;
-import com.futureplatforms.kirin.gwt.client.services.db.DatabaseOpenService.CloseCallback;
-import com.futureplatforms.kirin.gwt.client.services.db.DatabaseOpenService.CloseSuccess;
-import com.futureplatforms.kirin.gwt.client.services.db.DatabaseOpenService.Failure;
-import com.futureplatforms.kirin.gwt.client.services.db.DatabaseOpenService.OpenCallback;
-import com.futureplatforms.kirin.gwt.client.services.db.DatabaseOpenService.OpenSuccess;
+import com.futureplatforms.kirin.gwt.client.services.db.DatabaseAccessService.OpenCallback;
 import com.futureplatforms.kirin.gwt.client.services.db.natives.TransactionServiceNative;
 import com.futureplatforms.kirin.gwt.compile.NoBind;
 import com.google.common.collect.Maps;
@@ -18,67 +14,28 @@ import com.google.gwt.core.client.GWT;
 
 @Export(value = "TransactionService", all = true)
 @ExportPackage("screens")
-public class TransactionService extends KirinService<TransactionServiceNative> {
+public class TransactionService extends KirinService<TransactionServiceNative>{
 
-	protected TransactionService() {
+	public TransactionService() {
 		super(GWT.<TransactionServiceNative>create(TransactionServiceNative.class));
 	}
-
-	private Map<Integer, Integer> _LatestTxIdForDbId = Maps.newHashMap();
-	private Map<Integer, Map<Integer, OpenCallback>> _OpenCallbacks = Maps.newHashMap();
-	private Map<Integer, Map<Integer, CloseCallback>> _CloseCallbacks = Maps.newHashMap();
 	
-	@NoBind
-	public void _BeginTransaction(int dbId, OpenSuccess success, Failure failure) {
-		int nextId;
-		if (_LatestTxIdForDbId.containsKey(dbId)) {
-			int latest = _LatestTxIdForDbId.get(dbId);
-			nextId = latest + 1;
-		} else {
-			nextId = Integer.MIN_VALUE;
-		}
-		
-		if (!_OpenCallbacks.containsKey(dbId)) {
-			_OpenCallbacks.put(dbId, Maps.<Integer, OpenCallback>newHashMap());
-		}
-		Map<Integer, OpenCallback> callbackMap = _OpenCallbacks.get(dbId);
-		callbackMap.put(nextId, new OpenCallback(success, failure));
-		_LatestTxIdForDbId.put(dbId, nextId);
-		
-		getNativeObject().beginTransaction(dbId, nextId);
-	}
-	
-	// BEGIN  Callback functions for transaction open
-	public void transactionBeginOnSuccess(int dbId, int txId) {
-		_OpenCallbacks.get(dbId).remove(txId)._Success.execute(txId);
-		if (_OpenCallbacks.get(dbId).isEmpty()) { _OpenCallbacks.remove(dbId); }
-	}
-	public void transactionBeginOnError(int dbId, int txId) {
-		_OpenCallbacks.get(dbId).remove(txId)._Failure.execute();
-		if (_OpenCallbacks.get(dbId).isEmpty()) { _OpenCallbacks.remove(dbId); }
-	}
-	// END  Callback functions for transaction open
-	
-	
-	@NoBind
-	public void _EndTransaction(int dbId, int txId, CloseSuccess success, Failure failure) {
-		if (!_CloseCallbacks.containsKey(dbId)) {
-			_CloseCallbacks.put(dbId, Maps.<Integer, CloseCallback>newHashMap());
-		} 
-		Map<Integer, CloseCallback> callbackMap = Maps.newHashMap();
-		callbackMap.put(txId, new CloseCallback(success, failure));
-		
-		getNativeObject().endTransaction(dbId, txId);
-	}
-	
-	// BEGIN  Callback functions for transaction closed
-	public void transactionEndOnSuccess(int dbId, int txId) {
-		_CloseCallbacks.get(dbId).remove(txId)._Success.execute();
-		if (_CloseCallbacks.get(dbId).isEmpty()) { _CloseCallbacks.remove(dbId); }
-	}
-	public void transactionEndOnError(int dbId, int txId) {
-		_CloseCallbacks.get(dbId).remove(txId)._Failure.execute();
-		if (_CloseCallbacks.get(dbId).isEmpty()) { _CloseCallbacks.remove(dbId); }
-	}
-	// END  Callback functions for transaction closed	
+	private int _NextTxCall = Integer.MIN_VALUE;
+    private Map<Integer, OpenCallback> _OpenCallbacks = Maps.newHashMap();
+    
+    @NoBind
+    public void _AppendStatementToTxRows() {
+    	
+    }
+    
+    @NoBind
+    public void _AppendStatementToTxToken() {
+    	
+    }
+    
+    @NoBind
+    public void _AppendFileToTx() {
+    	
+    }
+    
 }

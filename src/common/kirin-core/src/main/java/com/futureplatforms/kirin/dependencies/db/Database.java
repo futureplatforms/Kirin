@@ -1,27 +1,25 @@
 package com.futureplatforms.kirin.dependencies.db;
 
-import com.futureplatforms.kirin.dependencies.db.Database.TxRunner.TxRunnerCallback;
-import com.futureplatforms.kirin.dependencies.internal.DatabaseBackend;
 import com.futureplatforms.kirin.dependencies.internal.TransactionBackend;
 import com.futureplatforms.kirin.dependencies.internal.TransactionBackend.TxClosedCallback;
 
-public class Database {
-    public static abstract class TxRunner {
-        public static interface TxRunnerCallback {
-            public void onComplete();
-            public void onError();
-        }
+public abstract class Database {
+    public static interface TxRunner {
         
-        public abstract void run(Transaction tx);
+        public void run(Transaction tx);
+        
+        public void onComplete();
+        public void onError();
     }
-	
-	private DatabaseBackend _Backend;
-	public Database(DatabaseBackend backend) {
-		this._Backend = backend;
+    
+	public static interface TransactionCallback {
+		public void onSuccess(TransactionBackend tx);
+		public void onError();
 	}
 	
-    public void transaction(final TxRunner txRunner, final TxRunnerCallback callback) {
-    	_Backend.beginTransaction(new DatabaseBackend.BeginTransactionCallback() {
+	// This is the main method developers use to perform some database stuffs
+    public void transaction(final TxRunner txRunner) {
+    	performTransaction(new TransactionCallback() {
 			
 			@Override
 			public void onSuccess(TransactionBackend txBackend) {
@@ -31,20 +29,22 @@ public class Database {
 					
 					@Override
 					public void onError() {
-						callback.onError();
+						txRunner.onError();
 					}
 					
 					@Override
 					public void onClosed() {
-						callback.onComplete();
+						txRunner.onComplete();
 					}
 				});
 			}
 			
 			@Override
 			public void onError() {
-				callback.onError();
+				txRunner.onError();
 			}
 		});
     }
+    
+    protected abstract void performTransaction(TransactionCallback cb);
 }

@@ -3,6 +3,7 @@ package com.futureplatforms.kirin.dependencies.internal;
 import java.util.List;
 import java.util.Map;
 
+
 public interface TransactionBackend {
 
 	public static interface TxRowsCallback {
@@ -20,8 +21,8 @@ public interface TransactionBackend {
 		public void onError();
 	}
 	
-	public void appendStatementToTransaction(String sql, String[] params, TxRowsCallback dbtc);
-	public void appendStatementToTransaction(String sql, String[] params, TxTokenCallback dbtc);
-	public void appendFileToTransaction(String filename);
+	public void appendStatementToTx(String sql, String[] params, TxRowsCallback dbtc);
+	public void appendStatementToTx(String sql, String[] params, TxTokenCallback dbtc);
+	public void appendFileToTx(String filename);
 	public void endTransaction(TxClosedCallback cb);
 }

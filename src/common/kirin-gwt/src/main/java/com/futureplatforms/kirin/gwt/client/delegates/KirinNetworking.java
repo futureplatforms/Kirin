@@ -36,13 +36,13 @@ public class KirinNetworking implements NetworkDelegateClient {
             
             // This closure is an "instance" of NetworkingSuccess
             var success = function(payload) {
-            	var fn = p.@com.futureplatforms.kirin.gwt.client.delegates.KirinNetworking$NetworkingRunner::payload(Ljava/lang/String;);
+            	var fn = p.@com.futureplatforms.kirin.gwt.client.delegates.KirinNetworking$NetworkRunner::payload(Ljava/lang/String;);
                 fn(payload);
             };
             
             // This closure is an "instance" of NetworkingFailure
             var failure = function(err) {
-            	var fn = p.@com.futureplatforms.kirin.gwt.client.delegates.KirinNetworking$NetworkingRunner::onError(Ljava/lang/String;);
+            	var fn = p.@com.futureplatforms.kirin.gwt.client.delegates.KirinNetworking$NetworkRunner::onError(Ljava/lang/String;);
                 fn(err);
             };
             

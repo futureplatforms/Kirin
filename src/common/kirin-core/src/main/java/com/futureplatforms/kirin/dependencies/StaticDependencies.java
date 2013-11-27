@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate.HttpVerb;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate.NetworkResponse;
+import com.futureplatforms.kirin.dependencies.db.DatabaseDelegate;
 import com.futureplatforms.kirin.dependencies.json.JSONDelegate;
 import com.futureplatforms.kirin.dependencies.xml.parser.XMLParser;
 
@@ -67,6 +68,7 @@ public final class StaticDependencies {
     private XMLParser mXmlParser;
     private Formatter mFormatter;
     private boolean mInitialised;
+    private DatabaseDelegate _DatabasesDelegate;
     private Configuration _Profile;
     
     public LogDelegate getLogDelegate() { return mLogDelegate; }
@@ -78,6 +80,7 @@ public final class StaticDependencies {
     public Formatter getFormatter() { return mFormatter; }
     public boolean initialised() { return mInitialised; }
     public Configuration getProfile() { return _Profile; }
+    public DatabaseDelegate getDatabasesDelegate() { return _DatabasesDelegate; }
     
     public void setDependencies(    LogDelegate logDelegate,
                                     SettingsDelegate settingsDelegate,
@@ -86,7 +89,8 @@ public final class StaticDependencies {
                                     JSONDelegate jsonDelegate,
                                     XMLParser xmlParser, 
                                     Formatter formatter, 
-                                    Configuration profile) {
+                                    Configuration profile,
+                                    DatabaseDelegate databasesDelegate) {
         this.mLogDelegate = logDelegate;
         this.mSettingsDelegate = settingsDelegate;
         this.mLocationDelegate = locationDelegate;
@@ -96,5 +100,6 @@ public final class StaticDependencies {
         this.mFormatter = formatter;
         this._Profile = profile;
         this.mInitialised = true;
+        this._DatabasesDelegate = databasesDelegate;
     }
 }
