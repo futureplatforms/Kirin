@@ -4,13 +4,11 @@ import java.util.Map;
 
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.ExportPackage;
+import org.timepedia.exporter.client.NoExport;
 
+import com.futureplatforms.kirin.dependencies.db.Database.TransactionCallback;
 import com.futureplatforms.kirin.gwt.client.KirinService;
-import com.futureplatforms.kirin.gwt.client.services.db.DatabaseAccessService.CloseCallback;
-import com.futureplatforms.kirin.gwt.client.services.db.DatabaseAccessService.CloseSuccess;
-import com.futureplatforms.kirin.gwt.client.services.db.DatabaseAccessService.Failure;
-import com.futureplatforms.kirin.gwt.client.services.db.DatabaseAccessService.OpenCallback;
-import com.futureplatforms.kirin.gwt.client.services.db.DatabaseAccessService.OpenSuccess;
+import com.futureplatforms.kirin.gwt.client.delegates.db.GwtTransactionBackend2;
 import com.futureplatforms.kirin.gwt.client.services.db.natives.TransactionAccessServiceNative;
 import com.futureplatforms.kirin.gwt.compile.NoBind;
 import com.google.common.collect.Maps;
@@ -19,17 +17,23 @@ import com.google.gwt.core.client.GWT;
 @Export(value = "TransactionService", all = true)
 @ExportPackage("screens")
 public class TransactionAccessService extends KirinService<TransactionAccessServiceNative> {
-
+    private static TransactionAccessService _Instance;
+    
+    @NoBind
+    @NoExport
+    public static TransactionAccessService BACKDOOR() { return _Instance; }
+    
 	protected TransactionAccessService() {
 		super(GWT.<TransactionAccessServiceNative>create(TransactionAccessServiceNative.class));
 	}
 
 	private Map<Integer, Integer> _LatestTxIdForDbId = Maps.newHashMap();
-	private Map<Integer, Map<Integer, OpenCallback>> _OpenCallbacks = Maps.newHashMap();
-	private Map<Integer, Map<Integer, CloseCallback>> _CloseCallbacks = Maps.newHashMap();
+	private Map<Integer, Map<Integer, TransactionCallback>> _OpenCallbacks = Maps.newHashMap();
 	
 	@NoBind
-	public void _BeginTransaction(int dbId, OpenSuccess success, Failure failure) {
+	@NoExport
+	// this method gets called via the backdoor
+	public void _BeginTransaction(int dbId, TransactionCallback callback) {
 		int nextId;
 		if (_LatestTxIdForDbId.containsKey(dbId)) {
 			int latest = _LatestTxIdForDbId.get(dbId);
@@ -39,10 +43,10 @@ public class TransactionAccessService extends KirinService<TransactionAccessServ
 		}
 		
 		if (!_OpenCallbacks.containsKey(dbId)) {
-			_OpenCallbacks.put(dbId, Maps.<Integer, OpenCallback>newHashMap());
+			_OpenCallbacks.put(dbId, Maps.<Integer, TransactionCallback>newHashMap());
 		}
-		Map<Integer, OpenCallback> callbackMap = _OpenCallbacks.get(dbId);
-		callbackMap.put(nextId, new OpenCallback(success, failure));
+		Map<Integer, TransactionCallback> callbackMap = _OpenCallbacks.get(dbId);
+		callbackMap.put(nextId, callback);
 		_LatestTxIdForDbId.put(dbId, nextId);
 		
 		getNativeObject().beginTx(dbId, nextId);
@@ -50,35 +54,12 @@ public class TransactionAccessService extends KirinService<TransactionAccessServ
 	
 	// BEGIN  Callback functions for transaction open
 	public void transactionBeginOnSuccess(int dbId, int txId) {
-		_OpenCallbacks.get(dbId).remove(txId)._Success.execute(txId);
+		_OpenCallbacks.get(dbId).remove(txId).onSuccess(new GwtTransactionBackend2(dbId, txId));
 		if (_OpenCallbacks.get(dbId).isEmpty()) { _OpenCallbacks.remove(dbId); }
 	}
 	public void transactionBeginOnError(int dbId, int txId) {
-		_OpenCallbacks.get(dbId).remove(txId)._Failure.execute();
+		_OpenCallbacks.get(dbId).remove(txId).onError();
 		if (_OpenCallbacks.get(dbId).isEmpty()) { _OpenCallbacks.remove(dbId); }
 	}
 	// END  Callback functions for transaction open
-	
-	
-	@NoBind
-	public void _EndTransaction(int dbId, int txId, CloseSuccess success, Failure failure) {
-		if (!_CloseCallbacks.containsKey(dbId)) {
-			_CloseCallbacks.put(dbId, Maps.<Integer, CloseCallback>newHashMap());
-		} 
-		Map<Integer, CloseCallback> callbackMap = Maps.newHashMap();
-		callbackMap.put(txId, new CloseCallback(success, failure));
-		
-		getNativeObject().endTx(dbId, txId);
-	}
-	
-	// BEGIN  Callback functions for transaction closed
-	public void transactionEndOnSuccess(int dbId, int txId) {
-		_CloseCallbacks.get(dbId).remove(txId)._Success.execute();
-		if (_CloseCallbacks.get(dbId).isEmpty()) { _CloseCallbacks.remove(dbId); }
-	}
-	public void transactionEndOnError(int dbId, int txId) {
-		_CloseCallbacks.get(dbId).remove(txId)._Failure.execute();
-		if (_CloseCallbacks.get(dbId).isEmpty()) { _CloseCallbacks.remove(dbId); }
-	}
-	// END  Callback functions for transaction closed	
 }

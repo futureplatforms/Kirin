@@ -1,21 +1,27 @@
 package com.futureplatforms.kirin.dependencies.db;
 
 import java.util.List;
-import java.util.Map;
 
-import com.futureplatforms.kirin.dependencies.internal.TransactionBackend;
-import com.futureplatforms.kirin.dependencies.internal.TransactionBackend.TxClosedCallback;
-import com.futureplatforms.kirin.dependencies.internal.TransactionBackend.TxRowsCallback;
-import com.futureplatforms.kirin.dependencies.internal.TransactionBackend.TxTokenCallback;
+import com.futureplatforms.kirin.dependencies.db.Database.TxRunner;
+import com.futureplatforms.kirin.dependencies.internal.TransactionBackend2;
+import com.futureplatforms.kirin.dependencies.internal.TransactionBundle;
 import com.google.common.collect.Lists;
 
 public class Transaction {
+	public static class RowSet {
+		public final List<String> _ColumnNames;
+		public final List<List<String>> _RowValues = Lists.newArrayList();
+		public RowSet(List<String> columnNames) {
+			_ColumnNames = columnNames;
+		}
+	}
+	
     public static interface TxCB {
     	public void onError();
     }
     
     public static interface TxRowsCB extends TxCB {
-        public void onSuccess(List<Map<String, String>> rowset);
+        public void onSuccess(RowSet rowset);
     }
     
     public static interface TxTokenCB extends TxCB {
@@ -47,25 +53,25 @@ public class Transaction {
     	}
     }
     
-    private enum TxElementType {
+    public enum TxElementType {
     	Statement, File
     }
 
     private List<TxElementType> _TxElements = Lists.newArrayList();
     private List<Statement> _Statements = Lists.newArrayList();
-    private List<String> _Files = Lists.newArrayList();
+    private List<String> _SqlFiles = Lists.newArrayList();
     
     public enum Mode {
     	ReadOnly, ReadWrite
     }
-    private TransactionBackend _Backend;
+    private TransactionBackend2 _Backend;
     
     public static interface TransactionCallback {
     	public void onSuccess(Transaction t);
     	public void onError();
     }
     
-    protected Transaction(TransactionBackend backend) {
+    protected Transaction(TransactionBackend2 backend) {
     	this._Backend = backend;
     }
     
@@ -96,64 +102,11 @@ public class Transaction {
     }
     
     public void execSqlFile(String file) { 
-    	_Files.add(file); 
+    	_SqlFiles.add(file); 
     	_TxElements.add(TxElementType.File); 
     }
     
-    protected void pullTrigger(TxClosedCallback closedCallback) {
-    	int fileCount = 0, statementCount = 0;
-    	
-    	// run through each transaction element and register it with native
-    	for (TxElementType type : _TxElements) {
-    		if (type == TxElementType.File) {
-    			String file = _Files.get(fileCount);
-    			fileCount++;
-    			_Backend.appendFileToTx(file);
-    		} else {
-    			final Statement statement = _Statements.get(statementCount);
-    			statementCount++;
-    			if (statement instanceof StatementWithTokenReturn) {
-    				final StatementWithTokenReturn casted = (StatementWithTokenReturn) statement;
-    				TxTokenCallback cb = new TxTokenCallback() {
-						
-						@Override
-						public void onSuccess(String token) {
-							if (casted._Callback != null) {
-								casted._Callback.onSuccess(token);
-							}
-						}
-						
-						@Override
-						public void onError() {
-							if (casted._Callback != null) {
-								casted._Callback.onError();
-							}
-						}
-					};
-					_Backend.appendStatementToTx(statement._SQL, statement._Params, cb);
-    			} else {
-    				final StatementWithRowsReturn casted = (StatementWithRowsReturn) statement;
-    				TxRowsCallback cb = new TxRowsCallback() {
-						
-						@Override
-						public void onSuccess(List<Map<String, String>> rows) {
-							if (casted._Callback != null) {
-								casted._Callback.onSuccess(rows);
-							}
-						}
-						
-						@Override
-						public void onError() {
-							if (casted._Callback != null) {
-								casted._Callback.onError();
-							}
-						}
-					};
-					_Backend.appendStatementToTx(statement._SQL, statement._Params, cb);
-    			}
-    		}
-    	}
-    	
-    	_Backend.endTransaction(closedCallback);
+    protected void pullTrigger(TxRunner closedCallback) {
+    	_Backend.pullTrigger(new TransactionBundle(_TxElements, _Statements, _SqlFiles, closedCallback));
     }
 }
