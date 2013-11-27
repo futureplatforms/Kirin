@@ -58,4 +58,30 @@ public class GwtFormatter extends Formatter {
     public native String encodeURIComponent(String key) /*-{
         return encodeURIComponent(key);
     }-*/;
+
+	@Override
+	public byte[] hmacSHA1(String message, String passphrase) {
+		String str = _hmacSHA1(message, passphrase);
+		int numBytes = str.length() / 2;
+		byte[] bytes = new byte[numBytes];
+		for (int i=0; i<numBytes; i++) {
+			int start = i*2;
+			int end = start + 2;
+			String byteStr;
+			if (end < str.length()) {
+				byteStr = str.substring(start, end);
+			} else {
+				byteStr = str.substring(start);
+			}
+			
+			bytes[i] = (byte)Integer.parseInt(byteStr, 16);
+		}
+		return bytes;
+	}
+	
+	private native String _hmacSHA1(String message, String passphrase) /*-{
+		var res = $wnd.CryptoJS.HmacSHA1(message, passphrase);
+		return res.toString($wnd.CryptoJS.enc.Hex);
+	}-*/;
+
 }

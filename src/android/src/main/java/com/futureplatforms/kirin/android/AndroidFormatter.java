@@ -11,6 +11,9 @@ import java.text.SimpleDateFormat;
 import java.util.Currency;
 import java.util.Date;
 
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+
 import com.futureplatforms.kirin.dependencies.Formatter;
 
 public class AndroidFormatter extends Formatter {
@@ -75,4 +78,18 @@ public class AndroidFormatter extends Formatter {
         // MAKESHIFT IMPLEMENTATION, PLEASE TEST
         return encodeURIComponent(toEncode);
     }
+    
+	@Override
+	public byte[] hmacSHA1(String message, String passphrase) {
+		try {
+			SecretKeySpec signingKey = new SecretKeySpec(passphrase.getBytes(), "HmacSHA1");
+			Mac mac = Mac.getInstance("HmacSHA1");
+			mac.init(signingKey);
+			byte[] bytes = mac.doFinal(message.getBytes());
+			return bytes;
+		} catch (Throwable t) {
+			t.printStackTrace();
+			return null;
+		}
+	}
 }

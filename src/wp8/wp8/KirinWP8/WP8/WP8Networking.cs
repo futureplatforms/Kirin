@@ -1,4 +1,4 @@
-﻿using KirinWindows.Core;
+using KirinWindows.Core;
 using Newtonsoft.Json.Linq;
 using System;
 using System.IO;
@@ -6,6 +6,7 @@ using System.Net;
 using System.Text;
 using System.Net.NetworkInformation;
 using System.Threading;
+using System.Diagnostics;
 
 namespace KirinWP8
 {
@@ -23,46 +24,53 @@ namespace KirinWP8
 
         public void downloadString_(JObject o)
         {
-            _lastRequest = o;
-            var method = o["method"].ToString().ToUpper();
-            isGet = "GET".Equals(method);
-            if (!isGet)
+            try
             {
-                if (!"POST".Equals(method) && !"PUT".Equals(method))
+                _lastRequest = o;
+                var method = o["method"].ToString().ToUpper();
+                isGet = "GET".Equals(method);
+                if (!isGet)
                 {
-                    throw new InvalidOperationException(method + " is not a valid method, only GET, POST or PUT supported");
-                }
-            }
-            var url = o["url"].ToString();
-            var postData = o["postData"];
-            if (postData != null && !isGet)
-            {
-                toPost = postData.ToString();
-            }
-            var headers = o["headers"];
-            payload = o["payload"].ToString();
-            onError = o["onError"].ToString();
-
-            HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
-            if (headers != null)
-            {
-                foreach (JProperty prop in headers)
-                {
-                    var val = prop.Value.ToString();
-                    var key = prop.Name;
-                    if ("content-type".Equals(key, StringComparison.InvariantCultureIgnoreCase))
+                    if (!"POST".Equals(method) && !"PUT".Equals(method))
                     {
-                        req.ContentType = val;
-                    }
-                    else
-                    {
-                        req.Headers[key] = val;
+                        throw new InvalidOperationException(method + " is not a valid method, only GET, POST or PUT supported");
                     }
                 }
-            }
+                var url = o["url"].ToString();
+                var postData = o["postData"];
+                if (postData != null && !isGet)
+                {
+                    toPost = postData.ToString();
+                }
+                var headers = o["headers"];
+                payload = o["payload"].ToString();
+                onError = o["onError"].ToString();
 
-            req.Method = method;
-            PerformRequest(req);
+                HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
+                if (headers != null)
+                {
+                    foreach (JProperty prop in headers)
+                    {
+                        var val = prop.Value.ToString();
+                        var key = prop.Name;
+                        if ("content-type".Equals(key, StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            req.ContentType = val;
+                        }
+                        else
+                        {
+                            req.Headers[key] = val;
+                        }
+                    }
+                }
+
+                req.Method = method;
+                PerformRequest(req);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.ToString());
+            }
         }
 
 
@@ -71,15 +79,17 @@ namespace KirinWP8
             try
             {
                 var req = res.AsyncState as HttpWebRequest;
-                if (!isGet)
+                if (!isGet && !string.IsNullOrEmpty(toPost))
                 {
                     var bytes = new System.Text.UTF8Encoding().GetBytes(toPost);
-                    var stream = req.EndGetRequestStream(res);
-                    stream.Write(bytes, 0, bytes.Length);
-                    stream.Flush();
-                    stream.Close();
+                    using (var stream = req.EndGetRequestStream(res))
+                    {
+                        stream.Write(bytes, 0, bytes.Length);
+                        stream.Flush();
+                        stream.Close();
+                    }
                 }
-                req.BeginGetResponse(new AsyncCallback(Net_Resp), req);
+                req.BeginGetResponse(Net_Resp, req);
             }
             catch (WebException wex)
             {

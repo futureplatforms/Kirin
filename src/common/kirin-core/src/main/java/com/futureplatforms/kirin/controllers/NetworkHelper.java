@@ -29,22 +29,25 @@ public final class NetworkHelper {
 
             @Override
             public void run() {
-                _Cancelled = true;
-                callback.onFail("timeout");
+            	if (!_Cancelled) {
+            		_Cancelled = true;
+            		callback.onFail("timeout");
+            	}
             }
             
         };
         tt.schedule(30000);
-        _Dependencies.getLogDelegate().log("connecting to " + url);
         _Dependencies.getNetworkDelegate().doHttp(verb, url, payload, headers, new NetworkResponse() {
             
             public void onSuccess(int res, String result, Map<String, String> headers) {
+            	tt.cancel();
                 if (!_Cancelled) {
                     callback.onSuccess(res, result, headers);
                 }
             }
             
             public void onFail(String code) {
+            	tt.cancel();
                 if (!_Cancelled) {
                     callback.onFail(code);
                 }
