@@ -6,8 +6,6 @@ import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.ExportPackage;
 import org.timepedia.exporter.client.NoExport;
 
-import com.futureplatforms.kirin.dependencies.StaticDependencies;
-import com.futureplatforms.kirin.dependencies.StaticDependencies.LogDelegate;
 import com.futureplatforms.kirin.dependencies.db.Database.TransactionCallback;
 import com.futureplatforms.kirin.dependencies.db.Database.TxRunner;
 import com.futureplatforms.kirin.dependencies.db.Transaction.RowSet;
@@ -46,8 +44,6 @@ public class TransactionService extends KirinService<TransactionServiceNative>{
 	
 	// Map DB -> (Map TxID -> TxOpen Callback)
 	private Map<Integer, Map<Integer, TransactionCallback>> _OpenCallbacks = Maps.newHashMap();
-
-	private LogDelegate log = StaticDependencies.getInstance().getLogDelegate();
 	
 	@NoBind
 	@NoExport
@@ -96,10 +92,10 @@ public class TransactionService extends KirinService<TransactionServiceNative>{
     	
     	// run through each transaction element and register it with native
     	for (TxElementType type : bundle._Types) {
-    		if (type == TxElementType.File) {
-    			String filename = bundle._SqlFiles.get(fileCount);
+    		if (type == TxElementType.Batch) {
+    			String[] batch = bundle._Batches.get(fileCount);
     			fileCount++;
-    			getNativeObject().appendFile(dbId, txId, filename);
+    			getNativeObject().appendBatch(dbId, txId, batch);
     		} else {
     			final Statement statement = bundle._Statements.get(statementCount);
     			if (statement instanceof StatementWithTokenReturn) {

@@ -63,10 +63,27 @@
     [statements addObject:[[NewTransactionStatement alloc] initWithType:SQL_token andId:statementId andStatement:statement andParameters:params]];
 }
 
-- (void) appendFile: (int) dbId : (int) txId : (NSString*) filename {
-    NSLog(@"IMPLEMENT ME PLEASE");
-    //NSMutableArray *statements = [self getStatements:dbId :txId];
-   // [statements addObject:[[NewTransactionStatement alloc] initWithType:token andId:statementId andStatement:statement andParameters:params]];
+- (void) appendBatch: (int) dbId : (int) txId : (NSArray*) batch {
+    NSMutableArray *statements = [self getStatements:dbId :txId];
+    for (NSString *b in batch) {
+        [statements addObject:[[NewTransactionStatement alloc] initWithType:SQL_rowset andStatement:b andParameters:nil]];
+    }
+}
+
+- (BOOL)executeBatch:(sqlite3  *) db sql:(NSString *)sql error:(NSError**)error
+{
+    char* errorOutput;
+    int responseCode = sqlite3_exec(db, [sql UTF8String], NULL, NULL, &errorOutput);
+    
+    if (errorOutput != nil)
+    {
+        *error = [NSError errorWithDomain:[NSString stringWithUTF8String:errorOutput]
+                                     code:responseCode
+                                 userInfo:nil];
+        return false;
+    }
+    
+    return true;
 }
 
 - (void) end: (int) dbId : (int) txId {
@@ -74,48 +91,51 @@
     [dbQueue inTransaction:^(FMDatabase *db, BOOL *rollback) {
         NSMutableArray * statements = [self getStatements:dbId :txId];
         for (NewTransactionStatement * st in statements) {
-            
             FMResultSet * s = [db executeQuery:st.statement withArgumentsInArray:st.parameters];
             if ([db hadError]) {
                 NSLog(@"DB Error :: %@", [db lastErrorMessage]);
                 rollback = YES;
                 [self.kirinModule endFailure:dbId :txId];
                 return;
-            } else {
-                NSLog(@"DB No error");
             }
-            if (st.type == SQL_rowset) {
-                // ROWSET query
-                // Iterate through column names and send them to kirin
-                NSMutableArray * columnNames = [[NSMutableArray alloc] init];
-                int colCount = [s columnCount];
-                for (int i=0; i<colCount; i++) {
-                    [columnNames addObject:[s columnNameForIndex:i]];
-                }
-                [self.kirinModule statementRowSuccessColumnNames:dbId :txId :st.statementId :columnNames];
-                
-                // Now iterate through all rows
-                while ([s next]) {
-                    // create an array of all this row's values and send them to kirin
-                    NSMutableArray * row = [[NSMutableArray alloc] init];
+            
+            if (st.hasId) {
+                if (st.type == SQL_rowset) {
+                    // ROWSET query
+                    // Iterate through column names and send them to kirin
+                    NSMutableArray * columnNames = [[NSMutableArray alloc] init];
+                    int colCount = [s columnCount];
                     for (int i=0; i<colCount; i++) {
-                        [row addObject:[s stringForColumnIndex:i]];
+                        [columnNames addObject:[s columnNameForIndex:i]];
                     }
-                    [self.kirinModule statementRowSuccess:dbId :txId :st.statementId :row];
-                }
+                    [self.kirinModule statementRowSuccessColumnNames:dbId :txId :st.statementId :columnNames];
                 
-                // Finally tell Kirin we've finished!
-                [self.kirinModule statementRowSuccessEnd:dbId :txId :st.statementId];
+                    // Now iterate through all rows
+                    while ([s next]) {
+                        // create an array of all this row's values and send them to kirin
+                        NSMutableArray * row = [[NSMutableArray alloc] init];
+                        for (int i=0; i<colCount; i++) {
+                            [row addObject:[s stringForColumnIndex:i]];
+                        }
+                        [self.kirinModule statementRowSuccess:dbId :txId :st.statementId :row];
+                    }
+                
+                    // Finally tell Kirin we've finished!
+                    [self.kirinModule statementRowSuccessEnd:dbId :txId :st.statementId];
+                } else if (st.type == SQL_token) {
+                    // TOKEN query
+                    NSMutableArray * arr = [[NSMutableArray alloc] init];
+                    while ([s next]) {
+                        NSDictionary * dict = [s resultDictionary];
+                        [arr addObject:dict];
+                    }
+                
+                    NSString *token = [[KIRIN dropbox] putObject:arr];
+                    [self.kirinModule statementTokenSuccess:dbId :txId :st.statementId :token];
+                }
             } else {
-                // TOKEN query
-                NSMutableArray * arr = [[NSMutableArray alloc] init];
-                while ([s next]) {
-                    NSDictionary * dict = [s resultDictionary];
-                    [arr addObject:dict];
-                }
-                
-                NSString *token = [[KIRIN dropbox] putObject:arr];
-                [self.kirinModule statementTokenSuccess:dbId :txId :st.statementId :token];
+                // FMDB plays silly beggars if you don't iterate through the result set... weird
+                while ([s next]);
             }
         }
         [self.kirinModule endSuccess:dbId :txId];

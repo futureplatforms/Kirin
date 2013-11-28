@@ -2,6 +2,7 @@ package com.futureplatforms.kirin.dependencies.db;
 
 import java.util.List;
 
+import com.futureplatforms.kirin.dependencies.StaticDependencies;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.LogDelegate;
 import com.futureplatforms.kirin.dependencies.db.Database.TxRunner;
 import com.futureplatforms.kirin.dependencies.internal.TransactionBackend;
@@ -44,7 +45,7 @@ public class Transaction {
 		public void log(LogDelegate log) {
 			String header = "";
 			for (String colName : _ColumnNames) {
-				header += str(colName, 15, ' ');
+				header += str(colName, 15, ' ') + " | ";
 			}
 			log.log(header);
 			log.log(str("", 15 * _ColumnNames.size(), '='));
@@ -52,7 +53,7 @@ public class Transaction {
 			for (Row row : _Rows) {
 				String rowStr = "";
 				for (String value : row._Values) {
-					rowStr += str(value, 15, ' ');
+					rowStr += str(value, 15, ' ') + " | ";
 				}
 				log.log(rowStr);
 			}
@@ -97,12 +98,12 @@ public class Transaction {
     }
     
     public enum TxElementType {
-    	Statement, File
+    	Statement, Batch
     }
 
     private List<TxElementType> _TxElements = Lists.newArrayList();
     private List<Statement> _Statements = Lists.newArrayList();
-    private List<String> _SqlFiles = Lists.newArrayList();
+    private List<String[]> _BatchQueries = Lists.newArrayList();
     
     public enum Mode {
     	ReadOnly, ReadWrite
@@ -144,15 +145,21 @@ public class Transaction {
     	_TxElements.add(TxElementType.Statement); 
     }
     
-    public void execSqlFile(String file) { 
-    	_SqlFiles.add(file); 
-    	_TxElements.add(TxElementType.File); 
+    /**
+     * IF you're executing a SQL file then use this function.  Statements must be separated
+     * with semicolon followed by newline!
+     * @param batch
+     */
+    public void execBatchUpdate(String batch) { 
+    	String[] lines = batch.split(";(\\s)*[\n\r]");
+    	_BatchQueries.add(lines); 
+    	_TxElements.add(TxElementType.Batch); 
     }
     
     protected void pullTrigger(TxRunner closedCallback) {
     	// Package all the queries the user wants to do in this statement
     	// into a bundle
-    	TransactionBundle bundle = new TransactionBundle(_TxElements, _Statements, _SqlFiles, closedCallback);
+    	TransactionBundle bundle = new TransactionBundle(_TxElements, _Statements, _BatchQueries, closedCallback);
     	
     	// Now pass it to the native platform's flavour of pulling trigger
     	_Backend.pullTrigger(bundle);

@@ -16,6 +16,17 @@
         self.statementId = statementId;
         self.statement = statement;
         self.parameters = parameters;
+        self.hasId = YES;
+    }
+    return self;
+}
+-(id) initWithType :(SQLOperationType) type andStatement:(NSString*) statement andParameters:(NSArray*) parameters {
+    self = [super init];
+    if (self) {
+        self.type = type;
+        self.statement = statement;
+        self.parameters = parameters;
+        self.hasId = NO;
     }
     return self;
 }

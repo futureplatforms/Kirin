@@ -10,17 +10,17 @@ public class TransactionBundle {
 
 	public final List<TxElementType> _Types;
 	public final List<Statement> _Statements;
-	public final List<String> _SqlFiles;
+	public final List<String[]> _Batches;
 	public final TxRunner _ClosedCallback;
 	
 	public TransactionBundle(
 			List<TxElementType> types,
 			List<Statement> statements, 
-			List<String> sqlFiles, 
+			List<String[]> batches, 
 			TxRunner closedCallback) {
 		this._Types = types;
 		this._Statements = statements;
-		this._SqlFiles = sqlFiles;
+		this._Batches = batches;
 		this._ClosedCallback = closedCallback;
 	}
 

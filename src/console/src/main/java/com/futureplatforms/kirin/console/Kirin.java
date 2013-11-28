@@ -18,7 +18,8 @@ public final class Kirin {
                 new ConsoleJson(),
                 new JaxpXmlParser(),
                 new ConsoleFormatter(),
-                Configuration.Debug);
+                Configuration.Debug,
+                null);
         
         InternalDependencies.getInstance().setDependencies(new ConsoleTimer(), null);
     }
