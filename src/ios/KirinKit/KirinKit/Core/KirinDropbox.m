@@ -7,7 +7,14 @@
 //
 
 #import "KirinDropbox.h"
+#import <limits.h>
 
+@interface KirinDropbox() {
+    NSMutableDictionary * dropbox;
+    int key;
+}
+
+@end
 
 @implementation KirinDropbox
 
@@ -16,52 +23,30 @@
     
     if (self) {
         dropbox = [[NSMutableDictionary alloc] init];
-        dropboxCounter = 0;
+        key = INT_MIN;
     }
     
     return self;
 }
 
-#pragma mark -
-#pragma mark Dropbox methods
-
-- (NSString*) putObject:(id) object withTokenPrefix:(NSString*) tokenPrefix {
-    NSString* token = [NSString stringWithFormat:@"%@.%d", tokenPrefix, dropboxCounter];
-    [dropbox setObject:object forKey:token];
+- (NSString *) putObject:(id) object {
+    int thisKey = key;
+    key++;
     
-    dropboxCounter++;
-    return token;
+    NSLog(@"thisKey: %d", thisKey);
+    
+    NSString *strKey = [NSString stringWithFormat:@"%d", thisKey];
+    
+    NSLog(@"strKey: %@", strKey);
+    
+    [dropbox setObject:object forKey:strKey];
+    return strKey;
 }
 
-- (NSString*) putObject:(id) object withToken:(NSString*) token {
-    [dropbox setObject:object forKey:token];
-    return token;
-}
-
-- (NSObject*) consumeObjectWithToken:(NSString*) token {
-    if (!token) {
-        return nil;
-    }
-    NSObject* obj = [[[dropbox objectForKey:token] retain] autorelease];
+- (NSDictionary *) consumeObjectWithToken:(NSString *) token {
+    id obj = [dropbox objectForKey:token];
     [dropbox removeObjectForKey:token];
     return obj;
-}
-
-- (void) disposeObjectWithToken:(NSString*) token {
-    [dropbox removeObjectForKey:token];
-}
-
-- (NSObject*) getObjectWithToken:(NSString*) token {
-    NSObject* obj = [[[dropbox objectForKey:token] retain] autorelease];
-    return obj;
-}
-
-#pragma mark -
-#pragma mark Memory management
-- (void) dealloc {
-    [dropbox removeAllObjects];
-    [dropbox release];
-    [super dealloc];
 }
 
 @end

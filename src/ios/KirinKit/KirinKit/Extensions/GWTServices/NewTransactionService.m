@@ -12,6 +12,7 @@
 #import "fromNative/TransactionService.h"
 #import "FMDatabaseQueue.h"
 #import "FMDatabase.h"
+#import "KirinDropbox.h"
 
 @interface NewTransactionService() {
     NewDatabaseAccessService * _DatabaseAccessService;
@@ -83,8 +84,9 @@
             } else {
                 NSLog(@"DB No error");
             }
-            
             if (st.type == SQL_rowset) {
+                // ROWSET query
+                // Iterate through column names and send them to kirin
                 NSMutableArray * columnNames = [[NSMutableArray alloc] init];
                 int colCount = [s columnCount];
                 for (int i=0; i<colCount; i++) {
@@ -92,14 +94,28 @@
                 }
                 [self.kirinModule statementRowSuccessColumnNames:dbId :txId :st.statementId :columnNames];
                 
+                // Now iterate through all rows
                 while ([s next]) {
+                    // create an array of all this row's values and send them to kirin
                     NSMutableArray * row = [[NSMutableArray alloc] init];
                     for (int i=0; i<colCount; i++) {
                         [row addObject:[s stringForColumnIndex:i]];
                     }
                     [self.kirinModule statementRowSuccess:dbId :txId :st.statementId :row];
                 }
+                
+                // Finally tell Kirin we've finished!
                 [self.kirinModule statementRowSuccessEnd:dbId :txId :st.statementId];
+            } else {
+                // TOKEN query
+                NSMutableArray * arr = [[NSMutableArray alloc] init];
+                while ([s next]) {
+                    NSDictionary * dict = [s resultDictionary];
+                    [arr addObject:dict];
+                }
+                
+                NSString *token = [[KIRIN dropbox] putObject:arr];
+                [self.kirinModule statementTokenSuccess:dbId :txId :st.statementId :token];
             }
         }
         [self.kirinModule endSuccess:dbId :txId];
