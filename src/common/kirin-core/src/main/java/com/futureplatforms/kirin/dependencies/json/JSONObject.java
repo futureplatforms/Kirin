@@ -18,19 +18,33 @@ public abstract class JSONObject {
 
 	public abstract boolean getBoolean(String key);
 
+	public abstract int getInt(String key);
+
 	public abstract double getDouble(String key);
 
 	public abstract String getString(String key);
+
+	public abstract JSONArray getJSONArray(String key);
+
+	public abstract JSONObject getJSONObject(String key);
+
+	public abstract boolean optBoolean(String key, boolean defVal);
+
+	public abstract int optInt(String key, int defVal);
+
+	public abstract double optDouble(String key, double defVal);
+
+	public abstract String optString(String key);
+
+	public abstract JSONArray optJSONArray(String key);
+
+	public abstract JSONObject optJSONObject(String key);
 
 	public abstract boolean isNull(String key);
 
 	public boolean isNullOrDoesntExist(String key) {
 		return has(key) && isNull(key);
 	}
-
-	public abstract JSONArray getJSONArray(String key);
-
-	public abstract JSONObject getJSONObject(String key);
 
 	public abstract Iterator<String> keys();
 
@@ -90,11 +104,4 @@ public abstract class JSONObject {
 		}
 	}
 
-	public int getInt(String key) {
-		try {
-			return (int)getDouble(key);
-		} catch (Throwable t) {
-			return -1;
-		}
-	}
 }
