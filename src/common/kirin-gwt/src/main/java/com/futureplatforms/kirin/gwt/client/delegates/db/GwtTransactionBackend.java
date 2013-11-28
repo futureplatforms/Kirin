@@ -15,7 +15,7 @@ public class GwtTransactionBackend implements TransactionBackend {
 	
 	@Override
 	public void pullTrigger(TransactionBundle bundle) {
-		TransactionService.BACKDOOR().pullTrigger(bundle, _DbId, _TxId);
+		TransactionService.BACKDOOR()._pullTrigger(bundle, _DbId, _TxId);
 	}
 
 }

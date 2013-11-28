@@ -72,4 +72,5 @@ And pushing a large results set through the Kirin keyhole is impractical.
 A token query returns a string token, that you can pass back to native at the appropriate time.  Native code can use this token to retrieve the results set and do what it likes.
 
 ##Native implementation
+The iOS version is backed by FMDB.  
 On GWT it's separated in to two services, `DatabaseAccessService` and `TransactionService`

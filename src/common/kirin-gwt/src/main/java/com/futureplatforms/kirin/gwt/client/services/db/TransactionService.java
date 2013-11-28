@@ -88,7 +88,7 @@ public class TransactionService extends KirinService<TransactionServiceNative>{
 	@NoBind
 	@NoExport
 	// THIS GETS INVOKED FROM THE BACKDOOR
-	public void pullTrigger(
+	public void _pullTrigger(
 			TransactionBundle bundle, 
 			int dbId, int txId) {
 		map(bundle, dbId, txId);

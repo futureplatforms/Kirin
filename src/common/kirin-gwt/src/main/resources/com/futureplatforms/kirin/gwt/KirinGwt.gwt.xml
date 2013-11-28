@@ -22,7 +22,7 @@
   <!-- Specify the paths for translatable code                    -->
   <source path='client' />
   
-  <generate-with class="com.futureplatforms.kirin.gwt.compile.NativeObjectDeferredBindingGenerator">
+  <generate-with class="com.futureplatforms.kirin.gwt.compile.tonative.NativeObjectGenerator">
     <when-type-assignable class="com.futureplatforms.kirin.IKirinNativeObject" />
   </generate-with>
   

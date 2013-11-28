@@ -73,7 +73,17 @@
     [dbQueue inTransaction:^(FMDatabase *db, BOOL *rollback) {
         NSMutableArray * statements = [self getStatements:dbId :txId];
         for (NewTransactionStatement * st in statements) {
+            
             FMResultSet * s = [db executeQuery:st.statement withArgumentsInArray:st.parameters];
+            if ([db hadError]) {
+                NSLog(@"DB Error :: %@", [db lastErrorMessage]);
+                rollback = YES;
+                [self.kirinModule endFailure:dbId :txId];
+                return;
+            } else {
+                NSLog(@"DB No error");
+            }
+            
             if (st.type == SQL_rowset) {
                 NSMutableArray * columnNames = [[NSMutableArray alloc] init];
                 int colCount = [s columnCount];
