@@ -163,5 +163,47 @@ public class ConsoleJSONArray extends JSONArray {
         }
         return this;
     }
+
+	@Override
+	public int getInt(int index) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public boolean optBoolean(int index, boolean defVal) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public int optInt(int index, int defVal) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double optDouble(int index, double defVal) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public String optString(int index) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public JSONArray optJSONArray(int index) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public JSONObject optJSONObject(int index) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
 
