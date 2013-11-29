@@ -1,11 +1,11 @@
 defineModule("Win8JSSettings", function (require, exports) {
 	var existingKirinSettings = function existingKirinSettings() {
 		var settings = {};
-		for (var i = 0; i < localStorage.length; i++){
+		for (var i = 0; i < localStorage.length; i++) {
 			var key = localStorage.key(i);
 			if (key.indexOf('kirin-') === 0) {
 				var value = localStorage.getItem(key);
-				settings[key] = value;
+				settings[key.substring('kirin-'.length)] = value;
 			}
 		}
 		return settings;
@@ -19,6 +19,7 @@ defineModule("Win8JSSettings", function (require, exports) {
 					// add all the adds
 					for (var key in adds) {
 						if (adds.hasOwnProperty(key)) {
+							console.log('adding ' + key + ': ' + value);
 							var value = adds[key];
 							localStorage.setItem('kirin-' + key, value);
 						}
@@ -27,6 +28,7 @@ defineModule("Win8JSSettings", function (require, exports) {
 					// delete all the deletes
 					for (var key in deletes) {
 						if (deletes.hasOwnProperty(key)) {
+							console.log('deleting ' + key)
 							localStorage.removeItem(key);
 						}
 					}
@@ -41,7 +43,7 @@ defineModule("Win8JSSettings", function (require, exports) {
 		kirinHelper = kirin.bindModule(native, "Settings", false);
 		kirinHelper.onLoad();
 		
-		kirinHelper.invokeMethod('mergeOrOverwrite', existingKirinSettings());
+		kirinHelper.invokeMethod('mergeOrOverwrite', [existingKirinSettings()]);
 		kirinHelper.invokeMethod('resetEnvironment');
 	};
 });
