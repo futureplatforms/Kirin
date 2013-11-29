@@ -16,6 +16,8 @@ import com.futureplatforms.kirin.dependencies.db.Transaction.Statement;
 import com.futureplatforms.kirin.dependencies.db.Transaction.StatementWithRowsReturn;
 import com.futureplatforms.kirin.dependencies.db.Transaction.StatementWithTokenReturn;
 import com.futureplatforms.kirin.dependencies.db.Transaction.TxElementType;
+import com.futureplatforms.kirin.dependencies.db.Transaction.TxRowsCB;
+import com.futureplatforms.kirin.dependencies.db.Transaction.TxTokenCB;
 import com.futureplatforms.kirin.dependencies.internal.TransactionBackend;
 import com.futureplatforms.kirin.dependencies.internal.TransactionBundle;
 import com.google.common.collect.ImmutableList;
@@ -104,14 +106,19 @@ public class AndroidDatabase implements DatabaseDelegate {
 										rowset.addRow(values);
 									}
 								}
-								((StatementWithRowsReturn) st)._Callback.onSuccess(rowset);
+								TxRowsCB c = ((StatementWithRowsReturn) st)._Callback;
+								if (c != null) { c.onSuccess(rowset); }
 							} else {
 								// token return -- stick it on the dropbox!!
 								String token = AndroidDbDropbox.getInstance().putCursor(cursor);
-								((StatementWithTokenReturn) st)._Callback.onSuccess(token);
+								TxTokenCB c = ((StatementWithTokenReturn) st)._Callback;
+								if (c != null) { c.onSuccess(token); }
 							}
 						} else {
-							String file = bundle._Batches.get(batchCount);
+							String[] batch = bundle._Batches.get(batchCount);
+							for (String sql : batch) {
+								db.execSQL(sql);
+							}
 							batchCount++;
 							deps.getLogDelegate().log("SQL FILES not implemented");
 						}

@@ -31,6 +31,7 @@ public class Transaction {
 		}
 		
 		private static String str(String str, int colWidth, char pad) {
+			str = (str == null) ? "<null>" : str;
 			String s = str;
 			if (str.length() > colWidth) {
 				s = s.substring(0, colWidth);

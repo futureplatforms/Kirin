@@ -125,7 +125,8 @@ public class TransactionService extends KirinService<TransactionServiceNative>{
 	// A TOKEN RETURN STATEMENT WAS SUCCESSFUL
 	public void statementTokenSuccess(int dbId, int txId, int statementId, String token) {
 		Statement s = _Map.get(dbId).get(txId)._Statements.get(statementId);
-		((StatementWithTokenReturn) s)._Callback.onSuccess(token);
+		TxTokenCB c = ((StatementWithTokenReturn) s)._Callback;
+		if (c != null) { c.onSuccess(token); }
 	}
 	
 	
