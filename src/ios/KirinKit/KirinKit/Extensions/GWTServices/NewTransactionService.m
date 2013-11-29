@@ -70,22 +70,6 @@
     }
 }
 
-- (BOOL)executeBatch:(sqlite3  *) db sql:(NSString *)sql error:(NSError**)error
-{
-    char* errorOutput;
-    int responseCode = sqlite3_exec(db, [sql UTF8String], NULL, NULL, &errorOutput);
-    
-    if (errorOutput != nil)
-    {
-        *error = [NSError errorWithDomain:[NSString stringWithUTF8String:errorOutput]
-                                     code:responseCode
-                                 userInfo:nil];
-        return false;
-    }
-    
-    return true;
-}
-
 - (void) end: (int) dbId : (int) txId {
     FMDatabaseQueue * dbQueue = [_DatabaseAccessService.DbForId objectForKey:@(dbId)];
     [dbQueue inTransaction:^(FMDatabase *db, BOOL *rollback) {
@@ -115,7 +99,9 @@
                         // create an array of all this row's values and send them to kirin
                         NSMutableArray * row = [[NSMutableArray alloc] init];
                         for (int i=0; i<colCount; i++) {
-                            [row addObject:[s stringForColumnIndex:i]];
+                            if (![s columnIndexIsNull:i]) {
+                                [row addObject:[s stringForColumnIndex:i]];
+                            }
                         }
                         [self.kirinModule statementRowSuccess:dbId :txId :st.statementId :row];
                     }

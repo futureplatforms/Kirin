@@ -38,8 +38,15 @@
         <resource>
           <directory>src/main/java</directory>
           <includes>
-            <include>**/*.java</include>
-			<include>**/*.gwt.xml</include>
+            <include>**/*</include>
+			<include>**/*</include>
+          </includes>
+        </resource>
+        <resource>
+          <directory>src/main/resources</directory>
+          <includes>
+            <include>**/*</include>
+			<include>**/*</include>
           </includes>
         </resource>
       </resources>
