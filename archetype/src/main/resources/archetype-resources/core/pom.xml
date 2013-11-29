@@ -37,17 +37,9 @@
       <resources>
         <resource>
           <directory>src/main/java</directory>
-          <includes>
-            <include>**/*</include>
-			<include>**/*</include>
-          </includes>
         </resource>
         <resource>
           <directory>src/main/resources</directory>
-          <includes>
-            <include>**/*</include>
-			<include>**/*</include>
-          </includes>
         </resource>
       </resources>
   <!-- Copied this stuff off the webs http://stackoverflow.com/a/8535461/64505 -->
