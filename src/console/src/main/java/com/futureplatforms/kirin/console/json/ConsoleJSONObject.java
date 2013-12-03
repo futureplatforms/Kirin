@@ -166,4 +166,47 @@ public class ConsoleJSONObject extends com.futureplatforms.kirin.dependencies.js
     }
 
     protected JSONObject getNativeJSONObject() { return jsonObject; }
+
+	@Override
+	public int getInt(String key) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public boolean optBoolean(String key, boolean defVal) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public int optInt(String key, int defVal) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double optDouble(String key, double defVal) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public String optString(String key) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public JSONArray optJSONArray(String key) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public com.futureplatforms.kirin.dependencies.json.JSONObject optJSONObject(
+			String key) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
