@@ -1,5 +1,6 @@
 package com.futureplatforms.kirin.gwt.client.delegates.xml;
 
+import com.futureplatforms.kirin.dependencies.xml.parser.Attributes;
 import com.futureplatforms.kirin.dependencies.xml.parser.Node;
 import com.futureplatforms.kirin.dependencies.xml.parser.NodeList;
 
@@ -52,5 +53,10 @@ public class GwtNodeImpl implements Node {
         if (sibling == null) { return null; }
         return new GwtNodeImpl(sibling);
     }
+
+	@Override
+	public Attributes getAttributes() {
+		return new GwtAttributesImpl(mNode.getAttributes());
+	}
 
 }
