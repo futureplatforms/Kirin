@@ -61,7 +61,7 @@ public class AndroidNetwork implements NetworkDelegateClient {
 					responseHeaderMap.put(h.getName(), h.getValue());
 				}
 
-				result = EntityUtils.toString(getResponse.getEntity());
+				result = EntityUtils.toString(getResponse.getEntity(), "UTF-8");
 				return true;
 
 			} catch (Exception e) {
