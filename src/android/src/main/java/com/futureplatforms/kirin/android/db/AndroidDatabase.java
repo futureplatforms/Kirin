@@ -129,11 +129,16 @@ public class AndroidDatabase implements DatabaseDelegate {
 		}
 	}
 	
+	private static final Map<String, SQLiteOpenHelper> helpers = Maps.newHashMap();
+	
 	@Override
 	public void open(String filename, DatabaseOpenedCallback cb) {
 		SQLiteDatabase _db = _DbMap.get(_DbMap);
         if (_db == null || !_db.isOpen()) {
-            SQLiteOpenHelper helper = new Helper(filename);
+        	if (!helpers.containsKey(filename)) {
+        		helpers.put(filename, new Helper(filename));
+        	}
+            SQLiteOpenHelper helper = helpers.get(filename);
             _db = helper.getWritableDatabase();
             _DbMap.put(filename, _db);
         }
@@ -143,7 +148,7 @@ public class AndroidDatabase implements DatabaseDelegate {
 
 	@Override
 	public void close(Database db) {
-		
+
 	}
 
 }
