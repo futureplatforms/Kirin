@@ -8,7 +8,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.futureplatforms.kirin.dependencies.StaticDependencies;
 import com.futureplatforms.kirin.dependencies.db.Database;
 import com.futureplatforms.kirin.dependencies.db.DatabaseDelegate;
 import com.futureplatforms.kirin.dependencies.db.Transaction.RowSet;
@@ -47,7 +46,6 @@ public class AndroidDatabase implements DatabaseDelegate {
 	
 	private static class AndroidDatabaseImpl extends Database {
 
-		private final StaticDependencies deps = StaticDependencies.getInstance();
 		private SQLiteDatabase db;
 		
 		public AndroidDatabaseImpl(SQLiteDatabase db) {
@@ -120,7 +118,6 @@ public class AndroidDatabase implements DatabaseDelegate {
 								db.execSQL(sql);
 							}
 							batchCount++;
-							deps.getLogDelegate().log("SQL FILES not implemented");
 						}
 					}
 					bundle._ClosedCallback.onComplete();
