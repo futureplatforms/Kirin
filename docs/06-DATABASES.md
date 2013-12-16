@@ -73,7 +73,9 @@ Files like this should be loaded into a string and executed using `Transaction.e
 For details on loading text files within Kirin, see [RESOURCE-ACCESS](08-RESOURCE-ACCESS.md). 
 
 ###Rowset query
-This executes a `SELECT` and returns the results to Kirin code as a `RowSet` object.  There is currently ONE native to Kirin method call per row in the set.  **THIS WILL TAKE A LONG TIME ON GWT PLATFORMS IF YOU HAVE A QUERY RETURNING LOTS OF ROWS.**
+This executes a `SELECT` and returns the results to Kirin code as a `RowSet` object.  There is currently ONE native to Kirin method call per row in the set.  
+
+**THIS WILL TAKE A LONG TIME ON GWT PLATFORMS IF YOU HAVE A QUERY RETURNING LOTS OF ROWS.**
 
 But fear not, because you can always use:
 ###Token query
