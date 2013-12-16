@@ -2,7 +2,6 @@ package com.futureplatforms.kirin.dependencies.db;
 
 import java.util.List;
 
-import com.futureplatforms.kirin.dependencies.StaticDependencies;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.LogDelegate;
 import com.futureplatforms.kirin.dependencies.db.Database.TxRunner;
 import com.futureplatforms.kirin.dependencies.internal.TransactionBackend;

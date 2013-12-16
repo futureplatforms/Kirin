@@ -75,7 +75,7 @@ public class KirinEP implements EntryPoint {
                 profile,
                 new GwtDatabaseDelegate());
         
-        InternalDependencies.getInstance().setDependencies(new GwtTimerDelegate(), null);
+        InternalDependencies.getInstance().setDependencies(new GwtTimerDelegate());
         
         ExporterUtil.exportAll();
         
