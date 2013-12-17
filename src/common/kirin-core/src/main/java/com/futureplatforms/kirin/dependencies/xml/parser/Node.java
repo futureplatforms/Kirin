@@ -9,4 +9,5 @@ public interface Node {
     public String getNodeValue();
     public NodeList getChildNodes();
     public short getNodeType();
+    public Attributes getAttributes();
 }

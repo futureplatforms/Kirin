@@ -1,5 +1,6 @@
 package com.futureplatforms.kirin.android.xml;
 
+import com.futureplatforms.kirin.dependencies.xml.parser.Attributes;
 import com.futureplatforms.kirin.dependencies.xml.parser.Node;
 import com.futureplatforms.kirin.dependencies.xml.parser.NodeList;
 
@@ -50,5 +51,10 @@ public class JaxpNode implements Node {
     public short getNodeType() {
         return mNode.getNodeType();
     }
+
+	@Override
+	public Attributes getAttributes() {
+		return new JaxpAttributes(mNode.getAttributes());
+	}
 
 }
