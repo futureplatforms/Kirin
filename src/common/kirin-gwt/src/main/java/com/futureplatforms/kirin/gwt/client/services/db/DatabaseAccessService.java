@@ -25,6 +25,10 @@ public class DatabaseAccessService extends KirinService<DatabaseAccessServiceNat
     
     public DatabaseAccessService() {
         super(GWT.<DatabaseAccessServiceNative>create(DatabaseAccessServiceNative.class));
+        // There will only ever be one instance of this class, it will be created in javascript
+        // by the GWT platform when the app starts.
+        // We need to do this because the use of this module is initiated from Kirin code
+        // rather than native code (as with most regular screen modules).
         _Instance = this;
     }
     
@@ -50,14 +54,5 @@ public class DatabaseAccessService extends KirinService<DatabaseAccessServiceNat
     	cb.onError();
     }
     // END  Callback functions for database open
-    
-    
-    @NoBind
-    @NoExport
-    public void _closeDatabase(int dbId) {
-    	getNativeObject().close(dbId);
-    }
-    
-    
     
 }

@@ -41,11 +41,5 @@
     }
 }
 
-// gets called by Kirin
-- (void) close: (int) dbId {
-    [[self.DbForId objectForKey:@(dbId)] close];
-    [self.DbForId removeObjectForKey:@(dbId)];
-}
-
 @end
 

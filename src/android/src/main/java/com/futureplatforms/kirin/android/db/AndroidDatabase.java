@@ -76,8 +76,8 @@ public class AndroidDatabase implements DatabaseDelegate {
 								RowSet rowset = new RowSet(columnNames);
 								int colCount = cursor.getColumnCount();
 								while (cursor.moveToNext()) {
+									List<String> values = Lists.newArrayList();
 									for (int i=0; i<colCount; i++) {
-										List<String> values = Lists.newArrayList();
 										// Everything has to be a string...
 										int entryType = cursor.getType(i);
 										switch (entryType) {
@@ -101,8 +101,8 @@ public class AndroidDatabase implements DatabaseDelegate {
 												values.add(cursor.getString(i));
 											} break;
 										}
-										rowset.addRow(values);
 									}
+									rowset.addRow(values);
 								}
 								TxRowsCB c = ((StatementWithRowsReturn) st)._Callback;
 								if (c != null) { c.onSuccess(rowset); }
@@ -141,11 +141,6 @@ public class AndroidDatabase implements DatabaseDelegate {
         }
         
         cb.onOpened(new AndroidDatabaseImpl(_db));
-	}
-
-	@Override
-	public void close(Database db) {
-
 	}
 
 }

@@ -8,5 +8,4 @@ public interface DatabaseDelegate {
 	}
 	
 	public void open(String filename, DatabaseOpenedCallback cb);
-	public void close(Database db);
 }
