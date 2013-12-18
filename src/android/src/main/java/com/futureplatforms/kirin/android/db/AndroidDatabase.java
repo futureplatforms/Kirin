@@ -60,9 +60,8 @@ public class AndroidDatabase implements DatabaseDelegate {
 				public void pullTrigger(TransactionBundle bundle) {
 					db.beginTransaction();
 					
-					List<TxElementType> types = bundle._Types;
 					int statementCount=0, batchCount=0;
-					for (TxElementType type : types) {
+					for (TxElementType type : bundle._Types) {
 						if (type == TxElementType.Statement) {
 							Statement st = bundle._Statements.get(statementCount);
 							statementCount++;
