@@ -1,6 +1,7 @@
 package com.futureplatforms.kirin.console;
 
 
+import com.futureplatforms.kirin.console.db.ConsoleDB;
 import com.futureplatforms.kirin.console.json.ConsoleJson;
 import com.futureplatforms.kirin.console.xml.JaxpXmlParser;
 import com.futureplatforms.kirin.dependencies.StaticDependencies;
@@ -19,8 +20,8 @@ public final class Kirin {
                 new JaxpXmlParser(),
                 new ConsoleFormatter(),
                 Configuration.Debug,
-                null);
+                new ConsoleDB());
         
-        InternalDependencies.getInstance().setDependencies(new ConsoleTimer(), null);
+        InternalDependencies.getInstance().setDependencies(new ConsoleTimer());
     }
 }
