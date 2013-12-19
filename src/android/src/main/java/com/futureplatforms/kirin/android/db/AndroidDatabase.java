@@ -31,115 +31,141 @@ public class AndroidDatabase implements DatabaseDelegate {
 		}
 
 		@Override
-		public void onCreate(SQLiteDatabase db) { }
+		public void onCreate(SQLiteDatabase db) {
+		}
 
 		@Override
-		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) { }
+		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+		}
 	}
-	
-	private final Map<String, SQLiteDatabase> _DbMap = Maps.newHashMap();
+
 	private final Context _Context;
-	
+
 	public AndroidDatabase(Context context) {
 		this._Context = context;
 	}
-	
+
 	private static class AndroidDatabaseImpl extends Database {
 
 		private SQLiteDatabase db;
-		
+
 		public AndroidDatabaseImpl(SQLiteDatabase db) {
 			this.db = db;
 		}
-		
+
 		@Override
 		protected void performTransaction(TransactionCallback cb) {
 			cb.onSuccess(new TransactionBackend() {
-				
+
 				@Override
 				public void pullTrigger(TransactionBundle bundle) {
 					db.beginTransaction();
-					
-					int statementCount=0, batchCount=0;
-					for (TxElementType type : bundle._Types) {
-						if (type == TxElementType.Statement) {
-							Statement st = bundle._Statements.get(statementCount);
-							statementCount++;
-							
-							// Execute the statement
-							Cursor cursor = db.rawQuery(st._SQL, st._Params);
-							if (st instanceof StatementWithRowsReturn) {
-								// rows return
-								// construct RowSet from cursor
-								ImmutableList<String> columnNames = ImmutableList.copyOf(cursor.getColumnNames());
-								RowSet rowset = new RowSet(columnNames);
-								int colCount = cursor.getColumnCount();
-								while (cursor.moveToNext()) {
-									List<String> values = Lists.newArrayList();
-									for (int i=0; i<colCount; i++) {
-										// Everything has to be a string...
-										int entryType = cursor.getType(i);
-										switch (entryType) {
+					try {
+
+						int statementCount = 0, batchCount = 0;
+						for (TxElementType type : bundle._Types) {
+							if (type == TxElementType.Statement) {
+								Statement st = bundle._Statements
+										.get(statementCount);
+								statementCount++;
+
+								// Execute the statement
+								Cursor cursor = db
+										.rawQuery(st._SQL, st._Params);
+								if (st instanceof StatementWithRowsReturn) {
+									// rows return
+									// construct RowSet from cursor
+									ImmutableList<String> columnNames = ImmutableList
+											.copyOf(cursor.getColumnNames());
+									RowSet rowset = new RowSet(columnNames);
+									int colCount = cursor.getColumnCount();
+									while (cursor.moveToNext()) {
+										List<String> values = Lists
+												.newArrayList();
+										for (int i = 0; i < colCount; i++) {
+											// Everything has to be a string...
+											int entryType = cursor.getType(i);
+											switch (entryType) {
 											case Cursor.FIELD_TYPE_BLOB: {
-												values.add(new String(cursor.getBlob(i)));
-											} break;
-											
+												values.add(new String(cursor
+														.getBlob(i)));
+											}
+												break;
+
 											case Cursor.FIELD_TYPE_FLOAT: {
-												values.add(String.valueOf(cursor.getDouble(i)));
-											} break;
-											
+												values.add(String
+														.valueOf(cursor
+																.getDouble(i)));
+											}
+												break;
+
 											case Cursor.FIELD_TYPE_INTEGER: {
-												values.add(String.valueOf(cursor.getInt(i)));
-											} break;
-											
+												values.add(String
+														.valueOf(cursor
+																.getInt(i)));
+											}
+												break;
+
 											case Cursor.FIELD_TYPE_NULL: {
 												values.add(null);
-											} break;
-											
+											}
+												break;
+
 											case Cursor.FIELD_TYPE_STRING: {
 												values.add(cursor.getString(i));
-											} break;
+											}
+												break;
+											}
 										}
+										rowset.addRow(values);
 									}
-									rowset.addRow(values);
+									TxRowsCB c = ((StatementWithRowsReturn) st)._Callback;
+									if (c != null) {
+										c.onSuccess(rowset);
+									}
+								} else {
+									// token return -- stick it on the dropbox!!
+									String token = AndroidDbDropbox
+											.getInstance().putCursor(cursor);
+									TxTokenCB c = ((StatementWithTokenReturn) st)._Callback;
+									if (c != null) {
+										c.onSuccess(token);
+									}
 								}
-								TxRowsCB c = ((StatementWithRowsReturn) st)._Callback;
-								if (c != null) { c.onSuccess(rowset); }
 							} else {
-								// token return -- stick it on the dropbox!!
-								String token = AndroidDbDropbox.getInstance().putCursor(cursor);
-								TxTokenCB c = ((StatementWithTokenReturn) st)._Callback;
-								if (c != null) { c.onSuccess(token); }
+								String[] batch = bundle._Batches
+										.get(batchCount);
+								for (String sql : batch) {
+									db.execSQL(sql);
+								}
+								batchCount++;
 							}
-						} else {
-							String[] batch = bundle._Batches.get(batchCount);
-							for (String sql : batch) {
-								db.execSQL(sql);
-							}
-							batchCount++;
 						}
+						db.setTransactionSuccessful();
+						bundle._ClosedCallback.onComplete();
+					} catch (Exception e) {
+						bundle._ClosedCallback.onError();
+					} finally {
+						db.endTransaction();
 					}
-					bundle._ClosedCallback.onComplete();
 				}
 			});
+
 		}
 	}
-	
-	private static final Map<String, SQLiteOpenHelper> helpers = Maps.newHashMap();
-	
+
+	Map<String, SQLiteOpenHelper> dbHelperMap = Maps.newHashMap();
+
 	@Override
 	public void open(String filename, DatabaseOpenedCallback cb) {
-		SQLiteDatabase _db = _DbMap.get(_DbMap);
-        if (_db == null || !_db.isOpen()) {
-        	if (!helpers.containsKey(filename)) {
-        		helpers.put(filename, new Helper(filename));
-        	}
-            SQLiteOpenHelper helper = helpers.get(filename);
-            _db = helper.getWritableDatabase();
-            _DbMap.put(filename, _db);
-        }
-        
-        cb.onOpened(new AndroidDatabaseImpl(_db));
+		SQLiteOpenHelper helper = dbHelperMap.get(filename);
+		if (helper == null) {
+			helper = new Helper(filename);
+			dbHelperMap.put(filename, helper);
+		}
+		SQLiteDatabase _db = helper.getWritableDatabase();
+
+		cb.onOpened(new AndroidDatabaseImpl(_db));
 	}
 
 }
