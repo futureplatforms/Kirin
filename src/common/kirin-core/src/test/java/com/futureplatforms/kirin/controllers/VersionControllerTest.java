@@ -29,6 +29,7 @@ public class VersionControllerTest {
 
         // Run again with 1.0.0, and ensure firstRun is NOT called
         context.checking(new Expectations() {{
+        	oneOf(version).subsequentRun();
         }});
         cont.currentVersion("1.0.0", version);
         context.assertIsSatisfied();
@@ -42,6 +43,7 @@ public class VersionControllerTest {
         
         // Finally run again with 1.0.1 and ensure upgraded is NOT called
         context.checking(new Expectations() {{
+        	oneOf(version).subsequentRun();
         }});
         cont.currentVersion("1.0.1", version);
         context.assertIsSatisfied();

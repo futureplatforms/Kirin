@@ -19,6 +19,7 @@ public class KirinVersionController {
     public static interface KirinVersionDelegate {
         public void firstRun();
         public void upgraded(String lastVer);
+        public void subsequentRun();
     }
     
     public void currentVersion(String version, KirinVersionDelegate delegate) {
@@ -28,6 +29,8 @@ public class KirinVersionController {
             delegate.firstRun();
         } else if (!lastVersion.equals(version)) {
             delegate.upgraded(lastVersion);
+        } else {
+        	delegate.subsequentRun();
         }
     }
 }
