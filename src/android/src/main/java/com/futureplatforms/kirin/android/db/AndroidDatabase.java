@@ -5,6 +5,8 @@ import java.util.Map;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.database.CursorWindow;
+import android.database.sqlite.SQLiteCursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -84,34 +86,34 @@ public class AndroidDatabase implements DatabaseDelegate {
 												.newArrayList();
 										for (int i = 0; i < colCount; i++) {
 											// Everything has to be a string...
-											int entryType = cursor.getType(i);
+											int entryType = getType(cursor, i);
 											switch (entryType) {
-											case Cursor.FIELD_TYPE_BLOB: {
+											case FIELD_TYPE_BLOB: {
 												values.add(new String(cursor
 														.getBlob(i)));
 											}
 												break;
 
-											case Cursor.FIELD_TYPE_FLOAT: {
+											case FIELD_TYPE_FLOAT: {
 												values.add(String
 														.valueOf(cursor
 																.getDouble(i)));
 											}
 												break;
 
-											case Cursor.FIELD_TYPE_INTEGER: {
+											case FIELD_TYPE_INTEGER: {
 												values.add(String
 														.valueOf(cursor
 																.getInt(i)));
 											}
 												break;
 
-											case Cursor.FIELD_TYPE_NULL: {
+											case FIELD_TYPE_NULL: {
 												values.add(null);
 											}
 												break;
 
-											case Cursor.FIELD_TYPE_STRING: {
+											case FIELD_TYPE_STRING: {
 												values.add(cursor.getString(i));
 											}
 												break;
@@ -144,6 +146,7 @@ public class AndroidDatabase implements DatabaseDelegate {
 						db.setTransactionSuccessful();
 						bundle._ClosedCallback.onComplete();
 					} catch (Exception e) {
+						e.printStackTrace();
 						bundle._ClosedCallback.onError();
 					} finally {
 						db.endTransaction();
@@ -168,4 +171,29 @@ public class AndroidDatabase implements DatabaseDelegate {
 		cb.onOpened(new AndroidDatabaseImpl(_db));
 	}
 
+	protected static final int FIELD_TYPE_BLOB = 4;
+	protected static final int FIELD_TYPE_FLOAT = 2;
+	protected static final int FIELD_TYPE_INTEGER = 1;
+	protected static final int FIELD_TYPE_NULL = 0;
+	protected static final int FIELD_TYPE_STRING = 3;
+
+	static int getType(Cursor cursor, int i) throws Exception {
+		SQLiteCursor sqLiteCursor = (SQLiteCursor) cursor;
+		CursorWindow cursorWindow = sqLiteCursor.getWindow();
+		int pos = cursor.getPosition();
+		int type = -1;
+		if (cursorWindow.isNull(pos, i)) {
+			type = FIELD_TYPE_NULL;
+		} else if (cursorWindow.isLong(pos, i)) {
+			type = FIELD_TYPE_INTEGER;
+		} else if (cursorWindow.isFloat(pos, i)) {
+			type = FIELD_TYPE_FLOAT;
+		} else if (cursorWindow.isString(pos, i)) {
+			type = FIELD_TYPE_STRING;
+		} else if (cursorWindow.isBlob(pos, i)) {
+			type = FIELD_TYPE_BLOB;
+		}
+
+		return type;
+	}
 }
