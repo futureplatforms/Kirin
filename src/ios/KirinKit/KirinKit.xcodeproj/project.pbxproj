@@ -56,24 +56,11 @@
 		1A00C93114B2E32600211F34 /* NativeContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A00C8EC14B2E32600211F34 /* NativeContext.m */; };
 		1A00C93314B2E32600211F34 /* NativeExecutor.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A00C8ED14B2E32600211F34 /* NativeExecutor.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1A00C93414B2E32600211F34 /* SynthesizeSingleton.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A00C8EE14B2E32600211F34 /* SynthesizeSingleton.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		1A00C93514B2E32600211F34 /* Connection.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A00C8F014B2E32600211F34 /* Connection.h */; };
-		1A00C93614B2E32600211F34 /* Database.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A00C8F114B2E32600211F34 /* Database.h */; };
-		1A00C93714B2E32600211F34 /* DatabasesBackend.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A00C8F214B2E32600211F34 /* DatabasesBackend.h */; };
-		1A00C93814B2E32600211F34 /* DatabasesBackend.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A00C8F314B2E32600211F34 /* DatabasesBackend.m */; };
-		1A00C93A14B2E32600211F34 /* DatabasesBackendProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A00C8F414B2E32600211F34 /* DatabasesBackendProtocol.h */; };
 		1A00C94114B2E32600211F34 /* Networking.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A00C8F914B2E32600211F34 /* Networking.h */; };
 		1A00C94214B2E32600211F34 /* NetworkingBackend.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A00C8FA14B2E32600211F34 /* NetworkingBackend.h */; };
 		1A00C94314B2E32600211F34 /* NetworkingBackend.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A00C8FB14B2E32600211F34 /* NetworkingBackend.m */; };
 		1A00C94514B2E32600211F34 /* SettingsBackend.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A00C8FC14B2E32600211F34 /* SettingsBackend.h */; };
 		1A00C94614B2E32600211F34 /* SettingsBackend.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A00C8FD14B2E32600211F34 /* SettingsBackend.m */; };
-		1A00C94814B2E32600211F34 /* SQLiteConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A00C8FE14B2E32600211F34 /* SQLiteConnection.h */; };
-		1A00C94914B2E32600211F34 /* SQLiteConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A00C8FF14B2E32600211F34 /* SQLiteConnection.m */; };
-		1A00C94B14B2E32600211F34 /* SQLiteDatabase.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A00C90014B2E32600211F34 /* SQLiteDatabase.h */; };
-		1A00C94C14B2E32600211F34 /* SQLiteDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A00C90114B2E32600211F34 /* SQLiteDatabase.m */; };
-		1A00C94E14B2E32600211F34 /* SQLOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A00C90214B2E32600211F34 /* SQLOperation.h */; };
-		1A00C94F14B2E32600211F34 /* SQLOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A00C90314B2E32600211F34 /* SQLOperation.m */; };
-		1A00C95114B2E32600211F34 /* Transaction.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A00C90414B2E32600211F34 /* Transaction.h */; };
-		1A00C95214B2E32600211F34 /* Transaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A00C90514B2E32600211F34 /* Transaction.m */; };
 		1A00C97A14B2E36500211F34 /* NativeContextTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A00C97014B2E36500211F34 /* NativeContextTest.m */; };
 		1A00C97B14B2E36500211F34 /* KirinTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A00C97214B2E36500211F34 /* KirinTests.m */; };
 		1A00C97C14B2E36500211F34 /* KirinHelperTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A00C97414B2E36500211F34 /* KirinHelperTest.m */; };
@@ -226,24 +213,11 @@
 		1A00C8EC14B2E32600211F34 /* NativeContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NativeContext.m; sourceTree = "<group>"; };
 		1A00C8ED14B2E32600211F34 /* NativeExecutor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NativeExecutor.h; sourceTree = "<group>"; };
 		1A00C8EE14B2E32600211F34 /* SynthesizeSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SynthesizeSingleton.h; sourceTree = "<group>"; };
-		1A00C8F014B2E32600211F34 /* Connection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Connection.h; sourceTree = "<group>"; };
-		1A00C8F114B2E32600211F34 /* Database.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Database.h; sourceTree = "<group>"; };
-		1A00C8F214B2E32600211F34 /* DatabasesBackend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatabasesBackend.h; sourceTree = "<group>"; };
-		1A00C8F314B2E32600211F34 /* DatabasesBackend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatabasesBackend.m; sourceTree = "<group>"; };
-		1A00C8F414B2E32600211F34 /* DatabasesBackendProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatabasesBackendProtocol.h; sourceTree = "<group>"; };
 		1A00C8F914B2E32600211F34 /* Networking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Networking.h; sourceTree = "<group>"; };
 		1A00C8FA14B2E32600211F34 /* NetworkingBackend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkingBackend.h; sourceTree = "<group>"; };
 		1A00C8FB14B2E32600211F34 /* NetworkingBackend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkingBackend.m; sourceTree = "<group>"; };
 		1A00C8FC14B2E32600211F34 /* SettingsBackend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsBackend.h; sourceTree = "<group>"; };
 		1A00C8FD14B2E32600211F34 /* SettingsBackend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsBackend.m; sourceTree = "<group>"; };
-		1A00C8FE14B2E32600211F34 /* SQLiteConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SQLiteConnection.h; sourceTree = "<group>"; };
-		1A00C8FF14B2E32600211F34 /* SQLiteConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SQLiteConnection.m; sourceTree = "<group>"; };
-		1A00C90014B2E32600211F34 /* SQLiteDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SQLiteDatabase.h; sourceTree = "<group>"; };
-		1A00C90114B2E32600211F34 /* SQLiteDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SQLiteDatabase.m; sourceTree = "<group>"; };
-		1A00C90214B2E32600211F34 /* SQLOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SQLOperation.h; sourceTree = "<group>"; };
-		1A00C90314B2E32600211F34 /* SQLOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SQLOperation.m; sourceTree = "<group>"; };
-		1A00C90414B2E32600211F34 /* Transaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Transaction.h; sourceTree = "<group>"; };
-		1A00C90514B2E32600211F34 /* Transaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Transaction.m; sourceTree = "<group>"; };
 		1A00C90714B2E32600211F34 /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
 		1A00C90814B2E32600211F34 /* NSObject+JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+JSON.h"; sourceTree = "<group>"; };
 		1A00C90914B2E32600211F34 /* NSObject+JSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+JSON.m"; sourceTree = "<group>"; };
@@ -635,19 +609,6 @@
 				09DCA4FC1846342300C3555C /* NewTransactionService.m */,
 				09DCA4FF1846405C00C3555C /* NewTransactionStatement.h */,
 				09DCA5001846405C00C3555C /* NewTransactionStatement.m */,
-				1A00C8F414B2E32600211F34 /* DatabasesBackendProtocol.h */,
-				1A00C8F014B2E32600211F34 /* Connection.h */,
-				1A00C8F114B2E32600211F34 /* Database.h */,
-				1A00C8F214B2E32600211F34 /* DatabasesBackend.h */,
-				1A00C8F314B2E32600211F34 /* DatabasesBackend.m */,
-				1A00C8FE14B2E32600211F34 /* SQLiteConnection.h */,
-				1A00C8FF14B2E32600211F34 /* SQLiteConnection.m */,
-				1A00C90014B2E32600211F34 /* SQLiteDatabase.h */,
-				1A00C90114B2E32600211F34 /* SQLiteDatabase.m */,
-				1A00C90214B2E32600211F34 /* SQLOperation.h */,
-				1A00C90314B2E32600211F34 /* SQLOperation.m */,
-				1A00C90414B2E32600211F34 /* Transaction.h */,
-				1A00C90514B2E32600211F34 /* Transaction.m */,
 			);
 			name = Databases;
 			sourceTree = "<group>";
@@ -739,19 +700,12 @@
 				09B027E918462B6F0033356B /* FMResultSet.h in Headers */,
 				1A00C93314B2E32600211F34 /* NativeExecutor.h in Headers */,
 				1A00C93414B2E32600211F34 /* SynthesizeSingleton.h in Headers */,
-				1A00C93514B2E32600211F34 /* Connection.h in Headers */,
-				1A00C93714B2E32600211F34 /* DatabasesBackend.h in Headers */,
-				1A00C93A14B2E32600211F34 /* DatabasesBackendProtocol.h in Headers */,
 				09918358183232BC00A35AF8 /* KirinGwtServiceStub.h in Headers */,
 				09DCA4FD1846342300C3555C /* NewTransactionService.h in Headers */,
 				1A00C94114B2E32600211F34 /* Networking.h in Headers */,
 				1A00C94214B2E32600211F34 /* NetworkingBackend.h in Headers */,
 				1A00C94514B2E32600211F34 /* SettingsBackend.h in Headers */,
-				1A00C94814B2E32600211F34 /* SQLiteConnection.h in Headers */,
-				1A00C94B14B2E32600211F34 /* SQLiteDatabase.h in Headers */,
-				1A00C94E14B2E32600211F34 /* SQLOperation.h in Headers */,
 				0991834D1832325E00A35AF8 /* NewDatabaseAccessService.h in Headers */,
-				1A00C95114B2E32600211F34 /* Transaction.h in Headers */,
 				1A00C99A14B2EE8900211F34 /* KirinKit.h in Headers */,
 				091D1AC316F071E3001400FF /* NSObject+Kirin.h in Headers */,
 				1A02010214BCFFED00CB9765 /* KirinUiFragmentHelper.h in Headers */,
@@ -770,7 +724,6 @@
 				1A06437714CF0DB500FB7EE3 /* KirinImagePicker.h in Headers */,
 				1A06437814CF0DB500FB7EE3 /* CameraProtocol.h in Headers */,
 				1A61952A14D22105004FDD8E /* KirinFileSystem.h in Headers */,
-				1A00C93614B2E32600211F34 /* Database.h in Headers */,
 				1A9FE0A114D5F745008C0565 /* NativeObjectHolder.h in Headers */,
 				1A9FE0A514D5FA51008C0565 /* KirinExtensionOnMainThread.h in Headers */,
 				1A4384B614E2CAE00012CD5A /* FileSystem.h in Headers */,
@@ -934,15 +887,10 @@
 				1A00C92B14B2E32600211F34 /* KirinHelper.m in Sources */,
 				1A00C92E14B2E32600211F34 /* KirinWebViewHolder.m in Sources */,
 				1A00C93114B2E32600211F34 /* NativeContext.m in Sources */,
-				1A00C93814B2E32600211F34 /* DatabasesBackend.m in Sources */,
 				1A00C94314B2E32600211F34 /* NetworkingBackend.m in Sources */,
 				09DCA5021846405C00C3555C /* NewTransactionStatement.m in Sources */,
 				1A00C94614B2E32600211F34 /* SettingsBackend.m in Sources */,
-				1A00C94914B2E32600211F34 /* SQLiteConnection.m in Sources */,
-				1A00C94C14B2E32600211F34 /* SQLiteDatabase.m in Sources */,
-				1A00C94F14B2E32600211F34 /* SQLOperation.m in Sources */,
 				09DCA4FE1846342300C3555C /* NewTransactionService.m in Sources */,
-				1A00C95214B2E32600211F34 /* Transaction.m in Sources */,
 				1A02010314BCFFED00CB9765 /* KirinUiFragmentHelper.m in Sources */,
 				1A02010814BD025E00CB9765 /* KirinScreenHelper.m in Sources */,
 				1A02010E14BD072C00CB9765 /* KirinExtensionHelper.m in Sources */,

@@ -23,9 +23,6 @@ public class Transaction {
 		public final ImmutableList<String> _ColumnNames;
 		public final List<Row> _Rows = Lists.newArrayList();
 		
-		public static RowSet emptyRowSet() {
-			return new RowSet(ImmutableList.<String>of());
-		}
 		public RowSet(ImmutableList<String> columnNames) {
 			_ColumnNames = columnNames;
 		}
