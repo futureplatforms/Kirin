@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate.HttpVerb;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate.NetworkResponse;
+import com.futureplatforms.kirin.dependencies.TimerTask.TimerDelegate;
 import com.futureplatforms.kirin.dependencies.db.DatabaseDelegate;
 import com.futureplatforms.kirin.dependencies.json.JSONDelegate;
 import com.futureplatforms.kirin.dependencies.xml.parser.XMLParser;
@@ -70,7 +71,9 @@ public final class StaticDependencies {
     private boolean mInitialised;
     private DatabaseDelegate _DatabasesDelegate;
     private Configuration _Profile;
-    
+	private TimerDelegate _TimerDelegate;
+	
+	public TimerDelegate getTimerDelegate() { return _TimerDelegate; }
     public LogDelegate getLogDelegate() { return mLogDelegate; }
     public SettingsDelegate getSettingsDelegate() { return mSettingsDelegate; }
     public LocationDelegate getLocationDelegate() { return mLocationDelegate; }
@@ -90,7 +93,8 @@ public final class StaticDependencies {
                                     XMLParser xmlParser, 
                                     Formatter formatter, 
                                     Configuration profile,
-                                    DatabaseDelegate databasesDelegate) {
+                                    DatabaseDelegate databasesDelegate, 
+                                    TimerDelegate timerDel) {
         this.mLogDelegate = logDelegate;
         this.mSettingsDelegate = settingsDelegate;
         this.mLocationDelegate = locationDelegate;
@@ -101,5 +105,6 @@ public final class StaticDependencies {
         this._Profile = profile;
         this.mInitialised = true;
         this._DatabasesDelegate = databasesDelegate;
+        this._TimerDelegate = timerDel;
     }
 }

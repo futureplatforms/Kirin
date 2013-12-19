@@ -1,7 +1,7 @@
 package com.futureplatforms.kirin.console;
 
-import com.futureplatforms.kirin.controllers.TimerTask.PlatformTimerTask;
-import com.futureplatforms.kirin.controllers.TimerTask.TimerDelegate;
+import com.futureplatforms.kirin.dependencies.TimerTask.PlatformTimerTask;
+import com.futureplatforms.kirin.dependencies.TimerTask.TimerDelegate;
 
 public class ConsoleTimer implements TimerDelegate
 {

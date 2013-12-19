@@ -1,6 +1,4 @@
-package com.futureplatforms.kirin.controllers;
-
-import com.futureplatforms.kirin.dependencies.internal.InternalDependencies;
+package com.futureplatforms.kirin.dependencies;
 
 
 /**
@@ -60,10 +58,10 @@ public abstract class TimerTask {
     private PlatformTimerTask mPtt;
     
     public TimerTask() {
-        this(InternalDependencies.getInstance());
+        this(StaticDependencies.getInstance());
     }
     
-    public TimerTask(InternalDependencies deps) {
+    public TimerTask(StaticDependencies deps) {
         mPtt = deps.getTimerDelegate().getPlatformTimerTask();
         // Pass this TimerTask into the native dependency, and our run method will be invoked later
         mPtt.setRealTimerTask(this);

@@ -8,7 +8,6 @@ import org.timepedia.exporter.client.ExporterUtil;
 import com.futureplatforms.kirin.dependencies.StaticDependencies;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.Configuration;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.LogDelegate;
-import com.futureplatforms.kirin.dependencies.internal.InternalDependencies;
 import com.futureplatforms.kirin.gwt.client.delegates.GwtFormatter;
 import com.futureplatforms.kirin.gwt.client.delegates.GwtSettingsDelegate;
 import com.futureplatforms.kirin.gwt.client.delegates.GwtTimerDelegate;
@@ -73,9 +72,8 @@ public class KirinEP implements EntryPoint {
                 new GwtXMLParserImpl(),
                 new GwtFormatter(),
                 profile,
-                new GwtDatabaseDelegate());
-        
-        InternalDependencies.getInstance().setDependencies(new GwtTimerDelegate());
+                new GwtDatabaseDelegate(),
+                new GwtTimerDelegate());
         
         ExporterUtil.exportAll();
         

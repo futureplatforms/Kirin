@@ -4,8 +4,8 @@ import java.util.TimerTask;
 
 import android.os.Handler;
 
-import com.futureplatforms.kirin.controllers.TimerTask.PlatformTimerTask;
-import com.futureplatforms.kirin.controllers.TimerTask.TimerDelegate;
+import com.futureplatforms.kirin.dependencies.TimerTask.PlatformTimerTask;
+import com.futureplatforms.kirin.dependencies.TimerTask.TimerDelegate;
 
 public class AndroidTimer implements TimerDelegate
 {

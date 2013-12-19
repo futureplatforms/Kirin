@@ -6,7 +6,6 @@ import com.futureplatforms.kirin.console.json.ConsoleJson;
 import com.futureplatforms.kirin.console.xml.JaxpXmlParser;
 import com.futureplatforms.kirin.dependencies.StaticDependencies;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.Configuration;
-import com.futureplatforms.kirin.dependencies.internal.InternalDependencies;
 
 public final class Kirin {
     public static void kickOff() {
@@ -20,8 +19,7 @@ public final class Kirin {
                 new JaxpXmlParser(),
                 new ConsoleFormatter(),
                 Configuration.Debug,
-                new ConsoleDB());
-        
-        InternalDependencies.getInstance().setDependencies(new ConsoleTimer());
+                new ConsoleDB(),
+                new ConsoleTimer());
     }
 }

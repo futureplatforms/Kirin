@@ -22,6 +22,7 @@ public final class Kirin {
                 new JaxpXmlParser(),
                 new AndroidFormatter(),
                 isDebug ? Configuration.Debug : Configuration.Release,
-                new AndroidDatabase(context));
+                new AndroidDatabase(context),
+                new AndroidTimer());
     }
 }
