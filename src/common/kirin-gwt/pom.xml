@@ -74,7 +74,7 @@
         <resource>
           <directory>src/main/java</directory>
           <includes>
-            <include>**/*.java</include>
+            <include>com/futureplatforms/kirin/gwt/client/**/*.java</include>
             <include>**/*.gwt.xml</include>
           </includes>
         </resource>
