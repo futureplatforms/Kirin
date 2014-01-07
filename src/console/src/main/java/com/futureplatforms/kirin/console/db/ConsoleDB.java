@@ -116,8 +116,10 @@ public class ConsoleDB implements DatabaseDelegate {
 							}
 						}
 						_Connection.commit();
+						bundle._ClosedCallback.onComplete();
 					} catch (Exception e) {
 						e.printStackTrace();
+						bundle._ClosedCallback.onError();
 					}
 				}
 			});

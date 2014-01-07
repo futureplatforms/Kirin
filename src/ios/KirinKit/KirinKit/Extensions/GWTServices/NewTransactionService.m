@@ -99,7 +99,9 @@
                         // create an array of all this row's values and send them to kirin
                         NSMutableArray * row = [[NSMutableArray alloc] init];
                         for (int i=0; i<colCount; i++) {
-                            if (![s columnIndexIsNull:i]) {
+                            if ([s columnIndexIsNull:i]) {
+                                [row addObject:[NSNull null]];
+                            } else {
                                 [row addObject:[s stringForColumnIndex:i]];
                             }
                         }
