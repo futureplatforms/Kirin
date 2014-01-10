@@ -53,7 +53,9 @@ public class AndroidNetwork implements NetworkDelegateClient {
 				HttpResponse getResponse = null;
 
 				getResponse = client.execute(get);
-
+				try {
+					res = getResponse.getStatusLine().getStatusCode();
+				} catch (Throwable t) {}
 				Header[] responseHeaders = getResponse.getAllHeaders();
 
 				responseHeaderMap = new HashMap<String, String>();
@@ -131,7 +133,10 @@ public class AndroidNetwork implements NetworkDelegateClient {
 				HttpResponse postResponse = null;
 
 				postResponse = client.execute(base);
-
+				try {
+					res = postResponse.getStatusLine().getStatusCode();
+				} catch (Throwable t) {}
+				
 				Header[] responseHeaders = postResponse.getAllHeaders();
 
 				responseHeaderMap = new HashMap<String, String>();
