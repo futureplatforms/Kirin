@@ -46,12 +46,20 @@ public class KirinEP implements EntryPoint {
                 $wnd.console.log(s);
             }
         }-*/;
+
+		@Override
+		public void log(String tag, String s) {
+			log(tag+": "+s);
+		}
     };
     
     private final LogDelegate noopLogDelegate = new LogDelegate() {
         
         @Override
         public void log(String s) { }
+
+		@Override
+		public void log(String tag, String s) { }
     };
     
   /**

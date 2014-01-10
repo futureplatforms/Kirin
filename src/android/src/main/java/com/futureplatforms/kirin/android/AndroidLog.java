@@ -11,4 +11,9 @@ public class AndroidLog implements LogDelegate {
         Log.i("Kirin", s);    
     }
 
+	@Override
+	public void log(String tag, String s) {
+		Log.i(tag, s);
+	}
+
 }
