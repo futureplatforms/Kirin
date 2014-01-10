@@ -12,9 +12,15 @@ public class KirinFragmentMethods {
 			IKirinFragment<Module> f) {
 		Module module = null;
 		try {
-			module = (Module) ((Class<?>) ((ParameterizedType) f.getClass()
-					.getGenericSuperclass()).getActualTypeArguments()[0])
-					.newInstance();
+
+			Object clazz = f.getClass().getGenericSuperclass();
+
+			//get superclass until you get ParameterizedType
+			while (clazz != null && !(clazz instanceof ParameterizedType))
+				clazz = ((Class<?>) clazz).getGenericSuperclass();
+
+			module = (Module) ((Class<?>) ((ParameterizedType) clazz)
+					.getActualTypeArguments()[0]).newInstance();
 			module.onPrototypeLoad((KirinNativeObj) f);
 			f.setModule(module);
 		} catch (Exception e) {
