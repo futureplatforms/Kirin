@@ -13,6 +13,7 @@ public abstract class Formatter {
 	 */
 	
     public abstract Date parseDate(String format, String text);
+    public abstract String format(String string, Object... args);
     public abstract String formatDate(String format, Date date);
     public abstract String formatLocalisedShortTime(Date date);
     public abstract String formatLocalisedLongDateAndTime(Date date);

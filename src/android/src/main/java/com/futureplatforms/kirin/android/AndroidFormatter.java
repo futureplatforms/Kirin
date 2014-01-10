@@ -92,4 +92,9 @@ public class AndroidFormatter extends Formatter {
 			return null;
 		}
 	}
+
+	@Override
+	public String format(String string, Object... args) {
+		return String.format(string, args);
+	}
 }

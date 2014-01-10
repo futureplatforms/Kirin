@@ -108,4 +108,9 @@ public class ConsoleFormatter extends Formatter {
 			return null;
 		}
 	}
+
+	@Override
+	public String format(String string, Object... args) {
+		return String.format(string, args);
+	}
 }

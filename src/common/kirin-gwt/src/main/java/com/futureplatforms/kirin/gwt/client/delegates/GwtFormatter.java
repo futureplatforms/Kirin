@@ -8,6 +8,8 @@ import com.google.gwt.http.client.URL;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
 import com.google.gwt.i18n.client.NumberFormat;
+import com.google.gwt.regexp.shared.RegExp;
+import com.google.gwt.regexp.shared.SplitResult;
 
 public class GwtFormatter extends Formatter {
 
@@ -83,5 +85,18 @@ public class GwtFormatter extends Formatter {
 		var res = $wnd.CryptoJS.HmacSHA1(message, passphrase);
 		return res.toString($wnd.CryptoJS.enc.Hex);
 	}-*/;
+
+	@Override
+	public String format(final String format, final Object... args) {
+		  final RegExp regex = RegExp.compile("%[a-z]");
+		  final SplitResult split = regex.split(format);
+		  final StringBuffer msg = new StringBuffer();
+		  for (int pos = 0; pos < split.length() - 1; ++pos) {
+		    msg.append(split.get(pos));
+		    msg.append(args[pos].toString());
+		  }
+		  msg.append(split.get(split.length() - 1));
+		  return msg.toString();
+		}
 
 }
