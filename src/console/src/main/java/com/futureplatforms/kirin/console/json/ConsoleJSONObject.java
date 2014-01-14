@@ -169,44 +169,49 @@ public class ConsoleJSONObject extends com.futureplatforms.kirin.dependencies.js
 
 	@Override
 	public int getInt(String key) {
-		// TODO Auto-generated method stub
-		return 0;
+		try {
+			return jsonObject.getInt(key);
+		} catch (JSONException e) {
+			throw new IllegalArgumentException("couldn't put " + key);
+		}
 	}
 
 	@Override
 	public boolean optBoolean(String key, boolean defVal) {
-		// TODO Auto-generated method stub
-		return false;
+		return jsonObject.optBoolean(key, defVal);
 	}
 
 	@Override
 	public int optInt(String key, int defVal) {
-		// TODO Auto-generated method stub
-		return 0;
+		return jsonObject.optInt(key, defVal);
 	}
 
 	@Override
 	public double optDouble(String key, double defVal) {
-		// TODO Auto-generated method stub
-		return 0;
+		return jsonObject.optDouble(key, defVal);
 	}
 
 	@Override
 	public String optString(String key) {
-		// TODO Auto-generated method stub
-		return null;
+		return jsonObject.optString(key, null);
 	}
 
 	@Override
 	public JSONArray optJSONArray(String key) {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			return new ConsoleJSONArray(jsonObject.getJSONArray(key));
+		} catch (JSONException e) {
+			return null;
+		}
 	}
 
 	@Override
 	public com.futureplatforms.kirin.dependencies.json.JSONObject optJSONObject(
 			String key) {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			return new ConsoleJSONObject(jsonObject.getJSONObject(key));
+		} catch (JSONException e) {
+			return null;
+		}
 	}
 }
