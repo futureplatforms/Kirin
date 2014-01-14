@@ -124,7 +124,18 @@ public class Transaction {
     	execQueryWithTokenReturn(sql, null, cb);
     }
     
+    private void validateParams(String[] params) {
+    	if (params != null) {
+	    	for (int i=0; i<params.length; i++) {
+				if (params[i] == null) { 
+					throw new NullPointerException("param " + i + " must not be null!"); 
+				} 
+			}
+    	}
+    }
+    
     public void execQueryWithTokenReturn(String sql, String[] params, TxTokenCB cb) { 
+    	validateParams(params);
     	_Statements.add(new StatementWithTokenReturn(sql, params, cb));
     	_TxElements.add(TxElementType.Statement); 
     }
@@ -142,6 +153,7 @@ public class Transaction {
     }
     
     public void execQueryWithRowsReturn(String sql, String[] params, TxRowsCB cb) { 
+    	validateParams(params);
     	_Statements.add(new StatementWithRowsReturn(sql, params, cb));
     	_TxElements.add(TxElementType.Statement); 
     }

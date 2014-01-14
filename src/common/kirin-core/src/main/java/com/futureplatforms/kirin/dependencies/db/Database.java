@@ -22,16 +22,21 @@ public abstract class Database {
 			
 			@Override
 			public void onSuccess(TransactionBackend txBackend) {
-				// OK, we've set up a native transaction
-				Transaction tx = new Transaction(txBackend);
-				
-				// Run the user-implemented TxRunner.run() method --
-				// this will fill the Transaction class with all the 
-				// SQL queries the user wants to run
-				txRunner.run(tx);
-				
-				// Actually execute it, and pass the TxRunner as callback
-				tx.pullTrigger(txRunner);
+				try {
+					// OK, we've set up a native transaction
+					Transaction tx = new Transaction(txBackend);
+					
+					// Run the user-implemented TxRunner.run() method --
+					// this will fill the Transaction class with all the 
+					// SQL queries the user wants to run
+					txRunner.run(tx);
+					
+					// Actually execute it, and pass the TxRunner as callback
+					tx.pullTrigger(txRunner);
+				} catch (Throwable t) {
+					t.printStackTrace();
+					txRunner.onError();
+				}
 			}
 		});
     }
