@@ -57,6 +57,10 @@ public final class StaticDependencies {
             doHttp(verb, url, payload, new HashMap<String, String>(), callback);
         }
         
+        public final void doHttp(HttpVerb verb, String url, Map<String, String> headers, NetworkResponse callback) {
+        	doHttp(verb, url, null, headers, callback);
+        }
+        
         public final void doHttp(HttpVerb verb, String url, String payload, Map<String, String> headers, NetworkResponse callback) {
             _Client.doHttp(verb, url, payload, headers, callback);
         }
