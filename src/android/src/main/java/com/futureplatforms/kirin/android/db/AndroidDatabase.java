@@ -144,13 +144,13 @@ public class AndroidDatabase implements DatabaseDelegate {
 							}
 						}
 						db.setTransactionSuccessful();
+						db.endTransaction();
 						bundle._ClosedCallback.onComplete();
 					} catch (Exception e) {
 						e.printStackTrace();
-						bundle._ClosedCallback.onError();
-					} finally {
 						db.endTransaction();
-					}
+						bundle._ClosedCallback.onError();
+					} 
 				}
 			});
 
