@@ -10,12 +10,12 @@
   <groupId>com.futureplatforms.kirin.gwt</groupId>
   <artifactId>kirin-gwt</artifactId>
   <name>kirin-gwt</name>
-
+  
   <properties>
     <!-- Convenience property to set the GWT version -->
     <gwtVersion>2.5.1</gwtVersion>
     <!-- GWT needs at least java 1.5 -->
-    <webappDirectory>${project.build.directory}/${project.build.finalName}/app</webappDirectory>
+    <webappDirectory>${project.build.directory}/${project.build.finalName}/app.zip</webappDirectory>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <gwtModule>com.futureplatforms.kirin.gwt.KirinServiceExport</gwtModule>
     <deployDirectory>${webappDirectory}/WEB-INF</deployDirectory>
@@ -101,7 +101,7 @@
                                 <pluginExecutionFilter>
                                     <groupId>org.codehaus.mojo</groupId>
                                     <artifactId>gwt-maven-plugin</artifactId>
-                                    <version>2.5.1</version>
+                                    <version>${gwtVersion}</version>
                                     <goals>
                                         <goal>resources</goal>
                                         <goal>compile</goal>
@@ -140,6 +140,7 @@
             <execution>
               <configuration>
                 <module>${gwtModule}</module>
+                <extra>${project.build.directory}/extra.zip</extra>
               </configuration>
               <goals>
                 <goal>compile</goal>

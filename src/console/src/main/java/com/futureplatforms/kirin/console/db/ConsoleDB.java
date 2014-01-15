@@ -22,6 +22,106 @@ import com.google.common.collect.Lists;
 
 public class ConsoleDB implements DatabaseDelegate {
 
+	public interface ResultSetProcessor {
+		public void columnNames(List<String> colNames);
+		public void nextRow(List<String> nextRow);
+		public void finished();
+	}
+	
+	private static class ConsoleDBResultSetProcessor implements ResultSetProcessor {
+		private RowSet _RowSet;
+		private final StatementWithRowsReturn _SRows;
+		public ConsoleDBResultSetProcessor(StatementWithRowsReturn sRows) {
+			_SRows = sRows;
+		}
+		@Override
+		public void columnNames(List<String> colNames) {
+			_RowSet = new RowSet(ImmutableList.copyOf(colNames));
+		}
+
+		@Override
+		public void nextRow(List<String> nextRow) {
+			_RowSet.addRow(nextRow);
+		}
+
+		@Override
+		public void finished() {
+			_SRows._Callback.onSuccess(_RowSet);
+		}
+	}
+	
+	private static class PrintResultSetProcessor implements ResultSetProcessor {
+		private final int _Width;
+		public PrintResultSetProcessor(int width) {
+			_Width = width;
+		}
+		
+		private String pad(String string) {
+			String str = "";
+			if (string.length() > _Width) {
+				str += string.substring(0, _Width);
+			} else {
+				str += string;
+				for (int i=string.length(); i<_Width; i++) {
+					str += " ";
+				}
+			}
+			return str;
+		}
+		
+		@Override
+		public void columnNames(List<String> colNames) {
+			String str = "";
+			for (String string : colNames) {
+				str += pad(string);
+				str += " | ";
+			}
+			str += System.getProperty("line.separator");
+			for (int i=0; i<colNames.size(); i++) {
+				for (int j=0; j<_Width + 3; j++) {
+					str += '=';
+				}
+			}
+			System.out.println(str);
+		}
+
+		@Override
+		public void nextRow(List<String> nextRow) {
+			String str = "";
+			for (String string : nextRow) {
+				str += pad(string);
+				str += " | ";
+			}
+			
+			System.out.println(str);
+		}
+
+		@Override
+		public void finished() {
+			System.out.println("DONE");
+		}
+		
+	}
+	public static ResultSetProcessor _PrintlnResultset = new PrintResultSetProcessor(15);
+	
+	public static void processResultSet(ResultSet resultSet, ResultSetProcessor processor) throws SQLException {
+		ResultSetMetaData metaData = resultSet.getMetaData();
+		int colCount = metaData.getColumnCount();
+		List<String> colNames = Lists.newArrayList();
+		for (int i=1; i<colCount+1; i++) {
+			colNames.add(metaData.getColumnName(i));
+		}
+		processor.columnNames(colNames);
+		while (resultSet.next()) {
+			List<String> nextRow = Lists.newArrayList();
+			for (int i=1; i<colCount+1; i++) {
+				nextRow.add(resultSet.getString(i));
+			}
+			processor.nextRow(nextRow);
+		}
+		processor.finished();
+	}
+	
 	public static class ConsoleDatabaseImpl extends Database {
 		private Connection _Connection;
 		
@@ -82,21 +182,7 @@ public class ConsoleDB implements DatabaseDelegate {
 									try {
 										if (sRows._Callback != null) {
 											ResultSet resultSet = execQuery(kirinStatement);
-											ResultSetMetaData metaData = resultSet.getMetaData();
-											int colCount = metaData.getColumnCount();
-											List<String> colNames = Lists.newArrayList();
-											for (int i=1; i<colCount+1; i++) {
-												colNames.add(metaData.getColumnName(i));
-											}
-											RowSet rowset = new RowSet(ImmutableList.copyOf(colNames));
-											while (resultSet.next()) {
-												List<String> nextRow = Lists.newArrayList();
-												for (int i=1; i<colCount+1; i++) {
-													nextRow.add(resultSet.getString(i));
-												}
-												rowset.addRow(nextRow);
-											}
-											sRows._Callback.onSuccess(rowset);
+											processResultSet(resultSet, new ConsoleDBResultSetProcessor(sRows));
 										} else {
 											execUpdate(kirinStatement);
 										}

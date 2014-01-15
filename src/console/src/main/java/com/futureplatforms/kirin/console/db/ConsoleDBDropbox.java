@@ -26,7 +26,7 @@ public class ConsoleDBDropbox {
 	
 	private static ConsoleDBDropbox instance;
 	public static ConsoleDBDropbox getInstance() {
-		if (instance == null) { return new ConsoleDBDropbox(); }
+		if (instance == null) { instance = new ConsoleDBDropbox(); }
 		return instance;
 	}
 }

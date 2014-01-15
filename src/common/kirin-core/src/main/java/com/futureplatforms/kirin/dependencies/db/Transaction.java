@@ -17,6 +17,9 @@ public class Transaction {
 				this._Values = values;
 			}
 			public String valueForColumn(String column) {
+				if (!_ColumnNames.contains(column)) {
+					throw new IllegalArgumentException("No such column: " + column);
+				}
 				return this._Values.get(_ColumnNames.indexOf(column));
 			}
 		}
