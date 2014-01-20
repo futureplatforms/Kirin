@@ -27,7 +27,7 @@ public class AndroidDbDropbox {
 	
 	private static AndroidDbDropbox instance;
 	public static AndroidDbDropbox getInstance() {
-		if (instance == null) { return new AndroidDbDropbox(); }
+		if (instance == null) { instance = new AndroidDbDropbox(); }
 		return instance;
 	}
 }
