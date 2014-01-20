@@ -1,5 +1,6 @@
 package com.futureplatforms.kirin.dependencies.db;
 
+import com.futureplatforms.kirin.dependencies.StaticDependencies;
 import com.futureplatforms.kirin.dependencies.internal.TransactionBackend;
 
 public abstract class Database {
@@ -34,7 +35,7 @@ public abstract class Database {
 					// Actually execute it, and pass the TxRunner as callback
 					tx.pullTrigger(txRunner);
 				} catch (Throwable t) {
-					t.printStackTrace();
+					StaticDependencies.getInstance().getLogDelegate().log(t.toString());
 					txRunner.onError();
 				}
 			}
