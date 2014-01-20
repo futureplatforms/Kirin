@@ -24,7 +24,12 @@ public class KirinNetworking implements NetworkDelegateClient {
         }
         
         public void onError(String s) {
-            mCB.onFail(s);
+        	try {
+        		int code = Integer.parseInt(s, 10);
+        		mCB.onSuccess(code, "", null);
+        	} catch (Throwable t) {
+        		mCB.onFail(s);
+        	}
         }
         
         public void doIt(String method, String url, Map<String, String> headers, String postData) {
