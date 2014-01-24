@@ -140,24 +140,15 @@ defineModule("kirin", function (require, exports) {
 	}
 	
 	function resolveModule(moduleName) {
-		var isFunction = function(functionToCheck) {
- 			var getType = {};
- 			return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
-		};
-		
-		if (gwtObjects[moduleName]) {
-			return gwtObjects[moduleName];
-		}
-		
 		var gwtClasses = window.screens;
-		if (gwtClasses && gwtClasses[moduleName] && isFunction(gwtClasses[moduleName])) {
-			gwtObjects[moduleName] = new gwtClasses[moduleName]();
-			return gwtObjects[moduleName]; 
-		} else if (window[moduleName] && isFunction(window[moduleName])) {
-			gwtObjects[moduleName] = new window[moduleName]();
-			return gwtObjects[moduleName]; 
+		if (gwtClasses) {
+			if (gwtObjects[moduleName]) {
+				return gwtObjects[moduleName];
+			} else if (gwtClasses[moduleName]) {
+				gwtObjects[moduleName] = new gwtClasses[moduleName]();
+				return gwtObjects[moduleName]; 
+			}
 		}
-		
 		return require(moduleName);
 	}
 

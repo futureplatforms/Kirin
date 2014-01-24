@@ -21,8 +21,6 @@
 #import <KirinKit/KirinPaths.h>
 #import <KirinKit/KirinFileSystem.h>
 
-#import <KirinKit/KirinGwtServiceStub.h>
-
 // TODO review if this is the best place to put this.
 // Better would be to go in KirinKitUI.h, but it's easier to remember here.
 #import <KirinKit/KirinUIViewController.h>

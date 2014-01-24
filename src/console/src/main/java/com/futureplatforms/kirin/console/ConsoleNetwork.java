@@ -90,7 +90,6 @@ public class ConsoleNetwork implements NetworkDelegateClient {
                    
                    callback.onSuccess(code, str, retHeaders);
                } catch (Throwable e) {
-            	   e.printStackTrace();
                    callback.onFail(""+code);
                }
            }
