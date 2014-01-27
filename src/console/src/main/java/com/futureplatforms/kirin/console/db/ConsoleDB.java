@@ -12,6 +12,7 @@ import com.futureplatforms.kirin.dependencies.db.Database;
 import com.futureplatforms.kirin.dependencies.db.DatabaseDelegate;
 import com.futureplatforms.kirin.dependencies.db.Transaction.RowSet;
 import com.futureplatforms.kirin.dependencies.db.Transaction.Statement;
+import com.futureplatforms.kirin.dependencies.db.Transaction.StatementWithJSONReturn;
 import com.futureplatforms.kirin.dependencies.db.Transaction.StatementWithRowsReturn;
 import com.futureplatforms.kirin.dependencies.db.Transaction.StatementWithTokenReturn;
 import com.futureplatforms.kirin.dependencies.db.Transaction.TxElementType;
@@ -177,6 +178,8 @@ public class ConsoleDB implements DatabaseDelegate {
 										e.printStackTrace();
 										sToken._Callback.onError();
 									}
+								} else if (kirinStatement instanceof StatementWithJSONReturn) {
+									// TODO FIXME NOT IMPLEMENTED YET
 								} else {
 									StatementWithRowsReturn sRows = (StatementWithRowsReturn) kirinStatement;
 									try {

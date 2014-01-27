@@ -6,16 +6,20 @@ import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.ExportPackage;
 import org.timepedia.exporter.client.NoExport;
 
+import com.futureplatforms.kirin.dependencies.StaticDependencies;
 import com.futureplatforms.kirin.dependencies.db.Database.TransactionCallback;
 import com.futureplatforms.kirin.dependencies.db.Database.TxRunner;
 import com.futureplatforms.kirin.dependencies.db.Transaction.RowSet;
 import com.futureplatforms.kirin.dependencies.db.Transaction.Statement;
+import com.futureplatforms.kirin.dependencies.db.Transaction.StatementWithJSONReturn;
 import com.futureplatforms.kirin.dependencies.db.Transaction.StatementWithRowsReturn;
 import com.futureplatforms.kirin.dependencies.db.Transaction.StatementWithTokenReturn;
 import com.futureplatforms.kirin.dependencies.db.Transaction.TxElementType;
+import com.futureplatforms.kirin.dependencies.db.Transaction.TxJSONCB;
 import com.futureplatforms.kirin.dependencies.db.Transaction.TxRowsCB;
 import com.futureplatforms.kirin.dependencies.db.Transaction.TxTokenCB;
 import com.futureplatforms.kirin.dependencies.internal.TransactionBundle;
+import com.futureplatforms.kirin.dependencies.json.JSONDelegate;
 import com.futureplatforms.kirin.gwt.client.KirinService;
 import com.futureplatforms.kirin.gwt.client.delegates.db.GwtTransactionBackend;
 import com.futureplatforms.kirin.gwt.client.services.db.natives.TransactionServiceNative;
@@ -100,6 +104,8 @@ public class TransactionService extends KirinService<TransactionServiceNative>{
     			final Statement statement = bundle._Statements.get(statementCount);
     			if (statement instanceof StatementWithTokenReturn) {
 					getNativeObject().appendStatementForToken(dbId, txId, statementCount, statement._SQL, statement._Params);
+    			} else if (statement instanceof StatementWithJSONReturn) {
+    				getNativeObject().appendStatementForJSON(dbId, txId, statementCount, statement._SQL, statement._Params);
     			} else {
 					getNativeObject().appendStatementForRows(dbId, txId, statementCount, statement._SQL, statement._Params);
     			}
@@ -159,6 +165,12 @@ public class TransactionService extends KirinService<TransactionServiceNative>{
 		Statement s = _Map.get(dbId).get(txId)._Statements.get(statementId);
 		TxRowsCB c = ((StatementWithRowsReturn) s)._Callback;
 		if (c != null) { c.onSuccess(rowset); }
+	}
+	
+	public void statementJSONSuccess(int dbId, int txId, int statementId, String json) {
+		Statement s = _Map.get(dbId).get(txId)._Statements.get(statementId);
+		TxJSONCB c = ((StatementWithJSONReturn) s)._Callback;
+		if (c != null) { c.onSuccess(StaticDependencies.getInstance().getJsonDelegate().getJSONArray(json)); }
 	}
 	
 	public void endSuccess(int dbId, int txId) {

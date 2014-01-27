@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-typedef enum sqlOperationType {SQL_rowset, SQL_token, SQL_batch} SQLOperationType;
+typedef enum sqlOperationType {SQL_rowset, SQL_token, SQL_json, SQL_batch} SQLOperationType;
 
 @interface NewTransactionStatement : NSObject
 @property (nonatomic, assign) SQLOperationType *type;

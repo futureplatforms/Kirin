@@ -6,6 +6,7 @@ import com.futureplatforms.kirin.dependencies.StaticDependencies.LogDelegate;
 import com.futureplatforms.kirin.dependencies.db.Database.TxRunner;
 import com.futureplatforms.kirin.dependencies.internal.TransactionBackend;
 import com.futureplatforms.kirin.dependencies.internal.TransactionBundle;
+import com.futureplatforms.kirin.dependencies.json.JSONArray;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 
@@ -75,6 +76,10 @@ public class Transaction {
     public static interface TxTokenCB extends TxCB {
     	public void onSuccess(String token);
     }
+
+    public static interface TxJSONCB extends TxCB {
+    	public void onSuccess(JSONArray json);
+    }
     
     public static abstract class Statement {
         public final String _SQL;
@@ -96,6 +101,14 @@ public class Transaction {
     public static class StatementWithRowsReturn extends Statement {
     	public final TxRowsCB _Callback;
     	public StatementWithRowsReturn(String sql, String[] params, TxRowsCB cb) {
+    		super(sql, params);
+    		this._Callback = cb;
+    	}
+    }
+
+    public static class StatementWithJSONReturn extends Statement {
+    	public final TxJSONCB _Callback;
+    	public StatementWithJSONReturn(String sql, String[] params, TxJSONCB cb) {
     		super(sql, params);
     		this._Callback = cb;
     	}
@@ -160,7 +173,16 @@ public class Transaction {
     	_Statements.add(new StatementWithRowsReturn(sql, params, cb));
     	_TxElements.add(TxElementType.Statement); 
     }
+ 
+    public void execQueryWithJSONReturn(String sql, TxJSONCB cb) {
+    	execQueryWithJSONReturn(sql, null, cb);
+    }
     
+    public void execQueryWithJSONReturn(String sql, String[] params, TxJSONCB cb) {
+    	validateParams(params);
+    	_Statements.add(new StatementWithJSONReturn(sql, params, cb));
+    	_TxElements.add(TxElementType.Statement);
+    }
     /**
      * IF you're executing a SQL file then use this function.  Statements must be separated
      * with semicolon followed by newline!

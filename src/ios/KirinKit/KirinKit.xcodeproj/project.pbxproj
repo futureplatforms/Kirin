@@ -13,8 +13,8 @@
 		0991834E1832325E00A35AF8 /* NewDatabaseAccessService.m in Sources */ = {isa = PBXBuildFile; fileRef = 0991834C1832325E00A35AF8 /* NewDatabaseAccessService.m */; };
 		099183511832326600A35AF8 /* NewNetworkingImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = 0991834F1832326600A35AF8 /* NewNetworkingImpl.h */; };
 		099183521832326600A35AF8 /* NewNetworkingImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 099183501832326600A35AF8 /* NewNetworkingImpl.m */; };
-		09918357183232BC00A35AF8 /* KirinGwtServiceProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 09918354183232BC00A35AF8 /* KirinGwtServiceProtocol.h */; };
-		09918358183232BC00A35AF8 /* KirinGwtServiceStub.h in Headers */ = {isa = PBXBuildFile; fileRef = 09918355183232BC00A35AF8 /* KirinGwtServiceStub.h */; };
+		09918357183232BC00A35AF8 /* KirinGwtServiceProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 09918354183232BC00A35AF8 /* KirinGwtServiceProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		09918358183232BC00A35AF8 /* KirinGwtServiceStub.h in Headers */ = {isa = PBXBuildFile; fileRef = 09918355183232BC00A35AF8 /* KirinGwtServiceStub.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		09918359183232BC00A35AF8 /* KirinGwtServiceStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 09918356183232BC00A35AF8 /* KirinGwtServiceStub.m */; };
 		0991835B1832426300A35AF8 /* app in Resources */ = {isa = PBXBuildFile; fileRef = 0991835A1832426300A35AF8 /* app */; };
 		09B027E018462B6F0033356B /* FMDatabase.h in Headers */ = {isa = PBXBuildFile; fileRef = 09B027D518462B6F0033356B /* FMDatabase.h */; };
@@ -694,13 +694,14 @@
 				1A00C91A14B2E32600211F34 /* DebugConsole.h in Headers */,
 				1A00C92014B2E32600211F34 /* JSContext.h in Headers */,
 				1A00C92314B2E32600211F34 /* JSExecutor.h in Headers */,
+				09918358183232BC00A35AF8 /* KirinGwtServiceStub.h in Headers */,
 				1A00C92D14B2E32600211F34 /* KirinWebViewHolder.h in Headers */,
+				09918357183232BC00A35AF8 /* KirinGwtServiceProtocol.h in Headers */,
 				1A00C93014B2E32600211F34 /* NativeContext.h in Headers */,
 				09B027E618462B6F0033356B /* FMDatabaseQueue.h in Headers */,
 				09B027E918462B6F0033356B /* FMResultSet.h in Headers */,
 				1A00C93314B2E32600211F34 /* NativeExecutor.h in Headers */,
 				1A00C93414B2E32600211F34 /* SynthesizeSingleton.h in Headers */,
-				09918358183232BC00A35AF8 /* KirinGwtServiceStub.h in Headers */,
 				09DCA4FD1846342300C3555C /* NewTransactionService.h in Headers */,
 				1A00C94114B2E32600211F34 /* Networking.h in Headers */,
 				1A00C94214B2E32600211F34 /* NetworkingBackend.h in Headers */,
@@ -709,7 +710,6 @@
 				1A00C99A14B2EE8900211F34 /* KirinKit.h in Headers */,
 				091D1AC316F071E3001400FF /* NSObject+Kirin.h in Headers */,
 				1A02010214BCFFED00CB9765 /* KirinUiFragmentHelper.h in Headers */,
-				09918357183232BC00A35AF8 /* KirinGwtServiceProtocol.h in Headers */,
 				1A02010714BD025E00CB9765 /* KirinScreenHelper.h in Headers */,
 				09DCA5011846405C00C3555C /* NewTransactionStatement.h in Headers */,
 				09B027E018462B6F0033356B /* FMDatabase.h in Headers */,
