@@ -1,159 +1,164 @@
 package com.futureplatforms.kirin.android;
 
+import java.util.List;
+
 import android.content.Context;
-import android.location.Criteria;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.location.LocationProvider;
 import android.os.Bundle;
 
 import com.futureplatforms.kirin.dependencies.LocationDelegate;
- 
-public class AndroidLocation implements LocationDelegate
-{
-	private LocationManager locationManager;
-	private LocationListener locationListener;
-	private String activeProvider;
-	private boolean _currentStatusAvailable;
-	
-	public AndroidLocation(Context context)
-	{
-		locationManager = (LocationManager) context
-				.getSystemService(Context.LOCATION_SERVICE);
-		_currentStatusAvailable = false;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallbacks;
+import com.google.android.gms.common.GooglePlayServicesClient.OnConnectionFailedListener;
+import com.google.android.gms.location.LocationClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.common.collect.Lists;
+
+public class AndroidLocation implements LocationDelegate {
+	private LocationClient mLocationClient;
+
+	private LocationRequest mLocationRequest;
+
+	private LocationListener mLocationListener;
+
+	public AndroidLocation(Context context) {
+		mLocationClient = new LocationClient(context, connectionCallbacks,
+				onConnectionFailedListener);
+		mLocationClient.connect();
 	}
-	
+
+	List<Runnable> onConnecteds = Lists.newArrayList();
+	List<Runnable> onConnectFaileds = Lists.newArrayList();
+
+	ConnectionCallbacks connectionCallbacks = new ConnectionCallbacks() {
+
+		@Override
+		public void onDisconnected() {
+		}
+
+		@Override
+		public void onConnected(Bundle arg0) {
+			for (Runnable r : onConnecteds)
+				r.run();
+			onConnecteds.clear();
+			onConnectFaileds.clear();
+
+		}
+	};
+	OnConnectionFailedListener onConnectionFailedListener = new OnConnectionFailedListener() {
+
+		@Override
+		public void onConnectionFailed(ConnectionResult connectionResult) {
+			for (Runnable r : onConnectFaileds)
+				r.run();
+			onConnectFaileds.clear();
+			onConnecteds.clear();
+		}
+	};
+
 	@Override
 	public boolean getIsListening() {
-		return (locationListener != null);
+		return mLocationListener != null;
 	}
-	
+
 	@Override
-	public void getLocation(Accuracy accuracy, LocationCallback callback)
-	{
-		configureListener(accuracy, callback, 0, 0);
-	}
-	
-	@Override
-	public void getLocationContinuous(Accuracy accuracy, int intervalMs,
-			LocationCallback callback)
-	{
-		configureListener(accuracy, callback, intervalMs, 1);
-	}
-	
-	private void configureProvider(Accuracy accuracy) {
-		Criteria criteria = new Criteria();
-		switch (accuracy)
-		{
-		case Coarse:
-			criteria.setAccuracy(Criteria.ACCURACY_COARSE);
-			break;
-		case Fine:
-			criteria.setAccuracy(Criteria.ACCURACY_FINE);
-			break;
-		default:
-			criteria.setAccuracy(Criteria.NO_REQUIREMENT);
-			break;
-		}
-		
-//		criteria.setAccuracy(Criteria.NO_REQUIREMENT);
-		activeProvider = locationManager.getBestProvider(criteria, true);
-	}
-	
-	private void configureListener(Accuracy accuracy, LocationCallback callback, int intervalMs, int minDistance) {
-		stopListening();
-		
-		configureProvider(accuracy);
-		if (activeProvider == null)
-		{
-			callback.onFail("No Location Provider Available");
+	public void getLocation(final Accuracy accuracy,
+			final LocationCallback callback) {
+		if (!mLocationClient.isConnected()) {
+			onConnecteds.add(new Runnable() {
+
+				@Override
+				public void run() {
+					getLocation(accuracy, callback);
+				}
+			});
+			onConnectFaileds.add(new Runnable() {
+
+				@Override
+				public void run() {
+					callback.onFail("Google Play Services Needed");
+				}
+			});
+
+			if (!mLocationClient.isConnecting())
+				mLocationClient.connect();
 			return;
 		}
-		
-		//Ensure our provider is enabled
-		if (!locationManager.isProviderEnabled(activeProvider))
-		{
-			callback.onFail("No Location Provider Available");
+
+		Location loc = mLocationClient.getLastLocation();
+		if (loc != null)
+			callback.onSuccess(loc.getLatitude(), loc.getLongitude(),
+					loc.getAccuracy());
+		else
+			callback.onFail("Can't get location");
+	}
+
+	@Override
+	public void getLocationContinuous(final Accuracy accuracy,
+			final int intervalMs, final LocationCallback callback) {
+		if (!mLocationClient.isConnected()) {
+			onConnecteds.add(new Runnable() {
+
+				@Override
+				public void run() {
+					getLocationContinuous(accuracy, intervalMs, callback);
+				}
+			});
+			onConnectFaileds.add(new Runnable() {
+
+				@Override
+				public void run() {
+					callback.onFail("Google Play Services Needed");
+				}
+			});
+
+			if (!mLocationClient.isConnecting())
+				mLocationClient.connect();
 			return;
 		}
-		
-		locationListener = new KirirnLocationListener(callback, (intervalMs > 0)); 
-		locationManager.requestLocationUpdates(activeProvider, intervalMs, minDistance, locationListener);
-		setInitialLocation();
+
+		mLocationRequest = LocationRequest.create();
+		mLocationRequest.setInterval(intervalMs);
+		if (accuracy == Accuracy.Fine)
+			mLocationRequest
+					.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+
+		if (mLocationListener != null)
+			mLocationClient.removeLocationUpdates(mLocationListener);
+		mLocationListener = new LocationListener() {
+
+			@Override
+			public void onLocationChanged(Location loc) {
+				callback.onSuccess(loc.getLatitude(), loc.getLongitude(),
+						loc.getAccuracy());
+			}
+		};
+
+		mLocationClient.requestLocationUpdates(mLocationRequest,
+				mLocationListener);
 	}
-	
+
 	@Override
-	public void stopListening()
-	{
-		if (locationListener != null)
-			locationManager.removeUpdates(locationListener);
-		locationListener = null;
+	public void stopListening() {
+		if (mLocationListener != null)
+			mLocationClient.removeLocationUpdates(mLocationListener);
+		mLocationListener = null;
 	}
-	
-	private double _latitude;
+
+	@Override
 	public double getLatitude() {
-		return _latitude;
+		return mLocationClient.getLastLocation().getLatitude();
 	}
-	
-	private double _longitude;
+
+	@Override
 	public double getLongitude() {
-		return _longitude;
+		return mLocationClient.getLastLocation().getLongitude();
 	}
-	
-	private float _accuracy;
+
+	@Override
 	public float getAccuracy() {
-		return _accuracy;
+		return mLocationClient.getLastLocation().getAccuracy();
 	}
-	
-	private void setInitialLocation() {
-		Location startPoint = locationManager.getLastKnownLocation(activeProvider);
-		if (startPoint == null) return;
-		_latitude = startPoint.getLatitude();
-		_longitude = startPoint.getLongitude();
-		_accuracy = startPoint.getAccuracy();
-	}
-	
-	class KirirnLocationListener implements LocationListener {
-		LocationCallback callback;
-		boolean continuous;
-		
-		public KirirnLocationListener(LocationCallback callback,
-				boolean continuous)
-		{
-			this.callback = callback;
-			this.continuous = continuous;
-		}
-		
-		@Override
-		public void onLocationChanged(Location location) {
-			callback.onSuccess(location.getLatitude(), location.getLongitude(), location.getAccuracy());
-			if (!continuous) locationManager.removeUpdates(this);
-		}
-		
-		@Override
-		public void onProviderDisabled(String provider) {
-			stopListening();
-			_currentStatusAvailable = false;
-			callback.onEnabledChanged(false);
-		}
-		
-		@Override
-		public void onProviderEnabled(String provider) {
-			_currentStatusAvailable = true;
-			callback.onEnabledChanged(true);
-		}
-		
-		@Override
-		public void onStatusChanged(String provider, int status, Bundle extras) {
-			
-			boolean newStatus = false;
-			if (status == LocationProvider.AVAILABLE || status == LocationProvider.TEMPORARILY_UNAVAILABLE)
-				newStatus = true;
-			
-			if (newStatus == _currentStatusAvailable) return;
-			callback.onEnabledChanged(newStatus);
-			_currentStatusAvailable = newStatus;
-		}
-	}
+
 }

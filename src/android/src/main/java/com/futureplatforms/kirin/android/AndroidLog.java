@@ -8,12 +8,12 @@ public class AndroidLog implements LogDelegate {
 
     @Override
     public void log(String s) {
-        Log.i("Kirin", s);    
+        Log.i("Kirin", ""+s);    
     }
 
 	@Override
 	public void log(String tag, String s) {
-		Log.i(tag, s);
+		Log.i(tag, ""+s);
 	}
 
 }
