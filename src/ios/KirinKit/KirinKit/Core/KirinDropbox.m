@@ -43,7 +43,7 @@
     return strKey;
 }
 
-- (NSDictionary *) consumeObjectWithToken:(NSString *) token {
+- (id) consumeObjectWithToken:(NSString *) token {
     id obj = [dropbox objectForKey:token];
     [dropbox removeObjectForKey:token];
     return obj;

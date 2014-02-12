@@ -22,6 +22,6 @@
  */
 - (NSString*) putObject:(id) object;
 
-- (NSObject*) consumeObjectWithToken:(NSString *) token;
+- (id) consumeObjectWithToken:(NSString *) token;
 
 @end
