@@ -15,10 +15,7 @@ import java.util.Set;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate.HttpVerb;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate.NetworkResponse;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegateClient;
-import com.google.common.base.Charsets;
 import com.google.common.collect.Maps;
-import com.google.common.io.CharStreams;
-import com.google.common.io.InputSupplier;
 
 public class ConsoleNetwork implements NetworkDelegateClient {
 

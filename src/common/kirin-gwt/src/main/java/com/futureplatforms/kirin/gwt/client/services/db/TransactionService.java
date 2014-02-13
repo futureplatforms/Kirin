@@ -19,7 +19,6 @@ import com.futureplatforms.kirin.dependencies.db.Transaction.TxJSONCB;
 import com.futureplatforms.kirin.dependencies.db.Transaction.TxRowsCB;
 import com.futureplatforms.kirin.dependencies.db.Transaction.TxTokenCB;
 import com.futureplatforms.kirin.dependencies.internal.TransactionBundle;
-import com.futureplatforms.kirin.dependencies.json.JSONDelegate;
 import com.futureplatforms.kirin.gwt.client.KirinService;
 import com.futureplatforms.kirin.gwt.client.delegates.db.GwtTransactionBackend;
 import com.futureplatforms.kirin.gwt.client.services.db.natives.TransactionServiceNative;

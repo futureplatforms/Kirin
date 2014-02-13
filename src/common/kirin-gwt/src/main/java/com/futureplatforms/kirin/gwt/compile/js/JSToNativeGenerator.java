@@ -30,7 +30,7 @@ public class JSToNativeGenerator extends InterfaceGenerator {
 		StringBuilder sb = new StringBuilder();
 		
 		StringBuilder _s = new StringBuilder();
-		for (JParameter param : method.getParameters()) {
+		for (@SuppressWarnings("unused") JParameter param : method.getParameters()) {
 			_s.append('_');
 		}
 		

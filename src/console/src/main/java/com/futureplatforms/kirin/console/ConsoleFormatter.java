@@ -4,9 +4,6 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.security.SignatureException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -18,7 +15,6 @@ import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
 import com.futureplatforms.kirin.dependencies.Formatter;
-import com.google.common.io.BaseEncoding;
 
 public class ConsoleFormatter extends Formatter {
 
@@ -62,6 +58,7 @@ public class ConsoleFormatter extends Formatter {
 		return f.format(amount);
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public String urlDecode(String toDecode) {
 		return URLDecoder.decode(toDecode);

@@ -1,14 +1,8 @@
 package com.futureplatforms.kirin.console.json;
 
-import static org.junit.Assert.*;
-
 import org.junit.Before;
-import org.junit.Test;
 
 import com.futureplatforms.kirin.console.Kirin;
-import com.futureplatforms.kirin.dependencies.StaticDependencies;
-import com.futureplatforms.kirin.dependencies.json.JSONDelegate;
-import com.futureplatforms.kirin.dependencies.json.JSONObject;
 
 public class JSONTest {
 	@Before
