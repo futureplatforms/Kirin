@@ -110,12 +110,8 @@ public class AndroidDatabase implements DatabaseDelegate {
 	    private JSONArray coerceToJSONArray(Cursor cursor) {
 	        JSONArray array = new JSONArray();
 
-	        while (!cursor.isAfterLast()) {
-	            JSONObject obj = coerceToJSONObject(cursor);
-
-	            array.put(obj);
-
-	            cursor.moveToNext();
+	        while (cursor.moveToNext()) {
+	            array.put(coerceToJSONObject(cursor));
 	        }
 	        return array;
 	    }
