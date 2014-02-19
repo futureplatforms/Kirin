@@ -10,8 +10,9 @@
 #import "JSON.h"
 #import "NativeObjectHolder.h"
 #import <UIKit/UIApplication.h>
+#import "KirinSynchronousExecute.h"
 
-@interface NativeContext () 
+@interface NativeContext ()
 
 @property(nonatomic, retain) NSMutableDictionary* nativeObjects;
     
@@ -52,10 +53,6 @@
     }
 }
 
-- (void) endBackgroundTask: (UIBackgroundTaskIdentifier) taskId {
-    [[UIApplication sharedApplication] endBackgroundTask:taskId];
-}
-
 - (void) executeCommandFromModule: (NSString*) host andMethod: (NSString*) fullMethodName andArgsList: (NSString*) query {
     NativeObjectHolder* holder = [self.nativeObjects objectForKey:host];
     id obj = holder ? holder.nativeObject : nil;
@@ -63,32 +60,33 @@
 	SEL selector = [holder findSelectorFromString:fullMethodName];
     
     BOOL isBackgroundThread = (holder.dispatchQueue != nil);
-    
 	if (obj && [obj respondsToSelector:selector]) {
-
-
         void (^block)(void) = ^{
-            UIBackgroundTaskIdentifier taskId = 0;
+            __block UIBackgroundTaskIdentifier taskId = UIBackgroundTaskInvalid;
+            
             if (isBackgroundThread) {
-                taskId = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{} ];
+                taskId = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
+                    [[UIApplication sharedApplication] endBackgroundTask:taskId];
+                    taskId = UIBackgroundTaskInvalid;
+                }];
             }
             @try {
                 NSString* argsJSON = [query stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
                 
                 NSMutableArray* arguments = [argsJSON JSONValue];
                 
-                NSMethodSignature* sig = [[obj class] instanceMethodSignatureForSelector:selector];                
+                NSMethodSignature* sig = [[obj class] instanceMethodSignatureForSelector:selector];
                 
                 NSInvocation* invocation = [NSInvocation invocationWithMethodSignature:sig];
                 
                 invocation.selector = selector;
                 invocation.target = obj;
-                for (int i=0, max=[arguments count]; i<max; i++) {
+                for (NSUInteger i=0, max=[arguments count]; i<max; i++) {
                     NSObject* arg = [arguments objectAtIndex:i];
                     
                     char argType = [sig getArgumentTypeAtIndex:i + 2][0];
                     BOOL handled = YES;
-                    if (argType == @encode(id)[0]) {    
+                    if (argType == @encode(id)[0]) {
                         if ([arg isKindOfClass:[NSNull class]]) {
                             arg = nil;
                         }
@@ -121,13 +119,10 @@
                     }
                     
                     if (!handled) {
-                        [NSException raise:@"KirinInvocationException" 
-                                    format:@"Cannot call selector %@ with argument %d value=%@", 
+                        [NSException raise:@"KirinInvocationException"
+                                    format:@"Cannot call selector %@ with argument %lu value=%@",
                          fullMethodName, i, arg];
                     }
-                        
-                    
-                    
                 }
                 [invocation invoke];
             } @catch (NSException* exception) {
@@ -139,18 +134,21 @@
                 // Always log to console for history
                 NSLog(@"Exception raised:\n%@", exceptionMessage);
                 NSLog(@"Backtrace: %@", [exception callStackSymbols]);
-            }
-            @finally {
+            } @finally {
                 if (isBackgroundThread) {
-                    [self performSelector:@selector(endBackgroundTask:) withObject:[NSNumber numberWithUnsignedInt:taskId] afterDelay:1];
+                    [[UIApplication sharedApplication] endBackgroundTask:taskId];
+                    taskId = UIBackgroundTaskInvalid;
                 }
             }
-
         };
         
         dispatch_queue_t queue = holder.dispatchQueue;
         if (queue) {
-            dispatch_async(queue, block);
+            if ([obj conformsToProtocol:@protocol(KirinSynchronousExecute)]) {
+                dispatch_sync(queue, block);
+            } else {
+                dispatch_async(queue, block);
+            }
         } else {
             block();
         }

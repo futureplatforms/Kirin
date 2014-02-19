@@ -159,6 +159,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		09188E6D18B4DC3D00FBBB77 /* KirinSynchronousExecute.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KirinSynchronousExecute.h; sourceTree = "<group>"; };
 		091D1AC116F071E3001400FF /* NSObject+Kirin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Kirin.h"; sourceTree = "<group>"; };
 		091D1AC216F071E3001400FF /* NSObject+Kirin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Kirin.m"; sourceTree = "<group>"; };
 		0991834B1832325E00A35AF8 /* NewDatabaseAccessService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewDatabaseAccessService.h; path = GWTServices/NewDatabaseAccessService.h; sourceTree = "<group>"; };
@@ -473,6 +474,7 @@
 				1A02011B14BD628300CB9765 /* KirinExtensionStub.h */,
 				1A02011C14BD628400CB9765 /* KirinExtensionStub.m */,
 				1A9FE0A414D5FA4F008C0565 /* KirinExtensionOnMainThread.h */,
+				09188E6D18B4DC3D00FBBB77 /* KirinSynchronousExecute.h */,
 				09918353183232BC00A35AF8 /* GwtServices */,
 				1A02011014BD08B800CB9765 /* Helpers */,
 				1A0200FE14BCF7A600CB9765 /* Internal */,
