@@ -58,6 +58,7 @@ public class AndroidFormatter extends Formatter {
 		return f.format(amount);
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public String urlDecode(String toDecode) {
 		return URLDecoder.decode(toDecode);

@@ -124,7 +124,6 @@ public class AndroidDatabase implements DatabaseDelegate {
 				public void pullTrigger(TransactionBundle bundle) {
 					db.beginTransaction();
 					try {
-
 						int statementCount = 0, batchCount = 0;
 						for (TxElementType type : bundle._Types) {
 							if (type == TxElementType.Statement) {
@@ -149,35 +148,30 @@ public class AndroidDatabase implements DatabaseDelegate {
 											// Everything has to be a string...
 											int entryType = getType(cursor, i);
 											switch (entryType) {
-											case FIELD_TYPE_BLOB: {
-												values.add(new String(cursor
-														.getBlob(i)));
-											}
-												break;
-
-											case FIELD_TYPE_FLOAT: {
-												values.add(String
-														.valueOf(cursor
-																.getDouble(i)));
-											}
-												break;
-
-											case FIELD_TYPE_INTEGER: {
-												values.add(String
-														.valueOf(cursor
-																.getInt(i)));
-											}
-												break;
-
-											case FIELD_TYPE_NULL: {
-												values.add(null);
-											}
-												break;
-
-											case FIELD_TYPE_STRING: {
-												values.add(cursor.getString(i));
-											}
-												break;
+												case FIELD_TYPE_BLOB: {
+													values.add(new String(cursor
+															.getBlob(i)));
+												} break;
+	
+												case FIELD_TYPE_FLOAT: {
+													values.add(String
+															.valueOf(cursor
+																	.getDouble(i)));
+												} break;
+	
+												case FIELD_TYPE_INTEGER: {
+													values.add(String
+															.valueOf(cursor
+																	.getInt(i)));
+												} break;
+	
+												case FIELD_TYPE_NULL: {
+													values.add(null);
+												} break;
+	
+												case FIELD_TYPE_STRING: {
+													values.add(cursor.getString(i));
+												} break;
 											}
 										}
 										rowset.addRow(values);
@@ -244,6 +238,7 @@ public class AndroidDatabase implements DatabaseDelegate {
 	protected static final int FIELD_TYPE_NULL = 0;
 	protected static final int FIELD_TYPE_STRING = 3;
 
+	@SuppressWarnings("deprecation")
 	static int getType(Cursor cursor, int i) throws Exception {
 		SQLiteCursor sqLiteCursor = (SQLiteCursor) cursor;
 		CursorWindow cursorWindow = sqLiteCursor.getWindow();

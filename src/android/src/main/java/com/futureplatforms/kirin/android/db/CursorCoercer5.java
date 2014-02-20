@@ -9,7 +9,8 @@ public class CursorCoercer5 implements CursorCoercer {
     /* (non-Javadoc)
      * @see com.futureplatforms.android.jscore.fragmentation.CursorCoercer#coerceToJSONObject(java.lang.String[], android.database.AbstractWindowedCursor)
      */
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     public JSONObject coerceToJSONObject(String[] cols, AbstractWindowedCursor c) {
         JSONObject obj = new JSONObject();
         for (int i = 0; i < cols.length; i++) {

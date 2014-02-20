@@ -17,6 +17,7 @@ public class KirinActivityUtils {
 		return tag;
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static <Module extends KirinModule<?>> Module getBackgroundModule(
 			FragmentManager fragmentManager, String tag)
 			throws KirinFragmentException {

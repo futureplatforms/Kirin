@@ -22,6 +22,7 @@ abstract public class KirinHybridFragment<Module extends HybridModule<HybridNati
 		return webView;
 	}
 
+	@SuppressWarnings("deprecation")
 	@SuppressLint("SetJavaScriptEnabled")
 	public void setWebView(WebView webView, final String url) {
 		this.webView = webView;
