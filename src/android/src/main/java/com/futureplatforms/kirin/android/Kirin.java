@@ -11,12 +11,15 @@ import com.futureplatforms.kirin.dependencies.StaticDependencies.Configuration;
 
 public final class Kirin {
     public static void kickOff(Context context) {
+       kickOff(context, true);
+    }
+    public static void kickOff(Context context, boolean includeLocation) {
         boolean isDebug =  0 != ( context.getApplicationInfo().flags &= ApplicationInfo.FLAG_DEBUGGABLE );
         
         StaticDependencies.getInstance().setDependencies(
                 new AndroidLog(), 
                 new AndroidSettings(context), 
-                new AndroidLocation(context), 
+                includeLocation ? new AndroidLocation(context) : null, 
                 new AndroidNetwork(), 
                 new AndroidJson(),
                 new JaxpXmlParser(),

@@ -33,11 +33,7 @@
     int thisKey = key;
     key++;
     
-    NSLog(@"thisKey: %d", thisKey);
-    
     NSString *strKey = [NSString stringWithFormat:@"%d", thisKey];
-    
-    NSLog(@"strKey: %@", strKey);
     
     [dropbox setObject:object forKey:strKey];
     return strKey;

@@ -45,6 +45,7 @@
 			<artifactId>google-play-services</artifactId>
 			<version>15.0.0</version>
 			<type>jar</type>
+     		<optional>true</optional>
 		</dependency>
 	</dependencies>
 
