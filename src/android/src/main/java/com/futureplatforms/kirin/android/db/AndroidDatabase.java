@@ -227,9 +227,13 @@ public class AndroidDatabase implements DatabaseDelegate {
 			helper = new Helper(filename);
 			dbHelperMap.put(filename, helper);
 		}
-		SQLiteDatabase _db = helper.getWritableDatabase();
-
+		SQLiteDatabase _db = null;
+		try {
+		 _db = helper.getWritableDatabase();
+		} catch (Exception e){}
+if(_db != null)
 		cb.onOpened(new AndroidDatabaseImpl(_db));
+else cb.onError();
 	}
 
 	protected static final int FIELD_TYPE_BLOB = 4;
