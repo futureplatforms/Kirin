@@ -10,7 +10,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<platform.version>4.4_r1</platform.version>
+		<platform.version>4.3_r2</platform.version>
 		<android.plugin.version>3.7.0</android.plugin.version>
 	</properties>
 	<parent>
@@ -38,12 +38,12 @@
 		<dependency>
 			<groupId>android.support</groupId>
 			<artifactId>compatibility-v4</artifactId>
-			<version>19.0.1</version>
+			<version>19</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.android.gms</groupId>
 			<artifactId>google-play-services</artifactId>
-			<version>15.0.0</version>
+			<version>13</version>
 			<type>jar</type>
      		<optional>true</optional>
 		</dependency>
