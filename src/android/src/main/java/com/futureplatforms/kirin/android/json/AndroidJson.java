@@ -7,12 +7,12 @@ import com.futureplatforms.kirin.dependencies.json.JSONObject;
 public class AndroidJson implements JSONDelegate {
 
     @Override
-    public JSONObject getJSONObject(String jsonText)  {
+    public JSONObject getJSONObject(String jsonText) throws KirinJsonException {
         return new AndroidJSONObject(jsonText);
     }
 
     @Override
-    public JSONArray getJSONArray(String jsonText) {
+    public JSONArray getJSONArray(String jsonText) throws KirinJsonException {
         return new AndroidJSONArray(jsonText);
     }
 

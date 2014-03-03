@@ -6,6 +6,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.futureplatforms.kirin.dependencies.json.JSONArray;
+import com.futureplatforms.kirin.dependencies.json.JSONDelegate.KirinJsonException;
 
 public class AndroidJSONObject extends
 		com.futureplatforms.kirin.dependencies.json.JSONObject {
@@ -19,11 +20,12 @@ public class AndroidJSONObject extends
 		this.jsonObject = jsonObject;
 	}
 
-	public AndroidJSONObject(String jsonString) {
+	public AndroidJSONObject(String jsonString) throws KirinJsonException {
 		try {
 			jsonObject = new JSONObject(jsonString);
-		} catch (JSONException e) {
-			throw new IllegalArgumentException("couldn't init object");
+		} catch (Exception e) {
+			throw new KirinJsonException("invalid json: "
+					+ e.getMessage());
 		}
 	}
 

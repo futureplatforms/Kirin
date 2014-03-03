@@ -19,6 +19,8 @@ import com.futureplatforms.kirin.dependencies.db.Transaction.TxJSONCB;
 import com.futureplatforms.kirin.dependencies.db.Transaction.TxRowsCB;
 import com.futureplatforms.kirin.dependencies.db.Transaction.TxTokenCB;
 import com.futureplatforms.kirin.dependencies.internal.TransactionBundle;
+import com.futureplatforms.kirin.dependencies.json.JSONArray;
+import com.futureplatforms.kirin.dependencies.json.JSONDelegate.KirinJsonException;
 import com.futureplatforms.kirin.gwt.client.KirinService;
 import com.futureplatforms.kirin.gwt.client.delegates.db.GwtTransactionBackend;
 import com.futureplatforms.kirin.gwt.client.services.db.natives.TransactionServiceNative;
@@ -166,7 +168,7 @@ public class TransactionService extends KirinService<TransactionServiceNative>{
 		if (c != null) { c.onSuccess(rowset); }
 	}
 	
-	public void statementJSONSuccess(int dbId, int txId, int statementId, String json) {
+	public void statementJSONSuccess(int dbId, int txId, int statementId, String json) throws KirinJsonException {
 		Statement s = _Map.get(dbId).get(txId)._Statements.get(statementId);
 		TxJSONCB c = ((StatementWithJSONReturn) s)._Callback;
 		if (c != null) { c.onSuccess(StaticDependencies.getInstance().getJsonDelegate().getJSONArray(json)); }

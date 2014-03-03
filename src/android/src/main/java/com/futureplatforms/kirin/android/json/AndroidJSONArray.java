@@ -3,6 +3,7 @@ package com.futureplatforms.kirin.android.json;
 import org.json.JSONException;
 
 import com.futureplatforms.kirin.dependencies.json.JSONArray;
+import com.futureplatforms.kirin.dependencies.json.JSONDelegate.KirinJsonException;
 import com.futureplatforms.kirin.dependencies.json.JSONObject;
 
 public class AndroidJSONArray extends JSONArray {
@@ -17,11 +18,11 @@ public class AndroidJSONArray extends JSONArray {
 		jsonArray = new org.json.JSONArray();
 	}
 
-	public AndroidJSONArray(String jsonText) {
+	public AndroidJSONArray(String jsonText) throws KirinJsonException {
 		try {
 			jsonArray = new org.json.JSONArray(jsonText);
-		} catch (JSONException e) {
-			throw new IllegalArgumentException("invalid json: "
+		} catch (Exception e) {
+			throw new KirinJsonException("invalid json: "
 					+ e.getMessage());
 		}
 	}

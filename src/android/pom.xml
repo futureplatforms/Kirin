@@ -39,6 +39,7 @@
 			<groupId>android.support</groupId>
 			<artifactId>compatibility-v4</artifactId>
 			<version>19.0.1</version>
+			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>com.google.android.gms</groupId>
