@@ -1,25 +1,25 @@
 package com.futureplatforms.kirin.android.app;
 
+import android.app.Activity;
+import android.app.Application;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 
 import com.futureplatforms.kirin.IKirinNativeObject;
 import com.futureplatforms.kirin.KirinModule;
 
-abstract public class KirinDialogFragment<Module extends KirinModule<KirinNativeObj>, KirinNativeObj extends IKirinNativeObject>
-		extends DialogFragment implements IKirinNativeObject,
-		IKirinModuleHost<Module> {
+abstract public class KirinApplication<Module extends KirinModule<KirinNativeObj>, KirinNativeObj extends IKirinNativeObject>
+		extends Application implements IKirinNativeObject, IKirinModuleHost<Module> {
 	private Module module;
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+	public void onCreate() {
+		super.onCreate();
 		KirinAndroidMethods.onCreate(this);
 	}
 
 	@Override
-	public void onDestroy() {
-		super.onDestroy();
+	public void onTerminate() {
+		super.onTerminate();
 		KirinAndroidMethods.onUnload(this);
 	}
 

@@ -8,19 +8,19 @@ import com.futureplatforms.kirin.KirinModule;
 
 abstract public class KirinListFragment<Module extends KirinModule<NativeObject>, NativeObject extends IKirinNativeObject>
 		extends ListFragment implements IKirinNativeObject,
-		IKirinFragment<Module> {
+		IKirinModuleHost<Module> {
 	private Module module;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		KirinFragmentMethods.onCreate(this);
+		KirinAndroidMethods.onCreate(this);
 	}
 
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		KirinFragmentMethods.onUnload(this);
+		KirinAndroidMethods.onUnload(this);
 	}
 
 	@Override

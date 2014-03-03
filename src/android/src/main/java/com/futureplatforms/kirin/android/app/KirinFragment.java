@@ -7,19 +7,19 @@ import com.futureplatforms.kirin.IKirinNativeObject;
 import com.futureplatforms.kirin.KirinModule;
 
 abstract public class KirinFragment<Module extends KirinModule<KirinNativeObj>, KirinNativeObj extends IKirinNativeObject>
-		extends Fragment implements IKirinNativeObject, IKirinFragment<Module> {
+		extends Fragment implements IKirinNativeObject, IKirinModuleHost<Module> {
 	private Module module;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		KirinFragmentMethods.onCreate(this);
+		KirinAndroidMethods.onCreate(this);
 	}
 
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		KirinFragmentMethods.onUnload(this);
+		KirinAndroidMethods.onUnload(this);
 	}
 
 	@Override

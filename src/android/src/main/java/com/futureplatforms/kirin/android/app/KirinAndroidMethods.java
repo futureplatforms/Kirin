@@ -5,11 +5,11 @@ import java.lang.reflect.ParameterizedType;
 import com.futureplatforms.kirin.IKirinNativeObject;
 import com.futureplatforms.kirin.KirinModule;
 
-public class KirinFragmentMethods {
+public class KirinAndroidMethods {
 
 	@SuppressWarnings("unchecked")
 	public static <Module extends KirinModule<KirinNativeObj>, KirinNativeObj extends IKirinNativeObject> void onCreate(
-			IKirinFragment<Module> f) {
+			IKirinModuleHost<Module> f) {
 		Module module = null;
 		try {
 
@@ -29,7 +29,7 @@ public class KirinFragmentMethods {
 	}
 
 	public static <Module extends KirinModule<KirinNativeObj>, KirinNativeObj extends IKirinNativeObject> void onUnload(
-			IKirinFragment<Module> f) {
+			IKirinModuleHost<Module> f) {
 		f.getModule().onUnload();
 	}
 

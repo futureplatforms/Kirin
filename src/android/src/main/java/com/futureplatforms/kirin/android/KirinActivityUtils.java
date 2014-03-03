@@ -4,12 +4,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
 import com.futureplatforms.kirin.KirinModule;
-import com.futureplatforms.kirin.android.app.IKirinFragment;
+import com.futureplatforms.kirin.android.app.IKirinModuleHost;
 
 public class KirinActivityUtils {
 
 	public static String loadBackgroundModule(FragmentManager fragmentManager,
-			IKirinFragment<?> fragment) {
+			IKirinModuleHost<?> fragment) {
 		String tag = fragment.getClass().getSimpleName();
 		if(fragmentManager.findFragmentByTag(tag) == null)
 		fragmentManager.beginTransaction().add((Fragment) fragment, tag)
@@ -22,8 +22,8 @@ public class KirinActivityUtils {
 			FragmentManager fragmentManager, String tag)
 			throws KirinFragmentException {
 		Fragment f = fragmentManager.findFragmentByTag(tag);
-		if (f instanceof IKirinFragment<?>) {
-			return (Module) ((IKirinFragment) f).getModule();
+		if (f instanceof IKirinModuleHost<?>) {
+			return (Module) ((IKirinModuleHost) f).getModule();
 		} else
 			throw new KirinFragmentException("Fragment is not a Kirin Fragment");
 

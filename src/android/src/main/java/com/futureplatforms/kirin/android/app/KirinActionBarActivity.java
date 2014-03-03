@@ -1,14 +1,13 @@
 package com.futureplatforms.kirin.android.app;
 
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
+import android.support.v7.app.ActionBarActivity;
 
 import com.futureplatforms.kirin.IKirinNativeObject;
 import com.futureplatforms.kirin.KirinModule;
 
-abstract public class KirinDialogFragment<Module extends KirinModule<KirinNativeObj>, KirinNativeObj extends IKirinNativeObject>
-		extends DialogFragment implements IKirinNativeObject,
-		IKirinModuleHost<Module> {
+abstract public class KirinActionBarActivity<Module extends KirinModule<KirinNativeObj>, KirinNativeObj extends IKirinNativeObject>
+		extends ActionBarActivity implements IKirinNativeObject, IKirinModuleHost<Module> {
 	private Module module;
 
 	@Override
