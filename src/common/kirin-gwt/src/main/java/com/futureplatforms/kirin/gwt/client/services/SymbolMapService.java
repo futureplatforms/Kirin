@@ -46,11 +46,14 @@ public class SymbolMapService extends KirinService<SymbolMapServiceNative> {
 	}
 
 	public void setSymbolMap(String symbolMap) {
+		// Symbol maps are in the form:
+		// # jsName, jsniIdent, className, memberName, sourceUri, sourceLine, fragmentNumber
 		String[] lines = symbolMap.split("\n");
 		for (String line : lines) {
+			// Ignore comments
 			if (!line.startsWith("#")) {
 				String[] components = line.split(",");
-				_SymbolMap.put(components[0], new MappedJavaMethod(components[1], components[2], components[3], components[4]));
+				_SymbolMap.put(components[0], new MappedJavaMethod(components[2], components[3], components[4], components[5]));
 			}
 		}
 	}

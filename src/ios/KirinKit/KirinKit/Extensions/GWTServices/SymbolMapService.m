@@ -25,14 +25,25 @@
 
 - (void) setStrongName: (NSString*) strongName {
     NSLog(@"SetStrongName %@", strongName);
-   // NSString *filename = [NSString stringWithFormat:@"/app/WEB-INF/deploy/K"]
-   // NSMutableData* data = [NSData dataWithContentsOfFile:strongName];
-   // NSString * str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    NSFileManager *filemgr =[NSFileManager defaultManager];
-    NSArray* filenames = [filemgr contentsOfDirectoryAtPath:@"/" error:nil];
     
+    // We want to load /app/WEB-INF/<app_name>/symbolMaps/<strongName>.symbolMap
+    NSString * resourcePath = [[NSBundle mainBundle] resourcePath];
+    NSString * pathToWebInf = [NSString stringWithFormat:@"%@/app/WEB-INF", resourcePath];
+    
+    // WEB-INF contains three folders: classes, lib and the app name.  To save us
+    // passing in the app name, look for the entry that is not "classes" or "lib".
+    NSFileManager *filemgr =[NSFileManager defaultManager];
+    NSArray* filenames = [filemgr contentsOfDirectoryAtPath:pathToWebInf error:nil];
     for (NSString *filename in filenames) {
-        NSLog(@"filename: %@", filename);
+        if (![filename isEqualToString:@"classes"] && ![filename isEqualToString:@"lib"]) {
+            NSString * appName = filename;
+            NSString * pathToSymbolMap = [NSString stringWithFormat:@"%@/%@/symbolMaps/%@.symbolMap", pathToWebInf, appName, strongName];
+            
+            NSMutableData *data = [NSData dataWithContentsOfFile:pathToSymbolMap];
+            NSString *symbolMap = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            [self.kirinModule setSymbolMap:symbolMap];
+            break;
+        }
     }
 }
 
