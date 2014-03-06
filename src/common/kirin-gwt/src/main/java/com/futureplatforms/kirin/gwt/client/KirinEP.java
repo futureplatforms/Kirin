@@ -16,6 +16,8 @@ import com.futureplatforms.kirin.gwt.client.delegates.KirinNetworking;
 import com.futureplatforms.kirin.gwt.client.delegates.db.GwtDatabaseDelegate;
 import com.futureplatforms.kirin.gwt.client.delegates.json.GwtJSON;
 import com.futureplatforms.kirin.gwt.client.delegates.xml.GwtXMLParserImpl;
+import com.futureplatforms.kirin.gwt.client.services.SymbolMapService;
+import com.futureplatforms.kirin.gwt.client.services.SymbolMapService.MappedJavaMethod;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JavaScriptObject;
@@ -84,14 +86,30 @@ public class KirinEP implements EntryPoint {
                 new GwtTimerDelegate());
         
         ExporterUtil.exportAll();
-        
         ld.log(GWT.getPermutationStrongName());
+        SymbolMapService.BACKDOOR()._setStrongName(GWT.getPermutationStrongName());
+        
         GWT.setUncaughtExceptionHandler(new GWT.UncaughtExceptionHandler() {
-            
+            private static final String UNKNOWN_DOT = "Unknown.";
+            private static final String UNKNOWN_SOURCE = "(Unknown Source)";
             @Override
             public void onUncaughtException(Throwable e) {
                 StackTraceElement[] stes = e.getStackTrace();
                 for (StackTraceElement ste : stes) {
+                	String exc = ste.toString();
+                	/*SymbolMapService sms = SymbolMapService.BACKDOOR();
+                	if (sms != null) {
+	                	if (exc.startsWith(UNKNOWN_DOT)) {
+	                		if (exc.endsWith(UNKNOWN_SOURCE)) {
+	                			String symbol = exc.substring(UNKNOWN_DOT.length(), exc.length() - UNKNOWN_SOURCE.length());
+	                			if (sms._SymbolMap != null && sms._SymbolMap.containsKey(symbol)) {
+		                			MappedJavaMethod method = sms._SymbolMap.get(symbol);
+		                			ld.log(method._ClassName + ": " + method._MemberName);
+		                			break;
+	                			}
+	                		}
+	                	}
+                	}*/
                     ld.log(ste.toString());
                 }
             }

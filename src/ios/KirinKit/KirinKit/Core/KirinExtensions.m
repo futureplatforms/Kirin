@@ -18,6 +18,7 @@
 #import "NewNetworkingImpl.h"
 #import "NewDatabaseAccessService.h"
 #import "KirinGwtServiceProtocol.h"
+#import "SymbolMapService.h"
 
 @interface KirinExtensions()
 
@@ -44,7 +45,9 @@
     NewDatabaseAccessService *dbAccess = [[NewDatabaseAccessService alloc] init];
     [services registerGwtService:dbAccess];
     [services registerGwtService:dbAccess.NewTransactionService];
+    [services registerGwtService:[[SymbolMapService alloc] init]];
     [services registerExtension:[KirinLocationBackend instance]];
+    
     return services;
 }
 

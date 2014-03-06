@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		090C142518C83D2C0030EC1F /* SymbolMapService.h in Headers */ = {isa = PBXBuildFile; fileRef = 090C142318C83D2C0030EC1F /* SymbolMapService.h */; };
+		090C142618C83D2C0030EC1F /* SymbolMapService.m in Sources */ = {isa = PBXBuildFile; fileRef = 090C142418C83D2C0030EC1F /* SymbolMapService.m */; };
 		091D1AC316F071E3001400FF /* NSObject+Kirin.h in Headers */ = {isa = PBXBuildFile; fileRef = 091D1AC116F071E3001400FF /* NSObject+Kirin.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		091D1AC416F071E3001400FF /* NSObject+Kirin.m in Sources */ = {isa = PBXBuildFile; fileRef = 091D1AC216F071E3001400FF /* NSObject+Kirin.m */; };
 		0991834D1832325E00A35AF8 /* NewDatabaseAccessService.h in Headers */ = {isa = PBXBuildFile; fileRef = 0991834B1832325E00A35AF8 /* NewDatabaseAccessService.h */; };
@@ -159,6 +161,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		090C142318C83D2C0030EC1F /* SymbolMapService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SymbolMapService.h; path = GWTServices/SymbolMapService.h; sourceTree = "<group>"; };
+		090C142418C83D2C0030EC1F /* SymbolMapService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SymbolMapService.m; path = GWTServices/SymbolMapService.m; sourceTree = "<group>"; };
 		09188E6D18B4DC3D00FBBB77 /* KirinSynchronousExecute.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KirinSynchronousExecute.h; sourceTree = "<group>"; };
 		091D1AC116F071E3001400FF /* NSObject+Kirin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Kirin.h"; sourceTree = "<group>"; };
 		091D1AC216F071E3001400FF /* NSObject+Kirin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Kirin.m"; sourceTree = "<group>"; };
@@ -342,6 +346,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		090C142218C7A4B40030EC1F /* SymbolMap */ = {
+			isa = PBXGroup;
+			children = (
+				090C142318C83D2C0030EC1F /* SymbolMapService.h */,
+				090C142418C83D2C0030EC1F /* SymbolMapService.m */,
+			);
+			name = SymbolMap;
+			sourceTree = "<group>";
+		};
 		09918353183232BC00A35AF8 /* GwtServices */ = {
 			isa = PBXGroup;
 			children = (
@@ -495,6 +508,7 @@
 		1A00C8EF14B2E32600211F34 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				090C142218C7A4B40030EC1F /* SymbolMap */,
 				1A7B90CD14FFDA3F0090DF19 /* Location */,
 				1A8C032614C86534000829F2 /* Camera */,
 				1A02011A14BD619600CB9765 /* Databases */,
@@ -695,6 +709,7 @@
 				1A00C92A14B2E32600211F34 /* KirinHelper.h in Headers */,
 				1A00C91A14B2E32600211F34 /* DebugConsole.h in Headers */,
 				1A00C92014B2E32600211F34 /* JSContext.h in Headers */,
+				090C142518C83D2C0030EC1F /* SymbolMapService.h in Headers */,
 				1A00C92314B2E32600211F34 /* JSExecutor.h in Headers */,
 				09918358183232BC00A35AF8 /* KirinGwtServiceStub.h in Headers */,
 				1A00C92D14B2E32600211F34 /* KirinWebViewHolder.h in Headers */,
@@ -898,6 +913,7 @@
 				1A02010E14BD072C00CB9765 /* KirinExtensionHelper.m in Sources */,
 				1A02011614BD130600CB9765 /* KirinExtensions.m in Sources */,
 				1A02011E14BD628500CB9765 /* KirinExtensionStub.m in Sources */,
+				090C142618C83D2C0030EC1F /* SymbolMapService.m in Sources */,
 				1A02012514BD782300CB9765 /* KirinPaths.m in Sources */,
 				1A8C032F14C86AF8000829F2 /* StringDownloader.m in Sources */,
 				09B027E118462B6F0033356B /* FMDatabase.m in Sources */,

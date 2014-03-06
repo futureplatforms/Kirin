@@ -18,7 +18,7 @@
     <webappDirectory>${project.build.directory}/${project.build.finalName}/app</webappDirectory>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <gwtModule>com.futureplatforms.kirin.gwt.KirinServiceExport</gwtModule>
-    <deployDirectory>${webappDirectory}/WEB-INF</deployDirectory>
+    <!--<deployDirectory>${webappDirectory}/WEB-INF</deployDirectory>-->
     
   </properties>
 
