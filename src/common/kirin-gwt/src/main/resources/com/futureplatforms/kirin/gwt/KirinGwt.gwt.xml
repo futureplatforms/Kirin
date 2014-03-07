@@ -26,7 +26,7 @@
     <when-type-assignable class="com.futureplatforms.kirin.IKirinNativeObject" />
   </generate-with>
   
-  <generate-with class="com.futureplatforms.kirin.gwt.compile.NativeProxyInterfaceGenerator">
+  <generate-with class="com.futureplatforms.kirin.gwt.compile.fromnative.FromNativeBindingGenerator">
     <when-type-assignable class="com.futureplatforms.kirin.KirinModule" />
   </generate-with>
   
