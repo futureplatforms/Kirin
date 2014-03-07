@@ -101,18 +101,18 @@ public abstract class HybridModule<NativeSide extends HybridModuleNative> extend
      * 
      * One special message is "ready" which indicates that the webview has initialised and is capable of receiving messages from us.
      */
-    public final void webViewSaid(final String method, final String params)
+    public final void webViewSaid(final String method, final String args)
     {
         if ("ready".equals(method)) {
             webViewIsReady();
         } else if ("log".equals(method)) {
-            StaticDependencies.getInstance().getLogDelegate().log("Hybrid webview LOG: " + params);
+            StaticDependencies.getInstance().getLogDelegate().log("Hybrid webview LOG: " + args);
         } else {
             if(this.moduleIsReady) {
-                onWebViewSaid(method, params);
+                onWebViewSaid(method, args);
             } else {
                 //PlatformDependencies.getInstance().getLogDelegate().log("HybridScreen.webViewSaid("+method+"/"+params+") module isn't ready yet. Queuing until it is.");
-                this.msgsForWhenModuleIsReady.add(new String[]{method, params});
+                this.msgsForWhenModuleIsReady.add(new String[]{method, args});
             }
         }
     }

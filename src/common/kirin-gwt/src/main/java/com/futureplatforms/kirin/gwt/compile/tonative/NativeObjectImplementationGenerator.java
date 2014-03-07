@@ -20,12 +20,6 @@ import com.google.gwt.user.rebind.SourceWriter;
 
 public class NativeObjectImplementationGenerator extends Generator {
 
-	private final InterfaceGenerator[] mProtocolGenerators = {
-			new CSInterfaceGenerator("../BINDINGS/windows/toNative/"),
-			new ObjectiveCProtocolGenerator("../BINDINGS/ios/toNative/"),
-			new JSToNativeGenerator("../BINDINGS/js/toNative/")
-	};
-	
 	@Override
 	public String generate(TreeLogger logger, GeneratorContext context,
 			String typeName) throws UnableToCompleteException {
@@ -69,9 +63,6 @@ public class NativeObjectImplementationGenerator extends Generator {
 			sourceWriter.commit(logger);
 		}
 
-		for (InterfaceGenerator generator : mProtocolGenerators) {
-			generator.generateProtocolResource(logger, context, nativeObjectType);
-		}
 		return composer.getCreatedClassName();
 	}
 

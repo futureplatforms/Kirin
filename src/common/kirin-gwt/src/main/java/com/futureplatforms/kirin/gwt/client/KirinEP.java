@@ -99,7 +99,7 @@ public class KirinEP implements EntryPoint {
 				public void run() {
 					SymbolMapService.BACKDOOR()._setStrongName(GWT.getPermutationStrongName());
 				}
-			}.schedule(1);;
+			}.schedule(1);
         }
         
         GWT.setUncaughtExceptionHandler(new GWT.UncaughtExceptionHandler() {

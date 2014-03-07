@@ -8,9 +8,11 @@ import org.timepedia.exporter.client.NoExport;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.ext.GeneratorContext;
 import com.google.gwt.core.ext.TreeLogger;
+import com.google.gwt.core.ext.TreeLogger.Type;
 import com.google.gwt.core.ext.UnableToCompleteException;
 import com.google.gwt.core.ext.typeinfo.JClassType;
 import com.google.gwt.core.ext.typeinfo.JMethod;
+import com.google.gwt.core.ext.typeinfo.JParameter;
 import com.google.gwt.core.ext.typeinfo.TypeOracle;
 
 public abstract class InterfaceGenerator {
@@ -64,6 +66,11 @@ public abstract class InterfaceGenerator {
 						continue;
 					}
 					
+					if (!parameterNamesValid(logger, method)) {
+						logger.log(Type.ERROR, "Could not process " + nativeObjectType.getName() + " :: " + method.getName());
+						throw new UnableToCompleteException();
+					}
+					
 					String methodSig = getMethodSignature(method);
 					if (methodSig != null) {
 						printWriter.append(methodSig).append('\n');
@@ -94,6 +101,20 @@ public abstract class InterfaceGenerator {
 			}
 		}
 		return false;
-		
+	}
+	
+	private boolean parameterNamesValid(TreeLogger logger, JMethod method) {
+		// These are keywords which exist in C#, Obj-C or Javascript, but not in Java
+		String[] keywords = { "id", "params", "ref", "arguments", "var", "foreach" };
+		JParameter[] params = method.getParameters();
+		for (JParameter param : params) {
+			for (String keyword : keywords) {
+				if (keyword.equals(param.getName())) {
+					logger.log(Type.ERROR, "Parameter " + param + " clashes with a native keyword, choose a different name!");
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 }

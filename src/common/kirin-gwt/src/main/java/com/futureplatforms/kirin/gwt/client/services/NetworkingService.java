@@ -58,12 +58,12 @@ public class NetworkingService extends KirinService<NetworkingServiceNative> {
     }
     
     // These are the methods that native uses to call back to us
-    public void payload(int id, String str) {
-        StaticDependencies.getInstance().getLogDelegate().log("payload " + id + ", " + str);
-        results.remove(id)._Success.onSuccess(200, null, str);
+    public void payload(int connId, String str) {
+        StaticDependencies.getInstance().getLogDelegate().log("payload " + connId + ", " + str);
+        results.remove(connId)._Success.onSuccess(200, null, str);
     }
     
-    public void onError(int id) {
-        results.remove(id)._Fail.onFail();
+    public void onError(int connId) {
+        results.remove(connId)._Fail.onFail();
     }
 }
