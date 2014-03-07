@@ -20,7 +20,7 @@ public final class Kirin {
                 new AndroidLog(), 
                 new AndroidSettings(context), 
                 includeLocation ? new AndroidLocation(context) : null, 
-                new AndroidNetwork(), 
+                new AndroidNetwork(context), 
                 new AndroidJson(),
                 new JaxpXmlParser(),
                 new AndroidFormatter(),
