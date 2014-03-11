@@ -46,8 +46,9 @@ target/
 generated-javascript
 obj
 node_modules
-/Kirin/core/wp8/wp8/KirinWP8/Service References
-/Kirin/core/wp8/wp8/KirinWP8/Bin
+src/wp8/KirinWP8/app
+src/wp8/KirinWP8/Service References
+src/wp8/KirinWP8/Bin
 maven/kirin-hello-world/kirin-hello-world-android/target
 maven/kirin-hello-world/common/gwt/target
 maven/kirin-hello-world/common/core/target
