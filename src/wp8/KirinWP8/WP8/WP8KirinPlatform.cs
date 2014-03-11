@@ -24,5 +24,10 @@ namespace KirinWP8
         {
             return new WP8SettingsBackend();
         }
+
+        public IFileBackend GetFileBackend(string assemblyName)
+        {
+            return new WP8FileBackend(assemblyName);
+        }
     }
 }

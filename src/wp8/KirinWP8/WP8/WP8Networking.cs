@@ -159,7 +159,7 @@ namespace KirinWP8
     public class WP8Networking : KirinExtension, INetworking
     {
         
-        public WP8Networking(string s, Kirin k) : base(s, k)
+        public WP8Networking(string s, Kirin k) : base(s, k, false)
         {
         }
 

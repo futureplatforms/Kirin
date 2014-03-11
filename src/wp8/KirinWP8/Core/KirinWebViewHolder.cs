@@ -35,7 +35,6 @@ namespace KirinWindows.Core
             string fn = "(function() { try {";
             fn += script + ";";
             fn += "} catch (e) { window.external.notify(e); } })();";
-            Debug.WriteLine("actually invoking " + fn);
 
             wb.InvokeScriptAsync("eval", fn);
         }

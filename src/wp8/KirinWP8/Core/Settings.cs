@@ -16,7 +16,7 @@ namespace KirinWindows.Core
         private ISettingsBackend backend;
 
         public Settings(string s, Kirin k, ISettingsBackend backend)
-            : base(s, k)
+            : base(s, k, false)
         {
             this.backend = backend;
             KirinAssistant.jsMethod("mergeOrOverwrite", new object[] { PrepareSettingsObject(backend.Retrieve()) });

@@ -6,6 +6,7 @@ import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.ExportPackage;
 import org.timepedia.exporter.client.NoExport;
 
+import com.futureplatforms.kirin.dependencies.StaticDependencies;
 import com.futureplatforms.kirin.gwt.client.KirinService;
 import com.futureplatforms.kirin.gwt.client.services.natives.SymbolMapServiceNative;
 import com.futureplatforms.kirin.gwt.compile.NoBind;
@@ -38,11 +39,9 @@ public class SymbolMapService extends KirinService<SymbolMapServiceNative> {
 		super(GWT.<SymbolMapServiceNative>create(SymbolMapServiceNative.class));
 		_Instance = this;
 	}
-
-	@NoBind
-	@NoExport
-	public void _setStrongName(String strongName) {
-		getNativeObject().setStrongName(strongName);
+	
+	protected void _onLoad() {
+		getNativeObject().setSymbolMapDetails(GWT.getModuleName(), GWT.getPermutationStrongName());
 	}
 
 	public void setSymbolMap(String symbolMap) {
@@ -51,10 +50,14 @@ public class SymbolMapService extends KirinService<SymbolMapServiceNative> {
 		String[] lines = symbolMap.split("\n");
 		for (String line : lines) {
 			// Ignore comments
-			if (!line.startsWith("#")) {
-				String[] components = line.split(",");
-				_SymbolMap.put(components[0], new MappedJavaMethod(components[2], components[3], components[4], components[5]));
+			try {
+				if (!line.startsWith("#")) {
+					String[] components = line.split(",");
+					_SymbolMap.put(components[0], new MappedJavaMethod(components[2], components[3], components[4], components[5]));
+				}
+			} catch (Throwable t) {
 			}
 		}
+		StaticDependencies.getInstance().getLogDelegate().log("SymbolMap: " + _SymbolMap.size());
 	}
 }

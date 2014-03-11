@@ -105,10 +105,14 @@ public abstract class InterfaceGenerator {
 	
 	private boolean parameterNamesValid(TreeLogger logger, JMethod method) {
 		// These are keywords which exist in C#, Obj-C or Javascript, but not in Java
-		String[] keywords = { "id", "params", "ref", "arguments", "var", "foreach" };
-		JParameter[] params = method.getParameters();
-		for (JParameter param : params) {
-			for (String keyword : keywords) {
+		String[] keywords = { "alloc", "init", "id", "params", "ref", "arguments", "var", "foreach" };
+		for (String keyword : keywords) {
+			if (keyword.equals(method.getName())) {
+				logger.log(Type.ERROR, "Method " + method + " clashes with a native keyword, choose a different name!");
+				return false;
+			}
+			JParameter[] params = method.getParameters();
+			for (JParameter param : params) {
 				if (keyword.equals(param.getName())) {
 					logger.log(Type.ERROR, "Parameter " + param + " clashes with a native keyword, choose a different name!");
 					return false;

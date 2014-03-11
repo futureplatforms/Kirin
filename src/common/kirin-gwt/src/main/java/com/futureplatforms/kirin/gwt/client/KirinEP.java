@@ -6,7 +6,6 @@ import java.util.Set;
 import org.timepedia.exporter.client.ExporterUtil;
 
 import com.futureplatforms.kirin.dependencies.StaticDependencies;
-import com.futureplatforms.kirin.dependencies.TimerTask;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.Configuration;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.LogDelegate;
 import com.futureplatforms.kirin.gwt.client.delegates.GwtFormatter;
@@ -89,17 +88,14 @@ public class KirinEP implements EntryPoint {
         ExporterUtil.exportAll();
         
         if (profile == Configuration.Debug) {
-	        ld.log(GWT.getPermutationStrongName());
-	        
-	        // Set this in a moment, to give time for the native SymbolMapService to bind on
-	        // TODO fix the timings of all this, currently exceptions thrown in the first screen
-	        // cannot use the symbol map service.
-	        new TimerTask() {
-				@Override
-				public void run() {
-					SymbolMapService.BACKDOOR()._setStrongName(GWT.getPermutationStrongName());
-				}
-			}.schedule(1);
+			LogDelegate log = StaticDependencies.getInstance().getLogDelegate();
+			log.log("GWT.getHostPageBaseURL: " + GWT.getHostPageBaseURL());
+			log.log("GWT.getModuleBaseForStaticFiles: " + GWT.getModuleBaseForStaticFiles());
+			log.log("GWT.getModuleBaseURL: " + GWT.getModuleBaseURL());
+			log.log("GWT.getModuleName: " + GWT.getModuleName());
+			log.log("GWT.getPermutationStrongName: " + GWT.getPermutationStrongName());
+			log.log("GWT.getUniqueThreadId: " + GWT.getUniqueThreadId());
+			log.log("GWT.getVersion: " + GWT.getVersion());
         }
         
         GWT.setUncaughtExceptionHandler(new GWT.UncaughtExceptionHandler() {

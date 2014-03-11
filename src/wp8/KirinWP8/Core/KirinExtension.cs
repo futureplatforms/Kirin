@@ -12,10 +12,10 @@ namespace KirinWindows.Core
 
         protected KirinAssistant KirinAssistant { get; private set; }
 
-        public KirinExtension(string moduleName, Kirin k)
+        public KirinExtension(string moduleName, Kirin k, bool isGwt=true)
         {
             this.moduleName = moduleName;
-            KirinAssistant = k.BindScreen(this, moduleName, isGwt:false);
+            KirinAssistant = k.BindScreen(this, moduleName, isGwt);
             KirinAssistant.onLoad();
         }
     }

@@ -11,5 +11,6 @@ namespace KirinWindows.Core
         IWebBrowserWrapper GetWebBrowserWrapper();
         INetworking GetNetworking(string name, Kirin k);
         ISettingsBackend GetSettingsBackend();
+        IFileBackend GetFileBackend(string assemblyName);
     }
 }
