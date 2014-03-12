@@ -1,6 +1,10 @@
 cd ..
 
-call mvn -pl common/kirin-gwt -am clean install
+REM  The module itself is specified in the pom.xml for the Kirin-GWT build
+call mvn clean install ^
+-pl common/kirin-gwt ^
+-Dconfiguration=%1 ^
+-am
 
 
 set PROJECT_HOME="%cd%"

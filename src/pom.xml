@@ -12,6 +12,8 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <guavaVersion>16.0.1</guavaVersion>
+    <gwtVersion>2.6.0</gwtVersion>
   </properties>
 
   <dependencies>

@@ -16,6 +16,21 @@ import com.google.gwt.core.ext.typeinfo.JParameter;
 import com.google.gwt.core.ext.typeinfo.TypeOracle;
 
 public abstract class InterfaceGenerator {
+	private static final String[] KEYWORDS = {
+		// Javascript
+		"debugger", "default", "delete", "function", "in", "typeof", "with",
+		
+		// C#
+		"as", "checked", "const", "delegate", "event", "explicit", "extern", "fixed", "foreach", "goto", "implicit",
+		"internal", "lock", "namespace", "operator", "out", "override", "params", "readonly", "sbyte", "sealed",
+		"stackalloc", "uint", "ulong", "unchecked", "unsafe", "ushort", "using", "virtual",
+		
+		// Obj-C
+		"alloc", "auto", "atomic", "BOOL", "bycopy", "byref", "Class", "init", "inline", "inout", "NO", "nonatomic", 
+		"NULL", "oneway", "Protocol", "retain", "register", "restrict", "SEL", "signed", "struct", "typedef", "union", 
+		"unsigned", "YES", "_Bool", "_Complex", "_Imaginary"
+	};
+	
 	protected String partialPath;
 	protected JClassType jsObjType;
 	
@@ -93,7 +108,7 @@ public abstract class InterfaceGenerator {
 	private boolean isKirinModuleMethod(JMethod method) {
 		String name = method.getName();
 		
-		String[] kirinMethods = {"onLoad", "onResume", "onPause", "onUnload"};
+		String[] kirinMethods = {"onLoad", "onUnload"};
 		
 		for (String kirinMethod : kirinMethods) {
 			if (kirinMethod.equals(name)) {
@@ -105,8 +120,7 @@ public abstract class InterfaceGenerator {
 	
 	private boolean parameterNamesValid(TreeLogger logger, JMethod method) {
 		// These are keywords which exist in C#, Obj-C or Javascript, but not in Java
-		String[] keywords = { "alloc", "init", "id", "params", "ref", "arguments", "var", "foreach" };
-		for (String keyword : keywords) {
+		for (String keyword : KEYWORDS) {
 			if (keyword.equals(method.getName())) {
 				logger.log(Type.ERROR, "Method " + method + " clashes with a native keyword, choose a different name!");
 				return false;

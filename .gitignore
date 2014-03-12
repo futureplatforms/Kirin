@@ -65,3 +65,8 @@ src/common/kirin-gwt/target
 *.suo
 archetype/target
 demos/kirin-hello-world/target
+
+# Strange SQLite bits
+*.opensdf
+*.sdf
+ipch

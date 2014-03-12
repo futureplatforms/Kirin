@@ -8,7 +8,6 @@
   <inherits name='com.futureplatforms.Kirin'/>
   
   <entry-point class='com.futureplatforms.kirin.gwt.client.KirinServiceExportEP' />
-  <source path='client' />
     
   <generate-with class="com.futureplatforms.kirin.gwt.compile.tonative.NativeObjectGenerator">
     <when-type-assignable class="com.futureplatforms.kirin.gwt.client.IKirinNativeService" />
@@ -16,9 +15,9 @@
   <generate-with class="com.futureplatforms.kirin.gwt.compile.fromnative.FromNativeBindingGenerator">
     <when-type-assignable class="com.futureplatforms.kirin.gwt.client.KirinService" />
   </generate-with>
-  
-
+ 
   <set-property name="user.agent" value="safari"/> 
   <!-- This needs setting or GWT Exporter won't do any exporting! -->
   <set-property name="export" value="yes"/>
+  <source path="client" />
 </module>

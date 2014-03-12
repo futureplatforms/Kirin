@@ -11,7 +11,7 @@ namespace KirinWindows.Core
     {
         private IFileBackend _FileBackend;
         private Generated.SymbolMapService _Service;
-        public SymbolMaps(string name, Kirin k, IFileBackend fileBackend) : base(name, k)
+        public SymbolMaps(Kirin k, IFileBackend fileBackend) : base("SymbolMapService", k)
         {
             _Service = new Generated.SymbolMapService(KirinAssistant);
             _FileBackend = fileBackend;
