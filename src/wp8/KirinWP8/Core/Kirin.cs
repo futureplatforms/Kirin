@@ -22,6 +22,8 @@ namespace KirinWindows.Core
             platform.GetNetworking("Networking", this);
             new Settings("Settings", this, platform.GetSettingsBackend());
             new KirinWindows.Core.SymbolMaps(this, platform.GetFileBackend(assemblyName));
+            DBService db = new KirinWindows.Core.DBService(this);
+            new KirinWindows.Core.TXService(db, this);
         }
 
         private string ReadFully(Stream stream)

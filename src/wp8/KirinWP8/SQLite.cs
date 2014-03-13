@@ -1708,7 +1708,7 @@ namespace SQLite
 			return exact;
 		}
 
-		public Column FindColumn (string columnName)
+		public virtual Column FindColumn (string columnName)
 		{
 			var exact = Columns.FirstOrDefault (c => c.Name == columnName);
 			return exact;
@@ -1774,7 +1774,13 @@ namespace SQLite
 
 			public string Name { get; private set; }
 
-			public string PropertyName { get { return _prop.Name; } }
+            public string PropertyName
+            {
+                get
+                {
+                    return _prop == null ? Name : _prop.Name;
+                }
+            }
 
 			public Type ColumnType { get; private set; }
 
@@ -1790,6 +1796,15 @@ namespace SQLite
 			public bool IsNullable { get; private set; }
 
 			public int? MaxStringLength { get; private set; }
+
+            // Kirin column
+            public Column(string name)
+            {
+                this.Name = name;
+                this.ColumnType = typeof(string);
+                this.Indices = new IndexedAttribute[] { new IndexedAttribute() };
+                this.MaxStringLength = int.MaxValue;
+            }
 
             public Column(PropertyInfo prop, CreateFlags createFlags = CreateFlags.None)
             {
@@ -1822,12 +1837,12 @@ namespace SQLite
                 MaxStringLength = Orm.MaxStringLength(prop);
             }
 
-			public void SetValue (object obj, object val)
+			public virtual void SetValue (object obj, object val)
 			{
 				_prop.SetValue (obj, val, null);
 			}
 
-			public object GetValue (object obj)
+            public virtual object GetValue(object obj)
 			{
 				return _prop.GetValue (obj, null);
 			}

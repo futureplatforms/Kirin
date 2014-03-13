@@ -9,7 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 
-namespace KirinWP8.Core
+namespace KirinWindows.Core
 {
     class DBService : KirinExtension, Generated.DatabaseAccessServiceNative
     {
@@ -28,11 +28,9 @@ namespace KirinWP8.Core
                 string dbPath = Path.Combine(Windows.Storage.ApplicationData.Current.LocalFolder.Path, filename);
                 if (!FileExists(filename).Result)
                 {
-                    using (var db = new SQLiteConnection(dbPath))
-                    {
-                        _Connections.Add(dbId, db);
-                        _Service.databaseOpenedSuccess(dbId);
-                    }
+                    SQLiteConnection db = new SQLiteConnection(dbPath);
+                    _Connections.Add(dbId, db);
+                    _Service.databaseOpenedSuccess(dbId);
                 }
             }).Start();
         }
