@@ -1014,6 +1014,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(PROJECT_DIR)/../../common/kirin-gwt/target/kirin-gwt-1.0-SNAPSHOT/app/SERVICE_BINDINGS/ios",
 				);
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -1031,6 +1032,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(PROJECT_DIR)/../../common/kirin-gwt/target/kirin-gwt-1.0-SNAPSHOT/app/SERVICE_BINDINGS/ios",
 				);
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
 			name = Release;
