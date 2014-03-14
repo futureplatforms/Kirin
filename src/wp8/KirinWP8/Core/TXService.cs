@@ -8,6 +8,9 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
+using Newtonsoft.Json;
+using System.IO;
+
 namespace KirinWindows.Core
 {
     enum SQLOperationType
@@ -147,6 +150,61 @@ namespace KirinWindows.Core
             }
         }
 
+        public class KirinQueryReturn
+        {
+            public List<string> _ColumnNames { get; private set; }
+            public List<Dictionary<string, string>> _Rows { get; private set; }
+
+            public KirinQueryReturn(List<object> objects, Dictionary<string, SQLite.TableMapping.Column> cols)
+            {
+                Debug.WriteLine("done query, returned " + objects.Count + " rows");
+                _ColumnNames = new List<string>();
+                _Rows = new List<Dictionary<string, string>>();
+
+                // Firstly iterate through the columns to retrieve column names
+                foreach (var entry in cols)
+                {
+                    _ColumnNames.Add(entry.Key);
+                }
+
+                // NOW THEN.
+                // Each object in "objects" represents a row in the returned table.
+                // Each column's dictionary is keyed by this object, and maps to the column's value in that row
+                // in that row.
+                //
+                // EXAMPLE:
+                //         _id    |   name   |  size  | colour
+                //      =========================================
+                // o1       aaa   |    foo   |   S    |   red
+                // o2       bbb   |    bar   |   M    |   yellow
+                // o3       ccc   |    bat   |   L    |   green
+                //
+                //  objects:  [o1, o2, o3]
+                //  cols:     [ 
+                //                 { "_id": { o1: "aaa", o2: "bbb", o3: "ccc" } }, 
+                //                 { "name": { o1: "foo", o2: "bar", o3: "bat" } }, 
+                //                 { "size": { o1: "S", o2: "M", o3: "L" } }, 
+                //                 { "colour", { o1: "red", o2: "yellow", o3: "green"} }
+                //            ]
+                foreach (var obj in objects)
+                {
+                    var dict = new Dictionary<string, string>();
+                    _Rows.Add(dict);
+
+                    foreach (var entry in cols)
+                    {
+                        var colName = entry.Key;
+                        var col = entry.Value as KirinWindows.Core.KirinMapping.KirinColumn;
+                        if (col._TheDict.ContainsKey(obj))
+                        {
+                            var val = col._TheDict[obj];
+                            dict.Add(colName, (string)val);
+                        }
+                    }
+                }
+            }
+        }
+
         public void end(int dbId, int txId)
         {
             new Thread(() =>
@@ -158,44 +216,49 @@ namespace KirinWindows.Core
                 var statements = GetStatements(dbId, txId);
                 foreach (var statement in statements)
                 {
-                    //db.Query(new SQLite.TableMapping(
                     Debug.WriteLine("about to do query: " + statement._Statement);
                     var parameters = statement._Parameters == null ? new string[0] : statement._Parameters;
                     var mapping = new KirinMapping();
                     var objects = db.Query(mapping, statement._Statement, parameters);
                     var cols = mapping._Columns;
+                    var ret = new KirinQueryReturn(objects, cols);
                     if (statement._HasId)
                     {
                         switch (statement._Type)
                         {
                             case SQLOperationType.Batch:
-                                break;
+                                {
+                                    // Yeah we're not expecting any batch ones here...
+                                } break;
 
                             case SQLOperationType.JSON:
-                                break;
+                                {
+
+                                } break;
 
                             case SQLOperationType.Rowset:
-                                break;
+                                {
+                                    _KirinService.statementRowSuccessColumnNames(dbId, txId, statement._StatementId, ret._ColumnNames.ToArray());
+                                    foreach (var row in ret._Rows)
+                                    {
+                                        var vals = row.Values.ToArray();
+                                        _KirinService.statementRowSuccess(dbId, txId, statement._StatementId, vals);
+                                    }
+                                    _KirinService.statementRowSuccessEnd(dbId, txId, statement._StatementId);
+                                } break;
 
+                            case SQLOperationType.Token:
+                                {
+                                    var token = KirinDropbox.DepositObject(ret._Rows);
+                                    _KirinService.statementTokenSuccess(dbId, txId, statement._StatementId, token);
+                                } break;
                         }
                     }
-                    Debug.WriteLine("done query, returned " + objects.Count + " rows");
-                    foreach (var obj in objects)
-                    {
-                        foreach (var entry in cols)
-                        {
-                            var colName = entry.Key;
-                            var col = entry.Value as KirinWindows.Core.KirinMapping.KirinColumn;
-                            if (col._TheDict.ContainsKey(obj))
-                            {
-                                var val = col._TheDict[obj];
-                                Debug.WriteLine(colName + ": " + val);
-                            }
-                        }
-                    }
+                    
                 }
                 Debug.WriteLine("about to commit");
                 db.Commit();
+                _KirinService.endSuccess(dbId, txId);
             }).Start();
         }
     }
