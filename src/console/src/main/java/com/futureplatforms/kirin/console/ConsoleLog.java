@@ -14,4 +14,10 @@ public class ConsoleLog implements LogDelegate {
 		log(tag + ": " + s);
 	}
 
+	@Override
+	public void log(String tag, String s, Throwable t) {
+		log(tag + ": " + s);
+		t.printStackTrace(System.out);
+	}
+
 }

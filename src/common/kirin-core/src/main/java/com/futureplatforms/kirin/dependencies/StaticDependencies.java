@@ -21,6 +21,7 @@ public final class StaticDependencies {
     public static interface LogDelegate {
         public void log(String s);
         public void log(String tag, String s);
+        public void log(String tag, String s, Throwable t);
     }
     public static interface SettingsDelegate {
         public String get(String key);
