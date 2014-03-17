@@ -23,7 +23,7 @@
     return [super initWithServiceName: self.serviceName];
 }
 
-- (void) setStrongName: (NSString*) strongName {
+- (void) setSymbolMapDetails: (NSString*) moduleName : (NSString*) strongName; {
     NSLog(@"SetStrongName %@", strongName);
     
     // We want to load /app/WEB-INF/<app_name>/symbolMaps/<strongName>.symbolMap
