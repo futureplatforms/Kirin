@@ -15,12 +15,21 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
 import android.os.AsyncTask;
+import android.os.Build;
 
 import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate.HttpVerb;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate.NetworkResponse;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegateClient;
 
 public class AndroidNetwork implements NetworkDelegateClient {
+	private static final String KIRIN_VERSION = "1.0";
+	final String userAgent;
+
+	public AndroidNetwork() {
+		userAgent = "Kirin/" + KIRIN_VERSION + " (Android " + Build.VERSION.RELEASE + "); "
+				+ Build.MODEL;
+	}
+
 	private class GetAsyncTask extends AsyncTask<Object, Void, Boolean> {
 		String url;
 		Map<String, String> headers;
@@ -42,13 +51,12 @@ public class AndroidNetwork implements NetworkDelegateClient {
 			try {
 
 				HttpClient client = new DefaultHttpClient();
-
 				HttpGet get = new HttpGet(url);
 
-				if (headers != null)
-					for (String name : headers.keySet()) {
-						get.setHeader(name, headers.get(name));
-					}
+				get.setHeader("User-Agent", userAgent);
+				if (headers != null) for (String name : headers.keySet()) {
+					get.setHeader(name, headers.get(name));
+				}
 
 				HttpResponse getResponse = null;
 
@@ -123,10 +131,9 @@ public class AndroidNetwork implements NetworkDelegateClient {
 					throw new IllegalStateException("verb is " + _Verb
 							+ ", can only be put or post");
 				}
-				if (headers != null)
-					for (String name : headers.keySet()) {
-						base.setHeader(name, headers.get(name));
-					}
+				if (headers != null) for (String name : headers.keySet()) {
+					base.setHeader(name, headers.get(name));
+				}
 
 				base.setEntity(new StringEntity(toPost));
 
@@ -136,7 +143,7 @@ public class AndroidNetwork implements NetworkDelegateClient {
 				try {
 					res = postResponse.getStatusLine().getStatusCode();
 				} catch (Throwable t) {}
-				
+
 				Header[] responseHeaders = postResponse.getAllHeaders();
 
 				responseHeaderMap = new HashMap<String, String>();
@@ -168,19 +175,19 @@ public class AndroidNetwork implements NetworkDelegateClient {
 	}
 
 	@Override
-	public void doHttp(HttpVerb verb, String url, String payload,
-			Map<String, String> headers, NetworkResponse callback) {
+	public void doHttp(HttpVerb verb, String url, String payload, Map<String, String> headers,
+			NetworkResponse callback) {
 		switch (verb) {
-		case GET:
-			new GetAsyncTask().execute(url, headers, callback);
-			break;
-		case POST:
-		case PUT:
-			new PostPutAsyncTask(verb).execute(url, payload, headers, callback);
-			break;
+			case GET:
+				new GetAsyncTask().execute(url, headers, callback);
+				break;
+			case POST:
+			case PUT:
+				new PostPutAsyncTask(verb).execute(url, payload, headers, callback);
+				break;
 
-		default:
-			throw new IllegalArgumentException("");
+			default:
+				throw new IllegalArgumentException("");
 		}
 	}
 }

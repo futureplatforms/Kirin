@@ -1,8 +1,6 @@
 package com.futureplatforms.kirin.android.app;
 
-import android.app.Activity;
 import android.app.Application;
-import android.os.Bundle;
 
 import com.futureplatforms.kirin.IKirinNativeObject;
 import com.futureplatforms.kirin.KirinModule;
