@@ -53,6 +53,17 @@ public class KirinEP implements EntryPoint {
 		public void log(String tag, String s) {
 			log(tag+": "+s);
 		}
+
+		@Override
+		public void log(String tag, String s, Throwable t) {
+			log(tag+": "+s);
+	        StringBuilder output = new StringBuilder();
+			StackTraceElement[] stackTrace = t.getStackTrace();
+			for(StackTraceElement line : stackTrace) {
+				output.append(line+"\n");
+			}
+			log(output.toString());
+		}
     };
     
     private final LogDelegate noopLogDelegate = new LogDelegate() {
@@ -62,6 +73,9 @@ public class KirinEP implements EntryPoint {
 
 		@Override
 		public void log(String tag, String s) { }
+
+		@Override
+		public void log(String tag, String s, Throwable t) {}
     };
     
   /**
