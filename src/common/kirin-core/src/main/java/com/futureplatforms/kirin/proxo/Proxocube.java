@@ -5,16 +5,16 @@ import java.util.Map;
 import com.futureplatforms.kirin.dependencies.StaticDependencies;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.LogDelegate;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate;
-import com.futureplatforms.kirin.dependencies.StaticDependencies.SettingsDelegate;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate.HttpVerb;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate.NetworkResponse;
+import com.futureplatforms.kirin.dependencies.StaticDependencies.SettingsDelegate;
 import com.futureplatforms.kirin.dependencies.db.Database;
 import com.futureplatforms.kirin.dependencies.db.Database.TxRunner;
 import com.futureplatforms.kirin.dependencies.db.Transaction;
 import com.futureplatforms.kirin.dependencies.json.JSONArray;
 import com.futureplatforms.kirin.dependencies.json.JSONDelegate;
-import com.futureplatforms.kirin.dependencies.json.JSONObject;
 import com.futureplatforms.kirin.dependencies.json.JSONDelegate.KirinJsonException;
+import com.futureplatforms.kirin.dependencies.json.JSONObject;
 import com.google.common.base.Strings;
 
 public class Proxocube {
@@ -99,5 +99,9 @@ public class Proxocube {
 				_Client.onError();
 			}
 		});
+	}
+	
+	public static String sha512Base64(String value) {
+		return StaticDependencies.getInstance().getFormatter().sha512B64(value);
 	}
 }

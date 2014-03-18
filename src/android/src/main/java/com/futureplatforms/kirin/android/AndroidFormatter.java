@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.nio.charset.Charset;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -15,6 +16,8 @@ import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
 import com.futureplatforms.kirin.dependencies.Formatter;
+import com.google.common.hash.Hashing;
+import com.google.common.io.BaseEncoding;
 
 public class AndroidFormatter extends Formatter {
 
@@ -97,5 +100,10 @@ public class AndroidFormatter extends Formatter {
 	@Override
 	public String format(String string, Object... args) {
 		return String.format(string, args);
+	}
+
+	@Override
+	public String sha512B64(String toEncode) {
+		return BaseEncoding.base64().encode(Hashing.sha512().hashString(toEncode, Charset.defaultCharset()).asBytes());
 	}
 }
