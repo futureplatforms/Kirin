@@ -19,7 +19,7 @@ public class FromNativeBindingGenerator extends Generator {
 	private final InterfaceGenerator[] mAppProtocolGenerators = {
 			new CSClassGenerator("../BINDINGS/windows/fromNative/"),
 			new ObjectiveCProtocolGenerator("../BINDINGS/ios/fromNative/"),
-			new JSFromNativeGenerator("../BINDINGS/js/fromNative")
+			new JSFromNativeGenerator("../BINDINGS/js/fromNative/")
 	};
 	
     private final InterfaceGenerator[] mServiceProtocolGenerators = {
