@@ -59,4 +59,15 @@ public class GwtNodeImpl implements Node {
 		return new GwtAttributesImpl(mNode.getAttributes());
 	}
 
+	@Override
+	public String getTextContent() {
+		if (mNode == null) return "";
+		StringBuilder result = new StringBuilder(4096);
+		for (com.google.gwt.xml.client.Node node = mNode.getFirstChild(); node != null; node = node
+				.getNextSibling())
+			result.append(node.getNodeValue());
+		return result.toString();
+	}
+
+
 }

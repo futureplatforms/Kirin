@@ -7,18 +7,17 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import com.futureplatforms.kirin.dependencies.xml.parser.Node;
+import com.futureplatforms.kirin.dependencies.xml.parser.Document;
 import com.futureplatforms.kirin.dependencies.xml.parser.XMLParser;
 
 public class JaxpXmlParser implements XMLParser {
 
     @Override
-    public Node parse(String contents) {
-    	Document document = null;
+    public Document parse(String contents) {
+    	org.w3c.dom.Document document = null;
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
@@ -30,6 +29,6 @@ public class JaxpXmlParser implements XMLParser {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return new JaxpNode(document);
+        return new JaxpDocument(document);
     }
 }
