@@ -59,4 +59,5 @@
   <script src="services/FileSystem.js"></script>
   <script src="utils/api-utils.js"></script>
   <script src="utils/hmac-sha1.js"></script>
+  <script src="utils/sha512.js"></script>
 </module>

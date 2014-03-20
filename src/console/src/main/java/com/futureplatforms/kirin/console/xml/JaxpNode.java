@@ -52,8 +52,13 @@ public class JaxpNode implements Node {
 
 	@Override
 	public Attributes getAttributes() {
-		// TODO Auto-generated method stub
-		return null;
+		return new JaxpAttributes(mNode.getAttributes());
 	}
+
+	@Override
+	public String getTextContent() {
+		return mNode.getTextContent();
+	}
+
 
 }
