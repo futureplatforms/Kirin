@@ -14,4 +14,5 @@ public interface Node {
     public short getNodeType();
     public Attributes getAttributes();
     public String getTextContent();
+	public String getData();
 }
