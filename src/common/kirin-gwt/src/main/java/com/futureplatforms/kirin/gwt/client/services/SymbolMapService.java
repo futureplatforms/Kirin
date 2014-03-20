@@ -7,6 +7,7 @@ import org.timepedia.exporter.client.ExportPackage;
 import org.timepedia.exporter.client.NoExport;
 
 import com.futureplatforms.kirin.dependencies.StaticDependencies;
+import com.futureplatforms.kirin.dependencies.StaticDependencies.Configuration;
 import com.futureplatforms.kirin.gwt.client.KirinService;
 import com.futureplatforms.kirin.gwt.client.services.natives.SymbolMapServiceNative;
 import com.futureplatforms.kirin.gwt.compile.NoBind;
@@ -41,7 +42,9 @@ public class SymbolMapService extends KirinService<SymbolMapServiceNative> {
 	}
 	
 	protected void _onLoad() {
-		getNativeObject().setSymbolMapDetails(GWT.getModuleName(), GWT.getPermutationStrongName());
+		if (StaticDependencies.getInstance().getProfile() == Configuration.Debug) {
+			getNativeObject().setSymbolMapDetails(GWT.getModuleName(), GWT.getPermutationStrongName());
+		}
 	}
 
 	public void setSymbolMap(String symbolMap) {
