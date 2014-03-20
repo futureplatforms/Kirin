@@ -1,10 +1,11 @@
 package com.futureplatforms.kirin.gwt.client.delegates.xml;
 
 import com.futureplatforms.kirin.dependencies.xml.parser.Attributes;
+import com.futureplatforms.kirin.dependencies.xml.parser.CharacterData;
 import com.futureplatforms.kirin.dependencies.xml.parser.Node;
 import com.futureplatforms.kirin.dependencies.xml.parser.NodeList;
 
-public class GwtNodeImpl implements Node {
+public class GwtNodeImpl implements Node, CharacterData {
 
     private com.google.gwt.xml.client.Node mNode;
     
@@ -67,6 +68,11 @@ public class GwtNodeImpl implements Node {
 				.getNextSibling())
 			result.append(node.getNodeValue());
 		return result.toString();
+	}
+
+	@Override
+	public String getData() {
+		return ((com.google.gwt.xml.client.CharacterData)mNode).getData();
 	}
 
 
