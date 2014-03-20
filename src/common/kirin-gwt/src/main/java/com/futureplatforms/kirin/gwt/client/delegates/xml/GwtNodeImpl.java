@@ -5,7 +5,7 @@ import com.futureplatforms.kirin.dependencies.xml.parser.CharacterData;
 import com.futureplatforms.kirin.dependencies.xml.parser.Node;
 import com.futureplatforms.kirin.dependencies.xml.parser.NodeList;
 
-public class GwtNodeImpl implements Node, CharacterData {
+public class GwtNodeImpl implements Node {
 
     private com.google.gwt.xml.client.Node mNode;
     
@@ -59,21 +59,5 @@ public class GwtNodeImpl implements Node, CharacterData {
 	public Attributes getAttributes() {
 		return new GwtAttributesImpl(mNode.getAttributes());
 	}
-
-	@Override
-	public String getTextContent() {
-		if (mNode == null) return "";
-		StringBuilder result = new StringBuilder(4096);
-		for (com.google.gwt.xml.client.Node node = mNode.getFirstChild(); node != null; node = node
-				.getNextSibling())
-			result.append(node.getNodeValue());
-		return result.toString();
-	}
-
-	@Override
-	public String getData() {
-		return ((com.google.gwt.xml.client.CharacterData)mNode).getData();
-	}
-
 
 }

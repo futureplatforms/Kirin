@@ -55,10 +55,4 @@ public class JaxpNode implements Node {
 		return new JaxpAttributes(mNode.getAttributes());
 	}
 
-	@Override
-	public String getTextContent() {
-		return mNode.getTextContent();
-	}
-
-
 }

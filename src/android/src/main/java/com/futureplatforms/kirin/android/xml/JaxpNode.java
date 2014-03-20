@@ -70,14 +70,4 @@ public class JaxpNode implements Node, CharacterData {
 		return new JaxpAttributes(mNode.getAttributes());
 	}
 
-	@Override
-	public String getTextContent() {
-		return mNode.getTextContent();
-	}
-
-	@Override
-	public String getData() {
-		return ((org.w3c.dom.CharacterData) mNode).getData();
-	}
-
 }

@@ -13,6 +13,4 @@ public interface Node {
     public NodeList getChildNodes();
     public short getNodeType();
     public Attributes getAttributes();
-    public String getTextContent();
-	public String getData();
 }
