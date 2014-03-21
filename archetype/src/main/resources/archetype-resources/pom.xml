@@ -11,7 +11,9 @@
   <url>http://maven.apache.org</url>
 
   <properties>
+    <guavaVersion>16.0.1</guavaVersion>
     <gwtVersion>2.5.1</gwtVersion>
+    <gwtExporterVersion>2.5.1</gwtExporterVersion>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
