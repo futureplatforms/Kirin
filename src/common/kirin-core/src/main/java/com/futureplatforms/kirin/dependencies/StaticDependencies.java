@@ -84,6 +84,22 @@ public final class StaticDependencies {
     public SettingsDelegate getSettingsDelegate() { return mSettingsDelegate; }
     public LocationDelegate getLocationDelegate() { return mLocationDelegate; }
     public NetworkDelegate getNetworkDelegate() { return mNetworkDelegate; }
+    public NotificationDelegate getNotificationDelegate() { return new NotificationDelegate() {
+		
+		@Override
+		public void scheduleNotification(int notificationId,
+				long timeMillisSince1970, String title, String text) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		@Override
+		public void cancelNotification(int notificationId) {
+			// TODO Auto-generated method stub
+			
+		}
+	}; }
+    
     public JSONDelegate getJsonDelegate() { return mJsonDelegate; }
     public XMLParser getXmlParser() { return mXmlParser; }
     public Formatter getFormatter() { return mFormatter; }
