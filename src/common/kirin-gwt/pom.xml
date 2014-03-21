@@ -108,7 +108,7 @@
                                 <pluginExecutionFilter>
                                     <groupId>org.codehaus.mojo</groupId>
                                     <artifactId>gwt-maven-plugin</artifactId>
-                                    <version>${gwtVersion}</version>
+                                    <versionRange>${gwtVersion}</versionRange>
                                     <goals>
                                         <goal>resources</goal>
                                         <goal>compile</goal>
