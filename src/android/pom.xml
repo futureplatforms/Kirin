@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-
+	<parent>
+		<artifactId>kirin</artifactId>
+		<groupId>com.futureplatforms.kirin</groupId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
+	
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.futureplatforms.kirin.android</groupId>
 	<artifactId>kirin-android</artifactId>
@@ -11,13 +16,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<platform.version>4.4.2_r3</platform.version>
-		<android.plugin.version>3.8.1</android.plugin.version>
 	</properties>
-	<parent>
-		<artifactId>kirin</artifactId>
-		<groupId>com.futureplatforms.kirin</groupId>
-		<version>1.0-SNAPSHOT</version>
-	</parent>
 	<dependencies>
 		<dependency>
 			<groupId>android</groupId>
@@ -61,17 +60,6 @@
 	<build>
 		<sourceDirectory>src/main/java</sourceDirectory>
 		<plugins>
-			<plugin>
-				<groupId>com.jayway.maven.plugins.android.generation2</groupId>
-				<artifactId>android-maven-plugin</artifactId>
-				<version>${android.plugin.version}</version>
-				<extensions>true</extensions>
-				<configuration>
-					<sdk>
-						<platform>19</platform>
-					</sdk>
-				</configuration>
-			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
