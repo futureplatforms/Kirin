@@ -214,4 +214,24 @@ public class ConsoleJSONObject extends com.futureplatforms.kirin.dependencies.js
 			return null;
 		}
 	}
+
+	@Override
+	public boolean optBoolean(String key) {
+		return jsonObject.optBoolean(key);
+	}
+
+	@Override
+	public int optInt(String key) {
+		return jsonObject.optInt(key);
+	}
+
+	@Override
+	public double optDouble(String key) {
+		return jsonObject.optDouble(key);
+	}
+
+	@Override
+	public String optString(String key, String defVal) {
+		return jsonObject.optString(key, defVal);
+	}
 }

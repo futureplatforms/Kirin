@@ -1,9 +1,7 @@
 package com.futureplatforms.kirin.android.json;
 
-import org.json.JSONException;
-
 import com.futureplatforms.kirin.dependencies.json.JSONArray;
-import com.futureplatforms.kirin.dependencies.json.JSONDelegate.KirinJsonException;
+import com.futureplatforms.kirin.dependencies.json.JSONException;
 import com.futureplatforms.kirin.dependencies.json.JSONObject;
 
 public class AndroidJSONArray extends JSONArray {
@@ -18,57 +16,56 @@ public class AndroidJSONArray extends JSONArray {
 		jsonArray = new org.json.JSONArray();
 	}
 
-	public AndroidJSONArray(String jsonText) throws KirinJsonException {
+	public AndroidJSONArray(String jsonText) throws JSONException {
 		try {
 			jsonArray = new org.json.JSONArray(jsonText);
 		} catch (Exception e) {
-			throw new KirinJsonException("invalid json: "
-					+ e.getMessage());
+			throw new JSONException(e);
 		}
 	}
 
 	@Override
-	public boolean getBoolean(int index) {
+	public boolean getBoolean(int index) throws JSONException {
 		try {
 			return jsonArray.getBoolean(index);
-		} catch (JSONException e) {
-			throw new IllegalArgumentException("it's not a boolean");
+		} catch (org.json.JSONException e) {
+			throw new JSONException(e);
 		}
 	}
 
 	@Override
-	public double getDouble(int index) {
+	public double getDouble(int index) throws JSONException {
 		try {
 			return jsonArray.getDouble(index);
-		} catch (JSONException e) {
-			throw new IllegalArgumentException("it's not a double");
+		} catch (org.json.JSONException e) {
+			throw new JSONException(e);
 		}
 	}
 
 	@Override
-	public JSONArray getJSONArray(int index) {
+	public JSONArray getJSONArray(int index) throws JSONException {
 		try {
 			return new AndroidJSONArray(jsonArray.getJSONArray(index));
-		} catch (JSONException e) {
-			throw new IllegalArgumentException("it's not an array");
+		} catch (org.json.JSONException e) {
+			throw new JSONException(e);
 		}
 	}
 
 	@Override
-	public JSONObject getJSONObject(int index) {
+	public JSONObject getJSONObject(int index) throws JSONException {
 		try {
 			return new AndroidJSONObject(jsonArray.getJSONObject(index));
-		} catch (JSONException e) {
-			throw new IllegalArgumentException("couldn't get object");
+		} catch (org.json.JSONException e) {
+			throw new JSONException(e);
 		}
 	}
 
 	@Override
-	public String getString(int index) {
+	public String getString(int index) throws JSONException {
 		try {
 			return jsonArray.getString(index);
-		} catch (JSONException e) {
-			throw new IllegalArgumentException("it's not a string");
+		} catch (org.json.JSONException e) {
+			throw new JSONException(e);
 		}
 	}
 
@@ -93,18 +90,17 @@ public class AndroidJSONArray extends JSONArray {
 	}
 
 	@Override
-	public JSONArray putDouble(double d) {
+	public JSONArray putDouble(double d) throws JSONException {
 		try {
 			jsonArray.put(d);
-		} catch (JSONException e) {
-			throw new IllegalArgumentException("error adding " + d
-					+ " to array");
+		} catch (org.json.JSONException e) {
+			throw new JSONException(e);
 		}
 		return this;
 	}
 
 	@Override
-	public JSONArray putObject(Object value) {
+	public JSONArray putObject(Object value) throws JSONException {
 		if (value instanceof Integer) {
 			return this.putDouble(((Integer) value).intValue());
 		} else if (value instanceof Boolean) {
@@ -124,29 +120,27 @@ public class AndroidJSONArray extends JSONArray {
 	}
 
 	@Override
-	public JSONArray putBoolean(int index, boolean b) {
+	public JSONArray putBoolean(int index, boolean b) throws JSONException {
 		try {
 			jsonArray.put(index, b);
-		} catch (JSONException e) {
-			throw new IllegalArgumentException("error adding " + b
-					+ " to array");
+		} catch (org.json.JSONException e) {
+			throw new JSONException(e);
 		}
 		return this;
 	}
 
 	@Override
-	public JSONArray putDouble(int index, double d) {
+	public JSONArray putDouble(int index, double d) throws JSONException {
 		try {
 			jsonArray.put(index, d);
-		} catch (JSONException e) {
-			throw new IllegalArgumentException("error adding " + d
-					+ " to array");
+		} catch (org.json.JSONException e) {
+			throw new JSONException(e);
 		}
 		return this;
 	}
 
 	@Override
-	public JSONArray putObject(int index, Object value) {
+	public JSONArray putObject(int index, Object value) throws JSONException {
 		try {
 			if (value instanceof Integer) {
 				return this.putDouble(index, ((Integer) value).intValue());
@@ -165,19 +159,18 @@ public class AndroidJSONArray extends JSONArray {
 				jsonArray.put(index,
 						((AndroidJSONArray) value).getNativeJSONArray());
 			}
-		} catch (JSONException e) {
-			throw new IllegalArgumentException("error adding " + value
-					+ " to array");
+		} catch (org.json.JSONException e) {
+			throw new JSONException(e);
 		}
 		return this;
 	}
 
 	@Override
-	public int getInt(int index) {
+	public int getInt(int index) throws JSONException {
 		try {
 			return jsonArray.getInt(index);
-		} catch (JSONException e) {
-			throw new IllegalArgumentException("its not an int");
+		} catch (org.json.JSONException e) {
+			throw new JSONException(e);
 		}
 	}
 
@@ -205,7 +198,7 @@ public class AndroidJSONArray extends JSONArray {
 	public JSONArray optJSONArray(int index) {
 		try {
 			return new AndroidJSONArray(jsonArray.getJSONArray(index));
-		} catch (JSONException e) {
+		} catch (org.json.JSONException e) {
 			return null;
 		}
 	}
@@ -214,7 +207,7 @@ public class AndroidJSONArray extends JSONArray {
 	public JSONObject optJSONObject(int index) {
 		try {
 			return new AndroidJSONObject(jsonArray.getJSONObject(index));
-		} catch (JSONException e) {
+		} catch (org.json.JSONException e) {
 			return null;
 		}
 	}

@@ -13,7 +13,7 @@ import com.futureplatforms.kirin.dependencies.db.Database.TxRunner;
 import com.futureplatforms.kirin.dependencies.db.Transaction;
 import com.futureplatforms.kirin.dependencies.json.JSONArray;
 import com.futureplatforms.kirin.dependencies.json.JSONDelegate;
-import com.futureplatforms.kirin.dependencies.json.JSONDelegate.KirinJsonException;
+import com.futureplatforms.kirin.dependencies.json.JSONException;
 import com.futureplatforms.kirin.dependencies.json.JSONObject;
 import com.google.common.base.Strings;
 
@@ -72,7 +72,7 @@ public class Proxocube {
 									_Client.onInsertOrUpdate(tx, obj);
 								}
 							}
-						} catch (KirinJsonException e) {
+						} catch (JSONException e) {
 							_Client.onError();
 						}
 					}

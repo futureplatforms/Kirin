@@ -2,17 +2,18 @@ package com.futureplatforms.kirin.android.json;
 
 import com.futureplatforms.kirin.dependencies.json.JSONArray;
 import com.futureplatforms.kirin.dependencies.json.JSONDelegate;
+import com.futureplatforms.kirin.dependencies.json.JSONException;
 import com.futureplatforms.kirin.dependencies.json.JSONObject;
 
 public class AndroidJson implements JSONDelegate {
 
     @Override
-    public JSONObject getJSONObject(String jsonText) throws KirinJsonException {
+    public JSONObject getJSONObject(String jsonText) throws JSONException {
         return new AndroidJSONObject(jsonText);
     }
 
     @Override
-    public JSONArray getJSONArray(String jsonText) throws KirinJsonException {
+    public JSONArray getJSONArray(String jsonText) throws JSONException {
         return new AndroidJSONArray(jsonText);
     }
 

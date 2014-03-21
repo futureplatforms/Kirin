@@ -3,12 +3,17 @@ package com.futureplatforms.kirin.gwt.client.delegates.json;
 import com.futureplatforms.kirin.dependencies.json.JSONObject;
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONBoolean;
+import com.google.gwt.json.client.JSONException;
 import com.google.gwt.json.client.JSONNull;
 import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
 
+/**
+ * Replicates the 20080701 version of org.json API
+ * 
+ */
 public class GwtJSONArray extends
 		com.futureplatforms.kirin.dependencies.json.JSONArray {
 
@@ -235,8 +240,8 @@ public class GwtJSONArray extends
 				} else {
 					throw new IllegalStateException(index + " isn't double");
 				}
-			} 
-		} 
+			}
+		}
 		return defVal;
 	}
 
@@ -283,7 +288,37 @@ public class GwtJSONArray extends
 			} else {
 				throw new IllegalStateException(index + " isn't Object");
 			}
-		} 
+		}
 		return null;
 	}
+
+	/**
+	 * Get the object value associated with an index.
+	 * 
+	 * @param index
+	 *            The index must be between 0 and length() - 1.
+	 * @return An object value.
+	 * @throws JSONException
+	 *             If there is no value for the index.
+	 */
+	private JSONValue get(int index) throws JSONException {
+		JSONValue o = opt(index);
+		if (o == null) {
+			throw new JSONException("JSONArray[" + index + "] not found.");
+		}
+		return o;
+	}
+
+	/**
+	 * Get the optional object value associated with an index.
+	 * 
+	 * @param index
+	 *            The index must be between 0 and length() - 1.
+	 * @return An object value, or null if there is no object at that index.
+	 */
+	public JSONValue opt(int index) {
+		return (index < 0 || index >= length()) ? null : this.jsonArray
+				.get(index);
+	}
+
 }

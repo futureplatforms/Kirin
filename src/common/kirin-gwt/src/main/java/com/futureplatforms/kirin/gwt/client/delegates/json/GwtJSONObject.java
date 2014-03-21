@@ -2,14 +2,20 @@ package com.futureplatforms.kirin.gwt.client.delegates.json;
 
 import java.util.Iterator;
 
-import com.futureplatforms.kirin.dependencies.json.JSONArray;
+import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONBoolean;
+import com.google.gwt.json.client.JSONException;
 import com.google.gwt.json.client.JSONNull;
 import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
+
+/**
+ * Replicates the 20080701 version of org.json API
+ * 
+ */
 
 public class GwtJSONObject extends
 		com.futureplatforms.kirin.dependencies.json.JSONObject {
@@ -33,119 +39,131 @@ public class GwtJSONObject extends
 		return jsonObj.containsKey(key);
 	}
 
-	private boolean isNull(JSONValue value) {
+	/**
+	 * Determine if the value associated with the key is null or if there is no
+	 * value.
+	 * 
+	 * @param key
+	 *            A key string.
+	 * @return true if there is no value associated with the key or if the value
+	 *         is the JSONObject.NULL object.
+	 */
+	@Override
+	public boolean isNull(String key) {
+		JSONValue value = opt(key);
 		return value == null || value instanceof JSONNull;
 	}
 
+	/**
+	 * Get the boolean value associated with a key.
+	 * 
+	 * @param key
+	 *            A key string.
+	 * @return The truth.
+	 * @throws JSONException
+	 *             if the value is not a Boolean or the String "true" or
+	 *             "false".
+	 */
 	@Override
-	public boolean getBoolean(String key) {
-		boolean has = jsonObj.containsKey(key);
-		if (has) {
-			JSONValue value = jsonObj.get(key);
-			boolean isNull = isNull(value);
-			if (!isNull) {
-				JSONBoolean jb = value.isBoolean();
-				if (jb != null) {
-					return jb.booleanValue();
-				} else {
-					throw new IllegalStateException(key + " isn't boolean");
-				}
-			} else {
-				throw new IllegalStateException(key + " is null");
-			}
-		} else {
-			throw new IllegalStateException(key + " doesn't exist");
+	public boolean getBoolean(String key) throws JSONException {
+		Object o = get(key);
+		if (o instanceof JSONBoolean) {
+			return ((JSONBoolean) o).booleanValue();
 		}
+		throw new JSONException("JSONObject[" + quote(key)
+				+ "] is not a Boolean.");
 	}
 
+	/**
+	 * Get the int value associated with a key. If the number value is too large
+	 * for an int, it will be clipped.
+	 * 
+	 * @param key
+	 *            A key string.
+	 * @return The integer value.
+	 * @throws JSONException
+	 *             if the key is not found or if the value cannot be converted
+	 *             to an integer.
+	 */
 	@Override
-	public int getInt(String key) {
+	public int getInt(String key) throws JSONException {
 		return (int) getDouble(key);
 	}
 
+	/**
+	 * Get the double value associated with a key.
+	 * 
+	 * @param key
+	 *            A key string.
+	 * @return The numeric value.
+	 * @throws JSONException
+	 *             if the key is not found or if the value is not a Number
+	 *             object and cannot be converted to a number.
+	 */
 	@Override
-	public double getDouble(String key) {
-		boolean has = jsonObj.containsKey(key);
-		if (has) {
-			JSONValue value = jsonObj.get(key);
-			boolean isNull = isNull(value);
-			if (!isNull) {
-				JSONNumber jn = value.isNumber();
-				if (jn != null) {
-					return jn.doubleValue();
-				} else {
-					throw new IllegalStateException(key + " isn't double");
-				}
-			} else {
-				throw new IllegalStateException(key + " is null");
-			}
-		} else {
-			throw new IllegalStateException(key + " doesn't exist");
+	public double getDouble(String key) throws JSONException {
+		Object o = get(key);
+		try {
+			return o instanceof JSONNumber ? ((JSONNumber) o).doubleValue()
+					: Double.valueOf((String) o).doubleValue();
+		} catch (Exception e) {
+			throw new JSONException("JSONObject[" + quote(key)
+					+ "] is not a number.");
 		}
 	}
 
+	/**
+	 * Get the string associated with a key.
+	 * 
+	 * @param key
+	 *            A key string.
+	 * @return A string which is the value.
+	 * @throws JSONException
+	 *             if the key is not found.
+	 */
 	@Override
-	public String getString(String key) {
-		if (jsonObj.containsKey(key)) {
-			JSONValue value = jsonObj.get(key);
-			boolean isNull = isNull(value);
-			if (!isNull) {
-				JSONString js = value.isString();
-				if (js != null) {
-					return js.stringValue();
-				} else {
-					throw new IllegalStateException(key + " isn't String");
-				}
-			} else {
-				throw new IllegalStateException(key + " is null");
-			}
-		} else {
-			throw new IllegalStateException(key + " doesn't exist");
-		}
+	public String getString(String key) throws JSONException {
+		return get(key).toString();
 	}
 
-	@Override
-	public boolean isNull(String key) {
-		JSONValue value = jsonObj.get(key);
-		boolean isNull = isNull(value);
-		if (isNull) {
-			return true;
-		}
-		return value.isNull() != null;
-	}
-
+	/**
+	 * Get the JSONArray value associated with a key.
+	 * 
+	 * @param key
+	 *            A key string.
+	 * @return A JSONArray which is the value.
+	 * @throws JSONException
+	 *             if the key is not found or if the value is not a JSONArray.
+	 */
 	@Override
 	public com.futureplatforms.kirin.dependencies.json.JSONArray getJSONArray(
-			String key) {
-		JSONValue value = jsonObj.get(key);
-		boolean isNull = isNull(value);
-		if (!isNull) {
-			com.google.gwt.json.client.JSONArray ja = value.isArray();
-			if (ja != null) {
-				return new GwtJSONArray(ja);
-			} else {
-				throw new IllegalStateException(key + " isn't Array");
-			}
-		} else {
-			throw new IllegalStateException(key + " is null");
+			String key) throws JSONException {
+		Object o = get(key);
+		if (o instanceof JSONArray) {
+			return new GwtJSONArray((JSONArray) o);
 		}
+		throw new JSONException("JSONObject[" + quote(key)
+				+ "] is not a JSONArray.");
 	}
 
+	/**
+	 * Get the JSONObject value associated with a key.
+	 * 
+	 * @param key
+	 *            A key string.
+	 * @return A JSONObject which is the value.
+	 * @throws JSONException
+	 *             if the key is not found or if the value is not a JSONObject.
+	 */
 	@Override
 	public com.futureplatforms.kirin.dependencies.json.JSONObject getJSONObject(
-			String key) {
-		JSONValue value = jsonObj.get(key);
-		boolean isNull = isNull(value);
-		if (!isNull) {
-			com.google.gwt.json.client.JSONObject jo = value.isObject();
-			if (jo != null) {
-				return new GwtJSONObject(jo);
-			} else {
-				throw new IllegalStateException(key + " isn't Object");
-			}
-		} else {
-			throw new IllegalStateException(key + " is null");
+			String key) throws JSONException {
+		Object o = get(key);
+		if (o instanceof JSONObject) {
+			return new GwtJSONObject((JSONObject) o);
 		}
+		throw new JSONException("JSONObject[" + quote(key)
+				+ "] is not a JSONObject.");
 	}
 
 	@Override
@@ -230,97 +248,262 @@ public class GwtJSONObject extends
 		return jsonObj;
 	}
 
+	/**
+	 * Get an optional boolean associated with a key. It returns false if there
+	 * is no such key, or if the value is not Boolean.TRUE or the String "true".
+	 * 
+	 * @param key
+	 *            A key string.
+	 * @return The truth.
+	 */
 	@Override
-	public boolean optBoolean(String key, boolean defVal) {
-		boolean has = jsonObj.containsKey(key);
-		if (has) {
-			JSONValue value = jsonObj.get(key);
-			boolean isNull = isNull(value);
-			if (!isNull) {
-				JSONBoolean jb = value.isBoolean();
-				if (jb != null) {
-					return jb.booleanValue();
-				} else {
-					throw new IllegalStateException(key + " isn't boolean");
-				}
-			}
+	public boolean optBoolean(String key) {
+		return optBoolean(key, false);
+	}
+
+	/**
+	 * Get an optional boolean associated with a key. It returns the
+	 * defaultValue if there is no such key, or if it is not a Boolean or the
+	 * String "true" or "false" (case insensitive).
+	 * 
+	 * @param key
+	 *            A key string.
+	 * @param defaultValue
+	 *            The default.
+	 * @return The truth.
+	 */
+	@Override
+	public boolean optBoolean(String key, boolean defaultValue) {
+		try {
+			return getBoolean(key);
+		} catch (Exception e) {
+			return defaultValue;
 		}
-
-		return defVal;
 	}
 
+	/**
+	 * Get an optional int value associated with a key, or zero if there is no
+	 * such key or if the value is not a number. If the value is a string, an
+	 * attempt will be made to evaluate it as a number.
+	 * 
+	 * @param key
+	 *            A key string.
+	 * @return An object which is the value.
+	 */
 	@Override
-	public int optInt(String key, int defVal) {
-		return (int) optDouble(key, defVal);
+	public int optInt(String key) {
+		return (int) optDouble(key, 0);
 	}
 
+	/**
+	 * Get an optional int value associated with a key, or the default if there
+	 * is no such key or if the value is not a number. If the value is a string,
+	 * an attempt will be made to evaluate it as a number.
+	 * 
+	 * @param key
+	 *            A key string.
+	 * @param defaultValue
+	 *            The default.
+	 * @return An object which is the value.
+	 */
 	@Override
-	public double optDouble(String key, double defVal) {
-		boolean has = jsonObj.containsKey(key);
-		if (has) {
-			JSONValue value = jsonObj.get(key);
-			boolean isNull = isNull(value);
-			if (!isNull) {
-				JSONNumber jn = value.isNumber();
-				if (jn != null) {
-					return jn.doubleValue();
-				} else {
-					throw new IllegalStateException(key + " isn't double");
-				}
-			}
+	public int optInt(String key, int defaultValue) {
+		try {
+			return (int) getDouble(key);
+		} catch (Exception e) {
+			return defaultValue;
 		}
-		return defVal;
 	}
 
+	/**
+	 * Get an optional double associated with a key, or NaN if there is no such
+	 * key or if its value is not a number. If the value is a string, an attempt
+	 * will be made to evaluate it as a number.
+	 * 
+	 * @param key
+	 *            A string which is the key.
+	 * @return An object which is the value.
+	 */
+	@Override
+	public double optDouble(String key) {
+		return optDouble(key, Double.NaN);
+	}
+
+	/**
+	 * Get an optional double associated with a key, or the defaultValue if
+	 * there is no such key or if its value is not a number. If the value is a
+	 * string, an attempt will be made to evaluate it as a number.
+	 * 
+	 * @param key
+	 *            A key string.
+	 * @param defaultValue
+	 *            The default.
+	 * @return An object which is the value.
+	 */
+	@Override
+	public double optDouble(String key, double defaultValue) {
+		try {
+			Object o = opt(key);
+			return o instanceof JSONNumber ? ((JSONNumber) o).doubleValue()
+					: new Double((String) o).doubleValue();
+		} catch (Exception e) {
+			return defaultValue;
+		}
+	}
+
+	/**
+	 * Get an optional string associated with a key. It returns an empty string
+	 * if there is no such key. If the value is not a string and is not null,
+	 * then it is coverted to a string.
+	 * 
+	 * @param key
+	 *            A key string.
+	 * @return A string which is the value.
+	 */
 	@Override
 	public String optString(String key) {
-		if (jsonObj.containsKey(key)) {
-			JSONValue value = jsonObj.get(key);
-			boolean isNull = isNull(value);
-			if (!isNull) {
-				JSONString js = value.isString();
-				if (js != null) {
-					return js.stringValue();
-				} else {
-					throw new IllegalStateException(key + " isn't String");
-				}
-			}
-		}
-
-		return null;
+		return optString(key, "");
 	}
 
+	/**
+	 * Get an optional string associated with a key. It returns the defaultValue
+	 * if there is no such key.
+	 * 
+	 * @param key
+	 *            A key string.
+	 * @param defaultValue
+	 *            The default.
+	 * @return A string which is the value.
+	 */
 	@Override
-	public JSONArray optJSONArray(String key) {
-		JSONValue value = jsonObj.get(key);
-		boolean isNull = isNull(value);
-		if (!isNull) {
-			com.google.gwt.json.client.JSONArray ja = value.isArray();
-			if (ja != null) {
-				return new GwtJSONArray(ja);
-			} else {
-				throw new IllegalStateException(key + " isn't Array");
-			}
-		} 
-
-		return null;
+	public String optString(String key, String defaultValue) {
+		Object o = opt(key);
+		return o != null ? o.toString() : defaultValue;
 	}
 
+	/**
+	 * Get an optional JSONArray associated with a key. It returns null if there
+	 * is no such key, or if its value is not a JSONArray.
+	 * 
+	 * @param key
+	 *            A key string.
+	 * @return A JSONArray which is the value.
+	 */
+	@Override
+	public com.futureplatforms.kirin.dependencies.json.JSONArray optJSONArray(
+			String key) {
+		Object o = opt(key);
+		return o instanceof JSONArray ? new GwtJSONArray((JSONArray) o) : null;
+	}
+
+	/**
+	 * Get an optional JSONObject associated with a key. It returns null if
+	 * there is no such key, or if its value is not a JSONObject.
+	 * 
+	 * @param key
+	 *            A key string.
+	 * @return A JSONObject which is the value.
+	 */
 	@Override
 	public com.futureplatforms.kirin.dependencies.json.JSONObject optJSONObject(
 			String key) {
+		Object o = opt(key);
+		return o instanceof JSONObject ? new GwtJSONObject((JSONObject) o)
+				: null;
+	}
 
-		JSONValue value = jsonObj.get(key);
-		boolean isNull = isNull(value);
-		if (!isNull) {
-			com.google.gwt.json.client.JSONObject jo = value.isObject();
-			if (jo != null) {
-				return new GwtJSONObject(jo);
-			} else {
-				throw new IllegalStateException(key + " isn't Object");
+	/**
+	 * Get the value object associated with a key.
+	 * 
+	 * @param key
+	 *            A key string.
+	 * @return The object associated with the key.
+	 * @throws JSONException
+	 *             if the key is not found.
+	 */
+	private JSONValue get(String key) throws JSONException {
+		JSONValue o = opt(key);
+		if (o == null) {
+			throw new JSONException("JSONObject[" + quote(key) + "] not found.");
+		}
+		return o;
+	}
+
+	/**
+	 * Get an optional value associated with a key.
+	 * 
+	 * @param key
+	 *            A key string.
+	 * @return An object which is the value, or null if there is no value.
+	 */
+	private JSONValue opt(String key) {
+		return key == null ? null : this.jsonObj.get(key);
+	}
+
+	/**
+	 * Produce a string in double quotes with backslash sequences in all the
+	 * right places. A backslash will be inserted within </, allowing JSON text
+	 * to be delivered in HTML. In JSON text, a string cannot contain a control
+	 * character or an unescaped quote or backslash.
+	 * 
+	 * @param string
+	 *            A String
+	 * @return A String correctly formatted for insertion in a JSON text.
+	 */
+	public static String quote(String string) {
+		if (string == null || string.length() == 0) {
+			return "\"\"";
+		}
+
+		char b;
+		char c = 0;
+		int i;
+		int len = string.length();
+		StringBuffer sb = new StringBuffer(len + 4);
+		String t;
+
+		sb.append('"');
+		for (i = 0; i < len; i += 1) {
+			b = c;
+			c = string.charAt(i);
+			switch (c) {
+			case '\\':
+			case '"':
+				sb.append('\\');
+				sb.append(c);
+				break;
+			case '/':
+				if (b == '<') {
+					sb.append('\\');
+				}
+				sb.append(c);
+				break;
+			case '\b':
+				sb.append("\\b");
+				break;
+			case '\t':
+				sb.append("\\t");
+				break;
+			case '\n':
+				sb.append("\\n");
+				break;
+			case '\f':
+				sb.append("\\f");
+				break;
+			case '\r':
+				sb.append("\\r");
+				break;
+			default:
+				if (c < ' ' || (c >= '\u0080' && c < '\u00a0')
+						|| (c >= '\u2000' && c < '\u2100')) {
+					t = "000" + Integer.toHexString(c);
+					sb.append("\\u" + t.substring(t.length() - 4));
+				} else {
+					sb.append(c);
+				}
 			}
-		} 
-		
-		return null;
+		}
+		sb.append('"');
+		return sb.toString();
 	}
 }

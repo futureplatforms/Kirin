@@ -6,6 +6,7 @@ import java.util.Iterator;
  * 
  * Representation of a general JSON object listing name / value pairs and
  * written as { }.
+ * Replicates the 20080701 version of org.json API
  * 
  * @author daniel
  * 
@@ -16,25 +17,29 @@ public abstract class JSONObject {
 
 	public abstract boolean has(String key);
 
-	public abstract boolean getBoolean(String key);
+	public abstract boolean getBoolean(String key) throws JSONException;
 
-	public abstract int getInt(String key);
+	public abstract int getInt(String key) throws JSONException;
 
-	public abstract double getDouble(String key);
+	public abstract double getDouble(String key) throws JSONException;
 
-	public abstract String getString(String key);
+	public abstract String getString(String key) throws JSONException;
 
-	public abstract JSONArray getJSONArray(String key);
+	public abstract JSONArray getJSONArray(String key) throws JSONException;
 
-	public abstract JSONObject getJSONObject(String key);
+	public abstract JSONObject getJSONObject(String key) throws JSONException;
 
+	public abstract boolean optBoolean(String key);
 	public abstract boolean optBoolean(String key, boolean defVal);
 
+	public abstract int optInt(String key);
 	public abstract int optInt(String key, int defVal);
 
+	public abstract double optDouble(String key);
 	public abstract double optDouble(String key, double defVal);
 
 	public abstract String optString(String key);
+	public abstract String optString(String key, String defVal);
 
 	public abstract JSONArray optJSONArray(String key);
 
@@ -48,15 +53,15 @@ public abstract class JSONObject {
 
 	public abstract Iterator<String> keys();
 
-	public abstract JSONObject put(String key, int value);
+	public abstract JSONObject put(String key, int value) throws JSONException;
 
-	public abstract JSONObject put(String key, long value);
+	public abstract JSONObject put(String key, long value) throws JSONException;
 
-	public abstract JSONObject put(String key, Object value);
+	public abstract JSONObject put(String key, Object value) throws JSONException;
 
-	public abstract JSONObject put(String key, boolean value);
+	public abstract JSONObject put(String key, boolean value) throws JSONException;
 
-	public abstract JSONObject put(String key, double value);
+	public abstract JSONObject put(String key, double value) throws JSONException;
 
 	public abstract int size();
 

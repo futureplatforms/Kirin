@@ -2,11 +2,10 @@ package com.futureplatforms.kirin.android.json;
 
 import java.util.Iterator;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.futureplatforms.kirin.dependencies.json.JSONArray;
-import com.futureplatforms.kirin.dependencies.json.JSONDelegate.KirinJsonException;
+import com.futureplatforms.kirin.dependencies.json.JSONException;
 
 public class AndroidJSONObject extends
 		com.futureplatforms.kirin.dependencies.json.JSONObject {
@@ -20,12 +19,11 @@ public class AndroidJSONObject extends
 		this.jsonObject = jsonObject;
 	}
 
-	public AndroidJSONObject(String jsonString) throws KirinJsonException {
+	public AndroidJSONObject(String jsonString) throws JSONException {
 		try {
 			jsonObject = new JSONObject(jsonString);
-		} catch (Exception e) {
-			throw new KirinJsonException("invalid json: "
-					+ e.getMessage());
+		} catch (org.json.JSONException e) {
+			throw new JSONException(e);
 		}
 	}
 
@@ -35,29 +33,29 @@ public class AndroidJSONObject extends
 	}
 
 	@Override
-	public boolean getBoolean(String key) {
+	public boolean getBoolean(String key) throws JSONException {
 		try {
 			return jsonObject.getBoolean(key);
-		} catch (JSONException e) {
-			throw new IllegalArgumentException("couldn't get boolean");
+		} catch (org.json.JSONException e) {
+			throw new JSONException(e);
 		}
 	}
 
 	@Override
-	public double getDouble(String key) {
+	public double getDouble(String key) throws JSONException {
 		try {
 			return jsonObject.getDouble(key);
-		} catch (JSONException e) {
-			throw new IllegalArgumentException("couldn't get double");
+		} catch (org.json.JSONException e) {
+			throw new JSONException(e);
 		}
 	}
 
 	@Override
-	public String getString(String key) {
+	public String getString(String key) throws JSONException {
 		try {
 			return jsonObject.getString(key);
-		} catch (JSONException e) {
-			throw new IllegalArgumentException("couldn't get string");
+		} catch (org.json.JSONException e) {
+			throw new JSONException(e);
 		}
 	}
 
@@ -67,21 +65,21 @@ public class AndroidJSONObject extends
 	}
 
 	@Override
-	public JSONArray getJSONArray(String key) {
+	public JSONArray getJSONArray(String key) throws JSONException {
 		try {
 			return new AndroidJSONArray(jsonObject.getJSONArray(key));
-		} catch (JSONException e) {
-			throw new IllegalArgumentException("couldn't get array");
+		} catch (org.json.JSONException e) {
+			throw new JSONException(e);
 		}
 	}
 
 	@Override
 	public com.futureplatforms.kirin.dependencies.json.JSONObject getJSONObject(
-			String key) {
+			String key) throws JSONException {
 		try {
 			return new AndroidJSONObject(jsonObject.getJSONObject(key));
-		} catch (JSONException e) {
-			throw new IllegalArgumentException("couldn't get object");
+		} catch (org.json.JSONException e) {
+			throw new JSONException(e);
 		}
 	}
 
@@ -93,29 +91,29 @@ public class AndroidJSONObject extends
 
 	@Override
 	public com.futureplatforms.kirin.dependencies.json.JSONObject put(
-			String key, int value) {
+			String key, int value) throws JSONException {
 		try {
 			jsonObject.put(key, value);
 			return this;
-		} catch (JSONException e) {
-			throw new IllegalArgumentException("couldn't put " + value);
+		} catch (org.json.JSONException e) {
+			throw new JSONException(e);
 		}
 	}
 
 	@Override
 	public com.futureplatforms.kirin.dependencies.json.JSONObject put(
-			String key, long value) {
+			String key, long value) throws JSONException {
 		try {
 			jsonObject.put(key, value);
 			return this;
-		} catch (JSONException e) {
-			throw new IllegalArgumentException("couldn't put " + value);
+		} catch (org.json.JSONException e) {
+			throw new JSONException(e);
 		}
 	}
 
 	@Override
 	public com.futureplatforms.kirin.dependencies.json.JSONObject put(
-			String key, Object value) {
+			String key, Object value) throws JSONException {
 		try {
 			if (value instanceof Integer) {
 				return this.put(key, ((Integer) value).intValue());
@@ -137,30 +135,30 @@ public class AndroidJSONObject extends
 				jsonObject.put(key, (Object) null);
 			}
 			return this;
-		} catch (JSONException e) {
-			throw new IllegalArgumentException("couldn't put " + value);
+		} catch (org.json.JSONException e) {
+			throw new JSONException(e);
 		}
 	}
 
 	@Override
 	public com.futureplatforms.kirin.dependencies.json.JSONObject put(
-			String key, boolean value) {
+			String key, boolean value) throws JSONException {
 		try {
 			jsonObject.put(key, value);
 			return this;
-		} catch (JSONException e) {
-			throw new IllegalArgumentException("couldn't put " + value);
+		} catch (org.json.JSONException e) {
+			throw new JSONException(e);
 		}
 	}
 
 	@Override
 	public com.futureplatforms.kirin.dependencies.json.JSONObject put(
-			String key, double value) {
+			String key, double value) throws JSONException {
 		try {
 			jsonObject.put(key, value);
 			return this;
-		} catch (JSONException e) {
-			throw new IllegalArgumentException("couldn't put " + value);
+		} catch (org.json.JSONException e) {
+			throw new JSONException(e);
 		}
 	}
 
@@ -186,11 +184,11 @@ public class AndroidJSONObject extends
 	}
 
 	@Override
-	public int getInt(String key) {
+	public int getInt(String key) throws JSONException {
 		try {
 			return jsonObject.getInt(key);
-		} catch (JSONException e) {
-			throw new IllegalArgumentException("couldn't put " + key);
+		} catch (org.json.JSONException e) {
+			throw new JSONException(e);
 		}
 	}
 
@@ -218,7 +216,7 @@ public class AndroidJSONObject extends
 	public JSONArray optJSONArray(String key) {
 		try {
 			return new AndroidJSONArray(jsonObject.getJSONArray(key));
-		} catch (JSONException e) {
+		} catch (org.json.JSONException e) {
 			return null;
 		}
 	}
@@ -228,8 +226,28 @@ public class AndroidJSONObject extends
 			String key) {
 		try {
 			return new AndroidJSONObject(jsonObject.getJSONObject(key));
-		} catch (JSONException e) {
+		} catch (org.json.JSONException e) {
 			return null;
 		}
+	}
+
+	@Override
+	public boolean optBoolean(String key) {
+		return jsonObject.optBoolean(key);
+	}
+
+	@Override
+	public int optInt(String key) {
+		return jsonObject.optInt(key);
+	}
+
+	@Override
+	public double optDouble(String key) {
+		return jsonObject.optDouble(key);
+	}
+
+	@Override
+	public String optString(String key, String defVal) {
+		return jsonObject.optString(key, defVal);
 	}
 }
