@@ -13,8 +13,39 @@
     <webappDirectory>${project.build.directory}/${project.build.finalName}/app</webappDirectory>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <gwtModule>${package}.${rootArtifactId}</gwtModule>
+    <deployDirectory>${webappDirectory}/WEB-INF</deployDirectory>
+    <runTarget>Kirin.html</runTarget>
+    <gwtDraftCompile>true</gwtDraftCompile>
   </properties>
+  
+  <profiles>
+	<!--  This profile is to ensure the symbolmaps are deployed outwith the  -->
+    <!--  app folder and so don't end up in appstore (Release) builds        -->
+    <profile>
+      <id>release</id>
+      <activation>
+        <property>
+          <name>configuration</name>
+          <value>Release</value>
+        </property>
+      </activation>
+      <properties>
+        <deployDirectory>${webappDirectory}/../deploy</deployDirectory>
+        <gwtDraftCompile>false</gwtDraftCompile>
+      </properties>
+    </profile>
+  </profiles>
+  
   <dependencies>
+    <!--  
+  	Ensure all GWT depedencies are marked  
+  	<scope>provided</scope> or 
+  	<scope>test</scope>
+  	
+  	NOT default or their jars will be bundled in the executable!
+  	-->
+  
+    <!--  BEGIN common dependencies  -->
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
@@ -37,15 +68,29 @@
       <groupId>javax.validation</groupId>
       <artifactId>validation-api</artifactId>
       <version>1.0.0.GA</version>
-      <scope>test</scope>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>javax.validation</groupId>
       <artifactId>validation-api</artifactId>
       <version>1.0.0.GA</version>
       <classifier>sources</classifier>
-      <scope>test</scope>
+      <scope>provided</scope>
     </dependency>
+    <dependency>
+      <groupId>org.timepedia.exporter</groupId>
+      <artifactId>gwtexporter</artifactId>
+      <version>${gwtExporterVersion}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+	  <groupId>com.google.guava</groupId>
+	  <artifactId>guava-gwt</artifactId>
+	  <version>${guavaVersion}</version>
+	  <scope>provided</scope>
+    </dependency>
+    <!--  END common dependencies  -->
+    
     <dependency>
       <groupId>${groupId}.core</groupId>
       <artifactId>${rootArtifactId}-core</artifactId>
@@ -56,15 +101,27 @@
       <artifactId>kirin-gwt</artifactId>
       <version>1.0-SNAPSHOT</version>
     </dependency>
-    <dependency>
-      <groupId>org.timepedia.exporter</groupId>
-      <artifactId>gwtexporter</artifactId>
-      <version>2.4.0</version>
-      <scope>provided</scope>
-    </dependency>
   </dependencies>
 
   <build>
+  <resources>
+      <resource>
+        <directory>src/main/java</directory>
+        <includes>
+          <include>**/*.properties</include>
+          <include>**/*.java</include>
+          <include>**/*.gwt.xml</include>
+        </includes>
+      </resource>
+      <resource>
+        <directory>src/main/resources</directory>
+        <includes>
+          <include>**/*.properties</include>
+          <include>**/*.java</include>
+          <include>**/*.gwt.xml</include>
+        </includes>
+      </resource>
+    </resources>
     <!-- Generate compiled stuff in the folder used for developing mode -->
     <outputDirectory>${webappDirectory}/WEB-INF/classes</outputDirectory>
 
@@ -82,7 +139,7 @@
                                 <pluginExecutionFilter>
                                     <groupId>org.codehaus.mojo</groupId>
                                     <artifactId>gwt-maven-plugin</artifactId>
-                                    <versionRange>[2.4.0,)</versionRange>
+                                    <versionRange>${gwtVersion}</versionRange>
                                     <goals>
                                         <goal>resources</goal>
                                         <goal>compile</goal>
@@ -124,6 +181,7 @@
           <execution>
             <configuration>
               <module>${gwtModule}</module>
+              <!--<style>DETAILED</style>-->
             </configuration>
             <goals>
               <goal>compile</goal>
@@ -136,6 +194,8 @@
           <runTarget>Kirin.html</runTarget>
           <hostedWebapp>${webappDirectory}</hostedWebapp>
           <webappDirectory>${webappDirectory}</webappDirectory>
+          <deploy>${deployDirectory}</deploy>
+          <draftCompile>${gwtDraftCompile}</draftCompile>
         </configuration>
       </plugin>
 

@@ -14,7 +14,13 @@ IF NOT %CONFIGURATION%=="Debug" (
 	)
 )
 
-call mvn -pl common/gwt -DgwtModule=${package}.${rootArtifactId}_ie6_%CONFIGURATION% -am clean install
+call mvn clean install ^
+-pl gwt ^
+-Dconfiguration=%1 ^
+-DgwtModule=${package}.${rootArtifactId}_ie6_%CONFIGURATION% ^
+-Dgwt.compiler.strict=true ^
+-am
+
 
 
 SET PROJECT_HOME="%cd%"
@@ -25,3 +31,6 @@ rmdir /s /q "%WP8_HOME%\app"
 mkdir "%WP8_HOME%\app"
 REM  Everything needs COPYING into the project folder every time.  Visual Studio Express does not maintain soft links.
 echo f | xcopy "%GWT_HOME%\target\\${rootArtifactId}-gwt-1.0-SNAPSHOT\app" "%WP8_HOME%\app" /e /i /y
+
+cd wp8
+CALL cscript include_bindings.js ${rootArtifactId} wp8 debug

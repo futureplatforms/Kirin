@@ -10,9 +10,73 @@
 
 <html>
   <head>
+  <!-- This line prevents IE10 on WP8 defaulting to -->
+  <!-- IE7 mode when you load a local document!!!   -->
+  <!-- http://stackoverflow.com/q/13284083/64505    -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <script>
-    
-	var kirinNative = function() {
+    	if (window['MSApp']) {
+		    // Windows 8 needs to have document.write calls called like:
+		    // MSApp.execUnsafeLocalFunction(function() {
+		    //    document.write('blah')
+		    // });
+		    // so we reassign document.write to invoke the original 
+		    // document.write in this way (if MSApp exists).
+		    (function () {
+		        // Make documentWrite do the same as the window's own document.write
+			    var documentWrite = function() {
+			        this.apply(window.document, arguments);
+			    }.bind(window.document.write);
+			
+			    // Now reassign document.write to invoke documentWrite inside 
+			    // MSApp.execUnsafeLocalFunction
+			    document.write = function() {
+			        var origArgs = arguments;
+			        MSApp.execUnsafeLocalFunction(function() {
+			            documentWrite.apply(documentWrite, origArgs);
+			        });
+			    };
+		    })();
+	    }
+	if (!Function.prototype.bind) { 
+	    Function.prototype.bind = function (oThis) {
+            if (typeof this !== "function") {
+                // closest thing possible to the ECMAScript 5 internal IsCallable function
+                throw new TypeError("Function.prototype.bind - what is trying to be bound is not callable");
+            }
+
+            var aArgs = Array.prototype.slice.call(arguments, 1), 
+            fToBind = this, 
+            fNOP = function () {},
+            fBound = function () {
+                return fToBind.apply(this instanceof fNOP && oThis
+                                     ? this
+                                     : oThis,
+                                     aArgs.concat(Array.prototype.slice.call(arguments)));
+            };
+
+            fNOP.prototype = this.prototype;
+            fBound.prototype = new fNOP();
+
+            return fBound;
+        };
+    }
+	// GWT sometimes likes to show an alert complaining that the user
+	// agent is not what it expects.  We have told GWT not to do this, by adding
+	// <set-configuration-property name="user.agent.runtimeWarning" value="false"/>
+	// to KirinGwt.gwt.xml.
+	// But reassign window.alert just in case.
+	//window.alert = function (msg) { console.log("ALERT: " + msg); }
+	
+	var consoleLogFn = function () {
+	    this.apply(window.console, arguments);
+	}.bind(window.console.log);
+	
+	var consoleLog = function () {
+	    consoleLogFn.apply(consoleLogFn, arguments);
+	};
+	
+	var kirinNative = (function() {
 		var kirinUA = navigator.userAgent.toLowerCase();
 		var isIos = function() {
 			if (kirinUA.indexOf("ipad") >= 0 ||
@@ -22,13 +86,17 @@
 			}
 			return false;
 		};
-		
+	 
 		var isWindows = function() {
 			// Ideally we would check for existence of window.external, 
 			// but this doesn't work because window.external is actually
-			// VBScript, and just mentioning it invokes the function!
-			// http://stackoverflow.com/questions/2797913/no-argument-method-on-window-external-is-invoked-when-checking-with-typeof
+			// VBScript, and just mentioning it invokes the fuction!
+			// http://stackoverflow.com/questions/2797913
 			return kirinUA.indexOf("iemobile") >= 0;
+		};
+	
+		var isIeDesktop = function() {
+			return kirinUA.indexOf("msie 10.0") >= 0;
 		};
 		
 		return {
@@ -41,16 +109,20 @@
 					return function(url) {
 						window.external.notify(url);
 					};
+				} else if (isIeDesktop()) {
+					return function(url) {
+						console.info(url);
+					};
 				} else {
 					return function(url) {
-						console.log(url);
+						consoleLog(url);
 					}
 				}
 			}
 		};
-	}();
-	
-  	function isIos() {
+	})();
+		
+	function isIos() {
 		if (kirinUA.indexOf("ipad") >= 0 ||
 			kirinUA.indexOf("iphone") >= 0 ||
 			kirinUA.indexOf("ipod") >= 0) {
@@ -58,13 +130,13 @@
 		}
 		return false;
 	}
-  
-  	function kirinKickOff() {
-  		console.log("about to load kirin");
-        var kirin = require("kirin");
-        console.log("That's us kicked off"); 
-        kirinNative.getTellNativeFn()("ready://ready");
-  	}
+		 
+	function kirinKickOff() {
+		console.log("about to load kirin");
+		var kirin = require("kirin");
+		console.log("That's us kicked off");
+		kirinNative.getTellNativeFn()("ready://ready");
+	}
   </script>
   <script type="text/javascript" language="javascript" src="${rootArtifactId}/${rootArtifactId}.nocache.js"></script>
   </head>

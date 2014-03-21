@@ -12,7 +12,7 @@
     <fileSet encoding="UTF-8" filtered="true">
       <directory>wp8</directory>
       <includes>
-        <include>**/*.bat</include>
+        <include>**/*</include>
       </includes>
     </fileSet>
     <fileSet encoding="UTF-8">
