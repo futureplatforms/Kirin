@@ -135,98 +135,16 @@ public class AndroidDatabase implements DatabaseDelegate {
 								statementCount++;
 
 								// Execute the statement
-								if (st instanceof InsertStatement) {
-									SQLiteStatement sqLiteStatement = db
-											.compileStatement(st._SQL);
-									String[] bindArgs = st._Params;
-									if (bindArgs != null) {
-										for (int i = bindArgs.length; i != 0; i--) {
-											if (bindArgs[i] == null)
-												sqLiteStatement.bindNull(i);
-											else
-												sqLiteStatement.bindString(i,
-														bindArgs[i - 1]);
-										}
-									}
-									sqLiteStatement.executeInsert();
-								} else {
-									Cursor cursor = db.rawQuery(st._SQL,
-											st._Params);
-									if (st instanceof StatementWithRowsReturn) {
-										// rows return
-										// construct RowSet from cursor
-										ImmutableList<String> columnNames = ImmutableList
-												.copyOf(cursor.getColumnNames());
-										RowSet rowset = new RowSet(columnNames);
-										int colCount = cursor.getColumnCount();
-										while (cursor.moveToNext()) {
-											List<String> values = Lists
-													.newArrayList();
-											for (int i = 0; i < colCount; i++) {
-												// Everything has to be a
-												// string...
-												int entryType = getType(cursor,
-														i);
-												switch (entryType) {
-												case FIELD_TYPE_BLOB: {
-													values.add(new String(
-															cursor.getBlob(i)));
-												}
-													break;
-
-												case FIELD_TYPE_FLOAT: {
-													values.add(String.valueOf(cursor
-															.getDouble(i)));
-												}
-													break;
-
-												case FIELD_TYPE_INTEGER: {
-													values.add(String
-															.valueOf(cursor
-																	.getInt(i)));
-												}
-													break;
-
-												case FIELD_TYPE_NULL: {
-													values.add(null);
-												}
-													break;
-
-												case FIELD_TYPE_STRING: {
-													values.add(cursor
-															.getString(i));
-												}
-													break;
-												}
-											}
-											rowset.addRow(values);
-										}
-										TxRowsCB c = ((StatementWithRowsReturn) st)._Callback;
-										if (c != null) {
-											c.onSuccess(rowset);
-										}
-									} else {
-										if (st instanceof StatementWithJSONReturn) {
-											JSONArray arr = coerceToJSONArray(cursor);
-											TxJSONCB c = ((StatementWithJSONReturn) st)._Callback;
-											if (c != null) {
-												c.onSuccess(new AndroidJSONArray(
-														arr));
-											}
-										} else {
-											// token return -- stick it on the
-											// dropbox!!
-											String token = AndroidDbDropbox
-													.getInstance().putCursor(
-															cursor);
-											TxTokenCB c = ((StatementWithTokenReturn) st)._Callback;
-											if (c != null) {
-												c.onSuccess(token);
-											}
-										}
-									}
-								}
+								if (st instanceof InsertStatement)
+									executeInsert(st);
+								else if (st instanceof StatementWithRowsReturn)
+									executeQueryWithRowsReturn(st);
+								else if (st instanceof StatementWithJSONReturn)
+									executeQueryWithJsonReturn(st);
+								else
+									executeQueryWithTokenReturn(st);
 							} else {
+								//execute batch
 								String[] batch = bundle._Batches
 										.get(batchCount);
 								for (String sql : batch) {
@@ -244,8 +162,96 @@ public class AndroidDatabase implements DatabaseDelegate {
 						bundle._ClosedCallback.onError();
 					}
 				}
+
 			});
 
+		}
+
+		private void executeInsert(Statement st) {
+			SQLiteStatement sqLiteStatement = db.compileStatement(st._SQL);
+			String[] bindArgs = st._Params;
+			if (bindArgs != null) {
+				// loop copied from
+				// SQLiteProgram.bindAllArgsAsStrings()
+				// SQLite indexes are 1 to N, not 0 to N-1
+				for (int i = bindArgs.length; i != 0; i--) {
+					String arg = bindArgs[i - 1];
+					if (arg == null)
+						sqLiteStatement.bindNull(i);
+					else
+						sqLiteStatement.bindString(i, arg);
+				}
+			}
+			sqLiteStatement.executeInsert();
+		}
+
+		private void executeQueryWithRowsReturn(Statement st) throws Exception {
+			Cursor cursor = db.rawQuery(st._SQL, st._Params);
+			// rows return
+			// construct RowSet from cursor
+			ImmutableList<String> columnNames = ImmutableList.copyOf(cursor
+					.getColumnNames());
+			RowSet rowset = new RowSet(columnNames);
+			int colCount = cursor.getColumnCount();
+			while (cursor.moveToNext()) {
+				List<String> values = Lists.newArrayList();
+				for (int i = 0; i < colCount; i++) {
+					// Everything has to be a
+					// string...
+					int entryType = getType(cursor, i);
+					switch (entryType) {
+					case FIELD_TYPE_BLOB: {
+						values.add(new String(cursor.getBlob(i)));
+					}
+						break;
+
+					case FIELD_TYPE_FLOAT: {
+						values.add(String.valueOf(cursor.getDouble(i)));
+					}
+						break;
+
+					case FIELD_TYPE_INTEGER: {
+						values.add(String.valueOf(cursor.getInt(i)));
+					}
+						break;
+
+					case FIELD_TYPE_NULL: {
+						values.add(null);
+					}
+						break;
+
+					case FIELD_TYPE_STRING: {
+						values.add(cursor.getString(i));
+					}
+						break;
+					}
+				}
+				rowset.addRow(values);
+			}
+			TxRowsCB c = ((StatementWithRowsReturn) st)._Callback;
+			if (c != null) {
+				c.onSuccess(rowset);
+			}
+		}
+
+		private void executeQueryWithTokenReturn(Statement st) {
+			Cursor cursor = db.rawQuery(st._SQL, st._Params);
+			// token return -- stick it on the
+			// dropbox!!
+			String token = AndroidDbDropbox.getInstance().putCursor(cursor);
+			TxTokenCB c = ((StatementWithTokenReturn) st)._Callback;
+			if (c != null) {
+				c.onSuccess(token);
+			}
+		}
+
+		private void executeQueryWithJsonReturn(Statement st) {
+			Cursor cursor = db.rawQuery(st._SQL, st._Params);
+			JSONArray arr = coerceToJSONArray(cursor);
+			TxJSONCB c = ((StatementWithJSONReturn) st)._Callback;
+			if (c != null) {
+				c.onSuccess(new AndroidJSONArray(arr));
+			}
 		}
 	}
 

@@ -166,9 +166,18 @@ public class Transaction {
     	_TxElements.add(TxElementType.Statement); 
     }
 
+    /**
+     * exec an INSERT statement
+     * @param sql
+     */
     public void execInsert(String sql) {
     	execInsert(sql, null);
     }
+    /**
+     * Execute an INSERT statement, which allows nulls in the params
+     * @param sql
+     * @param params
+     */
     public void execInsert(String sql,String[] params) {
     	_Statements.add(new InsertStatement(sql, params));
     	_TxElements.add(TxElementType.Statement); 
