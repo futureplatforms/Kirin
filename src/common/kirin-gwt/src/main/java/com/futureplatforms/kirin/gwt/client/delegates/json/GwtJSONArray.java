@@ -1,11 +1,11 @@
 package com.futureplatforms.kirin.gwt.client.delegates.json;
 
-import com.futureplatforms.kirin.dependencies.json.JSONObject;
+import com.futureplatforms.kirin.dependencies.json.JSONException;
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONBoolean;
-import com.google.gwt.json.client.JSONException;
 import com.google.gwt.json.client.JSONNull;
 import com.google.gwt.json.client.JSONNumber;
+import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
@@ -31,109 +31,65 @@ public class GwtJSONArray extends
 		this.jsonArray = new JSONArray();
 	}
 
-	private boolean isNull(JSONValue value) {
+
+	@Override
+	public boolean isNull(int index) {
+		JSONValue value = opt(index);
 		return value == null || value instanceof JSONNull;
 	}
 
 	@Override
-	public boolean getBoolean(int index) {
-		boolean has = jsonArray.size() > index;
-		if (has) {
-			JSONValue value = jsonArray.get(index);
-			boolean isNull = isNull(value);
-			if (!isNull) {
-				JSONBoolean jb = value.isBoolean();
-				if (jb != null) {
-					return jb.booleanValue();
-				} else {
-					throw new IllegalStateException(index + " isn't boolean");
-				}
-			} else {
-				throw new IllegalStateException(index + " is null");
-			}
-		} else {
-			throw new IllegalStateException(index + " doesn't exist");
+	public boolean getBoolean(int index) throws JSONException {
+		Object o = get(index);
+		if (o instanceof JSONBoolean) {
+			return ((JSONBoolean) o).booleanValue();
 		}
+		String val = o.toString();
+        if (val.equalsIgnoreCase("false")) {
+            return false;
+        } else if (val.equalsIgnoreCase("true")) {
+            return true;
+        }
+		throw new JSONException("JSONArray[" + index + "] is not a Boolean.");
 	}
 
 	@Override
-	public int getInt(int index) {
+	public int getInt(int index) throws JSONException {
 		return (int) getDouble(index);
 	}
 
 	@Override
-	public double getDouble(int index) {
-		boolean has = jsonArray.size() > index;
-		if (has) {
-			JSONValue value = jsonArray.get(index);
-			boolean isNull = isNull(value);
-			if (!isNull) {
-				JSONNumber jn = value.isNumber();
-				if (jn != null) {
-					return jn.doubleValue();
-				} else {
-					throw new IllegalStateException(index + " isn't double");
-				}
-			} else {
-				throw new IllegalStateException(index + " is null");
-			}
-		} else {
-			throw new IllegalStateException(index + " doesn't exist");
+	public double getDouble(int index) throws JSONException {
+		Object o = get(index);
+		try {
+			return o instanceof JSONNumber ? ((JSONNumber) o).doubleValue()
+					: Double.valueOf((String) o).doubleValue();
+		} catch (Exception e) {
+			throw new JSONException("JSONArray[" + index + "] is not a number.");
 		}
 	}
 
 	@Override
 	public com.futureplatforms.kirin.dependencies.json.JSONArray getJSONArray(
-			int index) {
-		JSONValue value = jsonArray.get(index);
-		boolean isNull = isNull(value);
-		if (!isNull) {
-			com.google.gwt.json.client.JSONArray ja = value.isArray();
-			if (ja != null) {
-				return new GwtJSONArray(ja);
-			} else {
-				throw new IllegalStateException(index + " isn't Array");
-			}
-		} else {
-			throw new IllegalStateException(index + " is null");
+			int index) throws JSONException {
+		Object o = get(index);
+		if (o instanceof JSONArray) {
+			return new GwtJSONArray((JSONArray) o);
 		}
+		throw new JSONException("JSONArray[" + index + "] is not a JSONArray.");
 	}
 
+    public com.futureplatforms.kirin.dependencies.json.JSONObject getJSONObject(int index) throws JSONException {
+        Object o = get(index);
+        if (o instanceof JSONObject) {
+			return new GwtJSONObject((JSONObject) o);
+        }
+        throw new JSONException("JSONArray[" + index +
+            "] is not a JSONObject.");
+    }
 	@Override
-	public com.futureplatforms.kirin.dependencies.json.JSONObject getJSONObject(
-			int index) {
-		JSONValue value = jsonArray.get(index);
-		boolean isNull = isNull(value);
-		if (!isNull) {
-			com.google.gwt.json.client.JSONObject jo = value.isObject();
-			if (jo != null) {
-				return new GwtJSONObject(jo);
-			} else {
-				throw new IllegalStateException(index + " isn't Object");
-			}
-		} else {
-			throw new IllegalStateException(index + " is null");
-		}
-	}
-
-	@Override
-	public String getString(int index) {
-		if (jsonArray.size() > index) {
-			JSONValue value = jsonArray.get(index);
-			boolean isNull = isNull(value);
-			if (!isNull) {
-				JSONString js = value.isString();
-				if (js != null) {
-					return js.stringValue();
-				} else {
-					throw new IllegalStateException(index + " isn't String");
-				}
-			} else {
-				throw new IllegalStateException(index + " is null");
-			}
-		} else {
-			throw new IllegalStateException(index + " doesn't exist");
-		}
+	public String getString(int index) throws JSONException {
+		return get(index).toString();
 	}
 
 	@Override
@@ -204,92 +160,71 @@ public class GwtJSONArray extends
 	}
 
 	@Override
-	public boolean optBoolean(int index, boolean defVal) {
-		boolean has = jsonArray.size() > index;
-		if (has) {
-			JSONValue value = jsonArray.get(index);
-			boolean isNull = isNull(value);
-			if (!isNull) {
-				JSONBoolean jb = value.isBoolean();
-				if (jb != null) {
-					return jb.booleanValue();
-				} else {
-					throw new IllegalStateException(index + " isn't boolean");
-				}
-			}
-		}
-
-		return defVal;
+	public boolean optBoolean(int index) {
+		return optBoolean(index, false);
 	}
 
 	@Override
-	public int optInt(int index, int defVal) {
-		return (int) optDouble(index, defVal);
+	public boolean optBoolean(int index, boolean defaultValue) {
+		try {
+			return getBoolean(index);
+		} catch (Exception e) {
+			return defaultValue;
+		}
 	}
 
 	@Override
-	public double optDouble(int index, double defVal) {
-		boolean has = jsonArray.size() > index;
-		if (has) {
-			JSONValue value = jsonArray.get(index);
-			boolean isNull = isNull(value);
-			if (!isNull) {
-				JSONNumber jn = value.isNumber();
-				if (jn != null) {
-					return jn.doubleValue();
-				} else {
-					throw new IllegalStateException(index + " isn't double");
-				}
-			}
+	public int optInt(int index) {
+		return (int) optDouble(index, 0);
+	}
+
+	@Override
+	public int optInt(int index, int defaultValue) {
+		try {
+			return (int) getDouble(index);
+		} catch (Exception e) {
+			return defaultValue;
 		}
-		return defVal;
+	}
+
+	@Override
+	public double optDouble(int index) {
+		return optDouble(index, Double.NaN);
+	}
+
+	@Override
+	public double optDouble(int index, double defaultValue) {
+		try {
+			return getDouble(index);
+		} catch (Exception e) {
+			return defaultValue;
+		}
 	}
 
 	@Override
 	public String optString(int index) {
-		if (jsonArray.size() > index) {
-			JSONValue value = jsonArray.get(index);
-			boolean isNull = isNull(value);
-			if (!isNull) {
-				JSONString js = value.isString();
-				if (js != null) {
-					return js.stringValue();
-				} else {
-					throw new IllegalStateException(index + " isn't String");
-				}
-			}
-		}
-		return null;
+		return optString(index, "");
+	}
+
+	@Override
+	public String optString(int index, String defaultValue) {
+		Object o = opt(index);
+		return o != null ? o.toString() : defaultValue;
 	}
 
 	@Override
 	public com.futureplatforms.kirin.dependencies.json.JSONArray optJSONArray(
 			int index) {
-		JSONValue value = jsonArray.get(index);
-		boolean isNull = isNull(value);
-		if (!isNull) {
-			com.google.gwt.json.client.JSONArray ja = value.isArray();
-			if (ja != null) {
-				return new GwtJSONArray(ja);
-			}
-		}
-
-		return null;
+		Object o = opt(index);
+		return o instanceof JSONArray ? new GwtJSONArray((JSONArray) o) : null;
 	}
 
 	@Override
-	public JSONObject optJSONObject(int index) {
-		JSONValue value = jsonArray.get(index);
-		boolean isNull = isNull(value);
-		if (!isNull) {
-			com.google.gwt.json.client.JSONObject jo = value.isObject();
-			if (jo != null) {
-				return new GwtJSONObject(jo);
-			} else {
-				throw new IllegalStateException(index + " isn't Object");
-			}
-		}
-		return null;
+	public com.futureplatforms.kirin.dependencies.json.JSONObject optJSONObject(
+			int index) {
+		Object o = opt(index);
+		return o instanceof JSONObject ? new GwtJSONObject((JSONObject) o)
+				: null;
 	}
 
 	/**
@@ -316,7 +251,7 @@ public class GwtJSONArray extends
 	 *            The index must be between 0 and length() - 1.
 	 * @return An object value, or null if there is no object at that index.
 	 */
-	public JSONValue opt(int index) {
+	private JSONValue opt(int index) {
 		return (index < 0 || index >= length()) ? null : this.jsonArray
 				.get(index);
 	}

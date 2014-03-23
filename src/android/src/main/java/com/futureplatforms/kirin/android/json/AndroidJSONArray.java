@@ -212,4 +212,29 @@ public class AndroidJSONArray extends JSONArray {
 		}
 	}
 
+	@Override
+	public boolean isNull(int index) {
+		return jsonArray.isNull(index);
+	}
+
+	@Override
+	public boolean optBoolean(int index) {
+		return jsonArray.optBoolean(index);
+	}
+
+	@Override
+	public double optDouble(int index) {
+		return jsonArray.optDouble(index);
+	}
+
+	@Override
+	public int optInt(int index) {
+		return jsonArray.optInt(index);
+	}
+
+	@Override
+	public String optString(int index, String defVal) {
+		return jsonArray.optString(index,defVal);
+	}
+
 }
