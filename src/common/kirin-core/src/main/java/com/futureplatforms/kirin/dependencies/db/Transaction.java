@@ -89,6 +89,16 @@ public class Transaction {
             this._Params = params;
         }
     }
+    /**
+     * Insert Statement, that allows nulls in the params
+     * @author kassimmaguire
+     *
+     */
+    public static class InsertStatement extends StatementWithRowsReturn{
+		public InsertStatement(String sql, String[] params) {
+			super(sql, params, null);
+		}
+    }
     
     public static class StatementWithTokenReturn extends Statement {
     	public final TxTokenCB _Callback;
@@ -153,6 +163,14 @@ public class Transaction {
     public void execQueryWithTokenReturn(String sql, String[] params, TxTokenCB cb) { 
     	validateParams(params);
     	_Statements.add(new StatementWithTokenReturn(sql, params, cb));
+    	_TxElements.add(TxElementType.Statement); 
+    }
+
+    public void execInsert(String sql) {
+    	execInsert(sql, null);
+    }
+    public void execInsert(String sql,String[] params) {
+    	_Statements.add(new InsertStatement(sql, params));
     	_TxElements.add(TxElementType.Statement); 
     }
     

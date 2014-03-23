@@ -14,11 +14,13 @@ import android.database.CursorWindow;
 import android.database.sqlite.SQLiteCursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteStatement;
 import android.os.Build;
 
 import com.futureplatforms.kirin.android.json.AndroidJSONArray;
 import com.futureplatforms.kirin.dependencies.db.Database;
 import com.futureplatforms.kirin.dependencies.db.DatabaseDelegate;
+import com.futureplatforms.kirin.dependencies.db.Transaction.InsertStatement;
 import com.futureplatforms.kirin.dependencies.db.Transaction.RowSet;
 import com.futureplatforms.kirin.dependencies.db.Transaction.Statement;
 import com.futureplatforms.kirin.dependencies.db.Transaction.StatementWithJSONReturn;
@@ -63,59 +65,60 @@ public class AndroidDatabase implements DatabaseDelegate {
 
 		public AndroidDatabaseImpl(SQLiteDatabase db) {
 			this.db = db;
-	        if (Build.VERSION.SDK_INT >= 5) {
-	            _Coercer = new CursorCoercer5();
-	        } else {
-	        	_Coercer = new CursorCoercer4();
-	        }
+			if (Build.VERSION.SDK_INT >= 5) {
+				_Coercer = new CursorCoercer5();
+			} else {
+				_Coercer = new CursorCoercer4();
+			}
 		}
-		
+
 		private String[] columnNames(Cursor cursor) {
-	        String[] cols = cursor.getColumnNames();
+			String[] cols = cursor.getColumnNames();
 
-	        for (int i = 0, count = cols.length; i < count; i++) {
-	            String columnName = cols[i];
-	            
-	            int dot = columnName.indexOf('.');
-	            if (dot >= 0) {
-	                // assume that the column name will never end in dot.
-	                columnName = columnName.substring(dot + 1);
-	            }
-	            cols[i] = columnName;
-	            
-	        }
-	        return cols;
-	    }
-		
+			for (int i = 0, count = cols.length; i < count; i++) {
+				String columnName = cols[i];
+
+				int dot = columnName.indexOf('.');
+				if (dot >= 0) {
+					// assume that the column name will never end in dot.
+					columnName = columnName.substring(dot + 1);
+				}
+				cols[i] = columnName;
+
+			}
+			return cols;
+		}
+
 		private JSONObject coerceToJSONObject(Cursor cursor) {
-	        String[] cols = columnNames(cursor);
-	    	if (cursor instanceof AbstractWindowedCursor) {
-	            return _Coercer.coerceToJSONObject(cols, (AbstractWindowedCursor) cursor);
-	        } else {
-	            JSONObject obj = new JSONObject();
-	            for (int i = 0; i < cols.length; i++) {
-	                try {
-	                    if (!cursor.isNull(i)) {
-	                        obj.put(cols[i], cursor.getString(i));
-	                    }
-	                } catch (JSONException e) {
-	                }
+			String[] cols = columnNames(cursor);
+			if (cursor instanceof AbstractWindowedCursor) {
+				return _Coercer.coerceToJSONObject(cols,
+						(AbstractWindowedCursor) cursor);
+			} else {
+				JSONObject obj = new JSONObject();
+				for (int i = 0; i < cols.length; i++) {
+					try {
+						if (!cursor.isNull(i)) {
+							obj.put(cols[i], cursor.getString(i));
+						}
+					} catch (JSONException e) {
+					}
 
-	            }
-	            return obj;
-	        }
+				}
+				return obj;
+			}
 
-	    }
-	    
-	    private JSONArray coerceToJSONArray(Cursor cursor) {
-	        JSONArray array = new JSONArray();
+		}
 
-	        while (cursor.moveToNext()) {
-	            array.put(coerceToJSONObject(cursor));
-	        }
-	        return array;
-	    }
-		
+		private JSONArray coerceToJSONArray(Cursor cursor) {
+			JSONArray array = new JSONArray();
+
+			while (cursor.moveToNext()) {
+				array.put(coerceToJSONObject(cursor));
+			}
+			return array;
+		}
+
 		@Override
 		protected void performTransaction(TransactionCallback cb) {
 			cb.onSuccess(new TransactionBackend() {
@@ -132,66 +135,94 @@ public class AndroidDatabase implements DatabaseDelegate {
 								statementCount++;
 
 								// Execute the statement
-								Cursor cursor = db
-										.rawQuery(st._SQL, st._Params);
-								if (st instanceof StatementWithRowsReturn) {
-									// rows return
-									// construct RowSet from cursor
-									ImmutableList<String> columnNames = ImmutableList
-											.copyOf(cursor.getColumnNames());
-									RowSet rowset = new RowSet(columnNames);
-									int colCount = cursor.getColumnCount();
-									while (cursor.moveToNext()) {
-										List<String> values = Lists
-												.newArrayList();
-										for (int i = 0; i < colCount; i++) {
-											// Everything has to be a string...
-											int entryType = getType(cursor, i);
-											switch (entryType) {
+								if (st instanceof InsertStatement) {
+									SQLiteStatement sqLiteStatement = db
+											.compileStatement(st._SQL);
+									String[] bindArgs = st._Params;
+									if (bindArgs != null) {
+										for (int i = bindArgs.length; i != 0; i--) {
+											if (bindArgs[i] == null)
+												sqLiteStatement.bindNull(i);
+											else
+												sqLiteStatement.bindString(i,
+														bindArgs[i - 1]);
+										}
+									}
+									sqLiteStatement.executeInsert();
+								} else {
+									Cursor cursor = db.rawQuery(st._SQL,
+											st._Params);
+									if (st instanceof StatementWithRowsReturn) {
+										// rows return
+										// construct RowSet from cursor
+										ImmutableList<String> columnNames = ImmutableList
+												.copyOf(cursor.getColumnNames());
+										RowSet rowset = new RowSet(columnNames);
+										int colCount = cursor.getColumnCount();
+										while (cursor.moveToNext()) {
+											List<String> values = Lists
+													.newArrayList();
+											for (int i = 0; i < colCount; i++) {
+												// Everything has to be a
+												// string...
+												int entryType = getType(cursor,
+														i);
+												switch (entryType) {
 												case FIELD_TYPE_BLOB: {
-													values.add(new String(cursor
-															.getBlob(i)));
-												} break;
-	
+													values.add(new String(
+															cursor.getBlob(i)));
+												}
+													break;
+
 												case FIELD_TYPE_FLOAT: {
-													values.add(String
-															.valueOf(cursor
-																	.getDouble(i)));
-												} break;
-	
+													values.add(String.valueOf(cursor
+															.getDouble(i)));
+												}
+													break;
+
 												case FIELD_TYPE_INTEGER: {
 													values.add(String
 															.valueOf(cursor
 																	.getInt(i)));
-												} break;
-	
+												}
+													break;
+
 												case FIELD_TYPE_NULL: {
 													values.add(null);
-												} break;
-	
+												}
+													break;
+
 												case FIELD_TYPE_STRING: {
-													values.add(cursor.getString(i));
-												} break;
+													values.add(cursor
+															.getString(i));
+												}
+													break;
+												}
 											}
+											rowset.addRow(values);
 										}
-										rowset.addRow(values);
-									}
-									TxRowsCB c = ((StatementWithRowsReturn) st)._Callback;
-									if (c != null) {
-										c.onSuccess(rowset);
-									}
-								} else {
-									if (st instanceof StatementWithJSONReturn) {
-										JSONArray arr = coerceToJSONArray(cursor);
-										TxJSONCB c = ((StatementWithJSONReturn) st)._Callback;
-										if (c != null) { c.onSuccess(new AndroidJSONArray(arr)); }
-									} else {
-										// token return -- stick it on the dropbox!!
-										String token = AndroidDbDropbox
-												.getInstance().putCursor(cursor);
-										TxTokenCB c = ((StatementWithTokenReturn) st)._Callback;
+										TxRowsCB c = ((StatementWithRowsReturn) st)._Callback;
 										if (c != null) {
-											c.onSuccess(token);
+											c.onSuccess(rowset);
+										}
+									} else {
+										if (st instanceof StatementWithJSONReturn) {
+											JSONArray arr = coerceToJSONArray(cursor);
+											TxJSONCB c = ((StatementWithJSONReturn) st)._Callback;
+											if (c != null) {
+												c.onSuccess(new AndroidJSONArray(
+														arr));
+											}
+										} else {
+											// token return -- stick it on the
+											// dropbox!!
+											String token = AndroidDbDropbox
+													.getInstance().putCursor(
+															cursor);
+											TxTokenCB c = ((StatementWithTokenReturn) st)._Callback;
+											if (c != null) {
+												c.onSuccess(token);
+											}
 										}
 									}
 								}
@@ -211,7 +242,7 @@ public class AndroidDatabase implements DatabaseDelegate {
 						e.printStackTrace();
 						db.endTransaction();
 						bundle._ClosedCallback.onError();
-					} 
+					}
 				}
 			});
 
@@ -230,10 +261,12 @@ public class AndroidDatabase implements DatabaseDelegate {
 		SQLiteDatabase _db = null;
 		try {
 			_db = helper.getWritableDatabase();
-		} catch (Exception e){}
+		} catch (Exception e) {
+		}
 		if (_db != null)
 			cb.onOpened(new AndroidDatabaseImpl(_db));
-		else cb.onError();
+		else
+			cb.onError();
 	}
 
 	protected static final int FIELD_TYPE_BLOB = 4;
