@@ -2,17 +2,18 @@ package com.futureplatforms.kirin.console.json;
 
 import com.futureplatforms.kirin.dependencies.json.JSONArray;
 import com.futureplatforms.kirin.dependencies.json.JSONDelegate;
+import com.futureplatforms.kirin.dependencies.json.JSONException;
 import com.futureplatforms.kirin.dependencies.json.JSONObject;
 
 public class ConsoleJson implements JSONDelegate {
 
     @Override
-    public JSONObject getJSONObject(String jsonText)  {
+    public JSONObject getJSONObject(String jsonText)throws JSONException {
         return new ConsoleJSONObject(jsonText);
     }
 
     @Override
-    public JSONArray getJSONArray(String jsonText) {
+    public JSONArray getJSONArray(String jsonText) throws JSONException {
         return new ConsoleJSONArray(jsonText);
     }
 

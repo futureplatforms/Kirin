@@ -23,8 +23,12 @@ public class GwtJSONArray extends
 		this.jsonArray = jsonArray;
 	}
 
-	public GwtJSONArray(String jsonText) {
-		this.jsonArray = JSONParser.parseStrict(jsonText).isArray();
+	public GwtJSONArray(String jsonText) throws JSONException {
+		try{
+			this.jsonArray = JSONParser.parseStrict(jsonText).isArray();
+		} catch (Exception e) {
+			throw new JSONException(e);
+		}
 	}
 
 	public GwtJSONArray() {

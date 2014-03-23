@@ -26,8 +26,12 @@ public class GwtJSONObject extends
 		this.jsonObj = jsonObj;
 	}
 
-	public GwtJSONObject(String jsonString) {
+	public GwtJSONObject(String jsonString) throws JSONException {
+		try{
 		jsonObj = JSONParser.parseStrict(jsonString).isObject();
+		} catch (Exception e) {
+			throw new JSONException(e);
+		}
 	}
 
 	public GwtJSONObject() {
@@ -52,11 +56,11 @@ public class GwtJSONObject extends
 			return ((JSONBoolean) o).booleanValue();
 		}
 		String val = o.toString();
-        if (val.equalsIgnoreCase("false")) {
-            return false;
-        } else if (val.equalsIgnoreCase("true")) {
-            return true;
-        }
+		if (val.equalsIgnoreCase("false")) {
+			return false;
+		} else if (val.equalsIgnoreCase("true")) {
+			return true;
+		}
 		throw new JSONException("JSONObject[" + quote(key)
 				+ "] is not a Boolean.");
 	}
