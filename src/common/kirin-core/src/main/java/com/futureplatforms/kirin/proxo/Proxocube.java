@@ -46,7 +46,7 @@ public class Proxocube {
 	 * @param db
 	 */
 	public void sync(final Database db) {
-		_Net.doHttp(HttpVerb.GET, _Url, new NetworkResponse() {
+		_Net.doHttp(HttpVerb.GET, _Url + "/" + (_Revision + 1), new NetworkResponse() {
 			
 			@Override
 			public void onSuccess(int res, final String result, Map<String, String> headers) {
