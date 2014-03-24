@@ -83,7 +83,9 @@ public class GwtJSONObject extends
 
 	@Override
 	public String getString(String key) throws JSONException {
-		return get(key).toString();
+		JSONValue o = get(key);
+		if(o instanceof JSONString) return ((JSONString) o).stringValue();
+		else return o.toString();
 	}
 
 	@Override

@@ -93,7 +93,9 @@ public class GwtJSONArray extends
     }
 	@Override
 	public String getString(int index) throws JSONException {
-		return get(index).toString();
+		JSONValue o = get(index);
+		if(o instanceof JSONString) return ((JSONString) o).stringValue();
+		else return o.toString();
 	}
 
 	@Override
