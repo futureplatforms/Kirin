@@ -44,34 +44,44 @@ namespace KirinWP8
         }
     }
 
-    class WP8WebBrowser : IWebBrowserWrapper
+    public class WP8WebBrowser : IWebBrowserWrapper
     {
-        private WebBrowser wb;
-        public WP8WebBrowser()
+        private WebBrowser _WB;
+        public WP8WebBrowser():this(new WebBrowser())
         {
-            wb = new WebBrowser();
-            wb.IsScriptEnabled = true;
-            wb.ScriptNotify += wb_ScriptNotify;
-            wb.Navigated += wb_Navigated;
+        }
+
+        public WP8WebBrowser(WebBrowser wb)
+        {
+            _WB = wb;
+            _WB.IsScriptEnabled = true;
+            _WB.ScriptNotify += wb_ScriptNotify;
+            _WB.Navigated += wb_Navigated;
         }
 
         void wb_Navigated(object sender, NavigationEventArgs e)
-        { 
-            Navigated(sender, new WP8NavigationEventArgsWrapper(e));
+        {
+            if (Navigated != null)
+            {
+                Navigated(sender, new WP8NavigationEventArgsWrapper(e));
+            }
         }
 
         void wb_ScriptNotify(object sender, NotifyEventArgs e)
         {
-            ScriptNotify(sender, new WP8NotifyEventArgs(e));
+            if (ScriptNotify != null)
+            {
+                ScriptNotify(sender, new WP8NotifyEventArgs(e));
+            }
         }
 
         public void InvokeScriptAsync(string scriptName, params string[] args)
         {
-            wb.Dispatcher.BeginInvoke(() =>
+            _WB.Dispatcher.BeginInvoke(() =>
             {
                 try
                 {
-                    wb.InvokeScript(scriptName, args);
+                    _WB.InvokeScript(scriptName, args);
                 }
                 catch (Exception e)
                 {
@@ -82,7 +92,7 @@ namespace KirinWP8
 
         public void Navigate(Uri uri)
         {
-            wb.Navigate(uri);
+            _WB.Navigate(uri);
         }
 
         public void NavigateKirin()
@@ -97,7 +107,7 @@ namespace KirinWP8
 
         public System.Windows.Threading.Dispatcher Dispatcher
         {
-            get { return wb.Dispatcher; }
+            get { return _WB.Dispatcher; }
         }
     }
 }

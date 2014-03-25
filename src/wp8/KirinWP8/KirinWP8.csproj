@@ -86,6 +86,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Core\DBService.cs" />
+    <Compile Include="Core\Hybrid.cs" />
     <Compile Include="Core\KirinDropbox.cs" />
     <Compile Include="Core\SymbolMaps.cs" />
     <Compile Include="Core\IFileBackend.cs" />
