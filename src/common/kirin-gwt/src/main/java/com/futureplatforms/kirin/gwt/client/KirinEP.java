@@ -97,7 +97,8 @@ public class KirinEP implements EntryPoint {
                 new GwtFormatter(),
                 profile,
                 new GwtDatabaseDelegate(),
-                new GwtTimerDelegate());
+                new GwtTimerDelegate(),
+                null, null);
         
         ExporterUtil.exportAll();
         

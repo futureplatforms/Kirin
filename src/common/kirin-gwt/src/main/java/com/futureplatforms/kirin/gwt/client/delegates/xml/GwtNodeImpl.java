@@ -1,7 +1,6 @@
 package com.futureplatforms.kirin.gwt.client.delegates.xml;
 
 import com.futureplatforms.kirin.dependencies.xml.parser.Attributes;
-import com.futureplatforms.kirin.dependencies.xml.parser.CharacterData;
 import com.futureplatforms.kirin.dependencies.xml.parser.Node;
 import com.futureplatforms.kirin.dependencies.xml.parser.NodeList;
 

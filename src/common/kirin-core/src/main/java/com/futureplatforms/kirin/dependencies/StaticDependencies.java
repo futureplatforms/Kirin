@@ -7,6 +7,8 @@ import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate
 import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate.NetworkResponse;
 import com.futureplatforms.kirin.dependencies.TimerTask.TimerDelegate;
 import com.futureplatforms.kirin.dependencies.db.DatabaseDelegate;
+import com.futureplatforms.kirin.dependencies.fb.FacebookDelegate;
+import com.futureplatforms.kirin.dependencies.fb.SharingDelegate;
 import com.futureplatforms.kirin.dependencies.json.JSONDelegate;
 import com.futureplatforms.kirin.dependencies.xml.parser.XMLParser;
 
@@ -78,6 +80,8 @@ public final class StaticDependencies {
     private DatabaseDelegate _DatabasesDelegate;
     private Configuration _Profile;
 	private TimerDelegate _TimerDelegate;
+	private FacebookDelegate _FacebookDelegate;
+	private SharingDelegate _SharingDelegate;
 	
 	public TimerDelegate getTimerDelegate() { return _TimerDelegate; }
     public LogDelegate getLogDelegate() { return mLogDelegate; }
@@ -106,6 +110,8 @@ public final class StaticDependencies {
     public boolean initialised() { return mInitialised; }
     public Configuration getProfile() { return _Profile; }
     public DatabaseDelegate getDatabasesDelegate() { return _DatabasesDelegate; }
+    public FacebookDelegate getFacebookDelegate() { return _FacebookDelegate; }
+    public SharingDelegate getSharingDelegate() { return _SharingDelegate; }
     
     public void setDependencies(    LogDelegate logDelegate,
                                     SettingsDelegate settingsDelegate,
@@ -116,7 +122,9 @@ public final class StaticDependencies {
                                     Formatter formatter, 
                                     Configuration profile,
                                     DatabaseDelegate databasesDelegate, 
-                                    TimerDelegate timerDel) {
+                                    TimerDelegate timerDel,
+                                    FacebookDelegate fbDel,
+                                    SharingDelegate shDel) {
         this.mLogDelegate = logDelegate;
         this.mSettingsDelegate = settingsDelegate;
         this.mLocationDelegate = locationDelegate;
@@ -128,5 +136,7 @@ public final class StaticDependencies {
         this.mInitialised = true;
         this._DatabasesDelegate = databasesDelegate;
         this._TimerDelegate = timerDel;
+        this._FacebookDelegate = fbDel;
+        this._SharingDelegate = shDel;
     }
 }

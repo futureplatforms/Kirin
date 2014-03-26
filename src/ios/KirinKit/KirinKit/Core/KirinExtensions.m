@@ -19,6 +19,9 @@
 #import "NewDatabaseAccessService.h"
 #import "KirinGwtServiceProtocol.h"
 #import "SymbolMapService.h"
+//#import "KirinFacebook.h"
+//#import "KirinShare.h"
+//#import "KirinUpload.h"]
 
 @interface KirinExtensions()
 
@@ -47,7 +50,16 @@
     [services registerGwtService:dbAccess.NewTransactionService];
     [services registerGwtService:[[SymbolMapService alloc] init]];
     [services registerExtension:[KirinLocationBackend instance]];
+    /*
+    KirinFacebook* fb = [[KirinFacebook alloc] init];
+    [fb onRegister];
     
+    KirinShare* sh = [[KirinShare alloc] init];
+    [sh onRegister];
+    
+    KirinUpload* up = [[KirinUpload alloc] init];
+    [up onRegister];
+    */
     return services;
 }
 
