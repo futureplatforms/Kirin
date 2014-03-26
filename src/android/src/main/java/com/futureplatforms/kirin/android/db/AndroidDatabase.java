@@ -30,6 +30,7 @@ import com.futureplatforms.kirin.dependencies.db.Transaction.TxElementType;
 import com.futureplatforms.kirin.dependencies.db.Transaction.TxJSONCB;
 import com.futureplatforms.kirin.dependencies.db.Transaction.TxRowsCB;
 import com.futureplatforms.kirin.dependencies.db.Transaction.TxTokenCB;
+import com.futureplatforms.kirin.dependencies.db.Transaction.UpdateStatement;
 import com.futureplatforms.kirin.dependencies.internal.TransactionBackend;
 import com.futureplatforms.kirin.dependencies.internal.TransactionBundle;
 import com.google.common.collect.ImmutableList;
@@ -44,12 +45,10 @@ public class AndroidDatabase implements DatabaseDelegate {
 		}
 
 		@Override
-		public void onCreate(SQLiteDatabase db) {
-		}
+		public void onCreate(SQLiteDatabase db) {}
 
 		@Override
-		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		}
+		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {}
 	}
 
 	private final Context _Context;
@@ -92,8 +91,7 @@ public class AndroidDatabase implements DatabaseDelegate {
 		private JSONObject coerceToJSONObject(Cursor cursor) {
 			String[] cols = columnNames(cursor);
 			if (cursor instanceof AbstractWindowedCursor) {
-				return _Coercer.coerceToJSONObject(cols,
-						(AbstractWindowedCursor) cursor);
+				return _Coercer.coerceToJSONObject(cols, (AbstractWindowedCursor) cursor);
 			} else {
 				JSONObject obj = new JSONObject();
 				for (int i = 0; i < cols.length; i++) {
@@ -101,8 +99,7 @@ public class AndroidDatabase implements DatabaseDelegate {
 						if (!cursor.isNull(i)) {
 							obj.put(cols[i], cursor.getString(i));
 						}
-					} catch (JSONException e) {
-					}
+					} catch (JSONException e) {}
 
 				}
 				return obj;
@@ -130,23 +127,18 @@ public class AndroidDatabase implements DatabaseDelegate {
 						int statementCount = 0, batchCount = 0;
 						for (TxElementType type : bundle._Types) {
 							if (type == TxElementType.Statement) {
-								Statement st = bundle._Statements
-										.get(statementCount);
+								Statement st = bundle._Statements.get(statementCount);
 								statementCount++;
 
 								// Execute the statement
-								if (st instanceof InsertStatement)
-									executeInsert(st);
-								else if (st instanceof StatementWithRowsReturn)
-									executeQueryWithRowsReturn(st);
-								else if (st instanceof StatementWithJSONReturn)
-									executeQueryWithJsonReturn(st);
-								else
-									executeQueryWithTokenReturn(st);
+								if (st instanceof InsertStatement) executeInsert((InsertStatement) st);
+								else if (st instanceof UpdateStatement) executeUpdate((UpdateStatement) st);
+								else if (st instanceof StatementWithRowsReturn) executeQueryWithRowsReturn(st);
+								else if (st instanceof StatementWithJSONReturn) executeQueryWithJsonReturn(st);
+								else executeQueryWithTokenReturn(st);
 							} else {
-								//execute batch
-								String[] batch = bundle._Batches
-										.get(batchCount);
+								// execute batch
+								String[] batch = bundle._Batches.get(batchCount);
 								for (String sql : batch) {
 									db.execSQL(sql);
 								}
@@ -167,7 +159,17 @@ public class AndroidDatabase implements DatabaseDelegate {
 
 		}
 
-		private void executeInsert(Statement st) {
+		private void executeInsert(InsertStatement st) {
+			SQLiteStatement sqLiteStatement = compileAndBindStatement(st);
+			sqLiteStatement.executeInsert();
+		}
+
+		private void executeUpdate(UpdateStatement st) {
+			SQLiteStatement sqLiteStatement = compileAndBindStatement(st);
+			sqLiteStatement.executeUpdateDelete();
+		}
+
+		private SQLiteStatement compileAndBindStatement(Statement st) {
 			SQLiteStatement sqLiteStatement = db.compileStatement(st._SQL);
 			String[] bindArgs = st._Params;
 			if (bindArgs != null) {
@@ -176,21 +178,18 @@ public class AndroidDatabase implements DatabaseDelegate {
 				// SQLite indexes are 1 to N, not 0 to N-1
 				for (int i = bindArgs.length; i != 0; i--) {
 					String arg = bindArgs[i - 1];
-					if (arg == null)
-						sqLiteStatement.bindNull(i);
-					else
-						sqLiteStatement.bindString(i, arg);
+					if (arg == null) sqLiteStatement.bindNull(i);
+					else sqLiteStatement.bindString(i, arg);
 				}
 			}
-			sqLiteStatement.executeInsert();
+			return sqLiteStatement;
 		}
 
 		private void executeQueryWithRowsReturn(Statement st) throws Exception {
 			Cursor cursor = db.rawQuery(st._SQL, st._Params);
 			// rows return
 			// construct RowSet from cursor
-			ImmutableList<String> columnNames = ImmutableList.copyOf(cursor
-					.getColumnNames());
+			ImmutableList<String> columnNames = ImmutableList.copyOf(cursor.getColumnNames());
 			RowSet rowset = new RowSet(columnNames);
 			int colCount = cursor.getColumnCount();
 			while (cursor.moveToNext()) {
@@ -200,30 +199,30 @@ public class AndroidDatabase implements DatabaseDelegate {
 					// string...
 					int entryType = getType(cursor, i);
 					switch (entryType) {
-					case FIELD_TYPE_BLOB: {
-						values.add(new String(cursor.getBlob(i)));
-					}
-						break;
+						case FIELD_TYPE_BLOB: {
+							values.add(new String(cursor.getBlob(i)));
+						}
+							break;
 
-					case FIELD_TYPE_FLOAT: {
-						values.add(String.valueOf(cursor.getDouble(i)));
-					}
-						break;
+						case FIELD_TYPE_FLOAT: {
+							values.add(String.valueOf(cursor.getDouble(i)));
+						}
+							break;
 
-					case FIELD_TYPE_INTEGER: {
-						values.add(String.valueOf(cursor.getInt(i)));
-					}
-						break;
+						case FIELD_TYPE_INTEGER: {
+							values.add(String.valueOf(cursor.getInt(i)));
+						}
+							break;
 
-					case FIELD_TYPE_NULL: {
-						values.add(null);
-					}
-						break;
+						case FIELD_TYPE_NULL: {
+							values.add(null);
+						}
+							break;
 
-					case FIELD_TYPE_STRING: {
-						values.add(cursor.getString(i));
-					}
-						break;
+						case FIELD_TYPE_STRING: {
+							values.add(cursor.getString(i));
+						}
+							break;
 					}
 				}
 				rowset.addRow(values);
@@ -267,12 +266,9 @@ public class AndroidDatabase implements DatabaseDelegate {
 		SQLiteDatabase _db = null;
 		try {
 			_db = helper.getWritableDatabase();
-		} catch (Exception e) {
-		}
-		if (_db != null)
-			cb.onOpened(new AndroidDatabaseImpl(_db));
-		else
-			cb.onError();
+		} catch (Exception e) {}
+		if (_db != null) cb.onOpened(new AndroidDatabaseImpl(_db));
+		else cb.onError();
 	}
 
 	protected static final int FIELD_TYPE_BLOB = 4;

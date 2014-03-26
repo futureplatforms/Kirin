@@ -99,6 +99,16 @@ public class Transaction {
 			super(sql, params, null);
 		}
     }
+    /**
+     * Update Statement, that allows nulls in the params
+     * @author kassimmaguire
+     *
+     */
+    public static class UpdateStatement extends StatementWithRowsReturn{
+		public UpdateStatement(String sql, String[] params) {
+			super(sql, params, null);
+		}
+    }
     
     public static class StatementWithTokenReturn extends Statement {
     	public final TxTokenCB _Callback;
@@ -183,6 +193,17 @@ public class Transaction {
     	_TxElements.add(TxElementType.Statement); 
     }
     
+
+    /**
+     * Execute an UPDATE statement, which allows nulls in the params
+     * @param sql
+     * @param params
+     */
+    public void execUpdateWithNulls(String sql, String[] params) {
+    	_Statements.add(new UpdateStatement(sql, params));
+    	_TxElements.add(TxElementType.Statement); 
+    }
+
     public void execUpdate(String sql) {
     	execQueryWithRowsReturn(sql, null);
     }
