@@ -19,6 +19,7 @@ import android.os.Build;
 
 import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate.HttpVerb;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate.NetworkResponse;
+import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate.NetworkResponse.OnCancelledListener;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegateClient;
 
 public class AndroidNetwork implements NetworkDelegateClient {
@@ -51,12 +52,19 @@ public class AndroidNetwork implements NetworkDelegateClient {
 			try {
 
 				HttpClient client = new DefaultHttpClient();
-				HttpGet get = new HttpGet(url);
+				final HttpGet get = new HttpGet(url);
 
 				get.setHeader("User-Agent", userAgent);
 				if (headers != null) for (String name : headers.keySet()) {
 					get.setHeader(name, headers.get(name));
 				}
+				callback.setOnCancelledListener(new OnCancelledListener() {
+					
+					@Override
+					public void onCancel() {
+						get.abort();
+					}
+				});
 
 				HttpResponse getResponse = null;
 
@@ -86,9 +94,9 @@ public class AndroidNetwork implements NetworkDelegateClient {
 			super.onPostExecute(success);
 
 			if (success) {
-				callback.onSuccess(res, result, responseHeaderMap);
+				callback.callOnSuccess(res, result, responseHeaderMap);
 			} else {
-				callback.onFail(code);
+				callback.callOnFail(code);
 			}
 		}
 
@@ -166,9 +174,9 @@ public class AndroidNetwork implements NetworkDelegateClient {
 			super.onPostExecute(success);
 
 			if (success) {
-				callback.onSuccess(res, result, responseHeaderMap);
+				callback.callOnSuccess(res, result, responseHeaderMap);
 			} else {
-				callback.onFail(code);
+				callback.callOnFail(code);
 			}
 		}
 

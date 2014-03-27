@@ -85,9 +85,9 @@ public class ConsoleNetwork implements NetworkDelegateClient {
                 	   t.printStackTrace();
                    }
                    
-                   callback.onSuccess(code, str, retHeaders);
+                   callback.callOnSuccess(code, str, retHeaders);
                } catch (Throwable e) {
-                   callback.onFail(""+code);
+                   callback.callOnFail(""+code);
                }
            }
         }).start();
