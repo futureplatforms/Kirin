@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 import com.futureplatforms.kirin.dependencies.Formatter;
+import com.futureplatforms.kirin.dependencies.StaticDependencies;
 import com.google.gwt.http.client.URL;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
@@ -100,9 +101,13 @@ public class GwtFormatter extends Formatter {
 		}
 
 	@Override
-	public native String sha512B64(String toEncode) /*-{
-		var sha = new jsSHA(toEncode, 'TEXT')
+	public String sha512B64(String toEncode) {
+		return _sha512B64(toEncode);
+	}
+	private native static final String _sha512B64(String toEncode) /*-{
+		var sha = new $wnd.jsSHA(toEncode, 'TEXT')
 		var hash = sha.getHash('SHA-512', 'B64')
+		return hash
 	}-*/;
 
 }
