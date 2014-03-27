@@ -103,6 +103,7 @@ public class GwtFormatter extends Formatter {
 	public native String sha512B64(String toEncode) /*-{
 		var sha = new $wnd.jsSHA(toEncode, 'TEXT')
 		var hash = sha.getHash('SHA-512', 'B64')
+        return hash
 	}-*/;
 
 }
