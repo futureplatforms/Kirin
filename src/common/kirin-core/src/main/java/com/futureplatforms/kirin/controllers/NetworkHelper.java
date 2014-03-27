@@ -32,7 +32,7 @@ public final class NetworkHelper {
             public void run() {
             	if (!_Cancelled) {
             		_Cancelled = true;
-            		callback.onFail("timeout");
+            		callback.callOnFail("timeout");
             	}
             }
             
@@ -43,16 +43,17 @@ public final class NetworkHelper {
             public void onSuccess(int res, String result, Map<String, String> headers) {
             	tt.cancel();
                 if (!_Cancelled) {
-                    callback.onSuccess(res, result, headers);
+                    callback.callOnSuccess(res, result, headers);
                 }
             }
             
             public void onFail(String code) {
             	tt.cancel();
                 if (!_Cancelled) {
-                    callback.onFail(code);
+                    callback.callOnFail(code);
                 }
             }
+
         });
     }
     

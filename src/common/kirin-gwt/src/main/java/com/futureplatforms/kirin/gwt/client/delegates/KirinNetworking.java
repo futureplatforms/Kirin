@@ -17,18 +17,18 @@ public class KirinNetworking implements NetworkDelegateClient {
         
         public void payload(String s) {
             try {
-                mCB.onSuccess(200, s, null);
+                mCB.callOnSuccess(200, s, null);
             } catch (Throwable t) {
-                mCB.onFail(t.getLocalizedMessage());
+                mCB.callOnFail(t.getLocalizedMessage());
             }
         }
         
         public void onError(String s) {
         	try {
         		int code = Integer.parseInt(s, 10);
-        		mCB.onSuccess(code, "", null);
+        		mCB.callOnSuccess(code, "", null);
         	} catch (Throwable t) {
-        		mCB.onFail(s);
+        		mCB.callOnFail(s);
         	}
         }
         
