@@ -214,8 +214,9 @@ public class GwtJSONArray extends
 
 	@Override
 	public String optString(int index, String defaultValue) {
-		Object o = opt(index);
-		return o != null ? o.toString() : defaultValue;
+		JSONValue o = opt(index);
+		if(o instanceof JSONString) return ((JSONString) o).stringValue();
+		else return o != null ? o.toString() : defaultValue;
 	}
 
 	@Override
