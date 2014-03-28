@@ -29,6 +29,8 @@
 		09B027E718462B6F0033356B /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 09B027DC18462B6F0033356B /* FMDatabaseQueue.m */; };
 		09B027E918462B6F0033356B /* FMResultSet.h in Headers */ = {isa = PBXBuildFile; fileRef = 09B027DE18462B6F0033356B /* FMResultSet.h */; };
 		09B027EA18462B6F0033356B /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 09B027DF18462B6F0033356B /* FMResultSet.m */; };
+		09B0B56118E3616500A87C5D /* WebviewHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 09B0B55F18E3616500A87C5D /* WebviewHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		09B0B56218E3616500A87C5D /* WebviewHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 09B0B56018E3616500A87C5D /* WebviewHelper.m */; };
 		09D8177217E21D6E00611BBE /* UIViewController+Hybrid.h in Headers */ = {isa = PBXBuildFile; fileRef = 09D8177017E21D6E00611BBE /* UIViewController+Hybrid.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		09D8177317E21D6E00611BBE /* UIViewController+Hybrid.m in Sources */ = {isa = PBXBuildFile; fileRef = 09D8177117E21D6E00611BBE /* UIViewController+Hybrid.m */; };
 		09DCA4FD1846342300C3555C /* NewTransactionService.h in Headers */ = {isa = PBXBuildFile; fileRef = 09DCA4FB1846342300C3555C /* NewTransactionService.h */; };
@@ -184,6 +186,8 @@
 		09B027DC18462B6F0033356B /* FMDatabaseQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseQueue.m; sourceTree = "<group>"; };
 		09B027DE18462B6F0033356B /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
 		09B027DF18462B6F0033356B /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
+		09B0B55F18E3616500A87C5D /* WebviewHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebviewHelper.h; sourceTree = "<group>"; };
+		09B0B56018E3616500A87C5D /* WebviewHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebviewHelper.m; sourceTree = "<group>"; };
 		09D8177017E21D6E00611BBE /* UIViewController+Hybrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Hybrid.h"; sourceTree = "<group>"; };
 		09D8177117E21D6E00611BBE /* UIViewController+Hybrid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Hybrid.m"; sourceTree = "<group>"; };
 		09DCA4FB1846342300C3555C /* NewTransactionService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewTransactionService.h; path = GWTServices/NewTransactionService.h; sourceTree = "<group>"; };
@@ -408,6 +412,8 @@
 		1A00C8B114B2E2FD00211F34 /* KirinKit */ = {
 			isa = PBXGroup;
 			children = (
+				09B0B55F18E3616500A87C5D /* WebviewHelper.h */,
+				09B0B56018E3616500A87C5D /* WebviewHelper.m */,
 				091D1AC116F071E3001400FF /* NSObject+Kirin.h */,
 				091D1AC216F071E3001400FF /* NSObject+Kirin.m */,
 				09D8177017E21D6E00611BBE /* UIViewController+Hybrid.h */,
@@ -715,6 +721,7 @@
 				1A00C92D14B2E32600211F34 /* KirinWebViewHolder.h in Headers */,
 				09918357183232BC00A35AF8 /* KirinGwtServiceProtocol.h in Headers */,
 				1A00C93014B2E32600211F34 /* NativeContext.h in Headers */,
+				09B0B56118E3616500A87C5D /* WebviewHelper.h in Headers */,
 				09B027E618462B6F0033356B /* FMDatabaseQueue.h in Headers */,
 				09B027E918462B6F0033356B /* FMResultSet.h in Headers */,
 				1A00C93314B2E32600211F34 /* NativeExecutor.h in Headers */,
@@ -928,6 +935,7 @@
 				09B027EA18462B6F0033356B /* FMResultSet.m in Sources */,
 				1A2EF3BE14FA9B9300D00DE2 /* NSObject+JSON.m in Sources */,
 				1A2EF3C014FA9B9300D00DE2 /* SBJsonParser.m in Sources */,
+				09B0B56218E3616500A87C5D /* WebviewHelper.m in Sources */,
 				1A2EF3C214FA9B9300D00DE2 /* SBJsonStreamParser.m in Sources */,
 				1A2EF3C414FA9B9300D00DE2 /* SBJsonStreamParserAdapter.m in Sources */,
 				1A2EF3C614FA9B9300D00DE2 /* SBJsonStreamParserState.m in Sources */,
