@@ -4,6 +4,8 @@ import com.futureplatforms.kirin.dependencies.StaticDependencies;
 import com.futureplatforms.kirin.dependencies.internal.TransactionBackend;
 
 public abstract class Database {
+	public static boolean DEBUG = false;
+	
     public static interface TxRunner {
         
         public void run(Transaction tx);

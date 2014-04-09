@@ -2,6 +2,7 @@ package com.futureplatforms.kirin.dependencies.db;
 
 import java.util.List;
 
+import com.futureplatforms.kirin.dependencies.StaticDependencies;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.LogDelegate;
 import com.futureplatforms.kirin.dependencies.db.Database.TxRunner;
 import com.futureplatforms.kirin.dependencies.internal.TransactionBackend;
@@ -170,8 +171,28 @@ public class Transaction {
     	}
     }
     
+    private void log(String sql, String[] params) {
+    	if (Database.DEBUG) {
+    		LogDelegate log = StaticDependencies.getInstance().getLogDelegate();
+	    	log.log("\n" + sql);
+	    	if (params != null) {
+	    		String queryStr = "";
+		    	for (String param : params) {
+		    		queryStr += param + ", ";
+				}
+		    	log.log(queryStr);
+	    	}
+	    	log.log("\n");
+    	}
+    }
+    
     public void execQueryWithTokenReturn(String sql, String[] params, TxTokenCB cb) { 
-    	validateParams(params);
+    	try {
+    		validateParams(params);
+    	} catch (NullPointerException e) {
+    		LogDelegate log = StaticDependencies.getInstance().getLogDelegate();
+    		log.log("sql: " + sql + ": " + e.getMessage());
+    	}
     	_Statements.add(new StatementWithTokenReturn(sql, params, cb));
     	_TxElements.add(TxElementType.Statement); 
     }
@@ -189,6 +210,7 @@ public class Transaction {
      * @param params
      */
     public void execInsert(String sql,String[] params) {
+    	log(sql, params);
     	_Statements.add(new InsertStatement(sql, params));
     	_TxElements.add(TxElementType.Statement); 
     }
@@ -215,9 +237,15 @@ public class Transaction {
     public void execQueryWithRowsReturn(String sql, TxRowsCB cb) { 
     	execQueryWithRowsReturn(sql, null, cb);
     }
-    
+
     public void execQueryWithRowsReturn(String sql, String[] params, TxRowsCB cb) { 
-    	validateParams(params);
+    	try {
+    		validateParams(params);
+    	} catch (NullPointerException e) {
+    		LogDelegate log = StaticDependencies.getInstance().getLogDelegate();
+    		log.log("sql: " + sql + ": " + e.getMessage());
+    	}
+    	log(sql, params);
     	_Statements.add(new StatementWithRowsReturn(sql, params, cb));
     	_TxElements.add(TxElementType.Statement); 
     }
@@ -227,7 +255,13 @@ public class Transaction {
     }
     
     public void execQueryWithJSONReturn(String sql, String[] params, TxJSONCB cb) {
-    	validateParams(params);
+    	try {
+    		validateParams(params);
+    	} catch (NullPointerException e) {
+    		LogDelegate log = StaticDependencies.getInstance().getLogDelegate();
+    		log.log("sql: " + sql + ": " + e.getMessage());
+    	}
+    	log(sql, params);
     	_Statements.add(new StatementWithJSONReturn(sql, params, cb));
     	_TxElements.add(TxElementType.Statement);
     }

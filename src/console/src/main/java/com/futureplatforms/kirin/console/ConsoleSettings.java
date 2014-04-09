@@ -18,6 +18,7 @@ public class ConsoleSettings implements SettingsDelegate
 	@Override
 	public void put(String key, String value)
 	{
+		System.out.println("SETTINGS: " + key + ": " + value);
 		_Map.put(key, value);
 	}
 }

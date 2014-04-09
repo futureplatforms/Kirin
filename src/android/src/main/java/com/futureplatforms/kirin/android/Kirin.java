@@ -26,6 +26,7 @@ public final class Kirin {
                 new AndroidFormatter(),
                 isDebug ? Configuration.Debug : Configuration.Release,
                 new AndroidDatabase(context),
-                new AndroidTimer());
+                new AndroidTimer(),
+                new AndroidNotification(context));
     }
 }

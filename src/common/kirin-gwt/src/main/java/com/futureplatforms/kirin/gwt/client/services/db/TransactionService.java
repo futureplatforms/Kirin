@@ -1,5 +1,6 @@
 package com.futureplatforms.kirin.gwt.client.services.db;
 
+import java.util.List;
 import java.util.Map;
 
 import org.timepedia.exporter.client.Export;
@@ -19,6 +20,7 @@ import com.futureplatforms.kirin.dependencies.db.Transaction.TxJSONCB;
 import com.futureplatforms.kirin.dependencies.db.Transaction.TxRowsCB;
 import com.futureplatforms.kirin.dependencies.db.Transaction.TxTokenCB;
 import com.futureplatforms.kirin.dependencies.internal.TransactionBundle;
+import com.futureplatforms.kirin.dependencies.json.JSONArray;
 import com.futureplatforms.kirin.dependencies.json.JSONException;
 import com.futureplatforms.kirin.gwt.client.KirinService;
 import com.futureplatforms.kirin.gwt.client.delegates.db.GwtTransactionBackend;
@@ -34,6 +36,8 @@ import com.google.gwt.core.client.GWT;
 public class TransactionService extends KirinService<TransactionServiceNative>{
 	private static TransactionService _Instance;
     
+	private enum StatementReturnType { Rows, Token, JSON, Batch };
+	
     @NoBind
     @NoExport
     public static TransactionService BACKDOOR() { return _Instance; }
@@ -85,6 +89,32 @@ public class TransactionService extends KirinService<TransactionServiceNative>{
 		txMap.put(txId, bundle);
 	}
 	
+	private static final String paramsToString(String[] params) throws JSONException {
+		JSONArray arr = StaticDependencies.getInstance().getJsonDelegate().getJSONArray();
+		if (params != null) {
+			for (String param : params) {
+				arr.putObject(param);
+			}
+		}
+		return arr.toString();
+	}
+	
+	private static final int[] integerArrToIntArr(Integer[] arr) {
+		int[] intArr = new int[arr.length];
+		for (int i=0, len=arr.length; i<len; i++) {
+			intArr[i] = arr[i];
+		}
+		return intArr;
+	}
+	
+	private static final int[] srtArrToIntArr(StatementReturnType[] arr) {
+		int[] intArr = new int[arr.length];
+		for (int i=0, len=arr.length; i<len; i++) {
+			intArr[i] = arr[i].ordinal();
+		}
+		return intArr;
+	}
+	
 	@NoBind
 	@NoExport
 	// THIS GETS INVOKED FROM THE BACKDOOR
@@ -95,24 +125,52 @@ public class TransactionService extends KirinService<TransactionServiceNative>{
 		int fileCount = 0, statementCount = 0;
     	
     	// run through each transaction element and register it with native
-    	for (TxElementType type : bundle._Types) {
-    		if (type == TxElementType.Batch) {
-    			String[] batch = bundle._Batches.get(fileCount);
-    			fileCount++;
-    			getNativeObject().appendBatch(dbId, txId, batch);
-    		} else {
-    			final Statement statement = bundle._Statements.get(statementCount);
-    			if (statement instanceof StatementWithTokenReturn) {
-					getNativeObject().appendStatementForToken(dbId, txId, statementCount, statement._SQL, statement._Params);
-    			} else if (statement instanceof StatementWithJSONReturn) {
-    				getNativeObject().appendStatementForJSON(dbId, txId, statementCount, statement._SQL, statement._Params);
-    			} else {
-					getNativeObject().appendStatementForRows(dbId, txId, statementCount, statement._SQL, statement._Params);
-    			}
-    			statementCount++;
-    		}
-    	}
-
+		List<StatementReturnType> returnTypes = Lists.newArrayList();
+		List<Integer> statementIds = Lists.newArrayList();
+		List<String> statements = Lists.newArrayList();
+		List<String> jsonParams = Lists.newArrayList();
+		
+		try {
+	    	for (int i=0, len=bundle._Types.size(); i<len; i++) {
+	    		TxElementType type = bundle._Types.get(i);
+	    		if (type == TxElementType.Batch) {
+	    			String[] batch = bundle._Batches.get(fileCount);
+	    			for (String batchStr : batch) {
+	    				statementIds.add(0); // this will be ignored on native side
+	    				jsonParams.add(""); // as will this
+	    				
+	    				returnTypes.add(StatementReturnType.Batch);
+	    				statements.add(batchStr);
+	    			}
+	    			fileCount++;
+	    		} else {
+	    			final Statement statement = bundle._Statements.get(statementCount);
+	    			statements.add(statement._SQL);
+	    			statementIds.add(statementCount);
+	    			jsonParams.add(paramsToString(statement._Params));
+	    			if (statement instanceof StatementWithTokenReturn) {
+	    				returnTypes.add(StatementReturnType.Token);
+	    			} else if (statement instanceof StatementWithJSONReturn) {
+	    				returnTypes.add(StatementReturnType.JSON);
+	    			} else {
+	    				returnTypes.add(StatementReturnType.Rows);
+	    			}
+	    			statementCount++;
+	    		}
+	    	}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+    	
+    	StatementReturnType[] returnTypesArr = returnTypes.toArray(new StatementReturnType[0]);
+    	int[] returnTypesArrPrim = srtArrToIntArr(returnTypesArr);
+    	
+    	Integer[] statementIdsArr = statementIds.toArray(new Integer[0]);
+    	int[] statementIdsArrPrim = integerArrToIntArr(statementIdsArr);
+    	
+    	String[] statementsArr = statements.toArray(new String[0]);
+    	String[] jsonParamsArr = jsonParams.toArray(new String[0]);
+    	getNativeObject().appendStatements(dbId, txId, returnTypesArrPrim, statementIdsArrPrim, statementsArr, jsonParamsArr);
     	getNativeObject().end(dbId, txId);
 	}
 	

@@ -18,7 +18,7 @@ import com.google.gwt.core.ext.typeinfo.TypeOracle;
 public abstract class InterfaceGenerator {
 	private static final String[] KEYWORDS = {
 		// Javascript
-		"debugger", "default", "delete", "function", "in", "typeof", "with",
+		"debugger", "default", "delete", "export", "function", "in", "let", "typeof", "with", "yield",
 		
 		// C#
 		"as", "checked", "const", "delegate", "event", "explicit", "extern", "fixed", "foreach", "goto", "implicit",

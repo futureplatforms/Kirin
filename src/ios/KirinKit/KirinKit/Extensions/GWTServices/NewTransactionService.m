@@ -77,6 +77,35 @@
     }
 }
 
+// Appending a bunch of statements.
+// enum StatementReturnType { Rows, Token, JSON, Batch };
+- (void) appendStatements: (int) dbId : (int) txId : (NSArray*) returnTypes : (NSArray*) statementIds : (NSArray*) statements : (NSArray*) txParams {
+    NSMutableArray *nativeStatements = [self getStatements:dbId :txId];
+    int numStatements = [returnTypes count];
+    for (int i=0; i<numStatements; i++) {
+        int returnType = [((NSNumber*)returnTypes[i]) intValue];
+        SQLOperationType opType;
+        if (returnType == 0) {
+            opType = SQL_rowset;
+        } else if (returnType == 1) {
+            opType = SQL_token;
+        } else if (returnType == 2) {
+            opType = SQL_json;
+        } else if (returnType == 3) {
+            opType = SQL_batch;
+        }
+        NSString * statement = statements[i];
+        
+        if (opType == SQL_batch) {
+            [nativeStatements addObject:[[NewTransactionStatement alloc] initWithType:SQL_rowset andStatement:statement andParameters:nil]];
+        } else {
+            int statementId = [((NSNumber*)statementIds[i]) intValue];
+            NSArray * params = [txParams[i] JSONValue];
+            [nativeStatements addObject:[[NewTransactionStatement alloc] initWithType:opType andId:statementId andStatement:statement andParameters:params]];
+        }
+    }
+}
+
 - (void) end: (int) dbId : (int) txId {
     FMDatabaseQueue * dbQueue = [_DatabaseAccessService.DbForId objectForKey:@(dbId)];
     [dbQueue inTransaction:^(FMDatabase *db, BOOL *rollback) {
@@ -130,7 +159,6 @@
                         [self.kirinModule statementTokenSuccess:dbId :txId :st.statementId :token];
                     } else {
                         NSString *json = [arr JSONRepresentation];
-                        NSLog(@"json: %@", json);
                         [self.kirinModule statementJSONSuccess: dbId :txId :st.statementId :json];
                     }
                 } else {

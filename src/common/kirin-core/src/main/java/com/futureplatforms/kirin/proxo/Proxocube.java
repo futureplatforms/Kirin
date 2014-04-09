@@ -27,16 +27,77 @@ public class Proxocube {
 	private final String _Url;
 	private final ProxoClient _Client;
 	private int _Revision;
+	private String _Bakage;
 	
 	protected Proxocube(String url, ProxoClient client) {
+		this(url, client, null);
+	}
+	
+	/**
+	 * Set bakage if you want to kick off Proxocube with some baked-in data
+	 * @param url
+	 * @param client
+	 * @param bakage
+	 */
+	protected Proxocube(String url, ProxoClient client, String bakage) {
 		_Url = url;
 		_Client = client;
+		_Bakage = bakage;
 		String rev = _Settings.get("proxocube.revision." + url);
 		if (!Strings.isNullOrEmpty(rev)) {
 			_Revision = Integer.parseInt(rev, 10);
 		} else {
 			_Revision = -1;
 		}
+	}
+	
+	public boolean hasSynced() {
+		return _Revision > -1;
+	}
+	
+	private void process(final String result, final Database db, final int startRevision, final boolean didBake) {
+		db.transaction(new TxRunner() {
+			
+			@Override
+			public void run(Transaction tx) {
+				// A proxo response is a JSON array
+				try {
+					JSONArray arr = _Json.getJSONArray(result);
+					for (int i=0; i<arr.length(); i++) {
+						JSONObject obj = arr.getJSONObject(i);
+						
+						// As we iterate through the objects, keep track of the highest revision ID
+						if (obj.has("revision")) {
+							int rev = obj.getInt("revision");
+							_Revision = Math.max(rev, _Revision);
+						}
+						
+						if (obj.has("deleted") && obj.getBoolean("deleted")) {
+							_Client.onDelete(tx, obj);
+						} else {
+							_Client.onInsertOrUpdate(tx, obj);
+						}
+					}
+					_Client.onSyncCompleting(tx);
+				} catch (JSONException e) {
+					_Client.onError();
+				} 
+			}
+			
+			@Override
+			public void onError() {
+				_Log.log("Proxocube database error");
+				_Client.onError();
+			}
+			
+			@Override
+			public void onComplete() {
+				// Complete!  Log the new revision
+				_Settings.put("proxocube.revision." + _Url, "" + _Revision);
+				_Log.log("Proxo sync done, now at revision " + _Revision);
+				_Client.onSyncComplete(_Revision != startRevision, didBake);
+			}
+		});
 	}
 	
 	/**
@@ -46,59 +107,23 @@ public class Proxocube {
 	 * @param db
 	 */
 	public void sync(final Database db) {
-		_Net.doHttp(HttpVerb.GET, _Url + "/" + (_Revision + 1), new NetworkResponse() {
-			
-			@Override
-			public void onSuccess(int res, final String result, Map<String, String> headers) {
-				db.transaction(new TxRunner() {
-					
-					@Override
-					public void run(Transaction tx) {
-						// A proxo response is a JSON array
-						try {
-							JSONArray arr = _Json.getJSONArray(result);
-							for (int i=0; i<arr.length(); i++) {
-								JSONObject obj = arr.getJSONObject(i);
-								
-								// As we iterate through the objects, keep track of the highest revision ID
-								if (obj.has("revision")) {
-									int rev = obj.getInt("revision");
-									_Revision = Math.max(rev, _Revision);
-								}
-								
-								if (obj.has("deleted") && obj.getBoolean("deleted")) {
-									_Client.onDelete(tx, obj);
-								} else {
-									_Client.onInsertOrUpdate(tx, obj);
-								}
-							}
-						} catch (JSONException e) {
-							_Client.onError();
-						}
-					}
-					
-					@Override
-					public void onError() {
-						_Log.log("Proxocube database error");
-						_Client.onError();
-					}
-					
-					@Override
-					public void onComplete() {
-						// Complete!  Log the new revision
-						_Settings.put("proxocube.revision." + _Url, "" + _Revision);
-						_Log.log("Proxo sync done, now at revision " + _Revision);
-						_Client.onSyncComplete();
-					}
-				});
+		final int startRevision = _Revision;
+		if (_Revision == -1 && !Strings.isNullOrEmpty(_Bakage)) {
+			process(_Bakage, db, startRevision, true);
+		} else {
+			_Net.doHttp(HttpVerb.GET, _Url + "/" + (_Revision + 1), new NetworkResponse() {
 				
-			}
-			
-			@Override
-			public void onFail(String code) {
-				_Client.onError();
-			}
-		});
+				@Override
+				public void onSuccess(int res, final String result, Map<String, String> headers) {
+					process(result, db, startRevision, false);
+				}
+				
+				@Override
+				public void onFail(String code) {
+					_Client.onError();
+				}
+			});
+		}
 	}
 	
 	public static String sha512Base64(String value) {

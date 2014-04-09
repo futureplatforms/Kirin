@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.List;
 
 import com.futureplatforms.kirin.dependencies.db.Database;
@@ -25,7 +26,7 @@ public class ConsoleDB implements DatabaseDelegate {
 
 	public interface ResultSetProcessor {
 		public void columnNames(List<String> colNames);
-		public void nextRow(List<String> nextRow);
+		public void nextRow(List<Object> nextRow);
 		public void finished();
 	}
 	
@@ -41,8 +42,16 @@ public class ConsoleDB implements DatabaseDelegate {
 		}
 
 		@Override
-		public void nextRow(List<String> nextRow) {
-			_RowSet.addRow(nextRow);
+		public void nextRow(List<Object> nextRow) {
+			List<String> strs = Lists.newArrayList();
+			for (Object obj : nextRow) {
+				if (obj != null) {
+					strs.add(obj.toString());
+				} else {
+					strs.add("<null>");
+				}
+			}
+			_RowSet.addRow(strs);
 		}
 
 		@Override
@@ -51,7 +60,7 @@ public class ConsoleDB implements DatabaseDelegate {
 		}
 	}
 	
-	private static class PrintResultSetProcessor implements ResultSetProcessor {
+	public static class PrintResultSetProcessor implements ResultSetProcessor {
 		private final int _Width;
 		public PrintResultSetProcessor(int width) {
 			_Width = width;
@@ -87,10 +96,10 @@ public class ConsoleDB implements DatabaseDelegate {
 		}
 
 		@Override
-		public void nextRow(List<String> nextRow) {
+		public void nextRow(List<Object> nextRow) {
 			String str = "";
-			for (String string : nextRow) {
-				str += pad(string);
+			for (Object item : nextRow) {
+				str += pad(item.toString());
 				str += " | ";
 			}
 			
@@ -112,11 +121,24 @@ public class ConsoleDB implements DatabaseDelegate {
 		for (int i=1; i<colCount+1; i++) {
 			colNames.add(metaData.getColumnName(i));
 		}
+		
 		processor.columnNames(colNames);
 		while (resultSet.next()) {
-			List<String> nextRow = Lists.newArrayList();
+			List<Object> nextRow = Lists.newArrayList();
 			for (int i=1; i<colCount+1; i++) {
-				nextRow.add(resultSet.getString(i));
+				int type = metaData.getColumnType(i);
+				if (type == Types.INTEGER) {
+					nextRow.add(resultSet.getInt(i));
+				} else if (type == Types.BOOLEAN) {
+					nextRow.add(resultSet.getBoolean(i));
+				} else if (type == Types.REAL) {
+					nextRow.add(resultSet.getDouble(i));
+				} else {
+					if (type != Types.VARCHAR) {
+						System.out.println("Unknown type: " + metaData.getColumnTypeName(i));
+					}
+					nextRow.add(resultSet.getString(i));
+				}
 			}
 			processor.nextRow(nextRow);
 		}
@@ -179,7 +201,13 @@ public class ConsoleDB implements DatabaseDelegate {
 										sToken._Callback.onError();
 									}
 								} else if (kirinStatement instanceof StatementWithJSONReturn) {
-									// TODO FIXME NOT IMPLEMENTED YET
+									StatementWithJSONReturn sJson = (StatementWithJSONReturn) kirinStatement;
+									if (sJson._Callback != null) {
+										ResultSet resultSet = execQuery(kirinStatement);
+										processResultSet(resultSet, new ConsoleDBJSON(sJson));
+									} else {
+										execUpdate(kirinStatement);
+									}
 								} else {
 									StatementWithRowsReturn sRows = (StatementWithRowsReturn) kirinStatement;
 									try {
@@ -228,5 +256,4 @@ public class ConsoleDB implements DatabaseDelegate {
 			cb.onError();
 		}
 	}
-
 }

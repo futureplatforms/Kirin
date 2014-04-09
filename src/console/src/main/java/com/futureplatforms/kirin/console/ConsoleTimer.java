@@ -11,14 +11,19 @@ public class ConsoleTimer implements TimerDelegate
         return new PlatformTimerTask() {
             
             @Override
-            public void schedule(int delayMillis) {
+            public void schedule(final int delayMillis) {
                 final PlatformTimerTask that = this;
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
+                    	try {
+							Thread.sleep(delayMillis);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
                         that.run();
                     }
-                });
+                }).start();
             }
             
             @Override

@@ -124,7 +124,8 @@ public final class StaticDependencies {
 	private DatabaseDelegate _DatabasesDelegate;
 	private Configuration _Profile;
 	private TimerDelegate _TimerDelegate;
-
+	private NotificationDelegate _NotificationDelegate;
+	
 	public TimerDelegate getTimerDelegate() {
 		return _TimerDelegate;
 	}
@@ -146,21 +147,7 @@ public final class StaticDependencies {
 	}
 
 	public NotificationDelegate getNotificationDelegate() {
-		return new NotificationDelegate() {
-
-			@Override
-			public void scheduleNotification(int notificationId, long timeMillisSince1970,
-					String title, String text) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void cancelNotification(int notificationId) {
-				// TODO Auto-generated method stub
-
-			}
-		};
+		return _NotificationDelegate;
 	}
 
 	public JSONDelegate getJsonDelegate() {
@@ -190,7 +177,8 @@ public final class StaticDependencies {
 	public void setDependencies(LogDelegate logDelegate, SettingsDelegate settingsDelegate,
 			LocationDelegate locationDelegate, NetworkDelegateClient networkDelegateClient,
 			JSONDelegate jsonDelegate, XMLParser xmlParser, Formatter formatter,
-			Configuration profile, DatabaseDelegate databasesDelegate, TimerDelegate timerDel) {
+			Configuration profile, DatabaseDelegate databasesDelegate, TimerDelegate timerDel,
+			NotificationDelegate notificationDelegate) {
 		this.mLogDelegate = logDelegate;
 		this.mSettingsDelegate = settingsDelegate;
 		this.mLocationDelegate = locationDelegate;
@@ -202,5 +190,6 @@ public final class StaticDependencies {
 		this.mInitialised = true;
 		this._DatabasesDelegate = databasesDelegate;
 		this._TimerDelegate = timerDel;
+		this._NotificationDelegate = notificationDelegate;
 	}
 }
