@@ -227,6 +227,7 @@ public class AndroidDatabase implements DatabaseDelegate {
 				}
 				rowset.addRow(values);
 			}
+			cursor.close();
 			TxRowsCB c = ((StatementWithRowsReturn) st)._Callback;
 			if (c != null) {
 				c.onSuccess(rowset);
@@ -247,6 +248,7 @@ public class AndroidDatabase implements DatabaseDelegate {
 		private void executeQueryWithJsonReturn(Statement st) {
 			Cursor cursor = db.rawQuery(st._SQL, st._Params);
 			JSONArray arr = coerceToJSONArray(cursor);
+			cursor.close();
 			TxJSONCB c = ((StatementWithJSONReturn) st)._Callback;
 			if (c != null) {
 				c.onSuccess(new AndroidJSONArray(arr));
