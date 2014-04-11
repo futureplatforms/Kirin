@@ -13,10 +13,6 @@ public class ProxoFactory {
 	}
 	
 	public Proxocube getProxocube(String suffix, ProxoClient client) {
-		return this.getProxocube(suffix, client, null);
-	}
-	
-	public Proxocube getProxocube(String suffix, ProxoClient client, String bakage) {
-		return new Proxocube(_Hostname + _Prefix + suffix, client, bakage);
+		return new Proxocube(_Hostname + _Prefix + suffix, client);
 	}
 }

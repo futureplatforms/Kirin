@@ -27,11 +27,8 @@ public class Proxocube {
 	private final String _Url;
 	private final ProxoClient _Client;
 	private int _Revision;
-	private String _Bakage;
+	private String _Bakage, _Password;
 	
-	protected Proxocube(String url, ProxoClient client) {
-		this(url, client, null);
-	}
 	
 	/**
 	 * Set bakage if you want to kick off Proxocube with some baked-in data
@@ -39,16 +36,23 @@ public class Proxocube {
 	 * @param client
 	 * @param bakage
 	 */
-	protected Proxocube(String url, ProxoClient client, String bakage) {
+	protected Proxocube(String url, ProxoClient client) {
 		_Url = url;
 		_Client = client;
-		_Bakage = bakage;
 		String rev = _Settings.get("proxocube.revision." + url);
 		if (!Strings.isNullOrEmpty(rev)) {
 			_Revision = Integer.parseInt(rev, 10);
 		} else {
 			_Revision = -1;
 		}
+	}
+	
+	public void setBakedInData(String baked) {
+		_Bakage = baked;
+	}
+	
+	public void setAESPassword(String password) {
+		this._Password = password;
 	}
 	
 	public boolean hasSynced() {
@@ -114,7 +118,12 @@ public class Proxocube {
 			_Net.doHttp(HttpVerb.GET, _Url + "/" + (_Revision + 1), new NetworkResponse() {
 				
 				@Override
-				public void onSuccess(int res, final String result, Map<String, String> headers) {
+				public void onSuccess(int res, String result, Map<String, String> headers) {
+					_Log.log("Result: " + result);
+					if (!Strings.isNullOrEmpty(_Password)) {
+						result = StaticDependencies.getInstance().getFormatter().decryptAES(result, _Password);
+						_Log.log("Result now: " + result);
+					}
 					process(result, db, startRevision, false);
 				}
 				

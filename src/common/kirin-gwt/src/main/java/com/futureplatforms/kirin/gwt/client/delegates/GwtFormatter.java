@@ -3,8 +3,9 @@ package com.futureplatforms.kirin.gwt.client.delegates;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import com.futureplatforms.kirin.dependencies.AsyncCallback.AsyncCallback1;
 import com.futureplatforms.kirin.dependencies.Formatter;
-import com.futureplatforms.kirin.dependencies.StaticDependencies;
+import com.futureplatforms.kirin.gwt.client.services.CryptoService;
 import com.google.gwt.http.client.URL;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
@@ -109,6 +110,32 @@ public class GwtFormatter extends Formatter {
 		var sha = new $wnd.jsSHA(toEncode, 'TEXT')
 		var hash = sha.getHash('SHA-512', 'B64')
 		return hash
+	}-*/;
+
+	@Override
+	public void pbkdf2(String plaintext, String salt, int iterations, int keyLenBytes, AsyncCallback1<byte[]> cb) {
+		CryptoService.BACKDOOR()._pbkdf2(plaintext, salt, iterations, keyLenBytes, cb);
+	}
+	
+	@Override
+	public String decryptAES(String encodedB64, String password) {
+		return _decryptAES(encodedB64, password);
+	}
+	
+	private native final String _decryptAES(String encodedB64, String password) /*-{
+		var cryptoJS = $wnd.CryptoJS;
+		
+		var first16OfHash = function(phrase) {
+			var sha512ed = cryptoJS.SHA512(phrase);
+			var asHex = sha512ed.toString(cryptoJS.enc.Hex);
+			return asHex.substring(0, 32);
+		};
+		
+		var iv = cryptoJS.enc.Hex.parse('00000000000000000000000000000000');
+		var first16pass = first16OfHash(password);
+		var passAsHex = cryptoJS.enc.Hex.parse(first16pass);
+    	var decrypted = cryptoJS.AES.decrypt(encodedB64, passAsHex, { iv: iv, mode: cryptoJS.mode.CBC });
+    	return decrypted.toString(cryptoJS.enc.Utf8);
 	}-*/;
 
 }

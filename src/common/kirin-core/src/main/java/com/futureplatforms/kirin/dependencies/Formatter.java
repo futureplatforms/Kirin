@@ -3,6 +3,9 @@ package com.futureplatforms.kirin.dependencies;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import com.futureplatforms.kirin.dependencies.AsyncCallback.AsyncCallback1;
+import com.google.common.io.BaseEncoding;
+
 public abstract class Formatter {
 	
 	/**
@@ -24,4 +27,16 @@ public abstract class Formatter {
     public abstract String encodeURIComponent(String str);
     public abstract byte[] hmacSHA1(String message, String passphrase);
     public abstract String sha512B64(String toEncode);
+    public abstract String decryptAES(String encodedB64, String password);
+    
+    /**
+     * Returns BASE64-Encoded PBKDF2 HMAC-SHA1
+     * @param plaintext
+     * @param salt
+     * @param iterations
+     * @param keyLenBytes
+     * @param cb
+     */
+	public abstract void pbkdf2(String plaintext, String salt, int iterations, int keyLenBytes,
+			AsyncCallback1<byte[]> cb);
 }

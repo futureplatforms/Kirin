@@ -20,7 +20,7 @@
 #import "KirinGwtServiceProtocol.h"
 #import "SymbolMapService.h"
 //#import "KirinFacebook.h"
-
+#import "Crypto.h"
 @interface KirinExtensions()
 
 @property(retain) NSMutableArray* allExtensions;
@@ -48,6 +48,9 @@
     [services registerGwtService:dbAccess.NewTransactionService];
     [services registerGwtService:[[SymbolMapService alloc] init]];
     [services registerExtension:[KirinLocationBackend instance]];
+    Crypto *cr = [[Crypto alloc] init];
+    [cr onRegister];
+
     /*
     if(NSClassFromString(@"SLComposeViewController")) {
         KirinFacebook* fb = [[KirinFacebook alloc] init];

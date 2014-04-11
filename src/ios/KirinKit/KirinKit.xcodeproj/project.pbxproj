@@ -37,6 +37,8 @@
 		09DCA4FE1846342300C3555C /* NewTransactionService.m in Sources */ = {isa = PBXBuildFile; fileRef = 09DCA4FC1846342300C3555C /* NewTransactionService.m */; };
 		09DCA5011846405C00C3555C /* NewTransactionStatement.h in Headers */ = {isa = PBXBuildFile; fileRef = 09DCA4FF1846405C00C3555C /* NewTransactionStatement.h */; };
 		09DCA5021846405C00C3555C /* NewTransactionStatement.m in Sources */ = {isa = PBXBuildFile; fileRef = 09DCA5001846405C00C3555C /* NewTransactionStatement.m */; };
+		09FF945C18F88F2D003097F3 /* Crypto.h in Headers */ = {isa = PBXBuildFile; fileRef = 09FF945A18F88F2D003097F3 /* Crypto.h */; };
+		09FF945D18F88F2D003097F3 /* Crypto.m in Sources */ = {isa = PBXBuildFile; fileRef = 09FF945B18F88F2D003097F3 /* Crypto.m */; };
 		1A00C8B614B2E2FD00211F34 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1A00C8B414B2E2FD00211F34 /* InfoPlist.strings */; };
 		1A00C8C014B2E2FD00211F34 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A00C8BF14B2E2FD00211F34 /* UIKit.framework */; };
 		1A00C8C214B2E2FD00211F34 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A00C8C114B2E2FD00211F34 /* Foundation.framework */; };
@@ -194,6 +196,8 @@
 		09DCA4FC1846342300C3555C /* NewTransactionService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewTransactionService.m; path = GWTServices/NewTransactionService.m; sourceTree = "<group>"; };
 		09DCA4FF1846405C00C3555C /* NewTransactionStatement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewTransactionStatement.h; path = GWTServices/NewTransactionStatement.h; sourceTree = "<group>"; };
 		09DCA5001846405C00C3555C /* NewTransactionStatement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewTransactionStatement.m; path = GWTServices/NewTransactionStatement.m; sourceTree = "<group>"; };
+		09FF945A18F88F2D003097F3 /* Crypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Crypto.h; path = GWTServices/Crypto.h; sourceTree = "<group>"; };
+		09FF945B18F88F2D003097F3 /* Crypto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Crypto.m; path = GWTServices/Crypto.m; sourceTree = "<group>"; };
 		1A00C8AF14B2E2FD00211F34 /* KirinKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KirinKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A00C8B314B2E2FD00211F34 /* KirinKit-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "KirinKit-Info.plist"; sourceTree = "<group>"; };
 		1A00C8B514B2E2FD00211F34 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -386,6 +390,15 @@
 			path = fmdb;
 			sourceTree = "<group>";
 		};
+		09FF945918F88F22003097F3 /* Crypto */ = {
+			isa = PBXGroup;
+			children = (
+				09FF945A18F88F2D003097F3 /* Crypto.h */,
+				09FF945B18F88F2D003097F3 /* Crypto.m */,
+			);
+			name = Crypto;
+			sourceTree = "<group>";
+		};
 		1A00C8A114B2E2FD00211F34 = {
 			isa = PBXGroup;
 			children = (
@@ -514,6 +527,7 @@
 		1A00C8EF14B2E32600211F34 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				09FF945918F88F22003097F3 /* Crypto */,
 				090C142218C7A4B40030EC1F /* SymbolMap */,
 				1A7B90CD14FFDA3F0090DF19 /* Location */,
 				1A8C032614C86534000829F2 /* Camera */,
@@ -761,6 +775,7 @@
 				1A2EF3C114FA9B9300D00DE2 /* SBJsonStreamParser.h in Headers */,
 				1A2EF3C314FA9B9300D00DE2 /* SBJsonStreamParserAdapter.h in Headers */,
 				1A2EF3C514FA9B9300D00DE2 /* SBJsonStreamParserState.h in Headers */,
+				09FF945C18F88F2D003097F3 /* Crypto.h in Headers */,
 				1A2EF3C714FA9B9300D00DE2 /* SBJsonStreamWriter.h in Headers */,
 				1A2EF3C914FA9B9300D00DE2 /* SBJsonStreamWriterState.h in Headers */,
 				1A2EF3CB14FA9B9300D00DE2 /* SBJsonTokeniser.h in Headers */,
@@ -939,6 +954,7 @@
 				1A2EF3C214FA9B9300D00DE2 /* SBJsonStreamParser.m in Sources */,
 				1A2EF3C414FA9B9300D00DE2 /* SBJsonStreamParserAdapter.m in Sources */,
 				1A2EF3C614FA9B9300D00DE2 /* SBJsonStreamParserState.m in Sources */,
+				09FF945D18F88F2D003097F3 /* Crypto.m in Sources */,
 				0991834E1832325E00A35AF8 /* NewDatabaseAccessService.m in Sources */,
 				1A2EF3C814FA9B9300D00DE2 /* SBJsonStreamWriter.m in Sources */,
 				09918359183232BC00A35AF8 /* KirinGwtServiceStub.m in Sources */,
