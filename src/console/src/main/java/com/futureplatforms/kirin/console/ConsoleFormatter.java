@@ -15,6 +15,7 @@ import java.util.Date;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
+import com.futureplatforms.kirin.dependencies.AsyncCallback.AsyncCallback1;
 import com.futureplatforms.kirin.dependencies.Formatter;
 import com.google.common.hash.Hashing;
 import com.google.common.io.BaseEncoding;
@@ -117,5 +118,18 @@ public class ConsoleFormatter extends Formatter {
 	@Override
 	public String sha512B64(String toEncode) {
 		return BaseEncoding.base64().encode(Hashing.sha512().hashString(toEncode, Charset.defaultCharset()).asBytes());
+	}
+
+	@Override
+	public String decryptAES(String encodedB64, String password) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void pbkdf2(String plaintext, String salt, int iterations,
+			int keyLenBytes, AsyncCallback1<byte[]> cb) {
+		// TODO Auto-generated method stub
+		
 	}
 }
