@@ -166,7 +166,7 @@ public class AndroidDatabase implements DatabaseDelegate {
 
 		private void executeUpdate(UpdateStatement st) {
 			SQLiteStatement sqLiteStatement = compileAndBindStatement(st);
-			sqLiteStatement.executeUpdateDelete();
+			sqLiteStatement.execute();
 		}
 
 		private SQLiteStatement compileAndBindStatement(Statement st) {
