@@ -1,4 +1,4 @@
-	# Kirin development quick start
+# Kirin development quick start
 
 Get a new Kirin project with Android, iPhone and WP8 targets.
 
