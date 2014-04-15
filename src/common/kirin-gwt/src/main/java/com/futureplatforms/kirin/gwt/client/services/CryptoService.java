@@ -11,7 +11,6 @@ import com.futureplatforms.kirin.gwt.client.KirinService;
 import com.futureplatforms.kirin.gwt.client.services.natives.CryptoServiceNative;
 import com.futureplatforms.kirin.gwt.compile.NoBind;
 import com.google.common.collect.Maps;
-import com.google.common.io.BaseEncoding;
 import com.google.gwt.core.client.GWT;
 
 @Export(value = "CryptoService", all = true)

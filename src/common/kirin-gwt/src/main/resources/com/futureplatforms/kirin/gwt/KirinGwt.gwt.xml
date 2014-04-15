@@ -61,4 +61,6 @@
   <script src="utils/api-utils.js"></script>
   <script src="utils/hmac-sha1.js"></script>
   <script src="utils/sha512.js"></script>
+  <script src="CryptoJS_v3.1.2/rollups/aes.js"></script>
+  <script src="CryptoJS_v3.1.2/rollups/sha512.js"></script>
 </module>
