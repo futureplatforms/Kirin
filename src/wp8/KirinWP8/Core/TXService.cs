@@ -135,6 +135,41 @@ namespace KirinWindows.Core
             GetStatements(dbId, txId).Add(s);
         }
 
+
+        public void appendStatements(int dbId, int txId, int[] returnTypes, int[] statementIds, string[] statements, string[] txParams)
+        {
+            for (int i = 0; i < returnTypes.Length; i++)
+            {
+                string[] deserParams = JsonConvert.DeserializeObject<string[]>(txParams[i]);
+                int returnType = returnTypes[i];
+                switch (returnType)
+                {
+                    case 0: // Rows
+                        appendStatementForRows(dbId, txId, statementIds[i], statements[i], deserParams);
+                        break;
+
+                    case 1: // Token
+                        appendStatementForToken(dbId, txId, statementIds[i], statements[i], deserParams);
+                        break;
+
+                    case 2: // JSON
+                        appendStatementForJSON(dbId, txId, statementIds[i], statements[i], deserParams);
+                        break;
+
+                    case 3: // Batch
+                        TXStatement s = new TXStatement()
+                        {
+                            _HasId = false,
+                            _Parameters = null,
+                            _Statement = statements[i],
+                            _Type = SQLOperationType.Batch
+                        };
+                        GetStatements(dbId, txId).Add(s);
+                        break;
+                }
+            }
+        }
+
         public void appendBatch(int dbId, int txId, string[] batch)
         {
             foreach (string b in batch)
