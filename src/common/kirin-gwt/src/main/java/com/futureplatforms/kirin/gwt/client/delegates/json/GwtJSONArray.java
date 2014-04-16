@@ -161,6 +161,8 @@ public class GwtJSONArray extends
 			jsonArray.set(index, ((GwtJSONObject) value).getNativeJSONObject());
 		} else if (value instanceof GwtJSONArray) {
 			jsonArray.set(index, ((GwtJSONArray) value).getNativeJSONArray());
+		} else if (value == null) {
+			jsonArray.set(index, JSONNull.getInstance());
 		}
 		return this;
 	}
