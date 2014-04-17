@@ -19,7 +19,7 @@
 #import "NewDatabaseAccessService.h"
 #import "KirinGwtServiceProtocol.h"
 #import "SymbolMapService.h"
-//#import "KirinFacebook.h"
+#import "KirinFacebook.h"
 #import "Crypto.h"
 @interface KirinExtensions()
 
@@ -51,14 +51,14 @@
     Crypto *cr = [[Crypto alloc] init];
     [cr onRegister];
 
-    /*
+    
     if(NSClassFromString(@"SLComposeViewController")) {
         KirinFacebook* fb = [[KirinFacebook alloc] init];
         [fb onRegister];
     
     } else {
     }
-    */
+    
     return services;
 }
 

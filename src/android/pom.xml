@@ -54,6 +54,13 @@
 			<type>jar</type>
 			<optional>true</optional>
 		</dependency>
+		<dependency>
+			<groupId>com.facebook</groupId>
+			<artifactId>android-sdk</artifactId>
+			<version>3.8.0</version>
+			<type>jar</type>
+			<optional>true</optional>
+		</dependency>
 	</dependencies>
 
 

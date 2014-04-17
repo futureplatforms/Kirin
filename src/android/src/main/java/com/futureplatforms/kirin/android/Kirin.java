@@ -27,6 +27,7 @@ public final class Kirin {
                 isDebug ? Configuration.Debug : Configuration.Release,
                 new AndroidDatabase(context),
                 new AndroidTimer(),
-                new AndroidNotification(context));
+                new AndroidNotification(context),
+                new FacebookDelegateImpl());
     }
 }

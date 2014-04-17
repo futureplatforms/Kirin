@@ -7,6 +7,7 @@ import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate
 import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate.NetworkResponse;
 import com.futureplatforms.kirin.dependencies.TimerTask.TimerDelegate;
 import com.futureplatforms.kirin.dependencies.db.DatabaseDelegate;
+import com.futureplatforms.kirin.dependencies.fb.FacebookDelegate;
 import com.futureplatforms.kirin.dependencies.json.JSONDelegate;
 import com.futureplatforms.kirin.dependencies.xml.parser.XMLParser;
 
@@ -125,6 +126,7 @@ public final class StaticDependencies {
 	private Configuration _Profile;
 	private TimerDelegate _TimerDelegate;
 	private NotificationDelegate _NotificationDelegate;
+	private FacebookDelegate _FacebookDelegate;
 	
 	public TimerDelegate getTimerDelegate() {
 		return _TimerDelegate;
@@ -173,12 +175,16 @@ public final class StaticDependencies {
 	public DatabaseDelegate getDatabasesDelegate() {
 		return _DatabasesDelegate;
 	}
+	
+	public FacebookDelegate getFacebookDelegate() {
+		return _FacebookDelegate;
+	}
 
 	public void setDependencies(LogDelegate logDelegate, SettingsDelegate settingsDelegate,
 			LocationDelegate locationDelegate, NetworkDelegateClient networkDelegateClient,
 			JSONDelegate jsonDelegate, XMLParser xmlParser, Formatter formatter,
 			Configuration profile, DatabaseDelegate databasesDelegate, TimerDelegate timerDel,
-			NotificationDelegate notificationDelegate) {
+			NotificationDelegate notificationDelegate, FacebookDelegate fbDel) {
 		this.mLogDelegate = logDelegate;
 		this.mSettingsDelegate = settingsDelegate;
 		this.mLocationDelegate = locationDelegate;
@@ -191,5 +197,6 @@ public final class StaticDependencies {
 		this._DatabasesDelegate = databasesDelegate;
 		this._TimerDelegate = timerDel;
 		this._NotificationDelegate = notificationDelegate;
+		this._FacebookDelegate = fbDel;
 	}
 }

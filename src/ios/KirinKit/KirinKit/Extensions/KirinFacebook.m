@@ -24,6 +24,19 @@
     self.serviceName = @"GwtFacebookService";
     self.kirinModuleProtocol = @protocol(GwtFacebookService);
     
+    NSLog(@"Welcome to the KirinFacebook service");
+    NSLog(@"Don't forget to do the following in your AppDelegate:");
+    NSLog(@"- (void)applicationDidBecomeActive:(UIApplication *)application");
+    NSLog(@"{");
+    NSLog(@"  [FBAppCall handleDidBecomeActive];");
+    NSLog(@"})");
+    NSLog(@"");
+    NSLog(@"- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation");
+    NSLog(@"{");
+    NSLog(@"  BOOL wasHandled = [FBAppCall handleOpenURL:url sourceApplication:sourceApplication];");
+    NSLog(@"  return wasHandled;");
+    NSLog(@"}");
+    
     [FBLoginView class];
     
     // Whenever a person opens the app, check for a cached session
@@ -102,7 +115,12 @@
 
 - (void) getAccessToken {
     NSString *fbAccessToken = [FBSession activeSession].accessTokenData.accessToken;
-    [self.kirinModule setAccessToken:fbAccessToken];
+    NSDate *fbAccessTokenExpDate = [FBSession activeSession].accessTokenData.expirationDate;
+    NSDateFormatter *isoFormat = [[NSDateFormatter alloc] init];
+    [isoFormat setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"];
+    NSString *createdDateStr = [isoFormat stringFromDate:fbAccessTokenExpDate];
+
+    [self.kirinModule setAccessToken:fbAccessToken :createdDateStr];
 }
 
 - (void) getAppId {
@@ -190,35 +208,6 @@
                                                 }
                                             }
                                         }];
-}
-
-- (void) requestForUploadPhoto: (NSString*) msg : (NSString*) imageToken : (int) cbId {
-	
-    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
-    [params setObject:msg forKey:@"message"];
-//    [params setObject:UIImagePNGRepresentation(img) forKey:@"picture"];
-	[params setObject:UIImagePNGRepresentation(imageToUpload) forKey:@"picture"];
-    
-    [FBRequestConnection startWithGraphPath:@"me/photos"
-                                 parameters:params
-                                 HTTPMethod:@"POST"
-                          completionHandler:^(FBRequestConnection *connection,
-                                              id result,
-                                              NSError *error)
-     {
-         
-         if (error)
-         {
-             //showing an alert for failure
-             [self.kirinModule requestForUploadPhotoError:cbId];
-         }
-         else
-         {
-             FBGraphObject * fbGraph = (FBGraphObject*) result;
-             [self.kirinModule requestForUploadPhotoSuccess:@"":cbId];
-         }
-     }];
-
 }
 
 -(void) signOut {
@@ -316,5 +305,57 @@ static UIImage *imageToUpload = nil;
     }
 }
 
+- (void) presentRequestsDialog: (int) cbId {
+    NSLog(@"About to present requests dialog");
+    [FBWebDialogs presentRequestsDialogModallyWithSession:nil
+                                                  message:@"request"
+                                                    title:@"request"
+                                               parameters:nil
+                                                  handler:
+    ^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
+        NSLog(@"Result! %@", resultURL);
+        //
+        //
+        if (error) {
+            [self.kirinModule requestsDialogFail:cbId];
+        } else {
+            if (result == FBWebDialogResultDialogCompleted) {
+                // If we shared OK the result URL looks like:
+                // fbconnect://success?to=100007574855460_1392017554394060
+                // If not, it just looks like:
+                // fbconnect://success
+                // Test if the query begins with post_id
+                
+                NSString *query = [resultURL query];
+                NSRange range = [query rangeOfString:@"error_code"];
+                if (range.length > 0) {
+                    // pressed Cancel
+                    [self.kirinModule requestsDialogCancel:cbId];
+                } else {
+                    NSArray * tos = [KirinFacebook parseTosFromQuery:[resultURL query]];
+                    [self.kirinModule requestsDialogSuccess:cbId :tos];
+                }
+            } else {
+                // pressed X
+                [self.kirinModule requestsDialogCancel:cbId];
+            }
+        }
+    }];
+}
+
++ (NSArray*) parseTosFromQuery: (NSString *) query {
+    NSMutableArray * tos = [[NSMutableArray alloc] init];
+    for (NSString *qs in [query componentsSeparatedByString:@"&"]) {
+        NSString *value = [[[[qs componentsSeparatedByString:@"="] objectAtIndex:1]
+                            stringByReplacingOccurrencesOfString:@"+" withString:@" "]
+                           stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        NSString *key = [[qs componentsSeparatedByString:@"="] objectAtIndex:0];
+        
+        if ([key isEqualToString:@"to"]) {
+            [tos addObject:value];
+        }
+    }
+    return tos;
+}
 
 @end

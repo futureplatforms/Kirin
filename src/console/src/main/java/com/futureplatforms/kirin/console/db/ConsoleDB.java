@@ -227,7 +227,12 @@ public class ConsoleDB implements DatabaseDelegate {
 								batchCount++;
 								java.sql.Statement sqlStatement = _Connection.createStatement();
 								for (String sql : batch) {
-									sqlStatement.executeUpdate(sql);
+									try {
+										sqlStatement.executeUpdate(sql);
+									} catch (SQLException e) {
+										System.out.println(sql);
+										e.printStackTrace();
+									}
 								}
 								sqlStatement.close();
 							}
