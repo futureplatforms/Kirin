@@ -324,7 +324,13 @@ public class FacebookDelegateImpl implements FacebookDelegate {
 
 	@Override
 	public void isLoggedIn(AsyncCallback1<Boolean> cb) {
-		SessionState state = Session.getActiveSession().getState();
+		Session session = Session.getActiveSession();
+		if(session == null)
+		{
+			cb.onFailure();
+			return;
+		}
+		SessionState state = session.getState();
 		cb.onSuccess(state.isOpened());
 	}
 
