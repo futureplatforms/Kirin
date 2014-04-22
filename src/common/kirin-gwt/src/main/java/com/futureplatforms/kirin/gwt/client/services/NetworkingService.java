@@ -3,11 +3,11 @@ package com.futureplatforms.kirin.gwt.client.services;
 import java.util.Map;
 
 import org.timepedia.exporter.client.Export;
-import org.timepedia.exporter.client.ExportClosure;
 import org.timepedia.exporter.client.ExportPackage;
-import org.timepedia.exporter.client.Exportable;
+import org.timepedia.exporter.client.NoExport;
 
 import com.futureplatforms.kirin.dependencies.StaticDependencies;
+import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate.NetworkResponse;
 import com.futureplatforms.kirin.gwt.client.KirinService;
 import com.futureplatforms.kirin.gwt.client.services.natives.NetworkingServiceNative;
 import com.futureplatforms.kirin.gwt.compile.NoBind;
@@ -18,52 +18,51 @@ import com.google.gwt.core.client.GWT;
 @ExportPackage("screens")
 public class NetworkingService extends KirinService<NetworkingServiceNative> {
     
-    @Export
-    @ExportClosure
-    public static interface NetworkingSuccess extends Exportable {
-        @Export
-        public void onSuccess(int code, String headers, String payload);
-    }
+    private static NetworkingService _Instance;
     
-    @Export
-    @ExportClosure
-    public static interface NetworkingFailure extends Exportable {
-        @Export
-        public void onFail();
-    }
-    
-    private static class NetworkingCB {
-        public final NetworkingSuccess _Success;
-        public final NetworkingFailure _Fail;
-        public NetworkingCB(NetworkingSuccess success, NetworkingFailure fail) {
-            this._Success = success; this._Fail = fail;
-        }
-    }
+    @NoBind
+    @NoExport
+    public static NetworkingService BACKDOOR() { return _Instance; }
     
     public NetworkingService() {
         super(GWT.<NetworkingServiceNative>create(NetworkingServiceNative.class));
+        _Instance = this;
     }
     
-    private Map<Integer, NetworkingCB> results = Maps.newHashMap();
+    private Map<Integer, NetworkResponse> results = Maps.newHashMap();
     private int nextId = Integer.MIN_VALUE;
 
     // This is the method that KirinNetworking uses to talk to us
     @NoBind
-    public void _retrieve(String method, String url, String postData, String[] headerKeys, String[] headerVals, NetworkingSuccess win, NetworkingFailure fail) {
+    public void _retrieve(String method, String url, String postData, String[] headerKeys, String[] headerVals, NetworkResponse cb) {
         int thisId = nextId;
         nextId++;
-        results.put(thisId, new NetworkingCB(win, fail));
+        results.put(thisId, cb);
         
         getNativeObject().retrieve(thisId, method, url, postData, headerKeys, headerVals);
     }
     
+    private static Map<String, String> fromArrays(String[] keys, String[] vals) {
+    	Map<String, String> map = Maps.newHashMap();
+    	for (int i=0; i<keys.length; i++) {
+    		String key = keys[i], val = vals[i];
+    		map.put(key, val);
+    	}
+    	return map;
+    }
+    
     // These are the methods that native uses to call back to us
-    public void payload(int connId, String str) {
+    public void payload(int connId, int respCode, String str, String[] headerKeys, String[] headerVals) {
         StaticDependencies.getInstance().getLogDelegate().log("payload " + connId + ", " + str);
-        results.remove(connId)._Success.onSuccess(200, null, str);
+        NetworkResponse resp = results.remove(connId);
+        if (respCode >= 200 && respCode <= 299) {
+        	resp.callOnSuccess(respCode, str, fromArrays(headerKeys, headerVals));
+        } else {
+        	resp.callOnFail(""+respCode);
+        }
     }
     
     public void onError(int connId) {
-        results.remove(connId)._Fail.onFail();
+        results.remove(connId).callOnFail("");
     }
 }

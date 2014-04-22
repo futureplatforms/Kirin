@@ -7,6 +7,7 @@ import com.futureplatforms.kirin.dependencies.AsyncCallback;
 import com.futureplatforms.kirin.dependencies.AsyncCallback.AsyncCallback1;
 import com.futureplatforms.kirin.dependencies.AsyncCallback.AsyncCallback2;
 import com.futureplatforms.kirin.dependencies.StaticDependencies;
+import com.futureplatforms.kirin.dependencies.StaticDependencies.LogDelegate;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.SettingsDelegate;
 import com.futureplatforms.kirin.dependencies.fb.FacebookHelper;
 import com.futureplatforms.kirin.dependencies.fb.FacebookHelper.FBGraphResponse;
@@ -18,6 +19,7 @@ import com.google.common.collect.Lists;
 public class FacebookFriends {
 	private static final StaticDependencies _Deps = StaticDependencies.getInstance();
 	private static final SettingsDelegate _Settings = _Deps.getSettingsDelegate();
+	private static final LogDelegate _Log = _Deps.getLogDelegate();
 	
 	private static final String fqlFriendsWithApp = "SELECT uid, first_name, last_name, pic_square FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = me()) AND is_app_user";
 	
@@ -46,8 +48,10 @@ public class FacebookFriends {
 			
 			@Override
 			public void onSuccess(String accessToken, String exp) {
+				_Log.log("FBFriends.checkDBValid: got access token");
 				String savedAccessToken = _Settings.get(FbAccessTokenKey);
 				if (!accessToken.equals(savedAccessToken)) {
+					_Log.log("access token does not match");
 					_DBPlugin.resetDB(new AsyncCallback() {
 						
 						@Override
@@ -61,6 +65,7 @@ public class FacebookFriends {
 						public void onFailure() { }
 					});
 				} else {
+					_Log.log("access token matches!");
 					cb.onSuccess(true);
 				}
 			}
@@ -107,57 +112,89 @@ public class FacebookFriends {
 		}
 	}
 	
+	/**
+	 * onFailure gets invoked if you're not currently logged in
+	 * @param cb
+	 */
 	public static void listFriendsWithAppInstalled(final AsyncCallback1<List<Friend>> cb) {
 		tryDB(cb);
 		if (shouldUseNetwork()) {
-			FacebookHelper.fql(fqlFriendsWithApp, new FBGraphResponse() {
-				
+			FacebookHelper.isLoggedIn(new AsyncCallback1<Boolean>() {
+
 				@Override
-				public void onSuccess(JSONObject obj) {
-					final List<Friend> friends = Lists.newArrayList();
-					try {
-						JSONArray arr = obj.getJSONArray("data");
-						for (int i=0, len=arr.length(); i<len; i++) {
-							JSONObject jsonFriend = arr.getJSONObject(i);
-							try {
-								Friend f = new Friend(
-										jsonFriend.getString("first_name"),
-										jsonFriend.getString("last_name"),
-										""+jsonFriend.getInt("uid"),
-										jsonFriend.getString("pic_square"));
-								friends.add(f);
-							} catch (JSONException e) {
-								StaticDependencies.getInstance().getLogDelegate().log("failed to process friend, " + e.getLocalizedMessage());
-							}
-						}
-					} catch (JSONException e) {
-						StaticDependencies.getInstance().getLogDelegate().log("failed to process friends, " + e.getLocalizedMessage());
-					}
-					if (_DBPlugin != null) {
-						_DBPlugin.saveFriends(friends, new AsyncCallback() {
-
-							@Override
-							public void onSuccess() {
-								cb.onSuccess(friends);
-							}
-
-							@Override
-							public void onFailure() { }
-							
-						});
+				public void onSuccess(Boolean isLoggedIn) {
+					if (!isLoggedIn) {
+						cb.onFailure();
 					} else {
-						cb.onSuccess(friends);
+						FacebookHelper.fql(fqlFriendsWithApp, new FBGraphResponse() {
+							
+							@Override
+							public void onSuccess(final JSONObject obj) {
+								FacebookHelper.getAccessToken(new AsyncCallback2<String, String>() {
+
+									@Override
+									public void onSuccess(String accessToken, String exp) {
+										final List<Friend> friends = Lists.newArrayList();
+										try {
+											JSONArray arr = obj.getJSONArray("data");
+											for (int i=0, len=arr.length(); i<len; i++) {
+												JSONObject jsonFriend = arr.getJSONObject(i);
+												try {
+													Friend f = new Friend(
+															jsonFriend.getString("first_name"),
+															jsonFriend.getString("last_name"),
+															""+jsonFriend.getInt("uid"),
+															jsonFriend.getString("pic_square"));
+													friends.add(f);
+												} catch (JSONException e) {
+													StaticDependencies.getInstance().getLogDelegate().log("failed to process friend, " + e.getLocalizedMessage());
+												}
+											}
+										} catch (JSONException e) {
+											StaticDependencies.getInstance().getLogDelegate().log("failed to process friends, " + e.getLocalizedMessage());
+										}
+										
+										_Settings.put(LastSyncedKey, ""+new Date().getTime());
+										_Settings.put(FbAccessTokenKey, accessToken);
+										
+										if (_DBPlugin != null) {
+											_DBPlugin.saveFriends(friends, new AsyncCallback() {
+												
+												@Override
+												public void onSuccess() {
+													cb.onSuccess(friends);
+												}
+												
+												@Override
+												public void onFailure() { }
+												
+											});
+										} else {
+											cb.onSuccess(friends);
+										}
+									}
+
+									@Override
+									public void onFailure() {
+										
+									}
+									
+								});
+							}
+							
+							@Override
+							public void onNetError() {
+								cb.onFailure();
+							}
+							
+							@Override
+							public void onAuthFailed() { }
+						});
 					}
-					_Settings.put(LastSyncedKey, ""+new Date().getTime());
 				}
-				
+
 				@Override
-				public void onNetError() {
-					cb.onFailure();
-				}
-				
-				@Override
-				public void onAuthFailed() { }
+				public void onFailure() { cb.onFailure(); }
 			});
 		}
 	}

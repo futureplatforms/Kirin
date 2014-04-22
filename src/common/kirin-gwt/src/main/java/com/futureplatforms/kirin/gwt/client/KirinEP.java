@@ -13,10 +13,10 @@ import com.futureplatforms.kirin.gwt.client.delegates.GwtNotificationDelegate;
 import com.futureplatforms.kirin.gwt.client.delegates.GwtSettingsDelegate;
 import com.futureplatforms.kirin.gwt.client.delegates.GwtTimerDelegate;
 import com.futureplatforms.kirin.gwt.client.delegates.KirinLocation;
-import com.futureplatforms.kirin.gwt.client.delegates.KirinNetworking;
 import com.futureplatforms.kirin.gwt.client.delegates.db.GwtDatabaseDelegate;
 import com.futureplatforms.kirin.gwt.client.delegates.fb.GwtFacebook;
 import com.futureplatforms.kirin.gwt.client.delegates.json.GwtJSON;
+import com.futureplatforms.kirin.gwt.client.delegates.net.GwtNetworking;
 import com.futureplatforms.kirin.gwt.client.delegates.xml.GwtXMLParserImpl;
 import com.futureplatforms.kirin.gwt.client.services.SymbolMapService;
 import com.futureplatforms.kirin.gwt.client.services.SymbolMapService.MappedJavaMethod;
@@ -93,7 +93,7 @@ public class KirinEP implements EntryPoint {
                 ld, 
                 new GwtSettingsDelegate(), 
                 new KirinLocation(), 
-                new KirinNetworking(), 
+                new GwtNetworking(),
                 new GwtJSON(), 
                 new GwtXMLParserImpl(),
                 new GwtFormatter(),

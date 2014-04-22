@@ -10,7 +10,6 @@
 
 #import "SettingsBackend.h"
 #import "FileSystemBackend.h"
-#import "NetworkingBackend.h"
 #import "KirinImagePicker.h"
 #import "LocalNotificationsBackend.h"
 #import "KirinLocationBackend.h"
@@ -42,7 +41,6 @@
     KirinExtensions* services = [KirinExtensions empty];
     NSLog(@"Core KirinExtensions");
     [services registerExtension:[[[SettingsBackend alloc] init] autorelease]];
-    [services registerExtension:[[[NetworkingBackend alloc] init] autorelease]];
     NewDatabaseAccessService *dbAccess = [[NewDatabaseAccessService alloc] init];
     [services registerGwtService:dbAccess];
     [services registerGwtService:dbAccess.NewTransactionService];
@@ -55,9 +53,11 @@
     if(NSClassFromString(@"SLComposeViewController")) {
         KirinFacebook* fb = [[KirinFacebook alloc] init];
         [fb onRegister];
-    
     } else {
     }
+    
+    NewNetworkingImpl * newNetworking = [[NewNetworkingImpl alloc] init];
+    [newNetworking onRegister];
     
     return services;
 }

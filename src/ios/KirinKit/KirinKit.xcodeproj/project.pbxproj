@@ -65,9 +65,6 @@
 		1A00C93114B2E32600211F34 /* NativeContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A00C8EC14B2E32600211F34 /* NativeContext.m */; };
 		1A00C93314B2E32600211F34 /* NativeExecutor.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A00C8ED14B2E32600211F34 /* NativeExecutor.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1A00C93414B2E32600211F34 /* SynthesizeSingleton.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A00C8EE14B2E32600211F34 /* SynthesizeSingleton.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		1A00C94114B2E32600211F34 /* Networking.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A00C8F914B2E32600211F34 /* Networking.h */; };
-		1A00C94214B2E32600211F34 /* NetworkingBackend.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A00C8FA14B2E32600211F34 /* NetworkingBackend.h */; };
-		1A00C94314B2E32600211F34 /* NetworkingBackend.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A00C8FB14B2E32600211F34 /* NetworkingBackend.m */; };
 		1A00C94514B2E32600211F34 /* SettingsBackend.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A00C8FC14B2E32600211F34 /* SettingsBackend.h */; };
 		1A00C94614B2E32600211F34 /* SettingsBackend.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A00C8FD14B2E32600211F34 /* SettingsBackend.m */; };
 		1A00C97A14B2E36500211F34 /* NativeContextTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A00C97014B2E36500211F34 /* NativeContextTest.m */; };
@@ -132,8 +129,6 @@
 		1A7B90C914FFDA390090DF19 /* KirinLocation.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A7B90C614FFDA390090DF19 /* KirinLocation.h */; };
 		1A7B90CA14FFDA390090DF19 /* KirinLocationBackend.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A7B90C714FFDA390090DF19 /* KirinLocationBackend.h */; };
 		1A7B90CB14FFDA390090DF19 /* KirinLocationBackend.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A7B90C814FFDA390090DF19 /* KirinLocationBackend.m */; };
-		1A8C032E14C86AF8000829F2 /* StringDownloader.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8C032C14C86AF7000829F2 /* StringDownloader.h */; };
-		1A8C032F14C86AF8000829F2 /* StringDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C032D14C86AF8000829F2 /* StringDownloader.m */; };
 		1A9FE0A114D5F745008C0565 /* NativeObjectHolder.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A9FE09F14D5F744008C0565 /* NativeObjectHolder.h */; };
 		1A9FE0A214D5F745008C0565 /* NativeObjectHolder.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A9FE0A014D5F745008C0565 /* NativeObjectHolder.m */; };
 		1A9FE0A514D5FA51008C0565 /* KirinExtensionOnMainThread.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A9FE0A414D5FA4F008C0565 /* KirinExtensionOnMainThread.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -232,9 +227,6 @@
 		1A00C8EC14B2E32600211F34 /* NativeContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NativeContext.m; sourceTree = "<group>"; };
 		1A00C8ED14B2E32600211F34 /* NativeExecutor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NativeExecutor.h; sourceTree = "<group>"; };
 		1A00C8EE14B2E32600211F34 /* SynthesizeSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SynthesizeSingleton.h; sourceTree = "<group>"; };
-		1A00C8F914B2E32600211F34 /* Networking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Networking.h; sourceTree = "<group>"; };
-		1A00C8FA14B2E32600211F34 /* NetworkingBackend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkingBackend.h; sourceTree = "<group>"; };
-		1A00C8FB14B2E32600211F34 /* NetworkingBackend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkingBackend.m; sourceTree = "<group>"; };
 		1A00C8FC14B2E32600211F34 /* SettingsBackend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsBackend.h; sourceTree = "<group>"; };
 		1A00C8FD14B2E32600211F34 /* SettingsBackend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsBackend.m; sourceTree = "<group>"; };
 		1A00C90714B2E32600211F34 /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
@@ -307,8 +299,6 @@
 		1A7B90C614FFDA390090DF19 /* KirinLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KirinLocation.h; sourceTree = "<group>"; };
 		1A7B90C714FFDA390090DF19 /* KirinLocationBackend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KirinLocationBackend.h; sourceTree = "<group>"; };
 		1A7B90C814FFDA390090DF19 /* KirinLocationBackend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KirinLocationBackend.m; sourceTree = "<group>"; };
-		1A8C032C14C86AF7000829F2 /* StringDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StringDownloader.h; sourceTree = "<group>"; };
-		1A8C032D14C86AF8000829F2 /* StringDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StringDownloader.m; sourceTree = "<group>"; };
 		1A9FE09F14D5F744008C0565 /* NativeObjectHolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NativeObjectHolder.h; sourceTree = "<group>"; };
 		1A9FE0A014D5F745008C0565 /* NativeObjectHolder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NativeObjectHolder.m; sourceTree = "<group>"; };
 		1A9FE0A414D5FA4F008C0565 /* KirinExtensionOnMainThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KirinExtensionOnMainThread.h; sourceTree = "<group>"; };
@@ -645,11 +635,6 @@
 			children = (
 				0991834F1832326600A35AF8 /* NewNetworkingImpl.h */,
 				099183501832326600A35AF8 /* NewNetworkingImpl.m */,
-				1A00C8F914B2E32600211F34 /* Networking.h */,
-				1A00C8FA14B2E32600211F34 /* NetworkingBackend.h */,
-				1A00C8FB14B2E32600211F34 /* NetworkingBackend.m */,
-				1A8C032C14C86AF7000829F2 /* StringDownloader.h */,
-				1A8C032D14C86AF8000829F2 /* StringDownloader.m */,
 			);
 			name = Networking;
 			sourceTree = "<group>";
@@ -759,8 +744,6 @@
 				1A00C93314B2E32600211F34 /* NativeExecutor.h in Headers */,
 				1A00C93414B2E32600211F34 /* SynthesizeSingleton.h in Headers */,
 				09DCA4FD1846342300C3555C /* NewTransactionService.h in Headers */,
-				1A00C94114B2E32600211F34 /* Networking.h in Headers */,
-				1A00C94214B2E32600211F34 /* NetworkingBackend.h in Headers */,
 				1A00C94514B2E32600211F34 /* SettingsBackend.h in Headers */,
 				0991834D1832325E00A35AF8 /* NewDatabaseAccessService.h in Headers */,
 				1A00C99A14B2EE8900211F34 /* KirinKit.h in Headers */,
@@ -775,7 +758,6 @@
 				1A02011D14BD628500CB9765 /* KirinExtensionStub.h in Headers */,
 				1A02012114BD658200CB9765 /* Settings.h in Headers */,
 				1A02012414BD782300CB9765 /* KirinPaths.h in Headers */,
-				1A8C032E14C86AF8000829F2 /* StringDownloader.h in Headers */,
 				1AE3FD8D14C9A41D009C2F3B /* KirinState.h in Headers */,
 				1A06437714CF0DB500FB7EE3 /* KirinImagePicker.h in Headers */,
 				1A06437814CF0DB500FB7EE3 /* CameraProtocol.h in Headers */,
@@ -946,7 +928,6 @@
 				1A00C92B14B2E32600211F34 /* KirinHelper.m in Sources */,
 				1A00C92E14B2E32600211F34 /* KirinWebViewHolder.m in Sources */,
 				1A00C93114B2E32600211F34 /* NativeContext.m in Sources */,
-				1A00C94314B2E32600211F34 /* NetworkingBackend.m in Sources */,
 				09DCA5021846405C00C3555C /* NewTransactionStatement.m in Sources */,
 				1A00C94614B2E32600211F34 /* SettingsBackend.m in Sources */,
 				09DCA4FE1846342300C3555C /* NewTransactionService.m in Sources */,
@@ -957,7 +938,6 @@
 				1A02011E14BD628500CB9765 /* KirinExtensionStub.m in Sources */,
 				090C142618C83D2C0030EC1F /* SymbolMapService.m in Sources */,
 				1A02012514BD782300CB9765 /* KirinPaths.m in Sources */,
-				1A8C032F14C86AF8000829F2 /* StringDownloader.m in Sources */,
 				09B027E118462B6F0033356B /* FMDatabase.m in Sources */,
 				1AE3FD8E14C9A41D009C2F3B /* KirinState.m in Sources */,
 				1A06437614CF0DB500FB7EE3 /* KirinImagePicker.m in Sources */,
