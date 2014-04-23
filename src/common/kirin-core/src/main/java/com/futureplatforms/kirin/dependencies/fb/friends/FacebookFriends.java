@@ -143,7 +143,7 @@ public class FacebookFriends {
 													Friend f = new Friend(
 															jsonFriend.getString("first_name"),
 															jsonFriend.getString("last_name"),
-															""+jsonFriend.getInt("uid"),
+															jsonFriend.getString("uid"),
 															jsonFriend.getString("pic_square"));
 													friends.add(f);
 												} catch (JSONException e) {
@@ -196,6 +196,12 @@ public class FacebookFriends {
 				@Override
 				public void onFailure() { cb.onFailure(); }
 			});
+		}
+	}
+	
+	public static void friendForUid(String uid, AsyncCallback1<Friend> cb) {
+		if (_DBPlugin != null) {
+			_DBPlugin.friendForUid(uid, cb);
 		}
 	}
 }

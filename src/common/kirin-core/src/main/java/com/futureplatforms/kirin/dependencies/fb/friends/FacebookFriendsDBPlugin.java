@@ -10,4 +10,5 @@ public interface FacebookFriendsDBPlugin {
 	public void resetDB(AsyncCallback cb);
 	public void saveFriends(List<Friend> friends, AsyncCallback cb);
 	public void getFriends(AsyncCallback1<List<Friend>> cb);
+	public void friendForUid(String uid, AsyncCallback1<Friend> cb);
 }
