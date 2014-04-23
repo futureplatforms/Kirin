@@ -2,6 +2,7 @@ package com.futureplatforms.kirin.gwt.client.delegates.json;
 
 import java.util.Iterator;
 
+import com.futureplatforms.kirin.dependencies.StaticDependencies;
 import com.futureplatforms.kirin.dependencies.json.JSONException;
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONBoolean;
@@ -149,6 +150,8 @@ public class GwtJSONObject extends
 		} else if (value == null) {
 			jsonObj.put(key, JSONNull.getInstance());
 		}
+		else
+		StaticDependencies.getInstance().getLogDelegate().log("JSON value not added: "+value+" ("+value.getClass().getName()+")");
 
 		return this;
 	}
