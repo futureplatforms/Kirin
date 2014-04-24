@@ -13,7 +13,6 @@ import android.util.Log;
 import com.facebook.FacebookException;
 import com.facebook.FacebookOperationCanceledException;
 import com.facebook.Session;
-import com.facebook.Session.Builder;
 import com.facebook.Session.OpenRequest;
 import com.facebook.Session.StatusCallback;
 import com.facebook.SessionState;
@@ -150,18 +149,21 @@ public class FacebookDelegateImpl implements FacebookDelegate {
 	}
 
 	// Nicked this off http://stackoverflow.com/a/14048644
-	private static Session openActiveSession(Activity activity, boolean allowLoginUI,
-			StatusCallback callback, List<String> permissions) {
-		Log.d("FB", "allowLoginUI :: " + allowLoginUI);
-		Session session = new Builder(activity).build();
-		if (SessionState.CREATED_TOKEN_LOADED.equals(session.getState()) || allowLoginUI) {
-			if (allowLoginUI || hasAllPermissions(session.getPermissions(), permissions)) {
-				Log.d("FB", "about to open for read");
-				return openForRead(activity, permissions, callback);
-			}
-		}
-		return null;
-	}
+	// private static Session openActiveSession(Activity activity, boolean
+	// allowLoginUI,
+	// StatusCallback callback, List<String> permissions) {
+	// Log.d("FB", "allowLoginUI :: " + allowLoginUI);
+	// Session session = new Builder(activity).build();
+	// if (SessionState.CREATED_TOKEN_LOADED.equals(session.getState()) ||
+	// allowLoginUI) {
+	// if (allowLoginUI || hasAllPermissions(session.getPermissions(),
+	// permissions)) {
+	// Log.d("FB", "about to open for read");
+	// return openForRead(activity, permissions, callback);
+	// }
+	// }
+	// return null;
+	// }
 
 	private FacebookShareCallback _Callback;
 
@@ -245,21 +247,23 @@ public class FacebookDelegateImpl implements FacebookDelegate {
 	}
 
 	public static FacebookLoginCallback newReadPermissionsCallback;
+
 	@Override
 	public void nativeOpenSessionWithReadPermissions(final FacebookLoginCallback callback,
 			boolean allowUI, ReadPermission... permissions) {
 		Log.d("FB", "nativeOpenSessionWithReadPermissions");
 		newReadPermissionsCallback = callback;
-		context.startActivity(FacebookActivity.newIntentForLogIn(context, permissions));
+		context.startActivity(FacebookActivity.newIntentForLogIn(context, allowUI, permissions));
 	}
 
 	public static FacebookLoginCallback newPublishPermissionsCallback;
+
 	@Override
 	public void nativeRequestPublishPermissions(final FacebookLoginCallback callback,
 			PublishPermission... permissions) {
 		Log.d("FB", "nativeRequestPublishPermissions");
 		newPublishPermissionsCallback = callback;
-		context.startActivity(FacebookActivity.newIntentForLogInPublish(context, permissions));
+		context.startActivity(FacebookActivity.newIntentForLogInPublish(context, true, permissions));
 	}
 
 	@Override

@@ -1,7 +1,6 @@
 package com.futureplatforms.kirin.android;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
@@ -56,66 +55,84 @@ public class FacebookActivity extends Activity {
 			case LOG_IN_READ:
 				final ArrayList<String> readPermissions = (ArrayList<String>) args
 						.getSerializable(PERMISSIONS);
-				Session.openActiveSession(this, true, new StatusCallback() {
+				Session readSession = Session.openActiveSession(this,
+						args.getBoolean(ALLOW_LOGIN_UI), new StatusCallback() {
 
-					@Override
-					public void call(Session session, SessionState state, Exception exception) {
-						if (state.isOpened()) {
-							if (readPermissions != null) {
-								if (!session.getPermissions().containsAll(readPermissions)) {
-									session.requestNewReadPermissions(new NewPermissionsRequest(
-											FacebookActivity.this, readPermissions));
-								} else {
-									FacebookDelegateImpl.newReadPermissionsCallback.onSuccess();
+							@Override
+							public void call(Session session, SessionState state,
+									Exception exception) {
+								if (state.isOpened()) {
+									if (readPermissions != null) {
+										if (!session.getPermissions().containsAll(readPermissions)) {
+											session.requestNewReadPermissions(new NewPermissionsRequest(
+													FacebookActivity.this, readPermissions));
+										} else {
+											FacebookDelegateImpl.newReadPermissionsCallback
+													.onSuccess();
+											FacebookDelegateImpl.newReadPermissionsCallback = null;
+											finish();
+										}
+									} else {
+										FacebookDelegateImpl.newReadPermissionsCallback.onSuccess();
+										FacebookDelegateImpl.newReadPermissionsCallback = null;
+										finish();
+									}
+								} else if (exception != null) {
+									FacebookDelegateImpl.newReadPermissionsCallback.onFailure();
+									FacebookDelegateImpl.newReadPermissionsCallback = null;
+									finish();
+								} else if (exception instanceof FacebookOperationCanceledException) {
+									FacebookDelegateImpl.newReadPermissionsCallback.onUserCancel();
 									FacebookDelegateImpl.newReadPermissionsCallback = null;
 									finish();
 								}
-							} else {
-								FacebookDelegateImpl.newReadPermissionsCallback.onSuccess();
-								FacebookDelegateImpl.newReadPermissionsCallback = null;
-								finish();
 							}
-						} else if (exception != null) {
-							FacebookDelegateImpl.newReadPermissionsCallback.onFailure();
-							FacebookDelegateImpl.newReadPermissionsCallback = null;
-							finish();
-						} else if (exception instanceof FacebookOperationCanceledException) {
-							FacebookDelegateImpl.newReadPermissionsCallback.onUserCancel();
-							FacebookDelegateImpl.newReadPermissionsCallback = null;
-							finish();
-						}
-					}
-				});
+						});
+				if (readSession == null) {
+					FacebookDelegateImpl.newPublishPermissionsCallback.onFailure();
+					FacebookDelegateImpl.newPublishPermissionsCallback = null;
+					finish();
+				}
 				break;
 			case LOG_IN_PUBLISH:
 				final ArrayList<String> publishPermissions = (ArrayList<String>) args
 						.getSerializable(PERMISSIONS);
-				Session.openActiveSession(this, true, new StatusCallback() {
+				Session publishSession = Session.openActiveSession(this,
+						args.getBoolean(ALLOW_LOGIN_UI), new StatusCallback() {
 
-					@Override
-					public void call(Session session, SessionState state, Exception exception) {
-						if (state.isOpened()) {
-							if (publishPermissions != null) {
-								if (!session.getPermissions().containsAll(publishPermissions)) {
-									session.requestNewPublishPermissions(new NewPermissionsRequest(
-											FacebookActivity.this, publishPermissions));
-								} else {
-									FacebookDelegateImpl.newPublishPermissionsCallback.onSuccess();
+							@Override
+							public void call(Session session, SessionState state,
+									Exception exception) {
+								if (state.isOpened()) {
+									if (publishPermissions != null) {
+										if (!session.getPermissions().containsAll(
+												publishPermissions)) {
+											session.requestNewPublishPermissions(new NewPermissionsRequest(
+													FacebookActivity.this, publishPermissions));
+										} else {
+											FacebookDelegateImpl.newPublishPermissionsCallback
+													.onSuccess();
+											FacebookDelegateImpl.newPublishPermissionsCallback = null;
+											finish();
+										}
+									}
+								} else if (exception != null) {
+									FacebookDelegateImpl.newPublishPermissionsCallback.onFailure();
+									FacebookDelegateImpl.newPublishPermissionsCallback = null;
+									finish();
+								} else if (exception instanceof FacebookOperationCanceledException) {
+									FacebookDelegateImpl.newPublishPermissionsCallback
+											.onUserCancel();
 									FacebookDelegateImpl.newPublishPermissionsCallback = null;
 									finish();
 								}
 							}
-						} else if (exception != null) {
-							FacebookDelegateImpl.newPublishPermissionsCallback.onFailure();
-							FacebookDelegateImpl.newPublishPermissionsCallback = null;
-							finish();
-						} else if (exception instanceof FacebookOperationCanceledException) {
-							FacebookDelegateImpl.newPublishPermissionsCallback.onUserCancel();
-							FacebookDelegateImpl.newPublishPermissionsCallback = null;
-							finish();
-						}
-					}
-				});
+						});
+				if (publishSession == null) {
+					FacebookDelegateImpl.newPublishPermissionsCallback.onFailure();
+					FacebookDelegateImpl.newPublishPermissionsCallback = null;
+					finish();
+				}
 				break;
 		}
 	}
@@ -164,16 +181,19 @@ public class FacebookActivity extends Activity {
 				REQUEST_TYPE, IS_LOGGED_IN);
 	}
 
-	public static Intent newIntentForLogIn(Context context, ReadPermission... readPermissions) {
+	public static Intent newIntentForLogIn(Context context, boolean allowLoginUI,
+			ReadPermission... readPermissions) {
 		return new Intent(context, FacebookActivity.class).setFlags(defaultFlags)
-				.putExtra(REQUEST_TYPE, LOG_IN_READ).putExtra(PERMISSIONS, names(readPermissions));
+				.putExtra(REQUEST_TYPE, LOG_IN_READ).putExtra(PERMISSIONS, names(readPermissions))
+				.putExtra(ALLOW_LOGIN_UI, allowLoginUI);
 	}
 
-	public static Intent newIntentForLogInPublish(Context context,
+	public static Intent newIntentForLogInPublish(Context context, boolean allowLoginUI,
 			PublishPermission... publishPermissions) {
 		return new Intent(context, FacebookActivity.class).setFlags(defaultFlags)
 				.putExtra(REQUEST_TYPE, LOG_IN_PUBLISH)
-				.putExtra(PERMISSIONS, names(publishPermissions));
+				.putExtra(PERMISSIONS, names(publishPermissions))
+				.putExtra(ALLOW_LOGIN_UI, allowLoginUI);
 	}
 
 	public static ArrayList<String> names(Enum[] permissions) {
