@@ -28,6 +28,6 @@ public final class Kirin {
                 new AndroidDatabase(context),
                 new AndroidTimer(),
                 new AndroidNotification(context),
-                new FacebookDelegateImpl());
+                new FacebookDelegateImpl(context));
     }
 }
