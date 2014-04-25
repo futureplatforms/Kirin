@@ -1,5 +1,4 @@
 ﻿using KirinWindows.Core;
-using KirinWP8.WP8;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,9 +14,9 @@ namespace KirinWP8
             return new WP8WebBrowser();
         }
 
-        public INetworking GetNetworking(string name, Kirin k)
+        public Generated.NetworkingServiceNative GetNetworking(string name, Kirin k)
         {
-            return new WP8Networking(name, k);
+            return new WP8GwtNetworking(name, k);
         }
 
         public ISettingsBackend GetSettingsBackend()

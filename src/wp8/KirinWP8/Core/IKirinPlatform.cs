@@ -9,7 +9,7 @@ namespace KirinWindows.Core
     public interface IKirinPlatform
     {
         IWebBrowserWrapper GetWebBrowserWrapper();
-        INetworking GetNetworking(string name, Kirin k);
+        Generated.NetworkingServiceNative GetNetworking(string name, Kirin k);
         ISettingsBackend GetSettingsBackend();
         IFileBackend GetFileBackend(string assemblyName);
     }

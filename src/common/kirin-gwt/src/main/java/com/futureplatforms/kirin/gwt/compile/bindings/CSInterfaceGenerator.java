@@ -16,7 +16,7 @@ public class CSInterfaceGenerator extends InterfaceGenerator {
 	public String preambleForClass(String name) {
 		String s = "/* Generated from " + name + "\n * Do not edit, as this WILL be overwritten\n */\n";
 		s += "namespace Generated {\n";
-		s += "interface " + name + " {\n";
+		s += "public interface " + name + " {\n";
 		return s;
 	}
 

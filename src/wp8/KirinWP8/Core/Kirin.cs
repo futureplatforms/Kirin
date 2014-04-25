@@ -19,7 +19,7 @@ namespace KirinWindows.Core
             holder = new KirinWebViewHolder(context = new NativeContext(), platform.GetWebBrowserWrapper());
             BindScreen(new DebugConsole(), "DebugConsole", isGwt:false);
 
-            platform.GetNetworking("Networking", this);
+            platform.GetNetworking("NetworkingService", this);
             new Settings("Settings", this, platform.GetSettingsBackend());
             new KirinWindows.Core.SymbolMaps(this, platform.GetFileBackend(assemblyName));
             DBService db = new KirinWindows.Core.DBService(this);
