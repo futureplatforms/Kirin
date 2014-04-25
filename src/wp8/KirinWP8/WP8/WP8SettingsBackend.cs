@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KirinWP8.WP8
+namespace KirinWP8
 {
     class WP8SettingsBackend : ISettingsBackend
     {

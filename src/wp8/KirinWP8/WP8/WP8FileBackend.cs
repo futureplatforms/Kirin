@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace KirinWP8.WP8
+namespace KirinWP8
 {
     class WP8FileBackend : IFileBackend
     {
