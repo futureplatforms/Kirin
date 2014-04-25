@@ -89,8 +89,8 @@ public class FacebookActivity extends Activity {
 							}
 						});
 				if (readSession == null) {
-					FacebookDelegateImpl.newPublishPermissionsCallback.onFailure();
-					FacebookDelegateImpl.newPublishPermissionsCallback = null;
+					FacebookDelegateImpl.newReadPermissionsCallback.onFailure();
+					FacebookDelegateImpl.newReadPermissionsCallback = null;
 					finish();
 				}
 				break;
