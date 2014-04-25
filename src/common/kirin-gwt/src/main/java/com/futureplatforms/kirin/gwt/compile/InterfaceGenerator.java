@@ -22,11 +22,11 @@ public abstract class InterfaceGenerator {
 		
 		// C#
 		"as", "checked", "const", "delegate", "event", "explicit", "extern", "fixed", "foreach", "goto", "implicit",
-		"internal", "lock", "namespace", "operator", "out", "override", "params", "readonly", "sbyte", "sealed",
+		"internal", "lock", "namespace", "operator", "out", "override", "params", "readonly", "ref", "sbyte", "sealed",
 		"stackalloc", "uint", "ulong", "unchecked", "unsafe", "ushort", "using", "virtual",
 		
 		// Obj-C
-		"alloc", "auto", "atomic", "BOOL", "bycopy", "byref", "Class", "init", "inline", "inout", "NO", "nonatomic", 
+		"alloc", "auto", "atomic", "BOOL", "bycopy", "byref", "Class", "id", "init", "inline", "inout", "NO", "nonatomic", 
 		"NULL", "oneway", "Protocol", "retain", "register", "restrict", "SEL", "signed", "struct", "typedef", "union", 
 		"unsigned", "YES", "_Bool", "_Complex", "_Imaginary"
 	};
