@@ -5,7 +5,7 @@ import com.futureplatforms.kirin.dependencies.NotificationDelegate;
 public class GwtNotificationDelegate implements NotificationDelegate {
 
 	private static native void callScheduleNotification(final int notificationId, final double timeMillisSince1970, final String title, final String text) /*-{
-	    var notifications = require("LocalNotifications");
+	    var notifications = $wnd.require("LocalNotifications");
 	    
 	    var config = {
 	    	title: title,
@@ -15,10 +15,11 @@ public class GwtNotificationDelegate implements NotificationDelegate {
 	    };
 	    
 	    notifications.scheduleNotification(config);
+		
 	}-*/;
 	
 	private static native void callCancelNotification(final int notificationId) /*-{
-	    require("LocalNotifications").cancelNotification(notificationId);
+	    $wnd.require("LocalNotifications").cancelNotification(notificationId);
 	}-*/;
 	
 	@Override
