@@ -41,6 +41,7 @@
     KirinExtensions* services = [KirinExtensions empty];
     NSLog(@"Core KirinExtensions");
     [services registerExtension:[[[SettingsBackend alloc] init] autorelease]];
+    [services registerExtension:[[LocalNotificationsBackend alloc] init]];
     NewDatabaseAccessService *dbAccess = [[NewDatabaseAccessService alloc] init];
     [services registerGwtService:dbAccess];
     [services registerGwtService:dbAccess.NewTransactionService];
