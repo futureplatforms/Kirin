@@ -13,7 +13,6 @@ import android.util.Log;
 import com.facebook.FacebookException;
 import com.facebook.FacebookOperationCanceledException;
 import com.facebook.Session;
-import com.facebook.Session.OpenRequest;
 import com.facebook.Session.StatusCallback;
 import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
@@ -29,11 +28,9 @@ import com.futureplatforms.kirin.dependencies.fb.FacebookDelegate;
 import com.futureplatforms.kirin.dependencies.fb.FacebookDetails.FacebookLoginCallback;
 import com.futureplatforms.kirin.dependencies.fb.FacebookDetails.FacebookRequestsCallback;
 import com.futureplatforms.kirin.dependencies.fb.FacebookDetails.FacebookShareCallback;
-import com.futureplatforms.kirin.dependencies.fb.FacebookDetails.Permission;
 import com.futureplatforms.kirin.dependencies.fb.FacebookDetails.PublishPermission;
 import com.futureplatforms.kirin.dependencies.fb.FacebookDetails.ReadPermission;
 import com.futureplatforms.kirin.dependencies.fb.FacebookDetails.ShareDialogParams;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 public class FacebookDelegateImpl implements FacebookDelegate {
@@ -129,25 +126,6 @@ public class FacebookDelegateImpl implements FacebookDelegate {
 		}
 	}
 
-	private static boolean hasAllPermissions(List<String> currentPermissions,
-			List<String> desiredPermissions) {
-		List<String> desiredCopy = Lists.newArrayList(desiredPermissions);
-		for (String current : currentPermissions) {
-			desiredCopy.remove(current);
-		}
-		Log.d("FB", "hasAllPermissions :: " + desiredCopy.isEmpty());
-		return desiredCopy.isEmpty();
-	}
-
-	private static Session openForRead(Activity activity, List<String> permissions,
-			StatusCallback callback) {
-		Session session = Session.getActiveSession();
-		OpenRequest openRequest = new OpenRequest(activity).setPermissions(permissions)
-				.setCallback(callback);
-		session.openForRead(openRequest);
-		return session;
-	}
-
 	// Nicked this off http://stackoverflow.com/a/14048644
 	// private static Session openActiveSession(Activity activity, boolean
 	// allowLoginUI,
@@ -236,14 +214,6 @@ public class FacebookDelegateImpl implements FacebookDelegate {
 		if (session != null && session.isOpened()) {
 			session.closeAndClearTokenInformation();
 		}
-	}
-
-	private List<String> permissionStrings(Permission... permissions) {
-		List<String> permissionStrings = Lists.newArrayList();
-		for (Permission permission : permissions) {
-			permissionStrings.add(permission.toString());
-		}
-		return permissionStrings;
 	}
 
 	public static FacebookLoginCallback newReadPermissionsCallback;
