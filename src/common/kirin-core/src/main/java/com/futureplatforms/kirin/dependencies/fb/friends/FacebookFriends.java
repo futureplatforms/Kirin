@@ -99,13 +99,18 @@ public class FacebookFriends {
 		if (_DBPlugin != null) {
 			try {
 				long lastSynced = Long.parseLong(_Settings.get(LastSyncedKey), 10);
+				
+				// If we haven't thrown an exception, we have a valid last synced time
 				if ((new Date().getTime() - lastSynced) > _IntervalMs) {
+					// And it is GREATER than the interval, so DO use network 
 					return true;
 				} else {
+					// It is LESS than the interval so DO NOT use network
 					return false;
 				}
 			} catch (NumberFormatException e) {
-				return false;
+				// There is no valid last synced time, so DO use network this time. 
+				return true;
 			}
 		} else {
 			return true;
