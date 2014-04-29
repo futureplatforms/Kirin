@@ -7,12 +7,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.facebook.FacebookException;
 import com.facebook.FacebookOperationCanceledException;
 import com.facebook.Session;
 import com.facebook.Session.NewPermissionsRequest;
 import com.facebook.Session.StatusCallback;
 import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
+import com.facebook.widget.WebDialog;
+import com.facebook.widget.WebDialog.OnCompleteListener;
 import com.futureplatforms.kirin.dependencies.fb.FacebookDetails.PublishPermission;
 import com.futureplatforms.kirin.dependencies.fb.FacebookDetails.ReadPermission;
 import com.google.common.collect.Lists;
@@ -27,6 +30,7 @@ public class FacebookActivity extends Activity {
 	private static final int IS_LOGGED_IN = 1;
 	private static final int LOG_IN_READ = 2;
 	private static final int LOG_IN_PUBLISH = 3;
+	private static final int REQUESTS_DIALOG = 4;
 
 	UiLifecycleHelper helper;
 
@@ -134,6 +138,28 @@ public class FacebookActivity extends Activity {
 					finish();
 				}
 				break;
+			case REQUESTS_DIALOG:
+				WebDialog dialog = new WebDialog.RequestsDialogBuilder(this,
+						Session.getActiveSession(), new Bundle()).setOnCompleteListener(
+						new OnCompleteListener() {
+
+							@Override
+							public void onComplete(Bundle values, FacebookException error) {
+								// TODO complete me
+								/*
+								 * if (error != null) { if (err instanceof
+								 * FacebookOperationCanceledException) {
+								 * cb.onUserCancel(); } else { cb.onFailure(); }
+								 * } else { String postIdKey = "post_id"; if
+								 * (bundle.containsKey(postIdKey)) {
+								 * cb.onSuccess(bundle.getString(postIdKey)); }
+								 * else { cb.onFailure(); } }
+								 */
+								finish();
+							}
+						}).build();
+				dialog.show();
+				break;
 		}
 	}
 
@@ -173,6 +199,17 @@ public class FacebookActivity extends Activity {
 		helper.onDestroy();
 	}
 
+	public static ArrayList<String> names(Enum[] permissions) {
+		if (permissions == null) return null;
+		ArrayList<String> names = Lists.newArrayListWithCapacity(permissions.length);
+
+		for (int i = 0; i < permissions.length; i++) {
+			names.add(permissions[i].name());
+		}
+
+		return names;
+	}
+
 	public static int defaultFlags = Intent.FLAG_ACTIVITY_NEW_TASK
 			| Intent.FLAG_ACTIVITY_NO_ANIMATION;
 
@@ -196,15 +233,8 @@ public class FacebookActivity extends Activity {
 				.putExtra(ALLOW_LOGIN_UI, allowLoginUI);
 	}
 
-	public static ArrayList<String> names(Enum[] permissions) {
-		if (permissions == null) return null;
-		ArrayList<String> names = Lists.newArrayListWithCapacity(permissions.length);
-
-		for (int i = 0; i < permissions.length; i++) {
-			names.add(permissions[i].name());
-		}
-
-		return names;
+	public static Intent newIntentForRequestsDialog(Context context) {
+		return new Intent(context, FacebookActivity.class).setFlags(defaultFlags).putExtra(
+				REQUEST_TYPE, REQUESTS_DIALOG);
 	}
-
 }

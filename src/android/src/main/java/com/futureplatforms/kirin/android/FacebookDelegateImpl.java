@@ -236,27 +236,30 @@ public class FacebookDelegateImpl implements FacebookDelegate {
 		context.startActivity(FacebookActivity.newIntentForLogInPublish(context, true, permissions));
 	}
 
+	// private FacebookRequestsCallback facebookRequestsCallback;
 	@Override
 	public void presentRequestsDialog(FacebookRequestsCallback cb) {
-		WebDialog dialog = new WebDialog.RequestsDialogBuilder(_Activity,
-				Session.getActiveSession(), new Bundle()).setOnCompleteListener(
-				new OnCompleteListener() {
-
-					@Override
-					public void onComplete(Bundle values, FacebookException error) {
-						// TODO complete me
-						/*
-						 * if (error != null) { if (err instanceof
-						 * FacebookOperationCanceledException) {
-						 * cb.onUserCancel(); } else { cb.onFailure(); } } else
-						 * { String postIdKey = "post_id"; if
-						 * (bundle.containsKey(postIdKey)) {
-						 * cb.onSuccess(bundle.getString(postIdKey)); } else {
-						 * cb.onFailure(); } }
-						 */
-					}
-				}).build();
-		dialog.show();
+		// this.facebookRequestsCallback = cb;
+		// WebDialog dialog = new WebDialog.RequestsDialogBuilder(_Activity,
+		// Session.getActiveSession(), new Bundle()).setOnCompleteListener(
+		// new OnCompleteListener() {
+		//
+		// @Override
+		// public void onComplete(Bundle values, FacebookException error) {
+		// // TODO complete me
+		// /*
+		// * if (error != null) { if (err instanceof
+		// * FacebookOperationCanceledException) {
+		// * cb.onUserCancel(); } else { cb.onFailure(); } } else
+		// * { String postIdKey = "post_id"; if
+		// * (bundle.containsKey(postIdKey)) {
+		// * cb.onSuccess(bundle.getString(postIdKey)); } else {
+		// * cb.onFailure(); } }
+		// */
+		// }
+		// }).build();
+		// dialog.show();
+		context.startActivity(FacebookActivity.newIntentForRequestsDialog(context));
 	}
 
 	// isLoggedIn
