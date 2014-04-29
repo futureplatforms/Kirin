@@ -236,10 +236,11 @@ public class FacebookDelegateImpl implements FacebookDelegate {
 		context.startActivity(FacebookActivity.newIntentForLogInPublish(context, true, permissions));
 	}
 
-	// private FacebookRequestsCallback facebookRequestsCallback;
+	public static  FacebookRequestsCallback facebookRequestsCallback;
+
 	@Override
 	public void presentRequestsDialog(FacebookRequestsCallback cb) {
-		// this.facebookRequestsCallback = cb;
+		this.facebookRequestsCallback = cb;
 		// WebDialog dialog = new WebDialog.RequestsDialogBuilder(_Activity,
 		// Session.getActiveSession(), new Bundle()).setOnCompleteListener(
 		// new OnCompleteListener() {
