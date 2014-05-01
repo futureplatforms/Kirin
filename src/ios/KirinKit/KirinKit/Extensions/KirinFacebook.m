@@ -108,27 +108,28 @@
     }
 }
 
-- (void) getAccessToken {
+- (void) getAccessToken: (int) cbId {
     NSString *fbAccessToken = [FBSession activeSession].accessTokenData.accessToken;
     NSDate *fbAccessTokenExpDate = [FBSession activeSession].accessTokenData.expirationDate;
     NSDateFormatter *isoFormat = [[NSDateFormatter alloc] init];
-    [isoFormat setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSZ"];
+    //2014-06-29T17:45:02.481+0100
+    [isoFormat setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"];
     NSString *createdDateStr = [isoFormat stringFromDate:fbAccessTokenExpDate];
 
-    [self.kirinModule setAccessToken:fbAccessToken :createdDateStr];
+    [self.kirinModule setAccessToken: cbId :fbAccessToken :createdDateStr];
 }
 
-- (void) getAppId {
+- (void) getAppId:(int) cbId {
     NSString *appId = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"FacebookAppID"];
-    [self.kirinModule setAppId:appId];
+    [self.kirinModule setAppId: cbId: appId];
 }
 
-- (void) isLoggedIn {
+- (void) isLoggedIn:(int) cbId {
     if (FBSession.activeSession.state == FBSessionStateOpen ||
         FBSession.activeSession.state == FBSessionStateOpenTokenExtended) {
-        [self.kirinModule setIsLoggedIn:YES];
+        [self.kirinModule setIsLoggedIn: cbId :YES];
     } else {
-        [self.kirinModule setIsLoggedIn:NO];
+        [self.kirinModule setIsLoggedIn: cbId : NO];
     }
 }
 
@@ -171,14 +172,14 @@
     }
 }
 
-- (void) getCurrentPermissions {
+- (void) getCurrentPermissions: (int) cbId {
     NSMutableArray *arr;
     if ([FBSession.activeSession.permissions count] > 0) {
         arr = [[NSMutableArray alloc] initWithArray:FBSession.activeSession.permissions];
     } else {
         arr = [[NSMutableArray alloc] init];
     }
-    [self.kirinModule setCurrentPermissions:arr];
+    [self.kirinModule setCurrentPermissions: cbId:arr];
 }
 
 - (void) requestPublishPermissions: (NSArray*) permissions : (int) cbId {

@@ -53,21 +53,36 @@ public class GwtFacebookService extends KirinService<GwtFacebookServiceNative> {
     private int _RequestId = Integer.MIN_VALUE;
     private Map<Integer, FacebookRequestsCallback> _RequestCallbacks = Maps.newHashMap();
     
-    private AsyncCallback2<String, String> _AccessTokenCallback;
-    private AsyncCallback1<Boolean> _IsLoggedInCallback;
-    private AsyncCallback1<String> _AppIdCallback;
-    private AsyncCallback1<String[]> _CurrentPermissionsCallback;
+    // accesstoken callbacks
+    private int _AccessTokenId = Integer.MIN_VALUE;
+    private Map<Integer, AsyncCallback2<String, String>> _AccessTokenCallbacks = Maps.newHashMap();
+    
+    // logged-in callbacks
+    private int _IsLoggedInId = Integer.MIN_VALUE;
+    private Map<Integer, AsyncCallback1<Boolean>> _IsLoggedInCallbacks = Maps.newHashMap();
+    
+    // appid callbacks
+    private int _AppIdId = Integer.MIN_VALUE;
+    private Map<Integer, AsyncCallback1<String>> _AppIdCallbacks = Maps.newHashMap();
+    
+    // permissions callbacks
+    private int _CurrentPermissionsId = Integer.MIN_VALUE;
+    private Map<Integer, AsyncCallback1<String[]>> _CurrentPermissionsCallbacks = Maps.newHashMap();
     
     @NoExport
     public void _getAccessToken(AsyncCallback2<String, String> cb) {
-    	_AccessTokenCallback = cb;
-    	getNativeObject().getAccessToken();
+    	int id = _AccessTokenId;
+    	_AccessTokenId++;
+    	_AccessTokenCallbacks.put(id, cb);
+    	getNativeObject().getAccessToken(id);
     }
     
     @NoExport
     public void _isLoggedIn(AsyncCallback1<Boolean> cb) {
-    	_IsLoggedInCallback = cb;
-    	getNativeObject().isLoggedIn();
+    	int id = _IsLoggedInId;
+    	_IsLoggedInId++;
+    	_IsLoggedInCallbacks.put(id, cb);
+    	getNativeObject().isLoggedIn(id);
     }
     
 	@NoExport
@@ -88,8 +103,10 @@ public class GwtFacebookService extends KirinService<GwtFacebookServiceNative> {
 	
 	@NoExport
 	public void _getAppId(AsyncCallback1<String> cb) {
-		_AppIdCallback = cb;
-		getNativeObject().getAppId();
+		int id = _AppIdId;
+		_AppIdId++;
+		_AppIdCallbacks.put(id, cb);
+		getNativeObject().getAppId(id);
 	}
 	
 	@NoExport
@@ -99,8 +116,10 @@ public class GwtFacebookService extends KirinService<GwtFacebookServiceNative> {
 	
 	@NoExport
 	public void _getCurrentPermissions(AsyncCallback1<String[]> cb) {
-		_CurrentPermissionsCallback = cb;
-		getNativeObject().getCurrentPermissions();
+		int id = _CurrentPermissionsId;
+		_CurrentPermissionsId++;
+		_CurrentPermissionsCallbacks.put(id, cb);
+		getNativeObject().getCurrentPermissions(id);
 	}
 	
 	@NoExport
@@ -163,18 +182,18 @@ public class GwtFacebookService extends KirinService<GwtFacebookServiceNative> {
 		_ShareCallbacks.remove(cbId).onFailure();
 	}
 	
-	public void setAccessToken(String accessToken, String expirationDate) {
-		_AccessTokenCallback.onSuccess(accessToken, expirationDate);
+	public void setAccessToken(int cbId, String accessToken, String expirationDate) {
+		_AccessTokenCallbacks.remove(cbId).onSuccess(accessToken, expirationDate);
 	}
-	public void setIsLoggedIn(boolean isLoggedIn) {
-		_IsLoggedInCallback.onSuccess(isLoggedIn);
+	public void setIsLoggedIn(int cbId, boolean isLoggedIn) {
+		_IsLoggedInCallbacks.remove(cbId).onSuccess(isLoggedIn);
 	}
-	public void setAppId(String appId) {
-		_AppIdCallback.onSuccess(appId);
+	public void setAppId(int cbId, String appId) {
+		_AppIdCallbacks.remove(cbId).onSuccess(appId);
 	}
 	
-	public void setCurrentPermissions(String[] currentPermissions) {
-		_CurrentPermissionsCallback.onSuccess(currentPermissions);
+	public void setCurrentPermissions(int cbId, String[] currentPermissions) {
+		_CurrentPermissionsCallbacks.remove(cbId).onSuccess(currentPermissions);
 	}
 	
 
