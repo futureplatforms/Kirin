@@ -9,7 +9,7 @@ public class ConsoleLocation implements LocationDelegate
 	{
 	}
 
-    public void getLocation(Accuracy accuracy, LocationCallback callback) {
+    public void startUpdatingLocation(Accuracy accuracy, LocationCallback callback) {
         // TODO Auto-generated method stub
         
     }

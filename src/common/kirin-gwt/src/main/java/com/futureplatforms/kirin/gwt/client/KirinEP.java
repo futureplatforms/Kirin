@@ -9,10 +9,10 @@ import com.futureplatforms.kirin.dependencies.StaticDependencies;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.Configuration;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.LogDelegate;
 import com.futureplatforms.kirin.gwt.client.delegates.GwtFormatter;
+import com.futureplatforms.kirin.gwt.client.delegates.GwtLocation;
 import com.futureplatforms.kirin.gwt.client.delegates.GwtNotificationDelegate;
 import com.futureplatforms.kirin.gwt.client.delegates.GwtSettingsDelegate;
 import com.futureplatforms.kirin.gwt.client.delegates.GwtTimerDelegate;
-import com.futureplatforms.kirin.gwt.client.delegates.KirinLocation;
 import com.futureplatforms.kirin.gwt.client.delegates.db.GwtDatabaseDelegate;
 import com.futureplatforms.kirin.gwt.client.delegates.fb.GwtFacebook;
 import com.futureplatforms.kirin.gwt.client.delegates.json.GwtJSON;
@@ -92,7 +92,7 @@ public class KirinEP implements EntryPoint {
         StaticDependencies.getInstance().setDependencies(
                 ld, 
                 new GwtSettingsDelegate(), 
-                new KirinLocation(), 
+                new GwtLocation(), 
                 new GwtNetworking(),
                 new GwtJSON(), 
                 new GwtXMLParserImpl(),

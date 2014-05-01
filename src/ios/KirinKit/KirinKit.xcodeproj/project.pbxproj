@@ -31,6 +31,8 @@
 		09B027EA18462B6F0033356B /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 09B027DF18462B6F0033356B /* FMResultSet.m */; };
 		09B0B56118E3616500A87C5D /* WebviewHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 09B0B55F18E3616500A87C5D /* WebviewHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		09B0B56218E3616500A87C5D /* WebviewHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 09B0B56018E3616500A87C5D /* WebviewHelper.m */; };
+		09C2D369191280020097F9EB /* KirinGwtLocation.h in Headers */ = {isa = PBXBuildFile; fileRef = 09C2D367191280020097F9EB /* KirinGwtLocation.h */; };
+		09C2D36A191280020097F9EB /* KirinGwtLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 09C2D368191280020097F9EB /* KirinGwtLocation.m */; };
 		09D8177217E21D6E00611BBE /* UIViewController+Hybrid.h in Headers */ = {isa = PBXBuildFile; fileRef = 09D8177017E21D6E00611BBE /* UIViewController+Hybrid.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		09D8177317E21D6E00611BBE /* UIViewController+Hybrid.m in Sources */ = {isa = PBXBuildFile; fileRef = 09D8177117E21D6E00611BBE /* UIViewController+Hybrid.m */; };
 		09DCA4FD1846342300C3555C /* NewTransactionService.h in Headers */ = {isa = PBXBuildFile; fileRef = 09DCA4FB1846342300C3555C /* NewTransactionService.h */; };
@@ -188,6 +190,8 @@
 		09B027DF18462B6F0033356B /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
 		09B0B55F18E3616500A87C5D /* WebviewHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebviewHelper.h; sourceTree = "<group>"; };
 		09B0B56018E3616500A87C5D /* WebviewHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebviewHelper.m; sourceTree = "<group>"; };
+		09C2D367191280020097F9EB /* KirinGwtLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KirinGwtLocation.h; sourceTree = "<group>"; };
+		09C2D368191280020097F9EB /* KirinGwtLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KirinGwtLocation.m; sourceTree = "<group>"; };
 		09D8177017E21D6E00611BBE /* UIViewController+Hybrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Hybrid.h"; sourceTree = "<group>"; };
 		09D8177117E21D6E00611BBE /* UIViewController+Hybrid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Hybrid.m"; sourceTree = "<group>"; };
 		09DCA4FB1846342300C3555C /* NewTransactionService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewTransactionService.h; path = GWTServices/NewTransactionService.h; sourceTree = "<group>"; };
@@ -683,6 +687,8 @@
 				1A7B90C614FFDA390090DF19 /* KirinLocation.h */,
 				1A7B90C714FFDA390090DF19 /* KirinLocationBackend.h */,
 				1A7B90C814FFDA390090DF19 /* KirinLocationBackend.m */,
+				09C2D367191280020097F9EB /* KirinGwtLocation.h */,
+				09C2D368191280020097F9EB /* KirinGwtLocation.m */,
 			);
 			name = Location;
 			sourceTree = "<group>";
@@ -745,6 +751,7 @@
 				1A00C93414B2E32600211F34 /* SynthesizeSingleton.h in Headers */,
 				09DCA4FD1846342300C3555C /* NewTransactionService.h in Headers */,
 				1A00C94514B2E32600211F34 /* SettingsBackend.h in Headers */,
+				09C2D369191280020097F9EB /* KirinGwtLocation.h in Headers */,
 				0991834D1832325E00A35AF8 /* NewDatabaseAccessService.h in Headers */,
 				1A00C99A14B2EE8900211F34 /* KirinKit.h in Headers */,
 				091D1AC316F071E3001400FF /* NSObject+Kirin.h in Headers */,
@@ -930,6 +937,7 @@
 				1A00C93114B2E32600211F34 /* NativeContext.m in Sources */,
 				09DCA5021846405C00C3555C /* NewTransactionStatement.m in Sources */,
 				1A00C94614B2E32600211F34 /* SettingsBackend.m in Sources */,
+				09C2D36A191280020097F9EB /* KirinGwtLocation.m in Sources */,
 				09DCA4FE1846342300C3555C /* NewTransactionService.m in Sources */,
 				1A02010314BCFFED00CB9765 /* KirinUiFragmentHelper.m in Sources */,
 				1A02010814BD025E00CB9765 /* KirinScreenHelper.m in Sources */,

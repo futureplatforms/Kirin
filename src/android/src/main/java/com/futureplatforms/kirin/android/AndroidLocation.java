@@ -2,10 +2,12 @@ package com.futureplatforms.kirin.android;
 
 import java.util.List;
 
+import android.Manifest.permission;
 import android.content.Context;
-import android.location.Location;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 
+import com.futureplatforms.kirin.dependencies.AsyncCallback.AsyncCallback1;
 import com.futureplatforms.kirin.dependencies.LocationDelegate;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallbacks;
@@ -16,22 +18,23 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.common.collect.Lists;
 
 public class AndroidLocation implements LocationDelegate {
-	private LocationClient mLocationClient;
-
-	private LocationRequest mLocationRequest;
+	private LocationClient _LocationClient;
 
 	private LocationListener mLocationListener;
 
+	private Context _Context;
+	
 	public AndroidLocation(Context context) {
-		mLocationClient = new LocationClient(context, connectionCallbacks,
+		this._Context = context;
+		_LocationClient = new LocationClient(context, connectionCallbacks,
 				onConnectionFailedListener);
-		mLocationClient.connect();
+		_LocationClient.connect();
 	}
 
-	List<Runnable> onConnecteds = Lists.newArrayList();
-	List<Runnable> onConnectFaileds = Lists.newArrayList();
+	private List<Runnable> onConnecteds = Lists.newArrayList();
+	private List<Runnable> onConnectFaileds = Lists.newArrayList();
 
-	ConnectionCallbacks connectionCallbacks = new ConnectionCallbacks() {
+	private ConnectionCallbacks connectionCallbacks = new ConnectionCallbacks() {
 
 		@Override
 		public void onDisconnected() {
@@ -46,7 +49,7 @@ public class AndroidLocation implements LocationDelegate {
 
 		}
 	};
-	OnConnectionFailedListener onConnectionFailedListener = new OnConnectionFailedListener() {
+	private OnConnectionFailedListener onConnectionFailedListener = new OnConnectionFailedListener() {
 
 		@Override
 		public void onConnectionFailed(ConnectionResult connectionResult) {
@@ -57,20 +60,29 @@ public class AndroidLocation implements LocationDelegate {
 		}
 	};
 
-	@Override
-	public boolean getIsListening() {
-		return mLocationListener != null;
+	private static int priorityForAccuracy(Accuracy acc) {
+		switch (acc) {
+			case Coarse:
+				return LocationRequest.PRIORITY_LOW_POWER;
+			case Fine:
+				return LocationRequest.PRIORITY_HIGH_ACCURACY;
+			case Medium:
+				return LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY;
+			case NoPower:
+				return LocationRequest.PRIORITY_NO_POWER;
+		}
+		throw new IllegalArgumentException();
 	}
-
+	
 	@Override
-	public void getLocation(final Accuracy accuracy,
+	public void startUpdatingLocation(final Accuracy accuracy, final long ms,
 			final LocationCallback callback) {
-		if (!mLocationClient.isConnected()) {
+		if (!_LocationClient.isConnected()) {
 			onConnecteds.add(new Runnable() {
 
 				@Override
 				public void run() {
-					getLocation(accuracy, callback);
+					startUpdatingLocation(accuracy, ms, callback);
 				}
 			});
 			onConnectFaileds.add(new Runnable() {
@@ -81,84 +93,46 @@ public class AndroidLocation implements LocationDelegate {
 				}
 			});
 
-			if (!mLocationClient.isConnecting())
-				mLocationClient.connect();
-			return;
-		}
-
-		Location loc = mLocationClient.getLastLocation();
-		if (loc != null)
-			callback.onSuccess(loc.getLatitude(), loc.getLongitude(),
-					loc.getAccuracy());
-		else
-			callback.onFail("Can't get location");
-	}
-
-	@Override
-	public void getLocationContinuous(final Accuracy accuracy,
-			final int intervalMs, final LocationCallback callback) {
-		if (!mLocationClient.isConnected()) {
-			onConnecteds.add(new Runnable() {
-
-				@Override
-				public void run() {
-					getLocationContinuous(accuracy, intervalMs, callback);
-				}
-			});
-			onConnectFaileds.add(new Runnable() {
-
-				@Override
-				public void run() {
-					callback.onFail("Google Play Services Needed");
-				}
-			});
-
-			if (!mLocationClient.isConnecting())
-				mLocationClient.connect();
-			return;
-		}
-
-		mLocationRequest = LocationRequest.create();
-		mLocationRequest.setInterval(intervalMs);
-		if (accuracy == Accuracy.Fine)
-			mLocationRequest
-					.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-
-		if (mLocationListener != null)
-			mLocationClient.removeLocationUpdates(mLocationListener);
-		mLocationListener = new LocationListener() {
-
-			@Override
-			public void onLocationChanged(Location loc) {
-				callback.onSuccess(loc.getLatitude(), loc.getLongitude(),
-						loc.getAccuracy());
+			if (!_LocationClient.isConnecting()) {
+				_LocationClient.connect();
 			}
-		};
+			return;
+		}
 
-		mLocationClient.requestLocationUpdates(mLocationRequest,
-				mLocationListener);
+		LocationRequest req = LocationRequest.create();
+		req.setPriority(priorityForAccuracy(accuracy));
+		req.setInterval(ms);
+		_LocationClient.requestLocationUpdates(req, mLocationListener = new LocationListener() {
+			
+			@Override
+			public void onLocationChanged(android.location.Location loc) {
+				callback.onSuccess(
+						new Location(
+								loc.getLatitude(), 
+								loc.getLongitude(), 
+								loc.getAccuracy(), 
+								loc.getTime()));
+			}
+		});
 	}
 
+
 	@Override
-	public void stopListening() {
-		if (mLocationListener != null)
-			mLocationClient.removeLocationUpdates(mLocationListener);
+	public void stopUpdating() {
+		if (mLocationListener != null) {
+			_LocationClient.removeLocationUpdates(mLocationListener);
+		}
 		mLocationListener = null;
 	}
 
 	@Override
-	public double getLatitude() {
-		return mLocationClient.getLastLocation().getLatitude();
-	}
-
-	@Override
-	public double getLongitude() {
-		return mLocationClient.getLastLocation().getLongitude();
-	}
-
-	@Override
-	public float getAccuracy() {
-		return mLocationClient.getLastLocation().getAccuracy();
+	public void hasPermission(AsyncCallback1<Boolean> cb) {
+		PackageManager pm = _Context.getPackageManager();
+	    if (pm.checkPermission(permission.ACCESS_FINE_LOCATION, _Context.getPackageName()) == PackageManager.PERMISSION_GRANTED) {
+	        cb.onSuccess(true);
+	    } else {
+	        cb.onSuccess(false);
+	    }
 	}
 
 }

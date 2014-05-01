@@ -40,8 +40,9 @@ abstract public class KirinHybridFragment<Module extends HybridModule<HybridNati
 			@Override
 			public void onPageFinished(WebView view, String xurl) {
 				super.onPageFinished(view, xurl);
-				if (url.equals(xurl))
+				if (url.equals(xurl)) {
 					getModule().onEntry();
+				}
 			}
 		});
 
@@ -67,8 +68,9 @@ abstract public class KirinHybridFragment<Module extends HybridModule<HybridNati
 
 			@Override
 			public void run() {
-				if (webView != null)
+				if (webView != null) {
 					webView.loadUrl("javascript:" + javascript);
+				}
 			}
 		});
 

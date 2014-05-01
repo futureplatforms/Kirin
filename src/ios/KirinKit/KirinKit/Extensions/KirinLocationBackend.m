@@ -128,7 +128,7 @@
             break;
     }
 
-    [self.locationManager setDistanceFilter:50.0];
+    //[self.locationManager setDistanceFilter:50.0];
  
     [self.locationManager startUpdatingLocation];
  
