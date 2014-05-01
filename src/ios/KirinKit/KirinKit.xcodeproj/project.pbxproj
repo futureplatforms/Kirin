@@ -39,7 +39,7 @@
 		09DCA5021846405C00C3555C /* NewTransactionStatement.m in Sources */ = {isa = PBXBuildFile; fileRef = 09DCA5001846405C00C3555C /* NewTransactionStatement.m */; };
 		09FF945C18F88F2D003097F3 /* Crypto.h in Headers */ = {isa = PBXBuildFile; fileRef = 09FF945A18F88F2D003097F3 /* Crypto.h */; };
 		09FF945D18F88F2D003097F3 /* Crypto.m in Sources */ = {isa = PBXBuildFile; fileRef = 09FF945B18F88F2D003097F3 /* Crypto.m */; };
-		09FF946918FC47B4003097F3 /* KirinFacebook.h in Headers */ = {isa = PBXBuildFile; fileRef = 09FF946718FC47B4003097F3 /* KirinFacebook.h */; };
+		09FF946918FC47B4003097F3 /* KirinFacebook.h in Headers */ = {isa = PBXBuildFile; fileRef = 09FF946718FC47B4003097F3 /* KirinFacebook.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		09FF946A18FC47B4003097F3 /* KirinFacebook.m in Sources */ = {isa = PBXBuildFile; fileRef = 09FF946818FC47B4003097F3 /* KirinFacebook.m */; };
 		09FF946C18FC480E003097F3 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09FF946B18FC480E003097F3 /* FacebookSDK.framework */; };
 		1A00C8B614B2E2FD00211F34 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1A00C8B414B2E2FD00211F34 /* InfoPlist.strings */; };
@@ -763,10 +763,10 @@
 				1A06437814CF0DB500FB7EE3 /* CameraProtocol.h in Headers */,
 				1A61952A14D22105004FDD8E /* KirinFileSystem.h in Headers */,
 				09D8177217E21D6E00611BBE /* UIViewController+Hybrid.h in Headers */,
+				09FF946918FC47B4003097F3 /* KirinFacebook.h in Headers */,
 				1A9FE0A114D5F745008C0565 /* NativeObjectHolder.h in Headers */,
 				1A9FE0A514D5FA51008C0565 /* KirinExtensionOnMainThread.h in Headers */,
 				1A4384B614E2CAE00012CD5A /* FileSystem.h in Headers */,
-				09FF946918FC47B4003097F3 /* KirinFacebook.h in Headers */,
 				1A4384BB14E2CCA40012CD5A /* FileSystemBackend.h in Headers */,
 				1AB1252314E4819A00933949 /* KirinAppDelegateHelper.h in Headers */,
 				1A21D87F14E5EE4000723C20 /* KirinArgs.h in Headers */,

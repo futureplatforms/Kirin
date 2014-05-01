@@ -24,19 +24,6 @@
     self.serviceName = @"GwtFacebookService";
     self.kirinModuleProtocol = @protocol(GwtFacebookService);
     
-    NSLog(@"Welcome to the KirinFacebook service");
-    NSLog(@"Don't forget to do the following in your AppDelegate:");
-    NSLog(@"- (void)applicationDidBecomeActive:(UIApplication *)application");
-    NSLog(@"{");
-    NSLog(@"  [FBAppCall handleDidBecomeActive];");
-    NSLog(@"})");
-    NSLog(@"");
-    NSLog(@"- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation");
-    NSLog(@"{");
-    NSLog(@"  BOOL wasHandled = [FBAppCall handleOpenURL:url sourceApplication:sourceApplication];");
-    NSLog(@"  return wasHandled;");
-    NSLog(@"}");
-    
     [FBLoginView class];
     
     // Whenever a person opens the app, check for a cached session
@@ -54,6 +41,14 @@
     }
     
     return [super initWithServiceName: self.serviceName];
+}
+
++ (void) handleDidBecomeActive {
+    [FBSession.activeSession handleDidBecomeActive];
+}
+
++ (BOOL) handleOpenUrl:(NSURL *)url {
+    return [FBSession.activeSession handleOpenURL:url];
 }
 
 // This method will handle ALL the session state changes in the app
@@ -117,7 +112,7 @@
     NSString *fbAccessToken = [FBSession activeSession].accessTokenData.accessToken;
     NSDate *fbAccessTokenExpDate = [FBSession activeSession].accessTokenData.expirationDate;
     NSDateFormatter *isoFormat = [[NSDateFormatter alloc] init];
-    [isoFormat setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"];
+    [isoFormat setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSZ"];
     NSString *createdDateStr = [isoFormat stringFromDate:fbAccessTokenExpDate];
 
     [self.kirinModule setAccessToken:fbAccessToken :createdDateStr];
@@ -212,19 +207,6 @@
 
 -(void) signOut {
     [[FBSession activeSession] closeAndClearTokenInformation];
-}
-
-
-static UIImage *imageToUpload = nil;
-
-+ (void)imageToUpload:(UIImage *)image
-{
-	imageToUpload = image;
-}
-
-+ (UIImage *)uploadImage
-{
-	return imageToUpload;
 }
 
 - (void) presentShareDialogWithParams: (NSString*) caption : (NSString*) description : (NSString*) link : (NSString*) name : (NSString*) picture : (NSString*) place : (NSString*) ref : (int) cbId {

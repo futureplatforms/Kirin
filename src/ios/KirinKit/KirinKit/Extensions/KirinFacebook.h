@@ -13,7 +13,7 @@
 
 @interface KirinFacebook : KirinGwtServiceStub<GwtFacebookServiceNative, KirinExtensionOnMainThread>
 
-+ (void)imageToUpload:(UIImage *)image;
-+ (UIImage *)uploadImage;
++ (void) handleDidBecomeActive;
++ (BOOL) handleOpenUrl:(NSURL*)url;
 
 @end
