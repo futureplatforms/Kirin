@@ -71,10 +71,8 @@ public class Proxocube {
 						JSONObject obj = arr.getJSONObject(i);
 						
 						// As we iterate through the objects, keep track of the highest revision ID
-						if (obj.has("revision")) {
-							int rev = obj.getInt("revision");
-							_Revision = Math.max(rev, _Revision);
-						}
+						int rev = obj.getInt("revision");
+						_Revision = Math.max(rev, _Revision);
 						
 						if (obj.has("deleted") && obj.getBoolean("deleted")) {
 							_Client.onDelete(tx, obj);
