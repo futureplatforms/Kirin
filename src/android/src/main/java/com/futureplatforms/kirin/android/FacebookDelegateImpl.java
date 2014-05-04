@@ -148,6 +148,12 @@ public class FacebookDelegateImpl implements FacebookDelegate {
 	@Override
 	public void presentShareDialogWithParams(final ShareDialogParams params,
 			final FacebookShareCallback cb) {
+		
+		this.facebookShareCallback = cb;
+		
+		context.startActivity(FacebookActivity.newIntentForShareDialog(context, params._Friends.get(0)));
+		
+		/*
 		Log.d("FB", "PresentShareDialogWithParams");
 		if (FacebookDialog.canPresentShareDialog(_Activity,
 				FacebookDialog.ShareDialogFeature.SHARE_DIALOG)) {
@@ -206,6 +212,8 @@ public class FacebookDelegateImpl implements FacebookDelegate {
 				feedDialog.show();
 			}
 		}
+		*/
+		
 	}
 
 	@Override
@@ -237,6 +245,7 @@ public class FacebookDelegateImpl implements FacebookDelegate {
 	}
 
 	public static  FacebookRequestsCallback facebookRequestsCallback;
+	public static  FacebookShareCallback facebookShareCallback;
 
 	@Override
 	public void presentRequestsDialog(FacebookRequestsCallback cb) {
