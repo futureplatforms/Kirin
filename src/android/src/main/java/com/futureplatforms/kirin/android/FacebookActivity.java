@@ -1,5 +1,6 @@
 package com.futureplatforms.kirin.android;
 
+//todo, handle dialog result. Handle web site when no fb. Enough being shared ?
 import java.util.ArrayList;
 
 import android.app.Activity;
@@ -28,7 +29,7 @@ public class FacebookActivity extends Activity {
 	private static final String PERMISSIONS = "permissions";
 
 	private static final String REQUEST_TYPE = "request_type";
-	
+
 	private static final String FRIEND_UID = "friend_uid";
 
 	private static final String ALLOW_LOGIN_UI = "allowLoginUI";
@@ -50,13 +51,12 @@ public class FacebookActivity extends Activity {
 			public void call(Session session, SessionState state,
 					Exception exception) {
 			}
-			
-		}
-		);
+
+		});
 		helper.onCreate(savedInstanceState);
 
 		Intent intent = getIntent();
-		Bundle args = intent.getExtras();
+		final Bundle args = intent.getExtras();
 
 		int requestType = args.getInt(REQUEST_TYPE);
 
@@ -193,81 +193,68 @@ public class FacebookActivity extends Activity {
 
 		case SHARE_DIALOG:
 
-			final ShareDialogParams params = new ShareDialogParams(null, null,
-					null, null, null, null, null, Lists.newArrayList("4"));
-			
-			Lists.newArrayList(args.getString(FRIEND_UID));
+			Session session = Session.getActiveSession();
+			if (session == null || !session.isOpened()) {
+				session = Session.openActiveSession(this, true,
+						new StatusCallback() {
 
-			if (FacebookDialog.canPresentShareDialog(this,
-					FacebookDialog.ShareDialogFeature.SHARE_DIALOG)) {
-
-				FacebookDialog shareDialog = new FacebookDialog.ShareDialogBuilder(
-						this).setName("")
-						.setCaption("")
-						.setDescription("")
-						.setFriends(Lists.newArrayList(args.getString(FRIEND_UID)))
-						
-						.build();
-
-				helper.trackPendingDialogCall(shareDialog.present());
-			} else {
-
-				Session session = Session.getActiveSession();
-				if (session == null || !session.isOpened()) {
-					session = Session.openActiveSession(this, true,
-							new StatusCallback() {
-
-								@Override
-								public void call(Session session,
-										SessionState state, Exception arg2) {
-									if (session != null && session.isOpened()) {
-										// presentShareDialogWithParams(params,
-										// cb);
-									}
+							@Override
+							public void call(Session session,
+									SessionState state, Exception arg2) {
+								if (session != null && session.isOpened()) {
+									presentShareDialog(args.getString(FRIEND_UID));
 								}
-							});
-				}
+							}
+						});
+			}
 
-				else {
-					// Fallback. For example, publish the post using the Feed
-					// Dialog
-					Bundle bundle = new Bundle();
-					bundle.putString("caption", params._Caption);
-					bundle.putString("description", params._Description);
-					bundle.putString("link", params._Link);
-					bundle.putString("name", params._Name);
-					bundle.putString("picture", params._Picture);
-					bundle.putString("ref", params._Ref);
-					WebDialog feedDialog = (new WebDialog.FeedDialogBuilder(
-							this, Session.getActiveSession(), bundle))
-							.setOnCompleteListener(new OnCompleteListener() {
-
-								@Override
-								public void onComplete(Bundle bundle,
-										FacebookException error) {
-
-									if (error != null) {
-										if (error instanceof FacebookOperationCanceledException) {
-											FacebookDelegateImpl.facebookShareCallback
-													.onUserCancel();
-										} else {
-											FacebookDelegateImpl.facebookShareCallback
-													.onFailure();
-										}
-			
-									}
-								}
-							}).build();
-					feedDialog.show();
-				}
+			else {
+				presentShareDialog(args.getString(FRIEND_UID));
 			}
 
 			break;
 		}
 	}
 
+	private void presentShareDialog(String uId) {
+		// Fallback. For example, publish the post using the Feed
+		// Dialog
+		Bundle bundle = new Bundle();
+		bundle.putString("to", uId);
+
+		WebDialog feedDialog = (new WebDialog.FeedDialogBuilder(this,
+				Session.getActiveSession(), bundle)).setOnCompleteListener(
+				new OnCompleteListener() {
+
+					@Override
+					public void onComplete(Bundle bundle,
+							FacebookException error) {
+
+						if (error != null) {
+							if (error instanceof FacebookOperationCanceledException) {
+								FacebookDelegateImpl.facebookShareCallback
+										.onUserCancel();
+							} else {
+								FacebookDelegateImpl.facebookShareCallback
+										.onFailure();
+							}
+
+						} else {
+							FacebookDelegateImpl.facebookShareCallback
+									.onSuccess("success");
+							android.util.Log.e("DSDS", "feedDialog on success");
+							finish();
+						}
+
+					}
+				}).build();
+		feedDialog.show();
+
+	}
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
 		super.onActivityResult(requestCode, resultCode, data);
 		helper.onActivityResult(requestCode, resultCode, data);
 	}
@@ -345,8 +332,9 @@ public class FacebookActivity extends Activity {
 	}
 
 	public static Intent newIntentForShareDialog(Context context, String uId) {
-		return new Intent(context, FacebookActivity.class).setFlags(
-				defaultFlags).putExtra(REQUEST_TYPE, SHARE_DIALOG).putExtra(FRIEND_UID, uId);
+		return new Intent(context, FacebookActivity.class)
+				.setFlags(defaultFlags).putExtra(REQUEST_TYPE, SHARE_DIALOG)
+				.putExtra(FRIEND_UID, uId);
 	}
 
 }
