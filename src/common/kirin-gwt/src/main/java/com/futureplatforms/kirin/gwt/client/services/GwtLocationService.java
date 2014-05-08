@@ -6,12 +6,10 @@ import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.ExportPackage;
 import org.timepedia.exporter.client.NoExport;
 
-import com.futureplatforms.kirin.dependencies.StaticDependencies;
 import com.futureplatforms.kirin.dependencies.AsyncCallback.AsyncCallback1;
 import com.futureplatforms.kirin.dependencies.LocationDelegate.Accuracy;
 import com.futureplatforms.kirin.dependencies.LocationDelegate.Location;
 import com.futureplatforms.kirin.dependencies.LocationDelegate.LocationCallback;
-import com.futureplatforms.kirin.dependencies.StaticDependencies.SettingsDelegate;
 import com.futureplatforms.kirin.gwt.client.KirinService;
 import com.futureplatforms.kirin.gwt.client.services.natives.GwtLocationServiceNative;
 import com.futureplatforms.kirin.gwt.compile.NoBind;

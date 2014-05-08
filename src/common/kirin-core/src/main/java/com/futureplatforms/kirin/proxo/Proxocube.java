@@ -8,6 +8,7 @@ import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate
 import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate.HttpVerb;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate.NetworkResponse;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.SettingsDelegate;
+import com.futureplatforms.kirin.dependencies.TimerTask;
 import com.futureplatforms.kirin.dependencies.db.Database;
 import com.futureplatforms.kirin.dependencies.db.Database.TxRunner;
 import com.futureplatforms.kirin.dependencies.db.Transaction;
@@ -98,6 +99,18 @@ public class Proxocube {
 				_Settings.put("proxocube.revision." + _Url, "" + _Revision);
 				_Log.log("Proxo sync done, now at revision " + _Revision);
 				_Client.onSyncComplete(_Revision != startRevision, didBake);
+				
+				if (didBake) {
+					// OK kick off another sync now
+					new TimerTask() {
+
+						@Override
+						public void run() {
+							sync(db);
+						}
+						
+					}.schedule(1);
+				}
 			}
 		});
 	}
