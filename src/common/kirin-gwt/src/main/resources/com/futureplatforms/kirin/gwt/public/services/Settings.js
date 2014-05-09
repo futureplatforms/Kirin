@@ -92,7 +92,7 @@ defineServiceModule("Settings", function (require, exports) {
     };
     
     exports.clear = function() {
-    	keyValuePairs = [];
+    	keyValuePairs = {};
     	backend.clear();
     };
 	
