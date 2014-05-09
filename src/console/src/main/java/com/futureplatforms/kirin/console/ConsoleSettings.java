@@ -21,4 +21,10 @@ public class ConsoleSettings implements SettingsDelegate
 		System.out.println("SETTINGS: " + key + ": " + value);
 		_Map.put(key, value);
 	}
+
+	@Override
+	public void clear() {
+		// TODO Auto-generated method stub
+		
+	} 
 }

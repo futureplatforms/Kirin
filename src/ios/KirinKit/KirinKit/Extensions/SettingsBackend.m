@@ -89,6 +89,11 @@
     [userSettings synchronize];
 }
 
+- (void)clear {
+    NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
+    [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
+}
+
 #pragma mark -
 #pragma mark lifecycle
 

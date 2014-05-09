@@ -27,4 +27,13 @@ public class GwtSettingsDelegate implements SettingsDelegate {
         }
         settings.commit();
     }-*/;
+    
+    public native void clear() /*-{
+    	if (!$wnd['require']) {
+            return;
+        }
+        
+        var settings = $wnd.require("Settings");
+        settings.clear();
+    }-*/;
 }

@@ -35,8 +35,8 @@ public final class StaticDependencies {
 
 	public static interface SettingsDelegate {
 		public String get(String key);
-
 		public void put(String key, String value);
+		public void clear();
 	}
 
 	public static interface NetworkDelegateClient {

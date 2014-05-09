@@ -20,4 +20,9 @@ public class ConsoleSettings implements SettingsDelegate
 	{
 		_Map.put(key, value);
 	}
+
+	@Override
+	public void clear() {
+		_Map.clear();
+	}
 }

@@ -90,6 +90,11 @@ defineServiceModule("Settings", function (require, exports) {
             keyValuePairs[makeKey(key)] = value;
         }
     };
+    
+    exports.clear = function() {
+    	keyValuePairs = [];
+    	backend.clear();
+    };
 	
 	exports.remove = function (key) {
 		key = makeKey(key);

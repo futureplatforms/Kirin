@@ -32,5 +32,11 @@ public class AndroidSettings implements SettingsDelegate
 		e.putString(key, value);
 		e.apply();
 	}
+
+
+	@Override
+	public void clear() {
+		mSharedPreferences.edit().clear().commit();
+	}
 	
 }
