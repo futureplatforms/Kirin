@@ -24,7 +24,6 @@ public class KirinVersionController {
     
     public void currentVersion(String version, KirinVersionDelegate delegate) {
         String lastVersion = _Settings.get(VERSION_SETTING);
-        _Settings.put(VERSION_SETTING, version);
         if (lastVersion == null) {
             delegate.firstRun();
         } else if (!lastVersion.equals(version)) {
@@ -32,5 +31,6 @@ public class KirinVersionController {
         } else {
         	delegate.subsequentRun();
         }
+        _Settings.put(VERSION_SETTING, version);
     }
 }
