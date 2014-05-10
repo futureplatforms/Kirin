@@ -6,7 +6,6 @@ import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.ExportPackage;
 import org.timepedia.exporter.client.NoExport;
 
-import com.futureplatforms.kirin.dependencies.StaticDependencies;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate.NetworkResponse;
 import com.futureplatforms.kirin.gwt.client.KirinService;
 import com.futureplatforms.kirin.gwt.client.services.natives.NetworkingServiceNative;
@@ -53,7 +52,6 @@ public class NetworkingService extends KirinService<NetworkingServiceNative> {
     
     // These are the methods that native uses to call back to us
     public void payload(int connId, int respCode, String str, String[] headerKeys, String[] headerVals) {
-        StaticDependencies.getInstance().getLogDelegate().log("payload " + connId + ", " + str);
         NetworkResponse resp = results.remove(connId);
         if (respCode >= 200 && respCode <= 299) {
         	resp.callOnSuccess(respCode, str, fromArrays(headerKeys, headerVals));

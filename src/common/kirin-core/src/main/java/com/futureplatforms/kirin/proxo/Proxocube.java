@@ -130,10 +130,8 @@ public class Proxocube {
 				
 				@Override
 				public void onSuccess(int res, String result, Map<String, String> headers) {
-					_Log.log("Result: " + result);
 					if (!Strings.isNullOrEmpty(_Password)) {
 						result = StaticDependencies.getInstance().getFormatter().decryptAES(result, _Password);
-						_Log.log("Result now: " + result);
 					}
 					process(result, db, startRevision, false);
 				}
