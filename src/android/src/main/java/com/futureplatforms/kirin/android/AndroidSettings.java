@@ -36,7 +36,7 @@ public class AndroidSettings implements SettingsDelegate
 
 	@Override
 	public void clear() {
-		mSharedPreferences.edit().clear().commit();
+		//mSharedPreferences.edit().clear().commit();
 	}
 	
 }
