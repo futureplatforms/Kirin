@@ -194,5 +194,10 @@ namespace KirinWP8
         {
             (new WP8GwtNetworkingRunner(this.KirinAssistant)).retrieve(connId, method, url, postData, headerKeys, headerVals);
         }
+
+        public void retrieveB64(int connId, string method, string url, string postData, string[] headerKeys, string[] headerVals)
+        {
+            // TODO: implement me
+        }
     }
 }
