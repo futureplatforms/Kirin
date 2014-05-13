@@ -21,6 +21,7 @@ import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate
 import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate.NetworkResponse;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate.NetworkResponse.OnCancelledListener;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegateClient;
+import com.google.common.io.BaseEncoding;
 
 public class AndroidNetwork implements NetworkDelegateClient {
 	private static final String KIRIN_VERSION = "1.0";
@@ -29,6 +30,10 @@ public class AndroidNetwork implements NetworkDelegateClient {
 	public AndroidNetwork() {
 		userAgent = "Kirin/" + KIRIN_VERSION + " (Android " + Build.VERSION.RELEASE + "); "
 				+ Build.MODEL;
+	}
+	
+	private enum HttpReturnType {
+		Plain, Base64
 	}
 
 	private class GetAsyncTask extends AsyncTask<Object, Void, Boolean> {
@@ -41,14 +46,16 @@ public class AndroidNetwork implements NetworkDelegateClient {
 		Map<String, String> responseHeaderMap;
 
 		String code;
-
+		private HttpReturnType _ReturnType;
+		
 		@SuppressWarnings("unchecked")
 		@Override
 		protected Boolean doInBackground(Object... params) {
 			url = (String) params[0];
 			headers = (Map<String, String>) params[1];
 			callback = (NetworkResponse) params[2];
-
+			_ReturnType = (HttpReturnType) params[3];
+			
 			try {
 
 				HttpClient client = new DefaultHttpClient();
@@ -79,7 +86,11 @@ public class AndroidNetwork implements NetworkDelegateClient {
 					responseHeaderMap.put(h.getName(), h.getValue());
 				}
 
-				result = EntityUtils.toString(getResponse.getEntity(), "UTF-8");
+				if (_ReturnType == HttpReturnType.Plain) {
+					result = EntityUtils.toString(getResponse.getEntity(), "UTF-8");
+				} else {
+					result = BaseEncoding.base64().encode(EntityUtils.toByteArray(getResponse.getEntity()));
+				}
 				return true;
 
 			} catch (Exception e) {
@@ -114,7 +125,8 @@ public class AndroidNetwork implements NetworkDelegateClient {
 
 		String code;
 		private HttpVerb _Verb;
-
+		private HttpReturnType _ReturnType;
+		
 		public PostPutAsyncTask(HttpVerb verb) {
 			this._Verb = verb;
 		}
@@ -126,7 +138,8 @@ public class AndroidNetwork implements NetworkDelegateClient {
 			toPost = (String) params[1];
 			headers = (Map<String, String>) params[2];
 			callback = (NetworkResponse) params[3];
-
+			_ReturnType = (HttpReturnType) params[4];
+			
 			try {
 				HttpClient client = new DefaultHttpClient();
 
@@ -158,8 +171,13 @@ public class AndroidNetwork implements NetworkDelegateClient {
 				for (Header h : responseHeaders) {
 					responseHeaderMap.put(h.getName(), h.getValue());
 				}
-
-				result = EntityUtils.toString(postResponse.getEntity());
+				
+				if (_ReturnType == HttpReturnType.Plain) {
+					result = EntityUtils.toString(postResponse.getEntity());
+				} else {
+					result = BaseEncoding.base64().encode(EntityUtils.toByteArray(postResponse.getEntity()));
+				}
+				
 				return true;
 
 			} catch (Exception e) {
@@ -187,15 +205,33 @@ public class AndroidNetwork implements NetworkDelegateClient {
 			NetworkResponse callback) {
 		switch (verb) {
 			case GET:
-				new GetAsyncTask().execute(url, headers, callback);
+				new GetAsyncTask().execute(url, headers, callback, HttpReturnType.Plain);
 				break;
 			case POST:
 			case PUT:
-				new PostPutAsyncTask(verb).execute(url, payload, headers, callback);
+				new PostPutAsyncTask(verb).execute(url, payload, headers, callback, HttpReturnType.Plain);
 				break;
 
 			default:
-				throw new IllegalArgumentException("");
+				throw new IllegalArgumentException(verb + " unsupported");
+		}
+	}
+
+	@Override
+	public void doHttpWithBase64Return(HttpVerb verb, String url,
+			String payload, Map<String, String> headers,
+			NetworkResponse callback) {
+		switch (verb) {
+			case GET:
+				new GetAsyncTask().execute(url, headers, callback, HttpReturnType.Base64);
+				break;
+			case POST:
+			case PUT:
+				new PostPutAsyncTask(verb).execute(url, payload, headers, callback, HttpReturnType.Base64);
+				break;
+	
+			default:
+				throw new IllegalArgumentException(verb + " unsupported");
 		}
 	}
 }

@@ -44,6 +44,11 @@ namespace KirinWP8
             retrieve(req._ConnId, req._Method, req._Url, req._PostData, req._HeaderKeys, req._HeaderVals);
         }
 
+        public void retrieveB64(int connId, string method, string url, string postData, string[] headerKeys, string[] headerVals)
+        {
+            // TODO: implement me
+        }
+
         public void retrieve(int connId, string method, string url, string postData, string[] headerKeys, string[] headerVals)
         {
             try

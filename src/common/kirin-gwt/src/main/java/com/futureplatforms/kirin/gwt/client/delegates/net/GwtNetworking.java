@@ -22,4 +22,17 @@ public class GwtNetworking implements NetworkDelegateClient {
 		
 	}
 
+	@Override
+	public void doHttpWithBase64Return(HttpVerb verb, String url,
+			String payload, Map<String, String> headers,
+			NetworkResponse callback) {
+		NetworkingService.BACKDOOR()._retrieveBase64(
+				verb.name(), 
+				url, 
+				payload, 
+				headers.keySet().toArray(new String[0]), 
+				headers.values().toArray(new String[0]), 
+				callback);
+	}
+
 }

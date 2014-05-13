@@ -41,6 +41,16 @@ public class NetworkingService extends KirinService<NetworkingServiceNative> {
         getNativeObject().retrieve(thisId, method, url, postData, headerKeys, headerVals);
     }
     
+    // This is the method that KirinNetworking uses to talk to us
+    @NoBind
+    public void _retrieveBase64(String method, String url, String postData, String[] headerKeys, String[] headerVals, NetworkResponse cb) {
+        int thisId = nextId;
+        nextId++;
+        results.put(thisId, cb);
+        
+        getNativeObject().retrieveB64(thisId, method, url, postData, headerKeys, headerVals);
+    }
+    
     private static Map<String, String> fromArrays(String[] keys, String[] vals) {
     	Map<String, String> map = Maps.newHashMap();
     	for (int i=0; i<keys.length; i++) {

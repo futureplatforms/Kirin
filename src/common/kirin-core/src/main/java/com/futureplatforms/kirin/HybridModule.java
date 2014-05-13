@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 import com.futureplatforms.kirin.dependencies.StaticDependencies;
+import com.futureplatforms.kirin.dependencies.StaticDependencies.LogDelegate;
 
 /**
  * Deals with a screen with a webview that we need to communicate with.
@@ -141,7 +142,9 @@ public abstract class HybridModule<NativeSide extends HybridModuleNative> extend
     protected void tellWebview(final String javascript) {
         final String encodedJavascript = encodeUTF8JsonAsAsciiJson(javascript);
         
-        StaticDependencies.getInstance().getLogDelegate().log("trying to tell webview " + encodedJavascript);
+        LogDelegate log = StaticDependencies.getInstance().getLogDelegate();
+    	log.log("trying to tell webview " + encodedJavascript.substring(0, Math.min(100, encodedJavascript.length())));
+        	
         if(this.webviewIsReady) {
             // Send immediately
             getNativeObject().tellWebview(encodedJavascript);

@@ -42,6 +42,8 @@ public final class StaticDependencies {
 	public static interface NetworkDelegateClient {
 		public void doHttp(HttpVerb verb, String url, String payload, Map<String, String> headers,
 				NetworkResponse callback);
+		public void doHttpWithBase64Return(HttpVerb verb, String url, String payload, Map<String, String> headers,
+				NetworkResponse callback);
 	}
 
 	public static class NetworkDelegate {
@@ -111,6 +113,11 @@ public final class StaticDependencies {
 		public final void doHttp(HttpVerb verb, String url, String payload,
 				Map<String, String> headers, NetworkResponse callback) {
 			_Client.doHttp(verb, url, payload, headers, callback);
+		}
+		
+		public final void doHttpWithBase64Return(HttpVerb verb, String url, String payload,
+				Map<String, String> headers, NetworkResponse callback) {
+			_Client.doHttpWithBase64Return(verb, url, payload, headers, callback);
 		}
 	}
 
