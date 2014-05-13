@@ -25,6 +25,8 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 
+import android.os.AsyncTask;
+
 import com.futureplatforms.kirin.dependencies.AsyncCallback.AsyncCallback1;
 import com.futureplatforms.kirin.dependencies.Formatter;
 import com.google.common.hash.HashCode;
@@ -50,14 +52,13 @@ public class AndroidFormatter extends Formatter {
 
 	@Override
 	public String formatLocalisedShortTime(Date date) {
-		return SimpleDateFormat.getTimeInstance(SimpleDateFormat.SHORT).format(
-				date);
+		return SimpleDateFormat.getTimeInstance(SimpleDateFormat.SHORT).format(date);
 	}
 
 	@Override
 	public String formatLocalisedLongDateAndTime(Date date) {
-		return SimpleDateFormat.getDateTimeInstance(SimpleDateFormat.LONG,
-				SimpleDateFormat.LONG).format(date);
+		return SimpleDateFormat.getDateTimeInstance(SimpleDateFormat.LONG, SimpleDateFormat.LONG)
+				.format(date);
 	}
 
 	@Override
@@ -89,12 +90,12 @@ public class AndroidFormatter extends Formatter {
 		return null;
 	}
 
-    @Override
-    public String urlEncode(String toEncode) {
-        // MAKESHIFT IMPLEMENTATION, PLEASE TEST
-        return encodeURIComponent(toEncode);
-    }
-    
+	@Override
+	public String urlEncode(String toEncode) {
+		// MAKESHIFT IMPLEMENTATION, PLEASE TEST
+		return encodeURIComponent(toEncode);
+	}
+
 	@Override
 	public byte[] hmacSHA1(String message, String passphrase) {
 		try {
@@ -116,25 +117,30 @@ public class AndroidFormatter extends Formatter {
 
 	@Override
 	public String sha512B64(String toEncode) {
-		return BaseEncoding.base64().encode(Hashing.sha512().hashString(toEncode, Charset.defaultCharset()).asBytes());
+		return BaseEncoding.base64().encode(
+				Hashing.sha512().hashString(toEncode, Charset.defaultCharset()).asBytes());
 	}
 
-	public static String decrypt(String encodedB64, String password) throws UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException {
+	public static String decrypt(String encodedB64, String password)
+			throws UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException,
+			InvalidKeyException, InvalidAlgorithmParameterException, IllegalBlockSizeException,
+			BadPaddingException {
 		HashCode code = Hashing.sha512().hashBytes(password.getBytes("UTF8"));
 		byte[] hash64 = code.asBytes();
-		
+
 		byte[] decoded = BaseEncoding.base64().decode(encodedB64);
-				
-		// The password can only be 128 bits so take the first 16 bytes of the hash
+
+		// The password can only be 128 bits so take the first 16 bytes of the
+		// hash
 		byte[] first16 = new byte[16];
 		System.arraycopy(hash64, 0, first16, 0, 16);
 		SecretKeySpec sks = new SecretKeySpec(first16, "AES");
 		Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-        cipher.init(Cipher.DECRYPT_MODE, sks, new IvParameterSpec(new byte[16]));
-        byte[] decrypted = cipher.doFinal(decoded);
-        return new String(decrypted);
+		cipher.init(Cipher.DECRYPT_MODE, sks, new IvParameterSpec(new byte[16]));
+		byte[] decrypted = cipher.doFinal(decoded);
+		return new String(decrypted);
 	}
-	
+
 	@Override
 	public String decryptAES(String encodedB64, String password) {
 		try {
@@ -153,20 +159,36 @@ public class AndroidFormatter extends Formatter {
 			e.printStackTrace();
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
-		} 
+		}
 		return "";
 	}
 
 	@Override
-	public void pbkdf2(String plaintext, String salt, int iterations,
-			int keyLenBytes, AsyncCallback1<byte[]> cb) {
-		try {
-			PBEKeySpec spec = new PBEKeySpec(plaintext.toCharArray(), salt.getBytes(), iterations, keyLenBytes * 8);
-			SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-			byte[] hash = skf.generateSecret(spec).getEncoded();
-			cb.onSuccess(hash);
-		} catch (Exception e) {
-			cb.onFailure();
-		}
+	public void pbkdf2(final String plaintext, final String salt, final int iterations,
+			final int keyLenBytes, final AsyncCallback1<byte[]> cb) {
+		new AsyncTask<Void, Void, Void>() {
+
+			private byte[] hash;
+			private boolean success;
+
+			@Override
+			protected Void doInBackground(Void... arg0) {
+				try {
+					PBEKeySpec spec = new PBEKeySpec(plaintext.toCharArray(), salt.getBytes(),
+							iterations, keyLenBytes * 8);
+					SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+					hash = skf.generateSecret(spec).getEncoded();
+					success = true;
+				} catch (Exception e) {
+					success = false;
+				}
+				return null;
+			}
+
+			protected void onPostExecute(Void result) {
+				if (success) cb.onSuccess(hash);
+				else cb.onFailure();
+			};
+		}.execute();
 	}
 }
