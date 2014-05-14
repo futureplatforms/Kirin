@@ -96,9 +96,10 @@ public class Proxocube {
 			@Override
 			public void onComplete() {
 				// Complete!  Log the new revision
+				boolean didUpdate = _Revision != startRevision;
 				_Settings.put("proxocube.revision." + _Url, "" + _Revision);
-				_Log.log("Proxo sync done, now at revision " + _Revision);
-				_Client.onSyncComplete(_Revision != startRevision, didBake);
+				_Log.log(_Url + " Proxo sync done, now at revision " + _Revision + ", baked=" + didBake + ", didUpdate=" + didUpdate);
+				_Client.onSyncComplete(didUpdate, didBake);
 				
 				if (didBake) {
 					// OK kick off another sync now
