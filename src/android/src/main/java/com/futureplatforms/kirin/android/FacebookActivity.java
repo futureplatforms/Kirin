@@ -7,7 +7,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.facebook.FacebookException;
 import com.facebook.FacebookOperationCanceledException;
@@ -16,13 +15,10 @@ import com.facebook.Session.NewPermissionsRequest;
 import com.facebook.Session.StatusCallback;
 import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
-import com.facebook.widget.FacebookDialog;
-import com.facebook.widget.FacebookDialog.PendingCall;
 import com.facebook.widget.WebDialog;
 import com.facebook.widget.WebDialog.OnCompleteListener;
 import com.futureplatforms.kirin.dependencies.fb.FacebookDetails.PublishPermission;
 import com.futureplatforms.kirin.dependencies.fb.FacebookDetails.ReadPermission;
-import com.futureplatforms.kirin.dependencies.fb.FacebookDetails.ShareDialogParams;
 import com.google.common.collect.Lists;
 
 public class FacebookActivity extends Activity {
@@ -158,8 +154,14 @@ public class FacebookActivity extends Activity {
 			}
 			break;
 		case REQUESTS_DIALOG:
+			
+			
+			Bundle params = new Bundle();
+			params.putString("message", "friendrequest");
+			
+			
 			WebDialog dialog = new WebDialog.RequestsDialogBuilder(this,
-					Session.getActiveSession(), new Bundle())
+					Session.getActiveSession(), params)
 					.setOnCompleteListener(new OnCompleteListener() {
 
 						@Override
