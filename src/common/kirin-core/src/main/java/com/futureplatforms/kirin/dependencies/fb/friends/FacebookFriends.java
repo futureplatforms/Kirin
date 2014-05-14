@@ -167,7 +167,10 @@ public class FacebookFriends {
 												
 												@Override
 												public void onSuccess() {
-													cb.onSuccess(friends);
+													// Don't just return the friends array
+													// as it's not in the right order.
+													// Retrieve from the database
+													tryDB(cb);
 												}
 												
 												@Override
