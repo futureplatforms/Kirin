@@ -59,7 +59,7 @@
 			<artifactId>android-sdk</artifactId>
 			<version>3.8.0</version>
 			<type>jar</type>
-			<scope>compile</scope>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 
