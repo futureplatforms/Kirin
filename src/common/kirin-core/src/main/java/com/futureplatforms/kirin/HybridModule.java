@@ -143,7 +143,7 @@ public abstract class HybridModule<NativeSide extends HybridModuleNative> extend
         final String encodedJavascript = encodeUTF8JsonAsAsciiJson(javascript);
         
         LogDelegate log = StaticDependencies.getInstance().getLogDelegate();
-    	log.log("trying to tell webview " + encodedJavascript.substring(0, Math.min(100, encodedJavascript.length())));
+    	log.log("trying to tell webview " + encodedJavascript.substring(0, Math.min(500, encodedJavascript.length())));
         	
         if(this.webviewIsReady) {
             // Send immediately
