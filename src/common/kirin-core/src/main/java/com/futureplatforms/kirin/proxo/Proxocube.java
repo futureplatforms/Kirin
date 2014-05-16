@@ -1,5 +1,6 @@
 package com.futureplatforms.kirin.proxo;
 
+import java.util.Date;
 import java.util.Map;
 
 import com.futureplatforms.kirin.dependencies.StaticDependencies;
@@ -28,6 +29,7 @@ public class Proxocube {
 	private final String _Url;
 	private final ProxoClient _Client;
 	private int _Revision;
+	private long lastSync;
 	private String _Bakage, _Password;
 	
 	
@@ -132,6 +134,8 @@ public class Proxocube {
 				public void onSuccess(int res, String result, Map<String, String> headers) {
 					if (!Strings.isNullOrEmpty(_Password)) {
 						result = StaticDependencies.getInstance().getFormatter().decryptAES(result, _Password);
+
+						lastSync = new Date().getTime();
 					}
 					process(result, db, startRevision, false);
 				}
@@ -147,4 +151,9 @@ public class Proxocube {
 	public static String sha512Base64(String value) {
 		return StaticDependencies.getInstance().getFormatter().sha512B64(value);
 	}
+
+	public long getLastSync() {
+		return lastSync;
+	}
+
 }
