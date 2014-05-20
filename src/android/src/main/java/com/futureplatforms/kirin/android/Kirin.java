@@ -8,6 +8,7 @@ import com.futureplatforms.kirin.android.json.AndroidJson;
 import com.futureplatforms.kirin.android.xml.JaxpXmlParser;
 import com.futureplatforms.kirin.dependencies.StaticDependencies;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.Configuration;
+import com.futureplatforms.kirin.dependencies.StaticDependencies.LogDelegate;
 
 public final class Kirin {
     public static void kickOff(Context context) {
@@ -17,7 +18,17 @@ public final class Kirin {
         boolean isDebug =  0 != ( context.getApplicationInfo().flags &= ApplicationInfo.FLAG_DEBUGGABLE );
         
         StaticDependencies.getInstance().setDependencies(
-                new AndroidLog(), 
+                isDebug ? new AndroidLog() : new LogDelegate() {
+					
+					@Override
+					public void log(String tag, String s, Throwable t) { }
+					
+					@Override
+					public void log(String tag, String s) { }
+					
+					@Override
+					public void log(String s) { }
+				}, 
                 new AndroidSettings(context), 
                 includeLocation ? new AndroidLocation(context) : null, 
                 new AndroidNetwork(), 
