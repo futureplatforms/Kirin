@@ -81,33 +81,43 @@ public class FacebookActivity extends Activity {
 												FacebookActivity.this,
 												readPermissions));
 									} else {
-										FacebookDelegateImpl.newReadPermissionsCallback
-												.onSuccess();
-										FacebookDelegateImpl.newReadPermissionsCallback = null;
+										if (FacebookDelegateImpl.newReadPermissionsCallback != null) {
+											FacebookDelegateImpl.newReadPermissionsCallback
+													.onSuccess();
+											FacebookDelegateImpl.newReadPermissionsCallback = null;
+										}
 										finish();
 									}
 								} else {
-									FacebookDelegateImpl.newReadPermissionsCallback
-											.onSuccess();
-									FacebookDelegateImpl.newReadPermissionsCallback = null;
+									if (FacebookDelegateImpl.newReadPermissionsCallback != null) {
+										FacebookDelegateImpl.newReadPermissionsCallback
+												.onSuccess();
+										FacebookDelegateImpl.newReadPermissionsCallback = null;
+									}
 									finish();
 								}
 							} else if (exception != null) {
-								FacebookDelegateImpl.newReadPermissionsCallback
-										.onFailure();
-								FacebookDelegateImpl.newReadPermissionsCallback = null;
+								if (FacebookDelegateImpl.newReadPermissionsCallback != null) {
+									FacebookDelegateImpl.newReadPermissionsCallback
+											.onFailure();
+									FacebookDelegateImpl.newReadPermissionsCallback = null;
+								}
 								finish();
 							} else if (exception instanceof FacebookOperationCanceledException) {
-								FacebookDelegateImpl.newReadPermissionsCallback
-										.onUserCancel();
-								FacebookDelegateImpl.newReadPermissionsCallback = null;
+								if (FacebookDelegateImpl.newReadPermissionsCallback != null) {
+									FacebookDelegateImpl.newReadPermissionsCallback
+											.onUserCancel();
+									FacebookDelegateImpl.newReadPermissionsCallback = null;
+								}
 								finish();
 							}
 						}
 					});
 			if (readSession == null) {
-				FacebookDelegateImpl.newReadPermissionsCallback.onFailure();
-				FacebookDelegateImpl.newReadPermissionsCallback = null;
+				if (FacebookDelegateImpl.newReadPermissionsCallback != null) {
+					FacebookDelegateImpl.newReadPermissionsCallback.onFailure();
+					FacebookDelegateImpl.newReadPermissionsCallback = null;
+				}
 				finish();
 			}
 			break;
@@ -128,28 +138,36 @@ public class FacebookActivity extends Activity {
 												FacebookActivity.this,
 												publishPermissions));
 									} else {
-										FacebookDelegateImpl.newPublishPermissionsCallback
-												.onSuccess();
-										FacebookDelegateImpl.newPublishPermissionsCallback = null;
+										if (FacebookDelegateImpl.newPublishPermissionsCallback != null) {
+											FacebookDelegateImpl.newPublishPermissionsCallback
+													.onSuccess();
+											FacebookDelegateImpl.newPublishPermissionsCallback = null;
+										}
 										finish();
 									}
 								}
 							} else if (exception != null) {
-								FacebookDelegateImpl.newPublishPermissionsCallback
-										.onFailure();
-								FacebookDelegateImpl.newPublishPermissionsCallback = null;
+								if (FacebookDelegateImpl.newPublishPermissionsCallback != null) {
+									FacebookDelegateImpl.newPublishPermissionsCallback
+											.onFailure();
+									FacebookDelegateImpl.newPublishPermissionsCallback = null;
+								}
 								finish();
 							} else if (exception instanceof FacebookOperationCanceledException) {
-								FacebookDelegateImpl.newPublishPermissionsCallback
-										.onUserCancel();
-								FacebookDelegateImpl.newPublishPermissionsCallback = null;
+								if (FacebookDelegateImpl.newPublishPermissionsCallback != null) {
+									FacebookDelegateImpl.newPublishPermissionsCallback
+											.onUserCancel();
+									FacebookDelegateImpl.newPublishPermissionsCallback = null;
+								}
 								finish();
 							}
 						}
 					});
 			if (publishSession == null) {
-				FacebookDelegateImpl.newPublishPermissionsCallback.onFailure();
-				FacebookDelegateImpl.newPublishPermissionsCallback = null;
+				if (FacebookDelegateImpl.newPublishPermissionsCallback != null) {
+					FacebookDelegateImpl.newPublishPermissionsCallback.onFailure();
+					FacebookDelegateImpl.newPublishPermissionsCallback = null;
+				}
 				finish();
 			}
 			break;
@@ -168,12 +186,14 @@ public class FacebookActivity extends Activity {
 						public void onComplete(Bundle values,
 								FacebookException error) {
 							if (error != null) {
-								if (error instanceof FacebookOperationCanceledException) {
-									FacebookDelegateImpl.facebookRequestsCallback
+								if (FacebookDelegateImpl.facebookRequestsCallback != null) {
+									if (error instanceof FacebookOperationCanceledException) {
+										FacebookDelegateImpl.facebookRequestsCallback
 											.onUserCancel();
-								} else {
-									FacebookDelegateImpl.facebookRequestsCallback
-											.onFailure();
+									} else {
+										FacebookDelegateImpl.facebookRequestsCallback
+												.onFailure();
+									}
 								}
 							} else {
 
@@ -233,17 +253,20 @@ public class FacebookActivity extends Activity {
 							FacebookException error) {
 
 						if (error != null) {
-							if (error instanceof FacebookOperationCanceledException) {
-								FacebookDelegateImpl.facebookShareCallback
-										.onUserCancel();
-							} else {
-								FacebookDelegateImpl.facebookShareCallback
-										.onFailure();
+							if (FacebookDelegateImpl.facebookShareCallback != null) {
+								if (error instanceof FacebookOperationCanceledException) {
+									FacebookDelegateImpl.facebookShareCallback
+											.onUserCancel();
+								} else {
+									FacebookDelegateImpl.facebookShareCallback
+											.onFailure();
+								}
 							}
-
 						} else {
-							FacebookDelegateImpl.facebookShareCallback
+							if (FacebookDelegateImpl.facebookShareCallback != null) {
+								FacebookDelegateImpl.facebookShareCallback
 									.onSuccess("success");
+							}
 							android.util.Log.e("DSDS", "feedDialog on success");
 							finish();
 						}

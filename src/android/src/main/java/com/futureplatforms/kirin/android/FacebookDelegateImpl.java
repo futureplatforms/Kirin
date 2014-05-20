@@ -10,17 +10,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.facebook.FacebookException;
-import com.facebook.FacebookOperationCanceledException;
 import com.facebook.Session;
 import com.facebook.Session.StatusCallback;
 import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
-import com.facebook.widget.FacebookDialog;
 import com.facebook.widget.FacebookDialog.Callback;
 import com.facebook.widget.FacebookDialog.PendingCall;
-import com.facebook.widget.WebDialog;
-import com.facebook.widget.WebDialog.OnCompleteListener;
 import com.futureplatforms.kirin.dependencies.AsyncCallback;
 import com.futureplatforms.kirin.dependencies.AsyncCallback.AsyncCallback1;
 import com.futureplatforms.kirin.dependencies.AsyncCallback.AsyncCallback2;
@@ -35,18 +30,12 @@ import com.google.common.collect.Maps;
 
 public class FacebookDelegateImpl implements FacebookDelegate {
 
-	private Activity _Activity;
-
 	private Map<Activity, UiLifecycleHelper> _LifecycleMap = Maps.newHashMap();
 
 	private Context context;
 
 	public FacebookDelegateImpl(Context context) {
 		this.context = context;
-	}
-
-	public void setCurrentActivity(Activity activity) {
-		this._Activity = activity;
 	}
 
 	public UiLifecycleHelper getLifecycleHelper(Activity activity) {
@@ -87,7 +76,6 @@ public class FacebookDelegateImpl implements FacebookDelegate {
 			}
 		};
 		_LifecycleMap.put(activity, helper);
-		_Activity = activity;
 		return helper;
 	}
 
@@ -149,7 +137,23 @@ public class FacebookDelegateImpl implements FacebookDelegate {
 	public void presentShareDialogWithParams(final ShareDialogParams params,
 			final FacebookShareCallback cb) {
 		
-		this.facebookShareCallback = cb;
+		FacebookDelegateImpl.facebookShareCallback = new FacebookShareCallback() {
+			
+			@Override
+			public void onSuccess(String res) {
+				if (cb != null) { cb.onSuccess(res); }
+			}
+			
+			@Override
+			public void onFailure() {
+				if (cb != null) { cb.onFailure(); }
+			}
+			
+			@Override
+			public void onUserCancel() {
+				if (cb != null) { cb.onUserCancel(); }
+			}
+		};
 		
 		context.startActivity(FacebookActivity.newIntentForShareDialog(context, params._Friends.get(0)));
 		
@@ -230,7 +234,24 @@ public class FacebookDelegateImpl implements FacebookDelegate {
 	public void nativeOpenSessionWithReadPermissions(final FacebookLoginCallback callback,
 			boolean allowUI, ReadPermission... permissions) {
 		Log.d("FB", "nativeOpenSessionWithReadPermissions");
-		newReadPermissionsCallback = callback;
+		// Wrap callback to check for null
+		newReadPermissionsCallback = new FacebookLoginCallback() {
+			
+			@Override
+			public void onSuccess() {
+				if (callback != null) { callback.onSuccess(); }
+			}
+			
+			@Override
+			public void onFailure() {
+				if (callback != null) { callback.onFailure(); }
+			}
+			
+			@Override
+			public void onUserCancel() {
+				if (callback != null) { callback.onUserCancel(); }
+			}
+		};
 		context.startActivity(FacebookActivity.newIntentForLogIn(context, allowUI, permissions));
 	}
 
@@ -240,7 +261,23 @@ public class FacebookDelegateImpl implements FacebookDelegate {
 	public void nativeRequestPublishPermissions(final FacebookLoginCallback callback,
 			PublishPermission... permissions) {
 		Log.d("FB", "nativeRequestPublishPermissions");
-		newPublishPermissionsCallback = callback;
+		newPublishPermissionsCallback = new FacebookLoginCallback() {
+			
+			@Override
+			public void onSuccess() {
+				if (callback != null) { callback.onSuccess(); }
+			}
+			
+			@Override
+			public void onFailure() {
+				if (callback != null) { callback.onFailure(); }
+			}
+			
+			@Override
+			public void onUserCancel() {
+				if (callback != null) { callback.onUserCancel(); }
+			}
+		};
 		context.startActivity(FacebookActivity.newIntentForLogInPublish(context, true, permissions));
 	}
 
@@ -248,8 +285,30 @@ public class FacebookDelegateImpl implements FacebookDelegate {
 	public static  FacebookShareCallback facebookShareCallback;
 
 	@Override
-	public void presentRequestsDialog(FacebookRequestsCallback cb) {
-		this.facebookRequestsCallback = cb;
+	public void presentRequestsDialog(final FacebookRequestsCallback cb) {
+		FacebookDelegateImpl.facebookRequestsCallback = new FacebookRequestsCallback() {
+			
+			@Override
+			public void onSuccess(String[] res) {
+				if (cb != null) {
+					cb.onSuccess(res);
+				}
+			}
+			
+			@Override
+			public void onFailure() {
+				if (cb != null) {
+					cb.onFailure();
+				}
+			}
+			
+			@Override
+			public void onUserCancel() {
+				if (cb != null) {
+					cb.onUserCancel();
+				}
+			}
+		};
 		// WebDialog dialog = new WebDialog.RequestsDialogBuilder(_Activity,
 		// Session.getActiveSession(), new Bundle()).setOnCompleteListener(
 		// new OnCompleteListener() {
@@ -277,10 +336,21 @@ public class FacebookDelegateImpl implements FacebookDelegate {
 	public static AsyncCallback1<Boolean> isLoggedInCallback;
 
 	@Override
-	public void isLoggedIn(AsyncCallback1<Boolean> cb) {
+	public void isLoggedIn(final AsyncCallback1<Boolean> cb) {
 		Session session = Session.getActiveSession();
 		if (session == null || !session.getState().isOpened()) {
-			isLoggedInCallback = cb;
+			isLoggedInCallback = new AsyncCallback1<Boolean>() {
+				
+				@Override
+				public void onSuccess(Boolean res) {
+					if (cb != null) { cb.onSuccess(res); }
+				}
+				
+				@Override
+				public void onFailure() {
+					if (cb != null) { cb.onFailure(); }
+				}
+			};
 			context.startActivity(FacebookActivity.newIntentForIsLoggedIn(context));
 		} else cb.onSuccess(true);
 	}
