@@ -210,7 +210,8 @@
     [[FBSession activeSession] closeAndClearTokenInformation];
 }
 
-- (void) presentShareDialogWithParams: (NSString*) caption : (NSString*) description : (NSString*) link : (NSString*) name : (NSString*) picture : (NSString*) place : (NSString*) ref : (int) cbId {
+- (void) presentShareDialogWithParams: (NSString*) caption : (NSString*) description : (NSString*) link : (NSString*) name : (NSString*) picture : (NSString*) place : (NSString*) ref : (NSArray*) friends : (int) cbId {
+    NSLog(@"Friends: %d", [friends count]);
     FBShareDialogParams *shareParams = [[FBShareDialogParams alloc] init];
     NSMutableDictionary *feedParams = [[NSMutableDictionary alloc] init];
     if (caption != nil) {
@@ -242,8 +243,14 @@
         [feedParams setObject:ref forKey:@"ref"];
     }
     
+    if (friends != nil && [friends count] > 0) {
+        shareParams.friends = friends;
+        [feedParams setObject:friends[0] forKey:@"to"];
+    }
+    /*
     if ([FBDialogs canPresentShareDialogWithParams:shareParams]) {
         [FBDialogs presentShareDialogWithParams:shareParams
+         
                                     clientState:nil
                                         handler:^(FBAppCall *call, NSDictionary *results, NSError *error) {
                                             if(error) {
@@ -259,7 +266,7 @@
                                                 }
                                             }
                                         }];
-    } else {
+    } else {*/
         [FBWebDialogs presentFeedDialogModallyWithSession:FBSession.activeSession
                                                parameters:feedParams
                                                   handler:^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
@@ -285,7 +292,7 @@
                                                           }
                                                       }
                                                   }];
-    }
+   // }
 }
 
 - (void) presentRequestsDialog: (int) cbId {

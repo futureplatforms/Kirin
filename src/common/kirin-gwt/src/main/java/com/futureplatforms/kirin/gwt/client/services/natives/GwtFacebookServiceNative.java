@@ -10,6 +10,6 @@ public interface GwtFacebookServiceNative extends IKirinNativeService {
 	public void requestPublishPermissions(String[] permissions, int cbId);
 	public void getCurrentPermissions(int cbId);
 	public void signOut();
-	public void presentShareDialogWithParams(String caption, String description, String link, String name, String picture, String place, String reference, int cbId);
+	public void presentShareDialogWithParams(String caption, String description, String link, String name, String picture, String place, String reference, String[] friends, int cbId);
 	public void presentRequestsDialog(int cbId);
 }

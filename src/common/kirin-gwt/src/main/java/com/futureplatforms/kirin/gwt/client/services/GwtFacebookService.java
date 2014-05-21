@@ -135,6 +135,7 @@ public class GwtFacebookService extends KirinService<GwtFacebookServiceNative> {
 				params._Picture, 
 				params._Place, 
 				params._Ref, 
+				params._Friends.toArray(new String[0]),
 				id);
 	}
 	
