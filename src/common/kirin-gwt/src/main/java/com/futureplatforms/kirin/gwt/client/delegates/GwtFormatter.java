@@ -136,6 +136,7 @@ public class GwtFormatter extends Formatter {
 
 		var bSuccess = false;
 		var result;
+		// attempt to decrypt until successful, loop needed due to iOS bug see https://code.google.com/p/crypto-js/issues/detail?id=80
 		while (!bSuccess) {
 			try {
 	    		var decrypted = cryptoJS.AES.decrypt(encodedB64, passAsHex, { iv: iv, mode: cryptoJS.mode.CBC });
