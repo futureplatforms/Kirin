@@ -124,7 +124,6 @@ public class GwtFormatter extends Formatter {
 	
 	private native final String _decryptAES(String encodedB64, String password) /*-{
 		var cryptoJS = $wnd.CryptoJS;
-		
 		var first16OfHash = function(phrase) {
 			var sha512ed = cryptoJS.SHA512(phrase);
 			var asHex = sha512ed.toString(cryptoJS.enc.Hex);
@@ -134,8 +133,19 @@ public class GwtFormatter extends Formatter {
 		var iv = cryptoJS.enc.Hex.parse('00000000000000000000000000000000');
 		var first16pass = first16OfHash(password);
 		var passAsHex = cryptoJS.enc.Hex.parse(first16pass);
-    	var decrypted = cryptoJS.AES.decrypt(encodedB64, passAsHex, { iv: iv, mode: cryptoJS.mode.CBC });
-    	return decrypted.toString(cryptoJS.enc.Utf8);
+
+		var bSuccess = false;
+		var result;
+		while (!bSuccess) {
+			try {
+	    		var decrypted = cryptoJS.AES.decrypt(encodedB64, passAsHex, { iv: iv, mode: cryptoJS.mode.CBC });
+			    result = decrypted.toString(cryptoJS.enc.Utf8);
+			    bSuccess = true;
+			} catch(e) {
+		      //bSuccess=false;
+			}
+		  }
+    	return result;
 	}-*/;
 
 }
