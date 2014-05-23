@@ -5,7 +5,7 @@ import com.futureplatforms.kirin.dependencies.json.JSONObject;
 
 public abstract class ProxoClient {
 	// Called when the given object is to be inserted or updated to the database
-	public abstract void onInsertOrUpdate(Transaction tx, JSONObject obj);
+	public abstract void onInsertOrUpdate(Transaction tx, JSONObject obj, boolean isFirstSync);
 	
 	// Called when the given object is to be deleted
 	public abstract void onDelete(Transaction tx, JSONObject obj);

@@ -63,6 +63,7 @@ public class Proxocube {
 	}
 	
 	private void process(final String result, final Database db, final int startRevision, final boolean didBake) {
+		final boolean isFirstSync = !hasSynced();
 		db.transaction(new TxRunner() {
 			
 			@Override
@@ -80,7 +81,7 @@ public class Proxocube {
 						if (obj.has("deleted") && obj.getBoolean("deleted")) {
 							_Client.onDelete(tx, obj);
 						} else {
-							_Client.onInsertOrUpdate(tx, obj);
+							_Client.onInsertOrUpdate(tx, obj, isFirstSync);
 						}
 					}
 					_Client.onSyncCompleting(tx);
