@@ -152,11 +152,11 @@ public class FacebookFriends {
 															jsonFriend.getString("pic_square"));
 													friends.add(f);
 												} catch (JSONException e) {
-													StaticDependencies.getInstance().getLogDelegate().log("failed to process friend, " + e.getLocalizedMessage());
+													StaticDependencies.getInstance().getLogDelegate().log("FACEBOOK","failed to process friend, ", e);
 												}
 											}
 										} catch (JSONException e) {
-											StaticDependencies.getInstance().getLogDelegate().log("failed to process friends, " + e.getLocalizedMessage());
+											StaticDependencies.getInstance().getLogDelegate().log("FACEBOOK","failed to process friends, ", e);
 										}
 										
 										_Settings.put(LastSyncedKey, ""+new Date().getTime());
