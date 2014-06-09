@@ -58,10 +58,11 @@ public class FacebookActivity extends Activity {
 
 		switch (requestType) {
 		case IS_LOGGED_IN:
-			Session s = Session.getActiveSession();
-			FacebookDelegateImpl.isLoggedInCallback.onSuccess(s.getState()
-					.isOpened());
-			FacebookDelegateImpl.isLoggedInCallback = null;
+			if (FacebookDelegateImpl.isLoggedInCallback != null) {
+				Session s = Session.getActiveSession();
+				FacebookDelegateImpl.isLoggedInCallback.onSuccess(s.getState().isOpened());
+				FacebookDelegateImpl.isLoggedInCallback = null;
+			}
 			finish();
 			break;
 		case LOG_IN_READ:
