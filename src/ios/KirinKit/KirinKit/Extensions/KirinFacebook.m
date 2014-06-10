@@ -317,13 +317,13 @@
                 // Test if the query begins with post_id
                 
                 NSString *query = [resultURL query];
+                NSLog(@"ResultURL: %@", [resultURL absoluteString]);
                 NSRange range = [query rangeOfString:@"error_code"];
                 if (range.length > 0) {
                     // pressed Cancel
                     [self.kirinModule requestsDialogCancel:cbId];
                 } else {
-                    NSArray * tos = [KirinFacebook parseTosFromQuery:[resultURL query]];
-                    [self.kirinModule requestsDialogSuccess:cbId :tos];
+                    [self.kirinModule requestsDialogSuccess:cbId :[resultURL query]];
                 }
             } else {
                 // pressed X
@@ -331,21 +331,6 @@
             }
         }
     }];
-}
-
-+ (NSArray*) parseTosFromQuery: (NSString *) query {
-    NSMutableArray * tos = [[NSMutableArray alloc] init];
-    for (NSString *qs in [query componentsSeparatedByString:@"&"]) {
-        NSString *value = [[[[qs componentsSeparatedByString:@"="] objectAtIndex:1]
-                            stringByReplacingOccurrencesOfString:@"+" withString:@" "]
-                           stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        NSString *key = [[qs componentsSeparatedByString:@"="] objectAtIndex:0];
-        
-        if ([key isEqualToString:@"to"]) {
-            [tos addObject:value];
-        }
-    }
-    return tos;
 }
 
 @end

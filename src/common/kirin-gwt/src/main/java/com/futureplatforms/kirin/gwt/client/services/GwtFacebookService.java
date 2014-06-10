@@ -1,5 +1,6 @@
 package com.futureplatforms.kirin.gwt.client.services;
 
+import java.util.List;
 import java.util.Map;
 
 import org.timepedia.exporter.client.Export;
@@ -8,12 +9,15 @@ import org.timepedia.exporter.client.NoExport;
 
 import com.futureplatforms.kirin.dependencies.AsyncCallback.AsyncCallback1;
 import com.futureplatforms.kirin.dependencies.AsyncCallback.AsyncCallback2;
+import com.futureplatforms.kirin.dependencies.StaticDependencies;
+import com.futureplatforms.kirin.dependencies.StaticDependencies.LogDelegate;
 import com.futureplatforms.kirin.dependencies.fb.FacebookDetails.FacebookRequestsCallback;
 import com.futureplatforms.kirin.dependencies.fb.FacebookDetails.FacebookShareCallback;
 import com.futureplatforms.kirin.dependencies.fb.FacebookDetails.ShareDialogParams;
 import com.futureplatforms.kirin.gwt.client.KirinService;
 import com.futureplatforms.kirin.gwt.client.services.natives.GwtFacebookServiceNative;
 import com.futureplatforms.kirin.gwt.compile.NoBind;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.gwt.core.client.GWT;
 
@@ -198,8 +202,25 @@ public class GwtFacebookService extends KirinService<GwtFacebookServiceNative> {
 	}
 	
 
-	public void requestsDialogSuccess(int cbId, String[] tos) {
-		_RequestCallbacks.remove(cbId).onSuccess(tos);
+	public void requestsDialogSuccess(int cbId, String respQuery) {
+		List<String> tos = Lists.newArrayList();
+		try {
+			LogDelegate log = StaticDependencies.getInstance().getLogDelegate();
+			respQuery = StaticDependencies.getInstance().getFormatter().urlDecode(respQuery);
+			log.log("tosQuery: " + respQuery);
+			
+			// Query looks like: request=877071382310355&to[0]=785760367&to[1]=100007833488331
+			String[] queryParts = respQuery.split("&");
+			log.log("queryParts.length: " + queryParts.length);
+			for (int i=0, len=queryParts.length; i<len; i++) {
+				String[] toQuery = queryParts[i].split("=");
+				if (toQuery[0].startsWith("to")) {
+					tos.add(toQuery[1]);
+				}
+			}
+		} catch (Throwable t) {
+		}
+		_RequestCallbacks.remove(cbId).onSuccess(tos.toArray(new String[0]));
 	}
 	public void requestsDialogCancel(int cbId) {
 		_RequestCallbacks.remove(cbId).onUserCancel();
