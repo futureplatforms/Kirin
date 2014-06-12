@@ -210,7 +210,7 @@ public class AndroidDatabase implements DatabaseDelegate {
 							break;
 
 						case FIELD_TYPE_INTEGER: {
-							values.add(String.valueOf(cursor.getInt(i)));
+							values.add(String.valueOf(cursor.getLong(i)));
 						}
 							break;
 
