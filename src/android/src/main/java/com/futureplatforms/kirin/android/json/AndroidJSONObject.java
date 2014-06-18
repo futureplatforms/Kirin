@@ -209,7 +209,7 @@ public class AndroidJSONObject extends
 
 	@Override
 	public String optString(String key) {
-		return jsonObject.optString(key, null);
+		return jsonObject.optString(key);
 	}
 
 	@Override
