@@ -51,7 +51,7 @@
     [cr onRegister];
 
     
-    if(NSClassFromString(@"SLComposeViewController")) {
+    if(NSClassFromString(@"FBSession")) {
         KirinFacebook* fb = [[KirinFacebook alloc] init];
         [fb onRegister];
     } else {
