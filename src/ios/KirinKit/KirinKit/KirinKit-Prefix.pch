@@ -13,4 +13,5 @@
     #define DLog(...)do{}while(0)
     #ifndef NS_BLOCK_ASSERTIONS
         #define NS_BLOCK_ASSERTIONS
+    #endif
 #endif
