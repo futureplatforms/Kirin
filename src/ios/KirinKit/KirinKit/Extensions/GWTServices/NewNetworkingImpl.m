@@ -72,7 +72,7 @@
              if (isB64) {
                  respStr = [NewNetworkingImpl Base64Encode:data];
              } else {
-                 respStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                 respStr = [[NSString alloc] initWithData:data encoding:[NewNetworkingImpl stringEncodingFromString:[response textEncodingName]]];
              }
              
              NSHTTPURLResponse * httpResp = (NSHTTPURLResponse*) response;
@@ -94,6 +94,36 @@
              [self.kirinModule payload:ref :respCode :respStr :keyArr :valArr];
          }
      }];
+}
+
++(NSStringEncoding)stringEncodingFromString:(NSString *)strEncoding
+{
+    @try
+    {
+        DLog(@": start");
+        
+        // Default to NSUTF8StringEncoding if blank string supplied
+        if ([[strEncoding stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] length] == 0)
+            return NSUTF8StringEncoding;
+        
+        DLog(@"Attempting to find encoding = %@", strEncoding);
+        // Try and obtain the correct string encoding from a string
+        CFStringRef cfStringRef = (CFStringRef)strEncoding;
+        CFStringEncoding cfStringEnc = CFStringConvertIANACharSetNameToEncoding(cfStringRef);
+        NSStringEncoding encoding = CFStringConvertEncodingToNSStringEncoding(cfStringEnc);
+        
+        return encoding;
+    }
+    @catch (NSException *exception)
+    {
+        // In-case the conversion failed
+        DLog(@"Could not find encoding, defaulting to UTF8");
+        return NSUTF8StringEncoding;
+    }
+    @finally
+    {
+        DLog(@": end");
+    }
 }
 
 
