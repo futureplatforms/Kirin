@@ -16,6 +16,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.net.Uri;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
@@ -78,13 +79,28 @@ public class AndroidNotification implements NotificationDelegate {
 		
 	}
 	
+	public static KirinNotificationActions KIRIN_NOTIFICATIONS_DROPBOX;
+	
+	public static class KirinNotificationActions {
+		public final Class<?> _Class;
+		public final Bundle _Extras;
+		public KirinNotificationActions(Class<?> clz, Bundle extras) {
+			_Class = clz; _Extras = extras;
+		}
+	}
+	
 	private static void displayNotification(final Context ctx, final PersistingAlarmIntent alarmIntent) {
 		try {
 			final NotificationCompat.Builder notifBuilder = new NotificationCompat.Builder(ctx);
 			
-			//TODO: Remove the application specific reference to the activity to start on notification click..
-			final Intent intent = new Intent(ctx, RandomActivity.class);
-			
+			Intent intent;
+			if (KIRIN_NOTIFICATIONS_DROPBOX != null) {
+				intent = new Intent(ctx, KIRIN_NOTIFICATIONS_DROPBOX._Class);
+				intent.putExtras(KIRIN_NOTIFICATIONS_DROPBOX._Extras);
+				KIRIN_NOTIFICATIONS_DROPBOX = null;
+			} else {
+				intent = new Intent(ctx, RandomActivity.class);
+			}
 			final PendingIntent pendingIntent = PendingIntent.getActivity(ctx, 0, intent, 0);
 			
 			notifBuilder.setContentIntent(pendingIntent);
