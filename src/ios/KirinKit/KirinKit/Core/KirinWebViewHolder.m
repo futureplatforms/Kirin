@@ -86,6 +86,7 @@
 - (BOOL)webView:(UIWebView *)theWebView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
     
 	NSURL *url = [request URL];
+    //NSLog(@"shouldStartLoadWithRequest %@", [url debugDescription]);
     /*
      * Get Command and Options From URL
      * We are looking for URLS that match native://<Class>/<command>[?<arguments>]
@@ -97,15 +98,17 @@
 		for (int i=0; i < [jsQueue count]; i++) {
 			[self _execJSImmediately:[jsQueue objectAtIndex:i]];
 		}
-		
-		webViewIsReady = YES;
+        webViewIsReady = YES;
 		[jsQueue removeAllObjects];
+        
+        [theWebView stringByEvaluatingJavaScriptFromString:@"EXPOSED_TO_NATIVE.runNext();"];
+        
         return NO;
     } else if ([[url scheme] isEqualToString:@"native"]) {
     	
         // Tell the JS code that we've got this command, and we're ready for another
-        [theWebView stringByEvaluatingJavaScriptFromString:@"EXPOSED_TO_NATIVE.js_ObjC_bridge.ready = true;"];
-		
+        [theWebView stringByEvaluatingJavaScriptFromString:@"EXPOSED_TO_NATIVE.runNext();"];
+        
         NSArray* components = [[url host] componentsSeparatedByString:@"."];
         
 
