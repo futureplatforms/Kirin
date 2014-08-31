@@ -95,7 +95,7 @@ public class GwtFacebook implements FacebookDelegate {
 
 	@Override
 	public void signOut(AsyncCallback cb) {
-		GwtFacebookService.BACKDOOR()._signOut();
+		GwtFacebookService.BACKDOOR()._signOut(cb);
 	}
 
 	@Override
