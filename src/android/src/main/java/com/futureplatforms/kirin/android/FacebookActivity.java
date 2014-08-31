@@ -37,6 +37,7 @@ public class FacebookActivity extends Activity {
 	private static final int LOG_IN_PUBLISH = 3;
 	private static final int REQUESTS_DIALOG = 4;
 	private static final int SHARE_DIALOG = 5;
+	private static final int SIGN_OUT = 6;
 
 	UiLifecycleHelper helper;
 
@@ -233,6 +234,26 @@ public class FacebookActivity extends Activity {
 				}
 
 				break;
+			case SIGN_OUT:
+					Session signOutSession = Session.getActiveSession();
+					if (signOutSession == null ) {
+						signOutSession = Session.openActiveSession(this, false, new StatusCallback() {
+	
+							@Override
+							public void call(Session session, SessionState state, Exception arg2) {
+								if (session != null) {
+									session.closeAndClearTokenInformation();
+									FacebookDelegateImpl.signOutCallback.onSuccess();
+									finish();
+								}
+							}
+						});
+					} else {
+						signOutSession.closeAndClearTokenInformation();
+						FacebookDelegateImpl.signOutCallback.onSuccess();
+						finish();
+					}
+				break;
 		}
 	}
 
@@ -355,6 +376,11 @@ public class FacebookActivity extends Activity {
 	public static Intent newIntentForShareDialog(Context context, String uId) {
 		return new Intent(context, FacebookActivity.class).setFlags(defaultFlags)
 				.putExtra(REQUEST_TYPE, SHARE_DIALOG).putExtra(FRIEND_UID, uId);
+	}
+
+	public static Intent newIntentForSignOut(Context context) {
+		return new Intent(context, FacebookActivity.class).setFlags(defaultFlags).putExtra(
+				REQUEST_TYPE, SIGN_OUT);
 	}
 
 }
