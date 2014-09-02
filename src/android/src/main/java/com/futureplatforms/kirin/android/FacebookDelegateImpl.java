@@ -105,9 +105,6 @@ public class FacebookDelegateImpl implements FacebookDelegate {
 		Session session = Session.getActiveSession();
 		if (session != null & session.isOpened()) {
 			List<String> permissions = session.getPermissions();
-			for (String permission : permissions) {
-				Log.d("permission", permission);
-			}
 			cb.onSuccess(permissions.toArray(new String[0]));
 		} else {
 			cb.onFailure();
@@ -219,12 +216,29 @@ public class FacebookDelegateImpl implements FacebookDelegate {
 		*/
 		
 	}
-
+	public static AsyncCallback signOutCallback;
+ 
 	@Override
-	public void signOut(AsyncCallback cb) {
+	public void signOut(final AsyncCallback callback) {
 		Session session = Session.getActiveSession();
-		if (session != null && session.isOpened()) {
+		if (session != null) {
 			session.closeAndClearTokenInformation();
+			callback.onSuccess();
+		} 
+		else {
+			signOutCallback = new AsyncCallback() {
+				
+				@Override
+				public void onSuccess() {
+					if (callback != null) { callback.onSuccess(); }
+				}
+				
+				@Override
+				public void onFailure() {
+					if (callback != null) { callback.onFailure(); }
+				}
+			};
+			context.startActivity(FacebookActivity.newIntentForSignOut(context));
 		}
 	}
 
@@ -233,7 +247,6 @@ public class FacebookDelegateImpl implements FacebookDelegate {
 	@Override
 	public void nativeOpenSessionWithReadPermissions(final FacebookLoginCallback callback,
 			boolean allowUI, ReadPermission... permissions) {
-		Log.d("FB", "nativeOpenSessionWithReadPermissions");
 		// Wrap callback to check for null
 		newReadPermissionsCallback = new FacebookLoginCallback() {
 			
@@ -260,7 +273,6 @@ public class FacebookDelegateImpl implements FacebookDelegate {
 	@Override
 	public void nativeRequestPublishPermissions(final FacebookLoginCallback callback,
 			PublishPermission... permissions) {
-		Log.d("FB", "nativeRequestPublishPermissions");
 		newPublishPermissionsCallback = new FacebookLoginCallback() {
 			
 			@Override

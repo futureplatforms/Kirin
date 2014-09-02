@@ -7,6 +7,7 @@ import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.ExportPackage;
 import org.timepedia.exporter.client.NoExport;
 
+import com.futureplatforms.kirin.dependencies.AsyncCallback;
 import com.futureplatforms.kirin.dependencies.AsyncCallback.AsyncCallback1;
 import com.futureplatforms.kirin.dependencies.AsyncCallback.AsyncCallback2;
 import com.futureplatforms.kirin.dependencies.StaticDependencies;
@@ -114,8 +115,9 @@ public class GwtFacebookService extends KirinService<GwtFacebookServiceNative> {
 	}
 	
 	@NoExport
-	public void _signOut() {
+	public void _signOut(AsyncCallback cb) {
 		getNativeObject().signOut();
+		cb.onSuccess();
 	}
 	
 	@NoExport
