@@ -93,7 +93,7 @@ public class AndroidFormatter extends Formatter {
 	@Override
 	public String urlEncode(String toEncode) {
 		// MAKESHIFT IMPLEMENTATION, PLEASE TEST
-		return encodeURIComponent(toEncode);
+		return encodeURIComponent(toEncode).replace("+", "%20");
 	}
 
 	@Override
