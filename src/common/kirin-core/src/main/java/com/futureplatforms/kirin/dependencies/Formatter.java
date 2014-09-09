@@ -2,9 +2,10 @@ package com.futureplatforms.kirin.dependencies;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import com.futureplatforms.kirin.dependencies.AsyncCallback.AsyncCallback1;
-import com.google.common.io.BaseEncoding;
 
 public abstract class Formatter {
 	
@@ -39,4 +40,14 @@ public abstract class Formatter {
      */
 	public abstract void pbkdf2(String plaintext, String salt, int iterations, int keyLenBytes,
 			AsyncCallback1<byte[]> cb);
+	
+	public String urlEncodedForm(Map<String, String> params) {
+		StringBuilder sb = new StringBuilder();
+		for (Entry<String, String> entry : params.entrySet()) {
+			sb.append(entry.getKey() + "=" + urlEncode(entry.getValue()) + "&");
+		}
+		// remove last &
+		sb.setLength(sb.length() - 1);
+		return sb.toString();
+	}
 }
