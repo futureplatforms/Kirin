@@ -42,23 +42,28 @@ defineModule("Native", function (require, exports) {
 	 * @private
 	 */
 	var run_command = function() {
-
 		if (!EXPOSED_TO_NATIVE.js_ObjC_bridge.ready) {
+			return;
+		}
+		
+		if (queue.commands.length === 0) {
 			return;
 		}
 		
 		EXPOSED_TO_NATIVE.js_ObjC_bridge.ready = false;
 	
 		var args = queue.commands.shift();
-		if (queue.commands.length === 0) {
-			window.clearInterval(queue.timer);
-			queue.timer = null;
-		}
-	
 		var parts = Array.prototype.slice.call(args, 1);
 		var url = "native://" + args[0] + "/?" + encodeURIComponent(JSON.stringify(parts));	
 		tellNativeFn(url);
 	};
+	
+	var runNextFromNative = function() {
+		EXPOSED_TO_NATIVE.js_ObjC_bridge.ready = true;
+		run_command();
+	};
+	
+	EXPOSED_TO_NATIVE['runNext'] = runNextFromNative;
 	
 	/**
 	 * Execute a native command in a queued fashion, to ensure commands do not
@@ -70,9 +75,7 @@ defineModule("Native", function (require, exports) {
 	 */
 	var exec = function() {
 		queue.commands.push(arguments);
-		if (queue.timer === null) {
-			queue.timer = window.setInterval(run_command, 10);
-		}
+		run_command();
 	};
 	exports.exec = exec;
 	
