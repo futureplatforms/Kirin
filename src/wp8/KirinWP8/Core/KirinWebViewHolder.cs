@@ -84,7 +84,7 @@ namespace KirinWindows.Core
             string method = classAndMethod.Substring(dot + 1);
 
             context.PerformMethod(className, method, parameters);
-            wb.InvokeScriptAsync("eval", "EXPOSED_TO_NATIVE.js_ObjC_bridge.ready = true;");
+            wb.InvokeScriptAsync("eval", "EXPOSED_TO_NATIVE.runNext();");
         }
 
         private void debugUri(Uri uri)
