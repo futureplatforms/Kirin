@@ -45,6 +45,8 @@
 
 @property(nonatomic, retain) KirinExtensions* kirinExtensions;
 
+@property(nonatomic, retain) NSDictionary* notificationUserData;
+
 - (id) initWithWebView: (UIWebView*) aWebView;
 
 - (KirinHelper*) bindObject: (id) nativeObject toModule:(NSString*) moduleName;

@@ -38,7 +38,12 @@
 
     localNotif.alertAction = @"OK";
 
-    localNotif.userInfo = [NSDictionary dictionaryWithObject:notificationId forKey:@"id"];
+    NSDictionary * dic = [KIRIN notificationUserData];
+    if (dic) {
+        localNotif.userInfo = dic;
+    } else {
+        localNotif.userInfo = [NSDictionary dictionaryWithObject:notificationId forKey:@"id"];
+    }
     
     [[UIApplication sharedApplication] scheduleLocalNotification:localNotif];
     [localNotif release];
