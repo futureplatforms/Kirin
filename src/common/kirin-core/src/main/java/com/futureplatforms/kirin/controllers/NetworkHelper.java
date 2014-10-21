@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.futureplatforms.kirin.dependencies.StaticDependencies;
+import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkFailType;
 import com.futureplatforms.kirin.dependencies.TimerTask;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate.HttpVerb;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate.NetworkResponse;
@@ -53,6 +54,16 @@ public final class NetworkHelper {
                     callback.callOnFail(code);
                 }
             }
+
+			@Override
+			protected void onFailWithStatus(String code,
+					NetworkFailType failType) {
+            	tt.cancel();
+                if (!_Cancelled) 
+                {
+                    callback.callOnFail(code);
+                }
+			}
 
         });
     }

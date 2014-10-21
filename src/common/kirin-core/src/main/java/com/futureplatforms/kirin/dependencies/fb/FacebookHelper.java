@@ -14,6 +14,7 @@ import com.futureplatforms.kirin.dependencies.StaticDependencies.LogDelegate;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate.HttpVerb;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate.NetworkResponse;
+import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkFailType;
 import com.futureplatforms.kirin.dependencies.fb.FacebookDetails.FacebookLoginCallback;
 import com.futureplatforms.kirin.dependencies.fb.FacebookDetails.FacebookRequestsCallback;
 import com.futureplatforms.kirin.dependencies.fb.FacebookDetails.FacebookShareCallback;
@@ -140,6 +141,13 @@ public class FacebookHelper {
 					public void onFail(String code) {
 						log.log(verb + ": " + endpoint + " onFail(" + code + ")");
 						resp.onNetError();
+					}
+
+					@Override
+					protected void onFailWithStatus(String code,
+							NetworkFailType failType) {
+                        onFail(code);
+						
 					}
 				});
 			}
