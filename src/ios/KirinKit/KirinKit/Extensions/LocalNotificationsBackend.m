@@ -33,7 +33,7 @@
     localNotif.fireDate = itemDate;
     localNotif.timeZone = [NSTimeZone defaultTimeZone];
 
-    localNotif.alertBody = [title stringByAppendingFormat:@": %@", text];
+    localNotif.alertBody = text;
     localNotif.soundName = UILocalNotificationDefaultSoundName;
 
     localNotif.alertAction = @"OK";
