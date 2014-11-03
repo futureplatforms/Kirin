@@ -40,15 +40,16 @@ public class AndroidNotification implements NotificationDelegate {
 		Log.i("Kirin", "scheduleNotification for " + notificationId + " at " + new Date(timeMillisSince1970) + " this="+this);
 
 		final PersistingAlarmIntent alarmIntent = new PersistingAlarmIntent(ctx, notificationId, timeMillisSince1970, title, text);
-		
 		scheduleNotification(alarmIntent);
 	}
 	
 	private void scheduleNotification(final PersistingAlarmIntent alarmIntent) {
 		if(alarmIntent.getTimeMillisSince1970() <= System.currentTimeMillis()) {
 			// Show the notification immediately, don't bother scheduling an alarm
+			Log.i("Kirin", "Scheduling notification immediately");
 			displayNotification(ctx, alarmIntent);
 		} else {
+			Log.i("Kirin", "Scheduling alarm for the future");
 			// Schedule an alarm to trigger in the future, at which point we will then show the notification
 			alarmIntent.save();
 			
@@ -66,7 +67,7 @@ public class AndroidNotification implements NotificationDelegate {
 		if(PersistingAlarmIntent.hasSaved(this.ctx, notificationId)) {
 			final PersistingAlarmIntent alarmIntent = PersistingAlarmIntent.load(this.ctx, notificationId);
 			
-			this.alarmMgr.cancel(PendingIntent.getBroadcast(this.ctx, 0, alarmIntent, 0));
+			this.alarmMgr.cancel(PendingIntent.getBroadcast(this.ctx, notificationId, alarmIntent, 0));
 			
 			alarmIntent.delete();
 		}
@@ -90,6 +91,8 @@ public class AndroidNotification implements NotificationDelegate {
 	}
 	
 	private static void displayNotification(final Context ctx, final PersistingAlarmIntent alarmIntent) {
+		Log.d("Kirin", "displayNotification");
+		
 		try {
 			final NotificationCompat.Builder notifBuilder = new NotificationCompat.Builder(ctx);
 			
@@ -102,7 +105,9 @@ public class AndroidNotification implements NotificationDelegate {
 				intent = new Intent(ctx, RandomActivity.class);
 			}
 			
-			final PendingIntent pendingIntent = PendingIntent.getActivity(ctx, alarmIntent.getNotificationId(), intent, 0);
+			Log.d("Kirin", "Creating notification with code :: " + alarmIntent.getNotificationId());
+			
+			final PendingIntent pendingIntent = PendingIntent.getActivity(ctx, alarmIntent.getNotificationId(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
 			
 			notifBuilder.setContentIntent(pendingIntent);
 			notifBuilder.setContentTitle(alarmIntent.getTitle());
