@@ -89,6 +89,8 @@ public class AndroidNotification implements NotificationDelegate {
 		}
 	}
 	
+	private static int nextRequestCode = Integer.MIN_VALUE;
+	
 	private static void displayNotification(final Context ctx, final PersistingAlarmIntent alarmIntent) {
 		try {
 			final NotificationCompat.Builder notifBuilder = new NotificationCompat.Builder(ctx);
@@ -101,7 +103,8 @@ public class AndroidNotification implements NotificationDelegate {
 			} else {
 				intent = new Intent(ctx, RandomActivity.class);
 			}
-			final PendingIntent pendingIntent = PendingIntent.getActivity(ctx, 0, intent, 0);
+			
+			final PendingIntent pendingIntent = PendingIntent.getActivity(ctx, nextRequestCode++, intent, 0);
 			
 			notifBuilder.setContentIntent(pendingIntent);
 			notifBuilder.setContentTitle(alarmIntent.getTitle());
