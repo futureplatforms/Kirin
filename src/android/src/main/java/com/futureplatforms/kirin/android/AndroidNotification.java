@@ -52,7 +52,7 @@ public class AndroidNotification implements NotificationDelegate {
 			// Schedule an alarm to trigger in the future, at which point we will then show the notification
 			alarmIntent.save();
 			
-			final PendingIntent pendingIntent = PendingIntent.getBroadcast(this.ctx, 0, alarmIntent, 0);
+			final PendingIntent pendingIntent = PendingIntent.getBroadcast(this.ctx, alarmIntent.getNotificationId(), alarmIntent, 0);
 			
 			this.alarmMgr.set(AlarmManager.RTC_WAKEUP, alarmIntent.getTimeMillisSince1970(), pendingIntent);
 		}
@@ -89,8 +89,6 @@ public class AndroidNotification implements NotificationDelegate {
 		}
 	}
 	
-	private static int nextRequestCode = Integer.MIN_VALUE;
-	
 	private static void displayNotification(final Context ctx, final PersistingAlarmIntent alarmIntent) {
 		try {
 			final NotificationCompat.Builder notifBuilder = new NotificationCompat.Builder(ctx);
@@ -104,7 +102,7 @@ public class AndroidNotification implements NotificationDelegate {
 				intent = new Intent(ctx, RandomActivity.class);
 			}
 			
-			final PendingIntent pendingIntent = PendingIntent.getActivity(ctx, nextRequestCode++, intent, 0);
+			final PendingIntent pendingIntent = PendingIntent.getActivity(ctx, alarmIntent.getNotificationId(), intent, 0);
 			
 			notifBuilder.setContentIntent(pendingIntent);
 			notifBuilder.setContentTitle(alarmIntent.getTitle());
