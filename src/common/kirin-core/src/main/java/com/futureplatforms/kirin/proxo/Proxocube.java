@@ -8,6 +8,7 @@ import com.futureplatforms.kirin.dependencies.StaticDependencies.LogDelegate;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate.HttpVerb;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate.NetworkResponse;
+import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkFailType;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.SettingsDelegate;
 import com.futureplatforms.kirin.dependencies.TimerTask;
 import com.futureplatforms.kirin.dependencies.db.Database;
@@ -144,6 +145,11 @@ public class Proxocube {
 				
 				@Override
 				public void onFail(String code) {
+					_Client.onError();
+				}
+
+				@Override
+				protected void onFailWithStatus(String code, NetworkFailType failType) {
 					_Client.onError();
 				}
 			});

@@ -1,5 +1,8 @@
 package com.futureplatforms.kirin.dependencies;
 
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,6 +18,8 @@ public final class StaticDependencies {
 	public enum Configuration {
 		Debug, Release
 	};
+	
+	public static enum NetworkFailType { NetworkFail, TimeoutFail, UnknownFail };
 
 	private static StaticDependencies instance;
 
@@ -48,7 +53,8 @@ public final class StaticDependencies {
 
 	public static class NetworkDelegate {
 		private NetworkDelegateClient _Client;
-
+		private static Boolean hasNetworkConnection;
+		
 		public NetworkDelegate(NetworkDelegateClient client) {
 			this._Client = client;
 		}
@@ -62,20 +68,32 @@ public final class StaticDependencies {
 			}
 		};
 
+		public static void UpdateNetworkConnectionStatus(boolean enabled)
+		{
+			hasNetworkConnection = new Boolean(enabled);
+		}
+		
 		public static abstract class NetworkResponse {
 			private boolean cancelled;
 			private OnCancelledListener mOnCancelledListener;
 
 			protected abstract void onSuccess(int res, String result, Map<String, String> headers);
-
 			protected abstract void onFail(String code);
-
+			protected void onFailWithStatus(String code, NetworkFailType failType) {}
+			
 			public void callOnSuccess(int res, String result, Map<String, String> headers) {
 				if (!cancelled) onSuccess(res, result, headers);
 			}
 
-			public void callOnFail(String code) {
-				if (!cancelled) onFail(code);
+			public void callOnFail(String code) 
+			{
+				if (!cancelled)
+				{
+					if (Boolean.TRUE.equals(hasNetworkConnection))
+						onFailWithStatus(code, NetworkFailType.TimeoutFail); 
+					else
+						onFail(code);
+				}
 			}
 
 			public void cancel() {

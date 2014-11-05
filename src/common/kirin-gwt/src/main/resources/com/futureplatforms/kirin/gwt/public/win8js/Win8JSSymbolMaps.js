@@ -8,11 +8,12 @@ defineModule("Win8JSSymbolMaps", function (require, exports) {
 			setSymbolMapDetails__: function setSymbolMapDetails__(moduleName, strongName) {
 				console.log('setSymbolMapDetails__(' + moduleName + ', ' + strongName + ')')
 				var uri = new Windows.Foundation.Uri('ms-appx:///app/WEB-INF/' + moduleName + '/symbolMaps/' + strongName + '.symbolMap')
-				Windows.Storage.StorageFile.getFileFromApplicationUriAsync(uri).done(function(file) {
-					Windows.Storage.FileIO.readTextAsync(file).done(function(fileContent) {
-						module.setSymbolMap(fileContent);
+				if(!Windows.Xbox)
+					Windows.Storage.StorageFile.getFileFromApplicationUriAsync(uri).done(function(file) {
+						Windows.Storage.FileIO.readTextAsync(file).done(function(fileContent) {
+							module.setSymbolMap(fileContent);
+						})
 					})
-				})
 			}
 		};
 		var module = require('SymbolMapServiceBinding');
