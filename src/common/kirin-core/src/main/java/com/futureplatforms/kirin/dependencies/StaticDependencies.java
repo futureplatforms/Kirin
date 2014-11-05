@@ -79,7 +79,7 @@ public final class StaticDependencies {
 
 			protected abstract void onSuccess(int res, String result, Map<String, String> headers);
 			protected abstract void onFail(String code);
-			protected abstract void onFailWithStatus(String code, NetworkFailType failType);
+			protected void onFailWithStatus(String code, NetworkFailType failType) {}
 			
 			public void callOnSuccess(int res, String result, Map<String, String> headers) {
 				if (!cancelled) onSuccess(res, result, headers);
