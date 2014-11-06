@@ -4,14 +4,15 @@ import com.futureplatforms.kirin.dependencies.NotificationDelegate;
 
 public class GwtNotificationDelegate implements NotificationDelegate {
 
-	private static native void callScheduleNotification(final int notificationId, final double timeMillisSince1970, final String title, final String text) /*-{
+	private static native void callScheduleNotification(final int notificationId, final double timeMillisSince1970, final String title, final String text, final int badge) /*-{
 	    var notifications = $wnd.require("LocalNotifications");
 	    
 	    var config = {
 	    	title: title,
 	        text: text,
 	        id: notificationId,
-	        timeMillisSince1970: timeMillisSince1970
+	        timeMillisSince1970: timeMillisSince1970,
+	        badge: badge
 	    };
 	    
 	    notifications.scheduleNotification(config);
@@ -23,8 +24,8 @@ public class GwtNotificationDelegate implements NotificationDelegate {
 	}-*/;
 	
 	@Override
-	public void scheduleNotification(final int notificationId, final long timeMillisSince1970, final String title, final String text) {
-		callScheduleNotification(notificationId, timeMillisSince1970, title, text);
+	public void scheduleNotification(final int notificationId, final long timeMillisSince1970, final String title, final String text, int badge) {
+		callScheduleNotification(notificationId, timeMillisSince1970, title, text, badge);
 	}
 	
 	@Override

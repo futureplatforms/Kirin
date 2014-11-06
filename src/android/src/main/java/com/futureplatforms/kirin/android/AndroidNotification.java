@@ -36,7 +36,7 @@ public class AndroidNotification implements NotificationDelegate {
 	}
 	
 	@Override
-	public void scheduleNotification(final int notificationId, final long timeMillisSince1970, final String title, final String text) {
+	public void scheduleNotification(final int notificationId, final long timeMillisSince1970, final String title, final String text, final int badge) {
 		Log.i("Kirin", "scheduleNotification for " + notificationId + " at " + new Date(timeMillisSince1970) + " this="+this);
 
 		final PersistingAlarmIntent alarmIntent = new PersistingAlarmIntent(ctx, notificationId, timeMillisSince1970, title, text);

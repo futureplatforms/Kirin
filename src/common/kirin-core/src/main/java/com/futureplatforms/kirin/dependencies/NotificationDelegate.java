@@ -7,7 +7,7 @@ public interface NotificationDelegate {
 	 * @param title
 	 * @param text
 	 */
-	public void scheduleNotification(int notificationId, long timeMillisSince1970, String title, String text);
+	public void scheduleNotification(int notificationId, long timeMillisSince1970, String title, String text, int badge);
 	
 	/**
 	 * If the notification hasn't already been shown, this will cancel the scheduled notification from appearing.

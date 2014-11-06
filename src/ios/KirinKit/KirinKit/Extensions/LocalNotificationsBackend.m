@@ -20,7 +20,8 @@
 - (void) scheduleNotification: (NSString*) text
                     withTitle: (NSString*) title
                        atTime: (NSNumber*) millisSince1970
-                       withId: (NSNumber*) notificationId {
+                       withId: (NSNumber*) notificationId
+                    withBadge: (NSNumber*) badge {
     NSDate *itemDate = [NSDate dateWithTimeIntervalSince1970:(millisSince1970.doubleValue / 1000)];
     
     NSLog(@"LocalNotificationsBackend.scheduleNotification %@ at time %@ where millisSince1970 is %@ with id %@", text, itemDate, millisSince1970, notificationId);
@@ -38,6 +39,8 @@
 
     localNotif.alertAction = @"OK";
 
+    localNotif.applicationIconBadgeNumber = [badge intValue];
+    
     NSDictionary * dic = [KIRIN notificationUserData];
     if (dic) {
         localNotif.userInfo = dic;
