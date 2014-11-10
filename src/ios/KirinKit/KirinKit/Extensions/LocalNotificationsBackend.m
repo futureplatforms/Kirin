@@ -39,8 +39,9 @@
 
     localNotif.alertAction = @"OK";
 
-    localNotif.applicationIconBadgeNumber = [badge intValue];
-    
+    if ([badge intValue] != -1) {
+        localNotif.applicationIconBadgeNumber = [badge intValue];
+    }
     NSDictionary * dic = [KIRIN notificationUserData];
     if (dic) {
         localNotif.userInfo = dic;
