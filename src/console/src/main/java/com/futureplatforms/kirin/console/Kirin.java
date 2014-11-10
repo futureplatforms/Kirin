@@ -36,7 +36,7 @@ public final class Kirin {
 					
 					@Override
 					public void scheduleNotification(int notificationId,
-							long timeMillisSince1970, String title, String text) {
+							long timeMillisSince1970, String title, String text, int badge) {
 						// TODO Auto-generated method stub
 						
 					}
