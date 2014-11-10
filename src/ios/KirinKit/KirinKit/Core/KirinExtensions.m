@@ -52,8 +52,10 @@
 
     
     if(NSClassFromString(@"FBSession")) {
-        KirinFacebook* fb = [[KirinFacebook alloc] init];
-        [fb onRegister];
+        if ([[NSBundle mainBundle] objectForInfoDictionaryKey:@"FacebookAppID"]) {
+            KirinFacebook* fb = [[KirinFacebook alloc] init];
+            [fb onRegister];
+        }
     } else {
     }
     
