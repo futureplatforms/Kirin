@@ -68,6 +68,11 @@ public class FBHeadlessShare {
 						ld.log("requestPublishPermissions onUserCancel");
 						cb.onFailure();
 					}
+
+					@Override
+					public void onFailWithUserMessage(String msg) {
+						cb.onFailure();
+					}
 				}, PublishPermission.publish_actions);
 	}
 	private static void openSessionWithReadPermissions(final String imageUrl, final String name, final String message, final String link, final AsyncCallback1<JSONObject> cb) {
@@ -89,6 +94,11 @@ public class FBHeadlessShare {
 			public void onUserCancel() {
 				ld.log("openSessionWithReadPermissions onUserCancel");
 				
+			}
+
+			@Override
+			public void onFailWithUserMessage(String msg) {
+				ld.log("onFailWithErrorMessage " + msg);
 			}
 		}, true, FacebookDetails.ReadPermission.read_stream);
 	}

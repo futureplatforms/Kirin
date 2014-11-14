@@ -9,6 +9,7 @@ import com.google.common.collect.ImmutableList;
 public interface FacebookDetails {
 	public static interface FacebookLoginCallback extends AsyncCallback {
 		public void onUserCancel();
+		public void onFailWithUserMessage(String msg);
 	}
 	
 	public static interface FacebookRequestsCallback extends AsyncCallback1<String[]> {

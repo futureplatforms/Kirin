@@ -155,7 +155,10 @@
                             workaroundOneTimeRunFlag = YES;
                         
                             if (error) {
-                                if ([FBErrorUtility errorCategoryForError:error] == FBErrorCategoryUserCancelled) {
+                                if ([FBErrorUtility shouldNotifyUserForError:error]) {
+                                    [self.kirinModule openSessionErrorWithUserMessage:_cbId
+                                                                                     :[FBErrorUtility userMessageForError:error]];
+                                } else if ([FBErrorUtility errorCategoryForError:error] == FBErrorCategoryUserCancelled) {
                                     [self.kirinModule openSessionCancel:_cbId];
                                 } else if ([FBErrorUtility errorCategoryForError:error] == FBErrorCategoryAuthenticationReopenSession) {
                                     [self.kirinModule openSessionAuthenticationFailed:_cbId];

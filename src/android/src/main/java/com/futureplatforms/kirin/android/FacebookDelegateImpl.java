@@ -264,6 +264,11 @@ public class FacebookDelegateImpl implements FacebookDelegate {
 			public void onUserCancel() {
 				if (callback != null) { callback.onUserCancel(); }
 			}
+
+			@Override
+			public void onFailWithUserMessage(String msg) {
+				if (callback != null) { callback.onFailWithUserMessage(msg); }
+			}
 		};
 		context.startActivity(FacebookActivity.newIntentForLogIn(context, allowUI, permissions));
 	}
@@ -288,6 +293,11 @@ public class FacebookDelegateImpl implements FacebookDelegate {
 			@Override
 			public void onUserCancel() {
 				if (callback != null) { callback.onUserCancel(); }
+			}
+
+			@Override
+			public void onFailWithUserMessage(String msg) {
+				if (callback != null) { callback.onFailWithUserMessage(msg); }
 			}
 		};
 		context.startActivity(FacebookActivity.newIntentForLogInPublish(context, true, permissions));

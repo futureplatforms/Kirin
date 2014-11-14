@@ -30,6 +30,7 @@ public class GwtFacebookService extends KirinService<GwtFacebookServiceNative> {
 		public void onError();
 		public void onCancel();
 		public void onAuthFailed();
+		public void onErrorWithUserMessage(String msg);
 	}
 	
 	private static GwtFacebookService _Instance;
@@ -164,6 +165,9 @@ public class GwtFacebookService extends KirinService<GwtFacebookServiceNative> {
 	}
 	public void openSessionAuthenticationFailed(int fbId) {
 		_OpenCallbacks.remove(fbId).onAuthFailed();
+	}
+	public void openSessionErrorWithUserMessage(int fbId, String msg) {
+		_OpenCallbacks.remove(fbId).onErrorWithUserMessage(msg);
 	}
 	
 	public void requestPublishSuccess(int fbId) {

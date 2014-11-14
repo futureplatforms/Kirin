@@ -48,6 +48,11 @@ public class GwtFacebook implements FacebookDelegate {
 				// TODO Auto-generated method stub
 				
 			}
+
+			@Override
+			public void onErrorWithUserMessage(String msg) {
+				callback.onFailWithUserMessage(msg);
+			}
 		});
 	}
 
@@ -79,6 +84,11 @@ public class GwtFacebook implements FacebookDelegate {
 			public void onAuthFailed() {
 				// TODO Auto-generated method stub
 				
+			}
+
+			@Override
+			public void onErrorWithUserMessage(String msg) {
+				callback.onFailWithUserMessage(msg);
 			}
 		});
 	}
