@@ -44,7 +44,7 @@ public class NativeObjectImplementationGenerator extends Generator {
 			// Create parameterless constructor
 			sourceWriter.println(genClassName + "() {}");
 
-			// Add acceptJSO method to implement ScreenWithJSO
+			// Add $setKirinNativeObject method to implement IKirinProxied
 			sourceWriter.println("private JavaScriptObject jso;");
 			sourceWriter
 					.println("public void $setKirinNativeObject(JavaScriptObject jso) {");
