@@ -1,5 +1,5 @@
 rm -rf target
 mkdir target
 cd KirinKit/build/Release-iphoneos
-zip --symlinks -r KirinKit.framework.zip KirinKit.framework
-mv KirinKit.framework.zip ../../../target
+zip --symlinks -r $1-$2.zip KirinKit.framework
+mv $1-$2.zip ../../../target

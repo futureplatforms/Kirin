@@ -11,7 +11,7 @@
 	<groupId>com.futureplatforms.kirin.ios</groupId>
 	<artifactId>kirin-ios</artifactId>
 	<name>kirin-ios</name>
-	<packaging>pom</packaging>
+	<packaging>jar</packaging>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -71,6 +71,10 @@
 					</goals>
 					<configuration>
 						<executable>${basedir}/scripts/zip_framework.sh</executable>
+						<arguments>
+							<argument>${artifactId}</argument>
+							<argument>${version}</argument>
+						</arguments>
 					</configuration>
 					</execution>
 				</executions>
