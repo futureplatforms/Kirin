@@ -30,6 +30,7 @@
     <module>common/kirin-gwt-stub</module>
     <module>android</module>
     <module>common/kirin-gwt</module>
-	<module>console</module>
+	  <module>console</module>
+    <module>ios</module>
   </modules>
 </project>
