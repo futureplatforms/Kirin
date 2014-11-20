@@ -75,7 +75,7 @@ public class FacebookActivity extends Activity {
 							@Override
 							public void call(Session session, SessionState state,
 									Exception exception) {
-								if (state.isOpened()) {
+								if (session.isOpened()) {
 									if (readPermissions != null) {
 										if (!session.getPermissions().containsAll(readPermissions)) {
 											session.requestNewReadPermissions(new NewPermissionsRequest(
@@ -129,7 +129,7 @@ public class FacebookActivity extends Activity {
 							@Override
 							public void call(Session session, SessionState state,
 									Exception exception) {
-								if (state.isOpened()) {
+								if (session.isOpened()) {
 									if (publishPermissions != null) {
 										if (!session.getPermissions().containsAll(
 												publishPermissions)) {
