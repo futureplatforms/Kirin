@@ -93,7 +93,7 @@
     NSString* string = (NSString*) [config objectForKey:@"contents"];
     NSData* data = [string dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
     NSString* filePath = [fs filePathFromConfig: config];
-    NSLog(@"FileSystemBackend: Saving file to disk %@", filePath);
+    DLog(@"FileSystemBackend: Saving file to disk %@", filePath);
     if (filePath != nil && [fs writeData:data toFile:filePath]) {
         [self.kirinHelper jsCallback:@"callback" 
                           fromConfig:config 

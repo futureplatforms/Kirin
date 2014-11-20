@@ -29,7 +29,7 @@
 - (id) initWithDatabaseAccessService: (NewDatabaseAccessService *) databaseAccessService {
     _DatabaseAccessService = databaseAccessService;
     _DbToTx = [[NSMutableDictionary alloc] init];
-    NSLog(@"initialising transaction service!");
+    DLog(@"initialising transaction service!");
     self.serviceName = @"TransactionService";
     self.kirinModuleProtocol = @protocol(TransactionService);
     return [super initWithServiceName: self.serviceName];
@@ -113,7 +113,7 @@
         for (NewTransactionStatement * st in statements) {
             FMResultSet * s = [db executeQuery:st.statement withArgumentsInArray:st.parameters];
             if ([db hadError]) {
-                NSLog(@"DB Error :: %@", [db lastErrorMessage]);
+                DLog(@"DB Error :: %@", [db lastErrorMessage]);
                 rollback = YES;
                 [self.kirinModule endFailure:dbId :txId];
                 return;
@@ -162,7 +162,7 @@
                         [self.kirinModule statementJSONSuccess: dbId :txId :st.statementId :json];
                     }
                 } else {
-                    NSLog(@"DB ERROR -- UNEXPECTED TYPE");
+                    DLog(@"DB ERROR -- UNEXPECTED TYPE");
                 }
             } else {
                 // FMDB plays silly beggars if you don't iterate through the result set... weird

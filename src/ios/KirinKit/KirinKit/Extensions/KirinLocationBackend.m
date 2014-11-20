@@ -72,7 +72,7 @@
 #pragma mark Called by Javascript.
 
 - (void) denyAccess {
-    NSLog(@"Denying access to Location Services: ");
+    DLog(@"Denying access to Location Services: ");
     self.locationManager.delegate = nil;
     [self.kirinHelper jsCallback:self.errback withArgsList:[KirinArgs string:@"denied"]];
     [self.locationManager stopUpdatingLocation];
@@ -87,9 +87,9 @@
     self.errback = errback;
     self.locationManager.delegate = self;
     if (isFine) {
-        NSLog(@"it's isFine");
+        DLog(@"it's isFine");
     } else {
-        NSLog(@"not isFine");
+        DLog(@"not isFine");
     }
     self.locationManager.desiredAccuracy = (isFine ? kCLLocationAccuracyBest : kCLLocationAccuracyKilometer);
     
@@ -100,10 +100,10 @@
     
     if (![CLLocationManager locationServicesEnabled]) {
         // the device has location services switched off.
-        NSLog(@"Location services aren't on");
+        DLog(@"Location services aren't on");
         // starting updates will ask the user to switch it on 
     } else if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied) {
-        NSLog(@"Location services are on, but we've been denied before");
+        DLog(@"Location services are on, but we've been denied before");
         [self denyAccess];
         return;
     }
@@ -113,18 +113,18 @@
     switch (status) {
         case kCLAuthorizationStatusDenied:
             
-            NSLog(@"Location authorization denied");
+            DLog(@"Location authorization denied");
             break;
         case kCLAuthorizationStatusRestricted:
-            NSLog(@"Location authorization restricted");
+            DLog(@"Location authorization restricted");
             // the user can't change this. Parental settings need to change.
             [self denyAccess];
             return;
         case kCLAuthorizationStatusNotDetermined:
-            NSLog(@"Location authorization not determined");
+            DLog(@"Location authorization not determined");
             break;
         case kCLAuthorizationStatusAuthorized:
-            NSLog(@"Location authorization already given");
+            DLog(@"Location authorization already given");
             break;
     }
 
@@ -135,7 +135,7 @@
 }
 
 - (void) stop {
-    NSLog(@"Location services: stopping listening");
+    DLog(@"Location services: stopping listening");
     [self.kirinHelper cleanupCallback:self.callback, self.errback, nil];
     
     [self.locationManager stopUpdatingLocation];
@@ -173,7 +173,7 @@
 
 
 - (void) locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
-    NSLog(@"%s %d: Location failed: %@", __PRETTY_FUNCTION__, __LINE__, [error localizedDescription]);
+    DLog(@"%s %d: Location failed: %@", __PRETTY_FUNCTION__, __LINE__, [error localizedDescription]);
     if (error.code == kCLErrorDenied) {
         [self denyAccess];
     } else if (error.code != kCLErrorLocationUnknown) {
@@ -186,18 +186,18 @@
 - (void) locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
     switch (status) {
         case kCLAuthorizationStatusDenied:
-            NSLog(@"User has denied location authorization");
+            DLog(@"User has denied location authorization");
             [self denyAccess];
             break;
         case kCLAuthorizationStatusRestricted:
-            NSLog(@"User has restricted location authorization");
+            DLog(@"User has restricted location authorization");
             [self denyAccess];
             break;
         case kCLAuthorizationStatusAuthorized:
-            NSLog(@"User has given location authorization");
+            DLog(@"User has given location authorization");
             break;
         case kCLAuthorizationStatusNotDetermined:
-            NSLog(@"User has somehow managed to not determine location authorization");
+            DLog(@"User has somehow managed to not determine location authorization");
             break;
     }
 

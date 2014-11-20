@@ -33,13 +33,13 @@
 @synthesize allExtensions;
 
 + (KirinExtensions*) empty {
-    NSLog(@"Empty KirinExtensions");
+    DLog(@"Empty KirinExtensions");
     return [[[KirinExtensions alloc] init] autorelease];
 }
 
 + (KirinExtensions*) coreExtensions {
     KirinExtensions* services = [KirinExtensions empty];
-    NSLog(@"Core KirinExtensions");
+    DLog(@"Core KirinExtensions");
     [services registerExtension:[[[SettingsBackend alloc] init] autorelease]];
     [services registerExtension:[[LocalNotificationsBackend alloc] init]];
     NewDatabaseAccessService *dbAccess = [[NewDatabaseAccessService alloc] init];

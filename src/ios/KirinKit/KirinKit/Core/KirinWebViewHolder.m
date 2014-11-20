@@ -60,7 +60,7 @@
 	}
 	
     NSURLRequest *appReq = [NSURLRequest requestWithURL:appURL cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:20.0];
-	NSLog(@"Loading %@", startPage);
+	DLog(@"Loading %@", startPage);
 	[aWebView loadRequest:appReq];
     
     
@@ -69,7 +69,7 @@
 
 - (void) _execJSImmediately: (NSString*) js {
     if (DEBUG_JS) {
-        NSLog(@"Javascript: %@", js);
+        DLog(@"Javascript: %@", js);
     }
     [self.webView stringByEvaluatingJavaScriptFromString:js];
 }
@@ -86,14 +86,14 @@
 - (BOOL)webView:(UIWebView *)theWebView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
     
 	NSURL *url = [request URL];
-    //NSLog(@"shouldStartLoadWithRequest %@", [url debugDescription]);
+    //DLog(@"shouldStartLoadWithRequest %@", [url debugDescription]);
     /*
      * Get Command and Options From URL
      * We are looking for URLS that match native://<Class>/<command>[?<arguments>]
      * We have to strip off the leading slash for the options.
      */
     if ([[url scheme] isEqualToString:@"ready"]) {
-        NSLog(@"WebView is reported finished. %d commands to tell JS", [jsQueue count]);
+        DLog(@"WebView is reported finished. %d commands to tell JS", [jsQueue count]);
 		[self _execJSImmediately:@"console.log('Webview is loaded')"];
 		for (int i=0; i < [jsQueue count]; i++) {
 			[self _execJSImmediately:[jsQueue objectAtIndex:i]];
@@ -132,7 +132,7 @@
          * XXX Could be security hole.
          */
         
-        NSLog(@"Kirin::shouldStartLoadWithRequest: Received Unhandled URL %@", url);
+        DLog(@"Kirin::shouldStartLoadWithRequest: Received Unhandled URL %@", url);
         [[UIApplication sharedApplication] openURL:url];
         return NO;
 	}
@@ -141,7 +141,7 @@
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
-    NSLog(@"[ERROR] %@", error);
+    DLog(@"[ERROR] %@", error);
 }
 
 - (void)dealloc {

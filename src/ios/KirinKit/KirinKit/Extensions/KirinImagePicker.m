@@ -41,12 +41,12 @@
 }
 
 - (void) cameraPicture:(NSDictionary *)config {
-        NSLog(@"Pick an image from the camera");
+        DLog(@"Pick an image from the camera");
     [self getPicture:config fromSource:UIImagePickerControllerSourceTypeCamera];    
 }
 
 - (void) galleryPicture:(NSDictionary *)config {
-    NSLog(@"Pick an image from the gallery");
+    DLog(@"Pick an image from the gallery");
     [self getPicture:config fromSource:UIImagePickerControllerSourceTypeSavedPhotosAlbum];
 }
 
@@ -64,7 +64,7 @@
         return;
     }
     
-    NSLog(@"Image picker or camera is available");
+    DLog(@"Image picker or camera is available");
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     // select camera rather than library
     picker.sourceType = sourceType; 
@@ -85,7 +85,7 @@
 // For responding to the user tapping Cancel.
 - (void) imagePickerControllerDidCancel: (UIImagePickerController *) picker 
 {
-    NSLog(@"imagePickerControllerDidCancel");
+    DLog(@"imagePickerControllerDidCancel");
     picker.delegate = nil;
     
 	if([picker respondsToSelector:@selector(presentingViewController)]) {
@@ -237,7 +237,7 @@
     
     newImage = UIGraphicsGetImageFromCurrentImageContext();
     if(newImage == nil) 
-        NSLog(@"could not scale image");
+        DLog(@"could not scale image");
     
     //pop the context to get back to the default
     UIGraphicsEndImageContext();

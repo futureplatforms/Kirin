@@ -23,7 +23,7 @@
 
 
 - (void)log:(id)message atLevel:(NSString*) log_level {
-	   NSLog(@"[%@] %@", log_level, message);
+	   DLog(@"[%@] %@", log_level, message);
 }
 
 @end

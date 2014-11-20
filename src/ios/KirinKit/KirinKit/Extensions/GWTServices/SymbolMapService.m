@@ -24,7 +24,7 @@
 }
 
 - (void) setSymbolMapDetails: (NSString*) moduleName : (NSString*) strongName; {
-    NSLog(@"SetStrongName %@", strongName);
+    DLog(@"SetStrongName %@", strongName);
     
     // We want to load /app/WEB-INF/<app_name>/symbolMaps/<strongName>.symbolMap
     NSString * resourcePath = [[NSBundle mainBundle] resourcePath];

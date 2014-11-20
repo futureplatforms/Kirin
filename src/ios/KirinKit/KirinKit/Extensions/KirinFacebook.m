@@ -62,14 +62,14 @@
     }
     if (state == FBSessionStateClosed || state == FBSessionStateClosedLoginFailed){
         // If the session is closed
-       // NSLog(@"Session closed");
+       // DLog(@"Session closed");
         // Show the user the logged-out UI
      //   [self userLoggedOut];
     }
     
     // Handle errors
     if (error){
-       // NSLog(@"Error");
+       // DLog(@"Error");
         NSString *alertText;
         NSString *alertTitle;
         // If the error requires people using an app to make an action outside of the app in order to recover
@@ -214,7 +214,7 @@
 }
 
 - (void) presentShareDialogWithParams: (NSString*) caption : (NSString*) description : (NSString*) link : (NSString*) name : (NSString*) picture : (NSString*) place : (NSString*) ref : (NSArray*) friends : (int) cbId {
-    NSLog(@"Friends: %d", [friends count]);
+    DLog(@"Friends: %d", [friends count]);
     FBShareDialogParams *shareParams = [[FBShareDialogParams alloc] init];
     NSMutableDictionary *feedParams = [[NSMutableDictionary alloc] init];
     if (caption != nil) {
@@ -299,14 +299,14 @@
 }
 
 - (void) presentRequestsDialog: (int) cbId {
-    NSLog(@"About to present requests dialog");
+    DLog(@"About to present requests dialog");
     [FBWebDialogs presentRequestsDialogModallyWithSession:nil
                                                   message:@"request"
                                                     title:@"request"
                                                parameters:nil
                                                   handler:
     ^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
-        NSLog(@"Result! %@", resultURL);
+        DLog(@"Result! %@", resultURL);
         //
         //
         if (error) {
@@ -320,7 +320,7 @@
                 // Test if the query begins with post_id
                 
                 NSString *query = [resultURL query];
-                NSLog(@"ResultURL: %@", [resultURL absoluteString]);
+                DLog(@"ResultURL: %@", [resultURL absoluteString]);
                 NSRange range = [query rangeOfString:@"error_code"];
                 if (range.length > 0) {
                     // pressed Cancel

@@ -46,10 +46,10 @@
     }
     
     if ([nativeObject isKindOfClass:[UIViewController class]]) {
-        //NSLog(@"Will dispatch to UIViewController %@ on the main thread", [nativeObject class]);
+        //DLog(@"Will dispatch to UIViewController %@ on the main thread", [nativeObject class]);
         self.dispatchQueue = nil;//dispatch_get_main_queue();
     } else if ([nativeObject conformsToProtocol:@protocol(KirinExtensionOnMainThread)]) {
-       // NSLog(@"Will dispatch to KirinExtensionWithUI %@ on the main thread", [nativeObject class]);
+       // DLog(@"Will dispatch to KirinExtensionWithUI %@ on the main thread", [nativeObject class]);
         self.dispatchQueue = nil;//dispatch_get_main_queue();
     } else {
         
@@ -60,9 +60,9 @@
         }
         
         if (self.dispatchQueue) {
-            //NSLog(@"Will dispatch to KirinExtension %@ on a custom dispatch queue", [nativeObject class]);
+            //DLog(@"Will dispatch to KirinExtension %@ on a custom dispatch queue", [nativeObject class]);
         } else {
-            //NSLog(@"Will dispatch to KirinExtension %@ on a global dispatch queue", [nativeObject class]);
+            //DLog(@"Will dispatch to KirinExtension %@ on a global dispatch queue", [nativeObject class]);
             self.dispatchQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
         }
         
@@ -140,7 +140,7 @@
 - (SEL) findSelectorFromString: methodName {
     NSString* realMethodName = [self.methodsMap objectForKey:methodName];
     
-//    NSLog(@"Javascript is calling: %@, calling a method called %@", methodName, realMethodName);
+//    DLog(@"Javascript is calling: %@, calling a method called %@", methodName, realMethodName);
     
     // unsure as to allow non-string munged methods.
     return NSSelectorFromString(realMethodName);
