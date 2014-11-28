@@ -34,21 +34,38 @@
 		<sourceDirectory>src/main/java</sourceDirectory>
 		<plugins>
 			<plugin>
-			  <artifactId>exec-maven-plugin</artifactId>
-			  <groupId>org.codehaus.mojo</groupId>
-			  <executions>
-			    <execution>
-			      <id>Build KirinKit</id>
-			      <phase>generate-sources</phase>
-			      <goals>
-			        <goal>exec</goal>
-			      </goals>
-			      <configuration>
-			        <executable>${basedir}/scripts/rebuild_kirinkit.sh</executable>
-			      </configuration>
-			    </execution>
-			  </executions>
+			  	<artifactId>exec-maven-plugin</artifactId>
+			  	<groupId>org.codehaus.mojo</groupId>
+			  	<version>1.3.2</version>
+			  	<executions>
+				    <execution>
+				      <id>Build KirinKit</id>
+				      <phase>generate-sources</phase>
+				      <goals>
+				        <goal>exec</goal>
+				      </goals>
+				      <configuration>
+				        <executable>${basedir}/scripts/rebuild_kirinkit.sh</executable>
+				      </configuration>
+				    </execution>
+			  	
+					<execution>
+						<id>Package iOS framework</id>
+						<phase>package</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>${basedir}/scripts/zip_framework.sh</executable>
+							<arguments>
+								<argument>${project.artifactId}</argument>
+								<argument>${project.version}</argument>
+							</arguments>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -58,27 +75,6 @@
 					<target>1.6</target>
 				</configuration>
 			</plugin>
-
-			<plugin>
-				<artifactId>exec-maven-plugin</artifactId>
-				<groupId>org.codehaus.mojo</groupId>
-				<executions>
-					<execution>
-					<id>Package iOS framework</id>
-					<phase>package</phase>
-					<goals>
-						<goal>exec</goal>
-					</goals>
-					<configuration>
-						<executable>${basedir}/scripts/zip_framework.sh</executable>
-						<arguments>
-							<argument>${artifactId}</argument>
-							<argument>${version}</argument>
-						</arguments>
-					</configuration>
-					</execution>
-				</executions>
-				</plugin>
 		</plugins>
 	</build>
 </project>
