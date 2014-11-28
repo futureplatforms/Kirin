@@ -16,6 +16,12 @@
     <gwtVersion>2.6.0</gwtVersion>
     <gwtExporterVersion>2.5.1</gwtExporterVersion>
   </properties>
+  
+  <scm>
+    <developerConnection>scm:git:git@git.futureplatforms.com:KirinJS.git</developerConnection>
+    <connection>scm:git:git@git.futureplatforms.com:KirinJS.git</connection>
+    <url>git@git.futureplatforms.com:KirinJS.git</url>
+  </scm>
 
   <dependencies>
     <dependency>

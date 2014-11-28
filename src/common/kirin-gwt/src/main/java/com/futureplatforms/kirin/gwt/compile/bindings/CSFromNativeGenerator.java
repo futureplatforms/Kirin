@@ -3,9 +3,9 @@ package com.futureplatforms.kirin.gwt.compile.bindings;
 import com.google.gwt.core.ext.typeinfo.JMethod;
 import com.google.gwt.core.ext.typeinfo.JParameter;
 
-public class CSClassGenerator extends CSInterfaceGenerator {
+public class CSFromNativeGenerator extends CSToNativeGenerator {
 
-	public CSClassGenerator(String partialPath) {
+	public CSFromNativeGenerator(String partialPath) {
 		super(partialPath);
 	}
 

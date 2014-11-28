@@ -53,7 +53,7 @@ public abstract class InterfaceGenerator {
 		if(outStream == null) {
 		    return; // We've already generated this protocol
 		}
-		// TODO Auto-generated method stub
+
 		PrintWriter printWriter = new PrintWriter(outStream);
 		try {
 			printWriter.format(preambleForClass(nativeObjectType.getSimpleSourceName()));

@@ -7,8 +7,8 @@ import com.google.gwt.core.ext.typeinfo.JMethod;
 import com.google.gwt.core.ext.typeinfo.JParameter;
 import com.google.gwt.core.ext.typeinfo.JType;
 
-public class CSInterfaceGenerator extends InterfaceGenerator {
-	public CSInterfaceGenerator(String partialPath) {
+public class CSToNativeGenerator extends InterfaceGenerator {
+	public CSToNativeGenerator(String partialPath) {
 		super(partialPath);
 	}
 	
