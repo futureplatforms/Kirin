@@ -38,6 +38,6 @@
     <module>common/kirin-gwt</module>
     <module>console</module>
     <module>ios</module>
-    <module>wp8_xaml_cs</module>
+    <module>wp8-xaml-cs</module>
   </modules>
 </project>

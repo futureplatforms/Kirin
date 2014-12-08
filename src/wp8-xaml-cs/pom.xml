@@ -8,9 +8,9 @@
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.futureplatforms.kirin.ios</groupId>
-	<artifactId>kirin-ios</artifactId>
-	<name>kirin-ios</name>
+	<groupId>com.futureplatforms.kirin.wp8-xaml-cs</groupId>
+	<artifactId>kirin-wp8-xaml-cs</artifactId>
+	<name>kirin-wp8-xaml-cs</name>
 	<packaging>jar</packaging>
 
 	<properties>
@@ -45,18 +45,18 @@
 							<goal>exec</goal>
 						</goals>
 						<configuration>
-							<executable>${basedir}/scripts/rebuild_kirinkit.sh</executable>
+							<executable>${basedir}/scripts/rebuild_kirinkit.bat</executable>
 						</configuration>
 				    </execution>
 			  	
 					<execution>
-						<id>Package iOS framework</id>
+						<id>Package WP8 framework</id>
 						<phase>package</phase>
 						<goals>
 							<goal>exec</goal>
 						</goals>
 						<configuration>
-							<executable>${basedir}/scripts/zip_framework.sh</executable>
+							<executable>${basedir}/scripts/zip_framework.bat</executable>
 							<arguments>
 								<argument>${project.artifactId}</argument>
 								<argument>${project.version}</argument>

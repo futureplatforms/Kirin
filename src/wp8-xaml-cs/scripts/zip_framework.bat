@@ -1,5 +1,5 @@
 :: Make a target folder in the root
-rmdir target
+rmdir /s /q target
 md target
 
 :: This is where the builds are
@@ -15,11 +15,11 @@ move x86 artifacts
 :: Now make it into a jar
 cd artifacts
 :: Need to find some way of zipping these folders
-zip --symlinks -r $1-$2.jar Debug Release
+"%JAVA_HOME%\bin\jar" cf %1-%2.jar ARM x86
 
 :: Move it to the target folder
-mv $1-$2.jar ../../../target
+move %1-%2.jar ../../../target
 
 :: And clean up
 cd ..
-rm -rf artifacts
+rmdir /s /q artifacts
