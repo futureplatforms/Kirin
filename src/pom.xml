@@ -36,7 +36,8 @@
     <module>common/kirin-gwt-stub</module>
     <module>android</module>
     <module>common/kirin-gwt</module>
-	  <module>console</module>
+    <module>console</module>
     <module>ios</module>
+    <module>wp8_xaml_cs</module>
   </modules>
 </project>
