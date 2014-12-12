@@ -18,31 +18,6 @@
     <deployDirectory>${webappDirectory}/WEB-INF</deployDirectory>
   </properties>
 
-  <profiles>
-    <profile>
-      <id>Windows</id>
-      <activation>
-        <os>
-          <family>Windows</family>
-        </os>
-      </activation>
-      <properties>
-        <script.extension>bat</script.extension>
-      </properties>
-    </profile>
-    <profile>
-      <id>NotWindows</id>
-      <activation>
-        <os>
-          <family>!Windows</family>
-        </os>
-      </activation>
-      <properties>
-        <script.extension>sh</script.extension>
-      </properties>
-    </profile>
-  </profiles>
-
   <dependencies>
     <!--  BEGIN common dependencies  -->
     <dependency>

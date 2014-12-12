@@ -17,6 +17,31 @@
     <gwtExporterVersion>2.5.1</gwtExporterVersion>
   </properties>
   
+  <profiles>
+    <profile>
+      <id>Windows</id>
+      <activation>
+        <os>
+          <family>Windows</family>
+        </os>
+      </activation>
+      <properties>
+        <script.extension>bat</script.extension>
+      </properties>
+    </profile>
+    <profile>
+      <id>NotWindows</id>
+      <activation>
+        <os>
+          <family>!Windows</family>
+        </os>
+      </activation>
+      <properties>
+        <script.extension>sh</script.extension>
+      </properties>
+    </profile>
+  </profiles>
+  
   <scm>
     <developerConnection>scm:git:git@git.futureplatforms.com:KirinJS.git</developerConnection>
     <connection>scm:git:git@git.futureplatforms.com:KirinJS.git</connection>
