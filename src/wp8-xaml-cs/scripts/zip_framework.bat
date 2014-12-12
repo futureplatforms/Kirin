@@ -9,13 +9,13 @@ cd KirinWP8/bin
 md artifacts
 
 :: Move the debug and release frameworks into the corresponding folders in artifacts dir
-move ARM artifacts
+:: move ARM artifacts
 move x86 artifacts
 
 :: Now make it into a jar
 cd artifacts
 :: Need to find some way of zipping these folders
-"%JAVA_HOME%\bin\jar" cf %1-%2.jar ARM x86
+"%JAVA_HOME%\bin\jar" cf %1-%2.jar x86
 
 :: Move it to the target folder
 move %1-%2.jar ../../../target

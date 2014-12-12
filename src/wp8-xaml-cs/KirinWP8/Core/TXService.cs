@@ -268,7 +268,7 @@ namespace KirinWindows.Core
 
                             case SQLOperationType.JSON:
                                 {
-
+                                    // todo implement me
                                 } break;
 
                             case SQLOperationType.Rowset:
