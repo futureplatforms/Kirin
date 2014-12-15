@@ -41,7 +41,7 @@ public final class NetworkHelper {
         tt.schedule(30000);
         _Dependencies.getNetworkDelegate().doHttp(verb, url, payload, headers, new NetworkResponse() {
             
-            public void onSuccess(int res, String result, Map<String, String> headers) {
+            public void onComplete(int res, String result, Map<String, String> headers) {
             	tt.cancel();
                 if (!_Cancelled) {
                     callback.callOnSuccess(res, result, headers);

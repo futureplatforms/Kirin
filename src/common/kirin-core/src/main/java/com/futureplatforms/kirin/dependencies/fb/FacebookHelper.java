@@ -117,7 +117,7 @@ public class FacebookHelper {
 				net.doHttp(verb, url, "", new NetworkResponse() {
 					
 					@Override
-					public void onSuccess(int res, String result, Map<String, String> headers) {
+					public void onComplete(int res, String result, Map<String, String> headers) {
 						log.log("res: " + res + ", " + result);
 						_AuthFailed = false;
 						if (res == 400 || res == 403) {
