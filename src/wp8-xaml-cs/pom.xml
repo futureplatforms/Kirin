@@ -21,6 +21,11 @@
 	<profiles>
 		<profile>
 			<id>Windows</id>
+			<activation>
+				<os>
+				  <family>Windows</family>
+				</os>
+			  </activation>
 			<dependencies>
 				<dependency>
 					<groupId>com.futureplatforms.kirin.core</groupId>

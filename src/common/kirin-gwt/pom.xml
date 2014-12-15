@@ -16,6 +16,7 @@
     <webappDirectory>${project.build.directory}/${project.build.finalName}/app</webappDirectory>
     <gwtModule>com.futureplatforms.kirin.gwt.KirinServiceExport</gwtModule>
     <deployDirectory>${webappDirectory}/WEB-INF</deployDirectory>
+    <gwtRename>KirinServiceExport</gwtRename>
   </properties>
 
   <dependencies>
@@ -187,7 +188,7 @@
               <arguments>
                 <argument>${project.artifactId}</argument>
                 <argument>${project.version}</argument>
-                <argument>${gwtModule}</argument>
+                <argument>${gwtRename}</argument>
               </arguments>
             </configuration>
           </execution>
