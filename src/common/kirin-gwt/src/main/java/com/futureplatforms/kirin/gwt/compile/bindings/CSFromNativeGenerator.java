@@ -14,6 +14,7 @@ public class CSFromNativeGenerator extends CSToNativeGenerator {
 		StringBuilder sb = new StringBuilder();
 		sb.append("/* Generated from " + name + "\n * Do not edit, as this WILL be overwritten\n */\n");
 		sb.append("using KirinWindows.Core;\n");
+		sb.append("using System.Collections.Generic;\n");
 		sb.append("namespace Generated {\n");
 		sb.append("public class " + name + " {\n");
 		sb.append("private KirinAssistant Assistant;\n");
