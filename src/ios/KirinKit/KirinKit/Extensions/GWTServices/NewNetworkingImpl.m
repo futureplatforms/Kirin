@@ -100,13 +100,9 @@
 {
     @try
     {
-        DLog(@": start");
-        
         // Default to NSUTF8StringEncoding if blank string supplied
         if ([[strEncoding stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] length] == 0)
             return NSUTF8StringEncoding;
-        
-        DLog(@"Attempting to find encoding = %@", strEncoding);
         // Try and obtain the correct string encoding from a string
         CFStringRef cfStringRef = (CFStringRef)strEncoding;
         CFStringEncoding cfStringEnc = CFStringConvertIANACharSetNameToEncoding(cfStringRef);
@@ -117,12 +113,7 @@
     @catch (NSException *exception)
     {
         // In-case the conversion failed
-        DLog(@"Could not find encoding, defaulting to UTF8");
         return NSUTF8StringEncoding;
-    }
-    @finally
-    {
-        DLog(@": end");
     }
 }
 

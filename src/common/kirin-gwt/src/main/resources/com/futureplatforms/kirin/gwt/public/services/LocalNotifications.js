@@ -20,11 +20,11 @@ defineServiceModule("LocalNotifications", function (require, exports) {
 		kirin = require("kirin"),
 		backend;
 	
-	exports.onLoad = function (proxy) {
+	exports.__KirinOnLoad = function (proxy) {
 		backend = proxy;
 	};
 	
-   	exports.onUnload = function () {
+   	exports.__KirinOnUnload = function () {
    		backend = null;
    	};
 	

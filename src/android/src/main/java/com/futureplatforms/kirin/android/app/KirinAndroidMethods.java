@@ -21,7 +21,7 @@ public class KirinAndroidMethods {
 
 			module = (Module) ((Class<?>) ((ParameterizedType) clazz)
 					.getActualTypeArguments()[0]).newInstance();
-			module.onPrototypeLoad((KirinNativeObj) f);
+			module.__AndroidOnLoad((KirinNativeObj) f);
 			f.setModule(module);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -30,7 +30,7 @@ public class KirinAndroidMethods {
 
 	public static <Module extends KirinModule<KirinNativeObj>, KirinNativeObj extends IKirinNativeObject> void onUnload(
 			IKirinModuleHost<Module> f) {
-		f.getModule().onUnload();
+		f.getModule().__KirinOnUnload();
 	}
 
 }

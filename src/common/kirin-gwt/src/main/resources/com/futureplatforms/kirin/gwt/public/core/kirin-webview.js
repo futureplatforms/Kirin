@@ -164,7 +164,7 @@ defineModule("kirin", function (require, exports) {
 		    return;
 		}
 		try {
-			module.onLoad(proxy);
+			module.__KirinOnLoad(proxy);
 		} catch (e1) {
 			handleError("loading module " + moduleName, e1);
 		}
@@ -174,7 +174,7 @@ defineModule("kirin", function (require, exports) {
 		try {
 			var module = resolveModule(moduleName);
 			// TODO unrequire
-			module.onUnload();	
+			module.__KirinOnUnload();	
 		} catch (e) {
 			handleError("unloading module", e);
 		}

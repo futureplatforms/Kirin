@@ -170,8 +170,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(Kirin)
 }
 
 
-
-
 #pragma mark -
 #pragma mark Memory managment
 - (void)dealloc

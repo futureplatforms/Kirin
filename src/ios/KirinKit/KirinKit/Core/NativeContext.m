@@ -126,14 +126,14 @@
                 }
                 [invocation invoke];
             } @catch (NSException* exception) {
-                DLog(@"Exception while executing %@.%@", host, fullMethodName);
+                NSLog(@"Exception while executing %@.%@", host, fullMethodName);
                 
                 // Create a string based on the exception
                 NSString *exceptionMessage = [NSString stringWithFormat:@"%@\nReason: %@\nUser Info: %@", [exception name], [exception reason], [exception userInfo]];
                 
                 // Always log to console for history
-                DLog(@"Exception raised:\n%@", exceptionMessage);
-                DLog(@"Backtrace: %@", [exception callStackSymbols]);
+                NSLog(@"Exception raised:\n%@", exceptionMessage);
+                NSLog(@"Backtrace: %@", [exception callStackSymbols]);
             } @finally {
                 if (isBackgroundThread) {
                     [[UIApplication sharedApplication] endBackgroundTask:taskId];
@@ -160,7 +160,7 @@
         if (!className) {
             className = host;
         }
-        DLog(@"Class method '%@' not defined in class %@, called from module %@.js", fullMethodName, className, host);
+        NSLog(@"Class method '%@' not defined in class %@, called from module %@.js", fullMethodName, className, host);
         
         //[NSException raise:NSInternalInconsistencyException format:@"Class method '%@' not defined against class '%@'.", fullMethodName, className];
         

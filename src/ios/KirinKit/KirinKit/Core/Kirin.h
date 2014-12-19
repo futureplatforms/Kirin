@@ -47,6 +47,9 @@
 
 @property(nonatomic, retain) NSDictionary* notificationUserData;
 
+@property(nonatomic) BOOL loggingEnabled;
+
+
 - (id) initWithWebView: (UIWebView*) aWebView;
 
 - (KirinHelper*) bindObject: (id) nativeObject toModule:(NSString*) moduleName;

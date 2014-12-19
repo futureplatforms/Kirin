@@ -60,7 +60,6 @@
         }
     }
     
-    DLog(@"No fileArea was specified, so defaulting to 'temporary'");
     return [KirinPaths filePathInTempDir:filePath];
 }
 

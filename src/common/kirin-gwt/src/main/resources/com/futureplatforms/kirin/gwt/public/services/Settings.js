@@ -21,7 +21,7 @@ defineServiceModule("Settings", function (require, exports) {
 		initialized = false,
 		backend;
 	
-	exports.onLoad = function (proxy) {
+	exports.__KirinOnLoad = function (proxy) {
 		backend = proxy;
 	};
 	

@@ -113,7 +113,7 @@
         for (NewTransactionStatement * st in statements) {
             FMResultSet * s = [db executeQuery:st.statement withArgumentsInArray:st.parameters];
             if ([db hadError]) {
-                DLog(@"DB Error :: %@", [db lastErrorMessage]);
+                NSLog(@"DB Error :: %@", [db lastErrorMessage]);
                 rollback = YES;
                 [self.kirinModule endFailure:dbId :txId];
                 return;
@@ -162,7 +162,7 @@
                         [self.kirinModule statementJSONSuccess: dbId :txId :st.statementId :json];
                     }
                 } else {
-                    DLog(@"DB ERROR -- UNEXPECTED TYPE");
+                    NSLog(@"DB ERROR -- UNEXPECTED TYPE");
                 }
             } else {
                 // FMDB plays silly beggars if you don't iterate through the result set... weird

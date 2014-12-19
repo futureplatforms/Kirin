@@ -24,8 +24,9 @@
                     withBadge: (NSNumber*) badge {
     NSDate *itemDate = [NSDate dateWithTimeIntervalSince1970:(millisSince1970.doubleValue / 1000)];
     
-    DLog(@"LocalNotificationsBackend.scheduleNotification %@ at time %@ where millisSince1970 is %@ with id %@", text, itemDate, millisSince1970, notificationId);
-
+    if ([KIRIN loggingEnabled]) {
+        NSLog(@"LocalNotificationsBackend.scheduleNotification %@ at time %@ where millisSince1970 is %@ with id %@", text, itemDate, millisSince1970, notificationId);
+    }
     UILocalNotification *localNotif = [[UILocalNotification alloc] init];
 
     if (localNotif == nil)
@@ -54,7 +55,9 @@
 }
 
 - (void) cancelNotification: (NSNumber*) notificationId {
-    DLog(@"LocalNotificationsBackend.cancelNotification %@", notificationId);
+    if ([KIRIN loggingEnabled]) {
+        NSLog(@"LocalNotificationsBackend.cancelNotification %@", notificationId);
+    }
     
     NSArray* allEvents = [[UIApplication sharedApplication] scheduledLocalNotifications];
     

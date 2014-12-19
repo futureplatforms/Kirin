@@ -75,7 +75,7 @@
     
         [userSettings setValuesForKeysWithDictionary:kirinAdds];
     } else {
-        DLog(@"[SettingsBackend] didn't expect a %@", [adds class]);
+        NSLog(@"[SettingsBackend] didn't expect a %@", [adds class]);
     }
 
     if([deletes isKindOfClass:[NSArray class]]) {
@@ -83,7 +83,7 @@
             [userSettings removeObjectForKey:[NSString stringWithFormat:@"kirin-%@", key]];
         }        
     } else {
-        DLog(@"[SettingsBackend] didn't expect a %@", [deletes class]);
+        NSLog(@"[SettingsBackend] didn't expect a %@", [deletes class]);
     }
     
     [userSettings synchronize];

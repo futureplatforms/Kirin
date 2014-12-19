@@ -71,12 +71,6 @@ public abstract class InterfaceGenerator {
 					    continue;
 					}
 					
-					// TODO filter out the lifecycle methods.
-					if (isKirinModuleMethod(method)) {
-						continue;
-					}
-					
-					// TODO check if the method is exported or not.
 					if (!isMethodExported(method)) {
 						continue;
 					}
@@ -103,19 +97,6 @@ public abstract class InterfaceGenerator {
 
 	private boolean isMethodExported(JMethod method) {
 		return method.getAnnotation(NoExport.class) == null;
-	}
-	
-	private boolean isKirinModuleMethod(JMethod method) {
-		String name = method.getName();
-		
-		String[] kirinMethods = {"onLoad", "onUnload"};
-		
-		for (String kirinMethod : kirinMethods) {
-			if (kirinMethod.equals(name)) {
-				return true;
-			}
-		}
-		return false;
 	}
 	
 	private boolean parameterNamesValid(TreeLogger logger, JMethod method) {

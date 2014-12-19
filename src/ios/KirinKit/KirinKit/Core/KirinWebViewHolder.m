@@ -60,7 +60,6 @@
 	}
 	
     NSURLRequest *appReq = [NSURLRequest requestWithURL:appURL cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:20.0];
-	DLog(@"Loading %@", startPage);
 	[aWebView loadRequest:appReq];
     
     
@@ -69,7 +68,7 @@
 
 - (void) _execJSImmediately: (NSString*) js {
     if (DEBUG_JS) {
-        DLog(@"Javascript: %@", js);
+        NSLog(@"Javascript: %@", js);
     }
     [self.webView stringByEvaluatingJavaScriptFromString:js];
 }
@@ -93,7 +92,6 @@
      * We have to strip off the leading slash for the options.
      */
     if ([[url scheme] isEqualToString:@"ready"]) {
-        DLog(@"WebView is reported finished. %d commands to tell JS", [jsQueue count]);
 		[self _execJSImmediately:@"console.log('Webview is loaded')"];
 		for (int i=0; i < [jsQueue count]; i++) {
 			[self _execJSImmediately:[jsQueue objectAtIndex:i]];
@@ -132,7 +130,6 @@
          * XXX Could be security hole.
          */
         
-        DLog(@"Kirin::shouldStartLoadWithRequest: Received Unhandled URL %@", url);
         [[UIApplication sharedApplication] openURL:url];
         return NO;
 	}
@@ -141,7 +138,7 @@
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
-    DLog(@"[ERROR] %@", error);
+    NSLog(@"[ERROR] %@", error);
 }
 
 - (void)dealloc {

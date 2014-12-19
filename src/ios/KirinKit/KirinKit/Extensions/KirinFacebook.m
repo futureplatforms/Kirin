@@ -214,7 +214,6 @@
 }
 
 - (void) presentShareDialogWithParams: (NSString*) caption : (NSString*) description : (NSString*) link : (NSString*) name : (NSString*) picture : (NSString*) place : (NSString*) ref : (NSArray*) friends : (int) cbId {
-    DLog(@"Friends: %d", [friends count]);
     FBShareDialogParams *shareParams = [[FBShareDialogParams alloc] init];
     NSMutableDictionary *feedParams = [[NSMutableDictionary alloc] init];
     if (caption != nil) {
@@ -299,16 +298,12 @@
 }
 
 - (void) presentRequestsDialog: (int) cbId {
-    DLog(@"About to present requests dialog");
     [FBWebDialogs presentRequestsDialogModallyWithSession:nil
                                                   message:@"request"
                                                     title:@"request"
                                                parameters:nil
                                                   handler:
     ^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
-        DLog(@"Result! %@", resultURL);
-        //
-        //
         if (error) {
             [self.kirinModule requestsDialogFail:cbId];
         } else {
@@ -320,7 +315,6 @@
                 // Test if the query begins with post_id
                 
                 NSString *query = [resultURL query];
-                DLog(@"ResultURL: %@", [resultURL absoluteString]);
                 NSRange range = [query rangeOfString:@"error_code"];
                 if (range.length > 0) {
                     // pressed Cancel
