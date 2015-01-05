@@ -46,7 +46,40 @@
     <developerConnection>scm:git:https://github.com/futureplatforms/Kirin.git</developerConnection>
     <connection>scm:git:https://github.com/futureplatforms/Kirin.git</connection>
     <url>https://github.com/futureplatforms/Kirin.git</url>
+    <tag>maven</tag>
   </scm>
+
+  <!-- Got this bit from http://central.sonatype.org/pages/apache-maven.html#distribution-management-and-authentication -->
+  <distributionManagement>
+    <snapshotRepository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    </snapshotRepository>
+    <repository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+    </repository>
+  </distributionManagement>
+
+  <!-- Got this bit from http://central.sonatype.org/pages/apache-maven.html#gpg-signed-components -->
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-gpg-plugin</artifactId>
+        <version>1.5</version>
+        <executions>
+          <execution>
+            <id>sign-artifacts</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>sign</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 
   <dependencies>
     <dependency>

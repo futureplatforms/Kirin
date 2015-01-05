@@ -86,5 +86,24 @@
 				</plugins>
 			</build>
 		</profile>
+	    <profile>
+			<id>NotWindows</id>
+			<activation>
+				<os>
+					<family>!Windows</family>
+				</os>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-deploy-plugin</artifactId>
+						<configuration>
+							<skip>true</skip>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
 	</profiles>
 </project>
