@@ -43,9 +43,9 @@
   </profiles>
   
   <scm>
-    <developerConnection>scm:git:git@git.futureplatforms.com:KirinJS.git</developerConnection>
-    <connection>scm:git:git@git.futureplatforms.com:KirinJS.git</connection>
-    <url>git@git.futureplatforms.com:KirinJS.git</url>
+    <developerConnection>scm:git:https://github.com/futureplatforms/Kirin.git</developerConnection>
+    <connection>scm:git:https://github.com/futureplatforms/Kirin.git</connection>
+    <url>https://github.com/futureplatforms/Kirin.git</url>
   </scm>
 
   <dependencies>
