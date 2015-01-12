@@ -22,21 +22,21 @@ public final class Kirin {
     
     public static void kickOff(Context context, boolean includeLocation, final CrashLog crashLog) {
         boolean isDebug =  0 != ( context.getApplicationInfo().flags &= ApplicationInfo.FLAG_DEBUGGABLE );
-        
+
         StaticDependencies.getInstance().setDependencies(
-                isDebug ? new AndroidLog() : new LogDelegate() {
-					
+                isDebug ? new AndroidLog(crashLog) : new LogDelegate() {
+
 					@Override
 					public void log(String tag, String s, Throwable t) {
 						if(crashLog != null) crashLog.log(tag,s, t);
 					}
-					
+
 					@Override
 					public void log(String tag, String s) { }
-					
+
 					@Override
 					public void log(String s) { }
-				}, 
+				},
                 new AndroidSettings(context), 
                 includeLocation ? new AndroidLocation(context) : null, 
                 new AndroidNetwork(), 

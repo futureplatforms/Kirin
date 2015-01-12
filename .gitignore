@@ -70,3 +70,4 @@ demos/kirin-hello-world/target
 *.opensdf
 *.sdf
 ipch
+src/.idea
