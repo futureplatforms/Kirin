@@ -10,6 +10,7 @@ import com.futureplatforms.kirin.dependencies.AsyncCallback.AsyncCallback2;
 import com.futureplatforms.kirin.dependencies.NotificationDelegate;
 import com.futureplatforms.kirin.dependencies.StaticDependencies;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.Configuration;
+import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegateClient;
 import com.futureplatforms.kirin.dependencies.fb.FacebookDelegate;
 import com.futureplatforms.kirin.dependencies.fb.FacebookDetails.FacebookLoginCallback;
 import com.futureplatforms.kirin.dependencies.fb.FacebookDetails.FacebookRequestsCallback;
@@ -19,20 +20,19 @@ import com.futureplatforms.kirin.dependencies.fb.FacebookDetails.ReadPermission;
 import com.futureplatforms.kirin.dependencies.fb.FacebookDetails.ShareDialogParams;
 
 public final class Kirin {
-    public static void kickOff() {
-        
-        StaticDependencies.getInstance().setDependencies(
-                new ConsoleLog(), 
-                new ConsoleSettings(), 
-                new ConsoleLocation(), 
-                new ConsoleNetwork(), 
-                new ConsoleJson(),
-                new JaxpXmlParser(),
-                new ConsoleFormatter(),
-                Configuration.Debug,
-                new ConsoleDB(),
-                new ConsoleTimer(),
-                new NotificationDelegate() {
+	public static void kickOffWithNetwork(NetworkDelegateClient net) {
+		StaticDependencies.getInstance().setDependencies(
+				new ConsoleLog(), 
+				new ConsoleSettings(), 
+				new ConsoleLocation(), 
+				net, 
+				new ConsoleJson(),
+				new JaxpXmlParser(),
+				new ConsoleFormatter(),
+				Configuration.Debug,
+				new ConsoleDB(),
+				new ConsoleTimer(),
+				new NotificationDelegate() {
 					
 					@Override
 					public void scheduleNotification(int notificationId,
@@ -107,5 +107,10 @@ public final class Kirin {
 						
 					}
 				});
+		
+	}
+	
+    public static void kickOff() {
+        kickOffWithNetwork(new ConsoleNetwork());
     }
 }
