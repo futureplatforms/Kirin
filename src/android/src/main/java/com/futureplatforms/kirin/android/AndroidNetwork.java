@@ -12,8 +12,6 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
 
 import android.os.AsyncTask;
@@ -27,8 +25,7 @@ import com.google.common.io.BaseEncoding;
 
 public class AndroidNetwork implements NetworkDelegateClient {
 	private static final String KIRIN_VERSION = "1.0";
-    public static final int TIMEOUT = 20000;
-    final String userAgent;
+	final String userAgent;
 
 	public AndroidNetwork() {
 		userAgent = "Kirin/" + KIRIN_VERSION + " (Android " + Build.VERSION.RELEASE + "); "
@@ -62,12 +59,7 @@ public class AndroidNetwork implements NetworkDelegateClient {
 			try {
 
 				HttpClient client = new DefaultHttpClient();
-
-                HttpParams httpParams = client.getParams();
-                HttpConnectionParams.setConnectionTimeout(httpParams, TIMEOUT);
-                HttpConnectionParams.setSoTimeout(httpParams, TIMEOUT);
-
-                final HttpGet get = new HttpGet(url);
+				final HttpGet get = new HttpGet(url);
 
 				get.setHeader("User-Agent", userAgent);
 				if (headers != null) for (String name : headers.keySet()) {
@@ -150,10 +142,6 @@ public class AndroidNetwork implements NetworkDelegateClient {
 			
 			try {
 				HttpClient client = new DefaultHttpClient();
-
-                HttpParams httpParams = client.getParams();
-                HttpConnectionParams.setConnectionTimeout(httpParams, TIMEOUT);
-                HttpConnectionParams.setSoTimeout(httpParams, TIMEOUT);
 
 				HttpEntityEnclosingRequestBase base;
 				if (_Verb == HttpVerb.POST) {
