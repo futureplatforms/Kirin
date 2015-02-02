@@ -5,4 +5,8 @@ public class XMLException extends Exception {
 	public XMLException(String s) {
 		super(s);
 	}
+
+	public XMLException(Exception e) {
+		super(e);
+	}
 }
