@@ -43,7 +43,7 @@
 		<dependency>
 			<groupId>com.google.android.gms</groupId>
 			<artifactId>google-play-services</artifactId>
-			<version>17.0.0</version>
+			<version>22.0.0</version>
 			<type>jar</type>
 			<scope>provided</scope>
 		</dependency>
