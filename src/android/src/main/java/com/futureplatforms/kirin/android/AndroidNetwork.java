@@ -191,7 +191,7 @@ public class AndroidNetwork implements NetworkDelegateClient {
 		protected void onPostExecute(Boolean success) {
 			super.onPostExecute(success);
 
-			if (success) {
+            if (success && res >= 200 && res <= 299) {
 				callback.callOnSuccess(res, result, responseHeaderMap);
 			} else {
 				callback.callOnFail(code);
