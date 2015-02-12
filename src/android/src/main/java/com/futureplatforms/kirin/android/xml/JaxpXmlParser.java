@@ -20,7 +20,10 @@ public class JaxpXmlParser implements XMLParser {
 		DocumentBuilder builder;
 		try {
 			builder = factory.newDocumentBuilder();
-			document = builder.parse(new InputSource(new StringReader(contents)));
+
+            contents = contents.replace("\uFEFF", ""); // remove BOM
+
+            document = builder.parse(new InputSource(new StringReader(contents)));
 			return new JaxpDocument(document);
 		} catch (Exception e) {
 			throw new XMLException(e);
