@@ -50,4 +50,9 @@ public abstract class Formatter {
 		sb.setLength(sb.length() - 1);
 		return sb.toString();
 	}
+
+    public String cdataString(String unencodedString)
+    {
+        return "<![CDATA[" + unencodedString + "]]>";
+    }
 }
