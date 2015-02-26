@@ -11,7 +11,7 @@
     </content>
     <orderEntry type="jdk" jdkName="Maven Android API 21 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: android:android:4.4.2_r3" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: android:android:5.0.1_r2" level="project" />
     <orderEntry type="library" name="Maven: com.futureplatforms.kirin.core:kirin-core:1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: com.google.guava:guava:16.0.1" level="project" />
     <orderEntry type="library" name="Maven: com.futureplatforms.kirin.gwtstub:kirin-gwt-stub:1.0-SNAPSHOT" level="project" />

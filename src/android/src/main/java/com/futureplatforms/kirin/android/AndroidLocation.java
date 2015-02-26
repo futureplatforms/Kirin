@@ -5,8 +5,12 @@ import java.util.List;
 import android.Manifest.permission;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.location.Criteria;
+import android.location.LocationManager;
 import android.os.Bundle;
 
+import android.support.v4.text.TextUtilsCompat;
+import android.text.TextUtils;
 import com.futureplatforms.kirin.dependencies.AsyncCallback.AsyncCallback1;
 import com.futureplatforms.kirin.dependencies.LocationDelegate;
 import com.google.android.gms.common.ConnectionResult;
@@ -22,11 +26,13 @@ public class AndroidLocation implements LocationDelegate {
     private GoogleApiClient mGoogleApiClient;
 
 	private LocationListener mLocationListener;
-
+    private LocationManager mLocationManager;
 	private Context _Context;
 	
 	public AndroidLocation(Context context) {
 		this._Context = context;
+
+        mLocationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
 
         mGoogleApiClient = new GoogleApiClient.Builder(context)
                 .addApi(LocationServices.API)
@@ -83,6 +89,11 @@ public class AndroidLocation implements LocationDelegate {
 	@Override
 	public void startUpdatingLocation(final Accuracy accuracy, final long ms,
 			final LocationCallback callback) {
+        if(!isLocationServicesEnabled()) {
+            callback.onFail("Location Services Not Enabled");
+            return;
+        }
+
 		if (!mGoogleApiClient.isConnected()) {
 			onConnecteds.add(new Runnable() {
 
@@ -140,5 +151,12 @@ public class AndroidLocation implements LocationDelegate {
 	        cb.onSuccess(false);
 	    }
 	}
+
+    public boolean isLocationServicesEnabled() {
+        String provider = mLocationManager.getBestProvider(new Criteria(),true);
+
+        return !TextUtils.isEmpty(provider) && !LocationManager.PASSIVE_PROVIDER.equals(provider);
+    }
+
 
 }
