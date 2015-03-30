@@ -11,6 +11,12 @@ Get a new Kirin project with Android, iPhone and WP8 targets.
 * For android development, ensure you have the Android SDK installed, and the `ANDROID_HOME` environment variable is set -- make sure this is up-to-date by running `android update sdk`
 * Ensure you have your platform's development tools installed (xcode for iOS, MS Visual Studio Express for Windows Phone)
 
+## Correct version of Maven
+Homebrew is your friend to get the correct version of Maven installed.  You need `3.1.x` for now.
+
+    brew install homebrew/versions/maven31
+    brew link homebrew/versions/maven31
+
 ## Build the core kirin libraries
 
 In the project's `src` folder execute `mvn install`.
