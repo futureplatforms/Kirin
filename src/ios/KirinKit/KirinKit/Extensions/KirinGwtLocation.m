@@ -54,6 +54,9 @@
 
 - (void) startUpdating: (int) accuracy {
     DLog(@"Start updating %d", accuracy);
+    if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
+        [self.locationManager requestWhenInUseAuthorization];
+    }
     self.locationManager.desiredAccuracy = [KirinGwtLocation clLocationAccuracyForKirinAccuracy:accuracy];
     [self.locationManager startUpdatingLocation];
 }
