@@ -41,57 +41,11 @@ public class FacebookFriends {
 	private static long _IntervalMs;
 	
 	private static final String LastSyncedKey = "kirin.friends.last.synced";
-	private static final String FbAccessTokenKey = "kirin.friends.access.token";
-	
-	private static void checkDBValid(final AsyncCallback1<Boolean> cb) {
-		FacebookHelper.getAccessToken(new AsyncCallback2<String, String>() {
-			
-			@Override
-			public void onSuccess(String accessToken, String exp) {
-				_Log.log("FBFriends.checkDBValid: got access token");
-				String savedAccessToken = _Settings.get(FbAccessTokenKey);
-				if (!accessToken.equals(savedAccessToken)) {
-					_Log.log("access token does not match");
-					_DBPlugin.resetDB(new AsyncCallback() {
-						
-						@Override
-						public void onSuccess() {
-							_Settings.put(FbAccessTokenKey, "");
-							_Settings.put(LastSyncedKey, "");
-							cb.onSuccess(false);
-						}
-						
-						@Override
-						public void onFailure() { }
-					});
-				} else {
-					_Log.log("access token matches!");
-					cb.onSuccess(true);
-				}
-			}
-			
-			@Override
-			public void onFailure() {
-				cb.onFailure();
-			}
-		});
-	}
 	
 	private static void tryDB(final AsyncCallback1<List<Friend>> cb) {
 		// is DB valid?
 		if (_DBPlugin != null) {
-			checkDBValid(new AsyncCallback1<Boolean>() {
-	
-				@Override
-				public void onSuccess(Boolean dbValid) {
-					if (dbValid) {
-						_DBPlugin.getFriends(cb);
-					}
-				}
-	
-				@Override
-				public void onFailure() { }
-			});
+			_DBPlugin.getFriends(cb);
 		}
 	}
 	
@@ -160,7 +114,6 @@ public class FacebookFriends {
 										}
 										
 										_Settings.put(LastSyncedKey, ""+new Date().getTime());
-										_Settings.put(FbAccessTokenKey, accessToken);
 										
 										if (_DBPlugin != null) {
 											_DBPlugin.saveFriends(friends, new AsyncCallback() {
