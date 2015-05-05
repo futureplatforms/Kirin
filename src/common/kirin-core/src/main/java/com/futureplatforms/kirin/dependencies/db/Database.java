@@ -37,7 +37,7 @@ public abstract class Database {
 					// Actually execute it, and pass the TxRunner as callback
 					tx.pullTrigger(txRunner);
 				} catch (Throwable t) {
-					StaticDependencies.getInstance().getLogDelegate().log(t.toString());
+					StaticDependencies.getInstance().getLogDelegate().log("Kirin","DB Transaction Exception",t);
 					txRunner.onError();
 				}
 			}

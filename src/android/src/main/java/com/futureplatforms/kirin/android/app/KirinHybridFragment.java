@@ -80,11 +80,6 @@ abstract public class KirinHybridFragment<Module extends HybridModule<HybridNati
 	public void onDestroyView() {
 		getModule().onWebviewDestroyed();
 		super.onDestroyView();
-	}
-
-	@Override
-	public void onDestroy() {
-		super.onDestroy();
 		if (webView != null) {
 			((ViewGroup) webView.getParent()).removeView(webView);
 			webView.destroy();
