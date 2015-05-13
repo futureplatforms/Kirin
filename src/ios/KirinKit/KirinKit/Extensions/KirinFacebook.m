@@ -134,6 +134,19 @@
 }
 
 - (void) isLoggedIn:(int) cbId {
+    if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
+        [FBSession openActiveSessionWithReadPermissions:@[@"basic_info"]
+                                           allowLoginUI:NO
+                                      completionHandler:^(FBSession *session, FBSessionState state, NSError *error) {
+                                          NSLog(@"Here's the callback: %d %@", state, [error debugDescription]);
+                                          // Handler for session state changes
+                                          // This method will be called EACH time the session state changes,
+                                          // also for intermediate states and NOT just when the session open
+                                          [self sessionStateChanged:session state:state error:error];
+                                      }];
+        [self.kirinModule setIsLoggedIn: cbId :YES];
+        return;
+    }
     if (FBSession.activeSession.state == FBSessionStateOpen ||
         FBSession.activeSession.state == FBSessionStateOpenTokenExtended) {
         [self.kirinModule setIsLoggedIn: cbId :YES];
