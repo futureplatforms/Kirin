@@ -75,13 +75,16 @@ public class FacebookFriends {
 	 * onFailure gets invoked if you're not currently logged in
 	 * @param cb
 	 */
-	public static void listFriendsWithAppInstalled(final AsyncCallback1<List<Friend>> cb) {
+	public static void listFriendsWithAppInstalled(final AsyncCallback1<List<Friend>> cb, final Runnable authFailed) {
+		_Log.log("FacebookFriends listFriendsWithAppInstalled");
 		tryDB(cb);
 		if (shouldUseNetwork()) {
+			_Log.log("shouldUseNetwork");
 			FacebookHelper.isLoggedIn(new AsyncCallback1<Boolean>() {
 
 				@Override
 				public void onSuccess(Boolean isLoggedIn) {
+					_Log.log("FB Helper isLoggedIn :: " + isLoggedIn);
 					if (!isLoggedIn) {
 						cb.onFailure();
 					} else {
@@ -89,6 +92,7 @@ public class FacebookFriends {
 							
 							@Override
 							public void onSuccess(final JSONObject obj) {
+								_Log.log("FB Friends result :: " + obj.toString());
 								FacebookHelper.getAccessToken(new AsyncCallback2<String, String>() {
 
 									@Override
@@ -149,7 +153,20 @@ public class FacebookFriends {
 							}
 							
 							@Override
-							public void onAuthFailed() { }
+							public void onAuthFailed() {
+								_DBPlugin.resetDB(new AsyncCallback() {
+									
+									@Override
+									public void onSuccess() {
+										authFailed.run();
+									}
+									
+									@Override
+									public void onFailure() {
+										authFailed.run();
+									}
+								});
+							}
 						});
 					}
 				}
@@ -157,6 +174,8 @@ public class FacebookFriends {
 				@Override
 				public void onFailure() { cb.onFailure(); }
 			});
+		} else {
+			_Log.log("FacebookFriends should not use network");
 		}
 	}
 	

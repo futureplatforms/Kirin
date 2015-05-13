@@ -140,7 +140,12 @@ public class FacebookHelper {
 					@Override
 					public void onFail(String code) {
 						log.log(verb + ": " + endpoint + " onFail(" + code + ")");
-						resp.onNetError();
+						if ("400".equals(code) || "403".equals(code)) {
+							_AuthFailed = true;
+							resp.onAuthFailed();
+						} else {
+							resp.onNetError();
+						}
 					}
 
 					@Override
