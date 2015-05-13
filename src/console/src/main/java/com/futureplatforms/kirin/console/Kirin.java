@@ -1,6 +1,8 @@
 package com.futureplatforms.kirin.console;
 
 
+import java.util.Map;
+
 import com.futureplatforms.kirin.console.db.ConsoleDB;
 import com.futureplatforms.kirin.console.json.ConsoleJson;
 import com.futureplatforms.kirin.console.xml.JaxpXmlParser;
@@ -103,6 +105,13 @@ public final class Kirin {
 					
 					@Override
 					public void getAccessToken(AsyncCallback2<String, String> cb) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void logEvent(String eventName,
+							Map<String, String> parameters) {
 						// TODO Auto-generated method stub
 						
 					}
