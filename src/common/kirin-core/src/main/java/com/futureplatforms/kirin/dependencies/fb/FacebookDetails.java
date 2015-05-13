@@ -42,7 +42,7 @@ public interface FacebookDetails {
 		friends_videos, user_website, friends_website,
 		user_work_history, friends_work_history, read_friendlists,
 		read_mailbox, read_requests, read_stream,
-		read_insights, xmpp_login
+		read_insights, xmpp_login, user_friends
 	}
 	
 	public enum PublishPermission implements Permission {
