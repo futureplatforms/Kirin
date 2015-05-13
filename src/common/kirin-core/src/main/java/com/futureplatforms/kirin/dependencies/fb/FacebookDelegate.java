@@ -1,5 +1,7 @@
 package com.futureplatforms.kirin.dependencies.fb;
 
+import java.util.Map;
+
 import com.futureplatforms.kirin.dependencies.AsyncCallback;
 import com.futureplatforms.kirin.dependencies.AsyncCallback.AsyncCallback1;
 import com.futureplatforms.kirin.dependencies.AsyncCallback.AsyncCallback2;
@@ -33,4 +35,6 @@ public interface FacebookDelegate {
 	 */ 
 	public void nativeRequestPublishPermissions(FacebookLoginCallback callback, PublishPermission ... permissions);
 
+	
+	public void logEvent(String eventName, Map<String, String> parameters);
 }

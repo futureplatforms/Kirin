@@ -44,11 +44,20 @@
 }
 
 + (void) handleDidBecomeActive {
+    [FBAppEvents activateApp];
     [FBSession.activeSession handleDidBecomeActive];
 }
 
 + (BOOL) handleOpenUrl:(NSURL *)url {
     return [FBSession.activeSession handleOpenURL:url];
+}
+
+- (void) logEvent: (NSString*) eventName : (NSArray*) paramKeys : (NSArray*) paramVals {
+    NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
+    for (NSUInteger i=0, len=[paramKeys count]; i<len; i++) {
+        dic[paramKeys[i]] = paramVals[i];
+    }
+    [FBAppEvents logEvent:eventName parameters:dic];
 }
 
 // This method will handle ALL the session state changes in the app

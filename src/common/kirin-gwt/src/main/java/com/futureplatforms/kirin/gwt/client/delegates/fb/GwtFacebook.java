@@ -1,5 +1,7 @@
 package com.futureplatforms.kirin.gwt.client.delegates.fb;
 
+import java.util.Map;
+
 import com.futureplatforms.kirin.dependencies.AsyncCallback;
 import com.futureplatforms.kirin.dependencies.AsyncCallback.AsyncCallback1;
 import com.futureplatforms.kirin.dependencies.AsyncCallback.AsyncCallback2;
@@ -127,6 +129,11 @@ public class GwtFacebook implements FacebookDelegate {
 	@Override
 	public void isLoggedIn(AsyncCallback1<Boolean> cb) {
 		GwtFacebookService.BACKDOOR()._isLoggedIn(cb);
+	}
+
+	@Override
+	public void logEvent(String eventName, Map<String, String> parameters) {
+		GwtFacebookService.BACKDOOR()._logEvent(eventName, parameters);
 	}
 
 }

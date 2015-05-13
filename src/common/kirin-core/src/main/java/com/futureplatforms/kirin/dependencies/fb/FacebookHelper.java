@@ -274,4 +274,8 @@ public class FacebookHelper {
 	public static void getAccessToken(AsyncCallback2<String, String> cb) {
 		_Delegate.getAccessToken(cb);
 	}
+	
+	public static void logEvent(String eventName, Map<String, String> parameters) {
+		_Delegate.logEvent(eventName, parameters);
+	}
 }
