@@ -16,6 +16,9 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<platform.version>5.0.1_r2</platform.version>
+		<support.version>22.1.0</support.version>
+		<play.version>22.0.0</play.version>
+        <facebook.version>3.23.1</facebook.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -37,30 +40,36 @@
 		<dependency>
 			<groupId>android.support</groupId>
 			<artifactId>compatibility-v4</artifactId>
-			<version>19.1.0</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.google.android.gms</groupId>
-			<artifactId>google-play-services</artifactId>
-			<version>22.0.0</version>
-			<type>jar</type>
+			<version>${support.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>android.support</groupId>
 			<artifactId>compatibility-v7-appcompat</artifactId>
-			<version>19.1.0</version>
+			<version>${support.version}</version>
 			<type>jar</type>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.facebook</groupId>
-			<artifactId>android-sdk</artifactId>
-			<version>3.15.0</version>
+			<groupId>com.google.android.gms</groupId>
+			<artifactId>google-play-services</artifactId>
+			<version>${play.version}</version>
 			<type>jar</type>
 			<scope>provided</scope>
 		</dependency>
+        <dependency>
+            <groupId>com.facebook.android</groupId>
+            <artifactId>facebook-android-sdk</artifactId>
+            <version>${facebook.version}</version>
+            <type>aar</type>
+			<scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.android.support</groupId>
+                    <artifactId>support-v4</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
 	</dependencies>
 
 
@@ -72,8 +81,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.1</version>
 				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
+					<source>1.7</source>
+					<target>1.7</target>
 				</configuration>
 			</plugin>
 		</plugins>
