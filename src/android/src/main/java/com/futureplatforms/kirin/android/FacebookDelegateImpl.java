@@ -30,7 +30,7 @@ import com.futureplatforms.kirin.dependencies.fb.FacebookDetails.ReadPermission;
 import com.futureplatforms.kirin.dependencies.fb.FacebookDetails.ShareDialogParams;
 import com.google.common.collect.Maps;
 
-public class FacebookDelegateImpl implements FacebookDelegate {
+public class FacebookDelegateImpl extends FacebookDelegate {
 
 	private Map<Activity, UiLifecycleHelper> _LifecycleMap = Maps.newHashMap();
 
@@ -221,31 +221,6 @@ public class FacebookDelegateImpl implements FacebookDelegate {
 		*/
 		
 	}
-	public static AsyncCallback signOutCallback;
- 
-	@Override
-	public void signOut(final AsyncCallback callback) {
-		Session session = Session.getActiveSession();
-		if (session != null) {
-			session.closeAndClearTokenInformation();
-			callback.onSuccess();
-		} 
-		else {
-			signOutCallback = new AsyncCallback() {
-				
-				@Override
-				public void onSuccess() {
-					if (callback != null) { callback.onSuccess(); }
-				}
-				
-				@Override
-				public void onFailure() {
-					if (callback != null) { callback.onFailure(); }
-				}
-			};
-			context.startActivity(FacebookActivity.newIntentForSignOut(context));
-		}
-	}
 
 	public static FacebookLoginCallback newReadPermissionsCallback;
 
@@ -389,5 +364,31 @@ public class FacebookDelegateImpl implements FacebookDelegate {
 			bundle.putString(entry.getKey(), entry.getValue());
 		}
 		_Logger.logEvent(eventName, bundle);
+	}
+	
+	public static AsyncCallback signOutCallback;
+	 
+	@Override
+	public void _SignOut(final AsyncCallback callback) {
+		Session session = Session.getActiveSession();
+		if (session != null) {
+			session.closeAndClearTokenInformation();
+			callback.onSuccess();
+		} 
+		else {
+			signOutCallback = new AsyncCallback() {
+				
+				@Override
+				public void onSuccess() {
+					if (callback != null) { callback.onSuccess(); }
+				}
+				
+				@Override
+				public void onFailure() {
+					if (callback != null) { callback.onFailure(); }
+				}
+			};
+			context.startActivity(FacebookActivity.newIntentForSignOut(context));
+		}
 	}
 }

@@ -71,6 +71,23 @@ public class FacebookFriends {
 		}
 	}
 	
+	public static void reset(final AsyncCallback cb) {
+		_DBPlugin.resetDB(new AsyncCallback() {
+			
+			@Override
+			public void onSuccess() {
+				_Settings.put(LastSyncedKey, "");
+				cb.onSuccess();
+			}
+			
+			@Override
+			public void onFailure() {
+				_Settings.put(LastSyncedKey, "");
+				cb.onFailure();
+			}
+		});
+	}
+	
 	/**
 	 * onFailure gets invoked if you're not currently logged in
 	 * @param cb
@@ -154,17 +171,18 @@ public class FacebookFriends {
 							
 							@Override
 							public void onAuthFailed() {
-								_DBPlugin.resetDB(new AsyncCallback() {
-									
+								reset(new AsyncCallback() {
+
 									@Override
 									public void onSuccess() {
 										authFailed.run();
 									}
-									
+
 									@Override
 									public void onFailure() {
 										authFailed.run();
 									}
+									
 								});
 							}
 						});

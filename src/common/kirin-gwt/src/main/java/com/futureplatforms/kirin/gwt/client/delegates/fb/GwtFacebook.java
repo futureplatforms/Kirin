@@ -15,7 +15,7 @@ import com.futureplatforms.kirin.dependencies.fb.FacebookDetails.ShareDialogPara
 import com.futureplatforms.kirin.gwt.client.services.GwtFacebookService;
 import com.futureplatforms.kirin.gwt.client.services.GwtFacebookService.GwtFacebookCallback;
 
-public class GwtFacebook implements FacebookDelegate {
+public class GwtFacebook extends FacebookDelegate {
 	public GwtFacebook() { }
 	
 	@Override
@@ -106,11 +106,6 @@ public class GwtFacebook implements FacebookDelegate {
 	}
 
 	@Override
-	public void signOut(AsyncCallback cb) {
-		GwtFacebookService.BACKDOOR()._signOut(cb);
-	}
-
-	@Override
 	public void getCurrentPermissions(AsyncCallback1<String[]> cb) {
 		GwtFacebookService.BACKDOOR()._getCurrentPermissions(cb);
 	}
@@ -134,6 +129,11 @@ public class GwtFacebook implements FacebookDelegate {
 	@Override
 	public void logEvent(String eventName, Map<String, String> parameters) {
 		GwtFacebookService.BACKDOOR()._logEvent(eventName, parameters);
+	}
+
+	@Override
+	public void _SignOut(AsyncCallback cb) {
+		GwtFacebookService.BACKDOOR()._signOut(cb);
 	}
 
 }
