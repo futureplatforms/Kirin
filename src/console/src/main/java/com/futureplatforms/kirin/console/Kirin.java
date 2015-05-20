@@ -56,7 +56,12 @@ public final class Kirin {
 						// TODO Auto-generated method stub
 						
 					}
-					
+
+					@Override
+					public void _SignOut(AsyncCallback cb) {
+
+					}
+
 					@Override
 					public void presentShareDialogWithParams(ShareDialogParams params,
 							FacebookShareCallback cb) {
