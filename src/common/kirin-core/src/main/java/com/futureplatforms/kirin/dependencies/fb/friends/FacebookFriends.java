@@ -42,10 +42,10 @@ public class FacebookFriends {
 	
 	private static final String LastSyncedKey = "kirin.friends.last.synced";
 	
-	private static void tryDB(final AsyncCallback1<List<Friend>> cb) {
+	private static void tryDB(final AsyncCallback2<List<Friend>, Boolean> cb, boolean isFromNetwork) {
 		// is DB valid?
 		if (_DBPlugin != null) {
-			_DBPlugin.getFriends(cb);
+			_DBPlugin.getFriends(cb, isFromNetwork);
 		}
 	}
 	
@@ -92,9 +92,9 @@ public class FacebookFriends {
 	 * onFailure gets invoked if you're not currently logged in
 	 * @param cb
 	 */
-	public static void listFriendsWithAppInstalled(final AsyncCallback1<List<Friend>> cb, final Runnable authFailed) {
+	public static void listFriendsWithAppInstalled(final AsyncCallback2<List<Friend>, Boolean> cb, final Runnable authFailed) {
 		_Log.log("FacebookFriends listFriendsWithAppInstalled");
-		tryDB(cb);
+		tryDB(cb, false);
 		if (shouldUseNetwork()) {
 			_Log.log("shouldUseNetwork");
 			FacebookHelper.isLoggedIn(new AsyncCallback1<Boolean>() {
@@ -144,7 +144,7 @@ public class FacebookFriends {
 													// Don't just return the friends array
 													// as it's not in the right order.
 													// Retrieve from the database
-													tryDB(cb);
+													tryDB(cb, true);
 												}
 												
 												@Override
@@ -152,7 +152,7 @@ public class FacebookFriends {
 												
 											});
 										} else {
-											cb.onSuccess(friends);
+											cb.onSuccess(friends,true);
 										}
 									}
 
