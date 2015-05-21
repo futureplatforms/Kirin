@@ -121,8 +121,11 @@
     NSString *fbAccessToken = [FBSession activeSession].accessTokenData.accessToken;
     NSDate *fbAccessTokenExpDate = [FBSession activeSession].accessTokenData.expirationDate;
     NSDateFormatter *isoFormat = [[NSDateFormatter alloc] init];
-    //2014-06-29T17:45:02.481+0100
-    [isoFormat setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"];
+    // NB You must set the locale on this NSDateFormatter, otherwise if the
+    // user has time set to 12hr clock, it will have am/pm on the end!!!
+    // http://stackoverflow.com/q/29374181/64505
+    isoFormat.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_GB"];
+    [isoFormat setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS"];
     NSString *createdDateStr = [isoFormat stringFromDate:fbAccessTokenExpDate];
 
     [self.kirinModule setAccessToken: cbId :fbAccessToken :createdDateStr];
