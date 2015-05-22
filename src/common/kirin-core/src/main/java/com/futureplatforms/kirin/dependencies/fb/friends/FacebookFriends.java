@@ -49,7 +49,7 @@ public class FacebookFriends {
 		}
 	}
 	
-	private static boolean shouldUseNetwork() {
+	public static boolean shouldUseNetwork() {
 		if (_DBPlugin != null) {
 			try {
 				long lastSynced = Long.parseLong(_Settings.get(LastSyncedKey), 10);
