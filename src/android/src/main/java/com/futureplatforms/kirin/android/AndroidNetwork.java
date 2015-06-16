@@ -3,6 +3,7 @@ package com.futureplatforms.kirin.android;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.futureplatforms.kirin.dependencies.StaticDependencies;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -94,6 +95,7 @@ public class AndroidNetwork implements NetworkDelegateClient {
 				return true;
 
 			} catch (Exception e) {
+				StaticDependencies.getInstance().getLogDelegate().log("Kirin","Network Exception",e);
 				code = e.getLocalizedMessage();
 				return false;
 			}
@@ -103,8 +105,8 @@ public class AndroidNetwork implements NetworkDelegateClient {
 		@Override
 		protected void onPostExecute(Boolean success) {
 			super.onPostExecute(success);
-
-			if (success) {
+	        
+			if (success && res >= 200 && res <= 299) {
 				callback.callOnSuccess(res, result, responseHeaderMap);
 			} else {
 				callback.callOnFail(code);
@@ -191,7 +193,7 @@ public class AndroidNetwork implements NetworkDelegateClient {
 		protected void onPostExecute(Boolean success) {
 			super.onPostExecute(success);
 
-			if (success) {
+            if (success && res >= 200 && res <= 299) {
 				callback.callOnSuccess(res, result, responseHeaderMap);
 			} else {
 				callback.callOnFail(code);

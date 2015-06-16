@@ -50,4 +50,27 @@ public abstract class Formatter {
 		sb.setLength(sb.length() - 1);
 		return sb.toString();
 	}
+
+    public String cdataString(String unencodedString)
+    {
+        return "<![CDATA[" + unencodedString + "]]>";
+    }
+
+    public boolean isNumeric(String s)
+    {
+        return s.matches("[-+]?\\d*\\.?\\d+");
+    }
+    public int parseIntWithDefaultValue(String s, int defaultValue)
+    {
+        try {
+            if (s != null && !s.isEmpty() && isNumeric(s))
+                return Integer.parseInt(s);
+            else
+                throw new NumberFormatException();
+        }
+        catch (NumberFormatException ex)
+        {
+            return defaultValue;
+        }
+    }
 }

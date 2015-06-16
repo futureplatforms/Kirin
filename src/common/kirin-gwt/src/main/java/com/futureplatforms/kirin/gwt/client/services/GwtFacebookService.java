@@ -154,6 +154,14 @@ public class GwtFacebookService extends KirinService<GwtFacebookServiceNative> {
 		getNativeObject().presentRequestsDialog(id);
 	}
 	
+	@NoExport
+	public void _logEvent(String eventName, Map<String, String> parameters) {
+		getNativeObject().logEvent(
+				eventName, 
+				parameters.keySet().toArray(new String[0]), 
+				parameters.values().toArray(new String[0]));
+	}
+	
 	public void openSessionSuccess(int fbId) {
 		_OpenCallbacks.remove(fbId).onSuccess();
 	}

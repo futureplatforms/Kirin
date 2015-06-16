@@ -28,6 +28,7 @@ public class AndroidNotification implements NotificationDelegate {
 	private final Context ctx;
 	private final AlarmManager alarmMgr;
 	private final NotificationManager notificationMgr;
+	public static int notificationIconRes = -1;
 	
 	public AndroidNotification(final Context context) {
 		this.ctx = context.getApplicationContext();
@@ -112,7 +113,7 @@ public class AndroidNotification implements NotificationDelegate {
 			notifBuilder.setContentIntent(pendingIntent);
 			notifBuilder.setContentTitle(alarmIntent.getTitle());
 			notifBuilder.setContentText(alarmIntent.getText());
-			notifBuilder.setSmallIcon(ctx.getApplicationInfo().icon);
+			notifBuilder.setSmallIcon(notificationIconRes != -1 ? notificationIconRes : ctx.getApplicationInfo().icon);
 			notifBuilder.setTicker(alarmIntent.getTitle() + ": " + alarmIntent.getText());
 			notifBuilder.setAutoCancel(true);
 			notifBuilder.setWhen(alarmIntent.getTimeMillisSince1970());

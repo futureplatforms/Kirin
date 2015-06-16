@@ -13,30 +13,38 @@ import com.futureplatforms.kirin.dependencies.StaticDependencies.LogDelegate;
 
 public final class Kirin {
     public static void kickOff(Context context) {
-       kickOff(context, true, null);
+       kickOff(context, true);
     }
 
     public static void kickOff(Context context, boolean includeLocation) {
-        kickOff(context, includeLocation, null);
+        kickOff(context, includeLocation, true);
+    }
+
+    public static void kickOff(Context context, boolean includeLocation, boolean includeFacebook) {
+        kickOff(context, includeLocation, includeFacebook, null);
+    }
+
+    public static void kickOff(Context context, boolean includeLocation, final CrashLog crashLog) {
+        kickOff(context, includeLocation, true, crashLog);
     }
     
-    public static void kickOff(Context context, boolean includeLocation, final CrashLog crashLog) {
+    public static void kickOff(Context context, boolean includeLocation, boolean includeFacebook, final CrashLog crashLog) {
         boolean isDebug =  0 != ( context.getApplicationInfo().flags &= ApplicationInfo.FLAG_DEBUGGABLE );
-        
+
         StaticDependencies.getInstance().setDependencies(
-                isDebug ? new AndroidLog() : new LogDelegate() {
-					
+                isDebug ? new AndroidLog(crashLog) : new LogDelegate() {
+
 					@Override
 					public void log(String tag, String s, Throwable t) {
 						if(crashLog != null) crashLog.log(tag,s, t);
 					}
-					
+
 					@Override
 					public void log(String tag, String s) { }
-					
+
 					@Override
 					public void log(String s) { }
-				}, 
+				},
                 new AndroidSettings(context), 
                 includeLocation ? new AndroidLocation(context) : null, 
                 new AndroidNetwork(), 
@@ -47,6 +55,6 @@ public final class Kirin {
                 new AndroidDatabase(context),
                 new AndroidTimer(),
                 new AndroidNotification(context),
-                new FacebookDelegateImpl(context));
+                includeFacebook ? new FacebookDelegateImpl(context) : null);
     }
 }

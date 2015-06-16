@@ -53,6 +53,10 @@
 }
 
 - (void) startUpdating: (int) accuracy {
+    DLog(@"Start updating %d", accuracy);
+    if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
+        [self.locationManager requestWhenInUseAuthorization];
+    }
     self.locationManager.desiredAccuracy = [KirinGwtLocation clLocationAccuracyForKirinAccuracy:accuracy];
     [self.locationManager startUpdatingLocation];
 }
@@ -63,6 +67,7 @@
 
 - (void)locationManager:(CLLocationManager *)manager
 	 didUpdateLocations:(NSArray *)locations {
+    DLog(@"updating: %@", [self.locationManager.location debugDescription]);
     CLLocation * location = self.locationManager.location;
     NSString *lat = [NSString stringWithFormat:@"%f", location.coordinate.latitude];
     NSString *lng = [NSString stringWithFormat:@"%f", location.coordinate.longitude];
@@ -74,6 +79,7 @@
 
 - (void)locationManager:(CLLocationManager *)manager
        didFailWithError:(NSError *) error {
+    DLog(@"Err: %@", [error debugDescription]);
     [self.kirinModule locationError:[error debugDescription]];
 }
 

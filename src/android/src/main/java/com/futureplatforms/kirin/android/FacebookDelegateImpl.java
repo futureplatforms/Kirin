@@ -3,6 +3,7 @@ package com.futureplatforms.kirin.android;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,6 +11,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.facebook.AppEventsLogger;
 import com.facebook.Session;
 import com.facebook.Session.StatusCallback;
 import com.facebook.SessionState;
@@ -28,13 +30,16 @@ import com.futureplatforms.kirin.dependencies.fb.FacebookDetails.ReadPermission;
 import com.futureplatforms.kirin.dependencies.fb.FacebookDetails.ShareDialogParams;
 import com.google.common.collect.Maps;
 
-public class FacebookDelegateImpl implements FacebookDelegate {
+public class FacebookDelegateImpl extends FacebookDelegate {
 
 	private Map<Activity, UiLifecycleHelper> _LifecycleMap = Maps.newHashMap();
 
 	private Context context;
+	private AppEventsLogger _Logger;
 
 	public FacebookDelegateImpl(Context context) {
+		AppEventsLogger.activateApp(context);
+		_Logger = AppEventsLogger.newLogger(context);
 		this.context = context;
 	}
 
@@ -216,31 +221,6 @@ public class FacebookDelegateImpl implements FacebookDelegate {
 		*/
 		
 	}
-	public static AsyncCallback signOutCallback;
- 
-	@Override
-	public void signOut(final AsyncCallback callback) {
-		Session session = Session.getActiveSession();
-		if (session != null) {
-			session.closeAndClearTokenInformation();
-			callback.onSuccess();
-		} 
-		else {
-			signOutCallback = new AsyncCallback() {
-				
-				@Override
-				public void onSuccess() {
-					if (callback != null) { callback.onSuccess(); }
-				}
-				
-				@Override
-				public void onFailure() {
-					if (callback != null) { callback.onFailure(); }
-				}
-			};
-			context.startActivity(FacebookActivity.newIntentForSignOut(context));
-		}
-	}
 
 	public static FacebookLoginCallback newReadPermissionsCallback;
 
@@ -375,5 +355,40 @@ public class FacebookDelegateImpl implements FacebookDelegate {
 			};
 			context.startActivity(FacebookActivity.newIntentForIsLoggedIn(context));
 		} else cb.onSuccess(true);
+	}
+
+	@Override
+	public void logEvent(String eventName, Map<String, String> parameters) {
+		Bundle bundle = new Bundle();
+		for (Entry<String, String> entry : parameters.entrySet()) {
+			bundle.putString(entry.getKey(), entry.getValue());
+		}
+		_Logger.logEvent(eventName, bundle);
+	}
+	
+	public static AsyncCallback signOutCallback;
+	 
+	@Override
+	public void _SignOut(final AsyncCallback callback) {
+		Session session = Session.getActiveSession();
+		if (session != null) {
+			session.closeAndClearTokenInformation();
+			callback.onSuccess();
+		} 
+		else {
+			signOutCallback = new AsyncCallback() {
+				
+				@Override
+				public void onSuccess() {
+					if (callback != null) { callback.onSuccess(); }
+				}
+				
+				@Override
+				public void onFailure() {
+					if (callback != null) { callback.onFailure(); }
+				}
+			};
+			context.startActivity(FacebookActivity.newIntentForSignOut(context));
+		}
 	}
 }

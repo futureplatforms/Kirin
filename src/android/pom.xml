@@ -15,7 +15,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<platform.version>4.4.2_r3</platform.version>
+		<platform.version>5.0.1_r2</platform.version>
 	</properties>
 	<profiles>
 	    <profile>
@@ -64,7 +64,7 @@
 		<dependency>
 			<groupId>com.google.android.gms</groupId>
 			<artifactId>google-play-services</artifactId>
-			<version>17.0.0</version>
+			<version>22.0.0</version>
 			<type>jar</type>
 			<scope>provided</scope>
 		</dependency>

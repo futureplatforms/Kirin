@@ -5,30 +5,41 @@ import java.util.List;
 import android.Manifest.permission;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.location.Criteria;
+import android.location.LocationManager;
 import android.os.Bundle;
 
+import android.support.v4.text.TextUtilsCompat;
+import android.text.TextUtils;
 import com.futureplatforms.kirin.dependencies.AsyncCallback.AsyncCallback1;
 import com.futureplatforms.kirin.dependencies.LocationDelegate;
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallbacks;
-import com.google.android.gms.common.GooglePlayServicesClient.OnConnectionFailedListener;
-import com.google.android.gms.location.LocationClient;
+import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
+import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
 import com.google.common.collect.Lists;
 
 public class AndroidLocation implements LocationDelegate {
-	private LocationClient _LocationClient;
+    private GoogleApiClient mGoogleApiClient;
 
 	private LocationListener mLocationListener;
-
+    private LocationManager mLocationManager;
 	private Context _Context;
 	
 	public AndroidLocation(Context context) {
 		this._Context = context;
-		_LocationClient = new LocationClient(context, connectionCallbacks,
-				onConnectionFailedListener);
-		_LocationClient.connect();
+
+        mLocationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+
+        mGoogleApiClient = new GoogleApiClient.Builder(context)
+                .addApi(LocationServices.API)
+                .addConnectionCallbacks(connectionCallbacks)
+                .addOnConnectionFailedListener(onConnectionFailedListener)
+                .build();
+        mGoogleApiClient.connect();
 	}
 
 	private List<Runnable> onConnecteds = Lists.newArrayList();
@@ -37,17 +48,18 @@ public class AndroidLocation implements LocationDelegate {
 	private ConnectionCallbacks connectionCallbacks = new ConnectionCallbacks() {
 
 		@Override
-		public void onDisconnected() {
-		}
-
-		@Override
-		public void onConnected(Bundle arg0) {
+        public void onConnected(Bundle bundle) {
 			for (Runnable r : onConnecteds)
 				r.run();
 			onConnecteds.clear();
 			onConnectFaileds.clear();
 
 		}
+
+        @Override
+        public void onConnectionSuspended(int i) {
+
+        }
 	};
 	private OnConnectionFailedListener onConnectionFailedListener = new OnConnectionFailedListener() {
 
@@ -77,7 +89,12 @@ public class AndroidLocation implements LocationDelegate {
 	@Override
 	public void startUpdatingLocation(final Accuracy accuracy, final long ms,
 			final LocationCallback callback) {
-		if (!_LocationClient.isConnected()) {
+        if(!isLocationServicesEnabled()) {
+            callback.onFail("Location Services Not Enabled");
+            return;
+        }
+
+		if (!mGoogleApiClient.isConnected()) {
 			onConnecteds.add(new Runnable() {
 
 				@Override
@@ -93,8 +110,8 @@ public class AndroidLocation implements LocationDelegate {
 				}
 			});
 
-			if (!_LocationClient.isConnecting()) {
-				_LocationClient.connect();
+			if (!mGoogleApiClient.isConnecting()) {
+                mGoogleApiClient.connect();
 			}
 			return;
 		}
@@ -102,25 +119,25 @@ public class AndroidLocation implements LocationDelegate {
 		LocationRequest req = LocationRequest.create();
 		req.setPriority(priorityForAccuracy(accuracy));
 		req.setInterval(ms);
-		_LocationClient.requestLocationUpdates(req, mLocationListener = new LocationListener() {
-			
-			@Override
-			public void onLocationChanged(android.location.Location loc) {
-				callback.onSuccess(
-						new Location(
-								loc.getLatitude(), 
-								loc.getLongitude(), 
-								loc.getAccuracy(), 
-								loc.getTime()));
-			}
-		});
+        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, req, mLocationListener = new LocationListener() {
+
+            @Override
+            public void onLocationChanged(android.location.Location loc) {
+                callback.onSuccess(
+                        new Location(
+                                loc.getLatitude(),
+                                loc.getLongitude(),
+                                loc.getAccuracy(),
+                                loc.getTime()));
+            }
+        });
 	}
 
 
 	@Override
 	public void stopUpdating() {
 		if (mLocationListener != null) {
-			_LocationClient.removeLocationUpdates(mLocationListener);
+            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, mLocationListener);
 		}
 		mLocationListener = null;
 	}
@@ -134,5 +151,12 @@ public class AndroidLocation implements LocationDelegate {
 	        cb.onSuccess(false);
 	    }
 	}
+
+    public boolean isLocationServicesEnabled() {
+        String provider = mLocationManager.getBestProvider(new Criteria(),true);
+
+        return !TextUtils.isEmpty(provider) && !LocationManager.PASSIVE_PROVIDER.equals(provider);
+    }
+
 
 }

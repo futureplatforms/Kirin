@@ -44,11 +44,20 @@
 }
 
 + (void) handleDidBecomeActive {
+    [FBAppEvents activateApp];
     [FBSession.activeSession handleDidBecomeActive];
 }
 
 + (BOOL) handleOpenUrl:(NSURL *)url {
     return [FBSession.activeSession handleOpenURL:url];
+}
+
+- (void) logEvent: (NSString*) eventName : (NSArray*) paramKeys : (NSArray*) paramVals {
+    NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
+    for (NSUInteger i=0, len=[paramKeys count]; i<len; i++) {
+        dic[paramKeys[i]] = paramVals[i];
+    }
+    [FBAppEvents logEvent:eventName parameters:dic];
 }
 
 // This method will handle ALL the session state changes in the app
@@ -112,8 +121,11 @@
     NSString *fbAccessToken = [FBSession activeSession].accessTokenData.accessToken;
     NSDate *fbAccessTokenExpDate = [FBSession activeSession].accessTokenData.expirationDate;
     NSDateFormatter *isoFormat = [[NSDateFormatter alloc] init];
-    //2014-06-29T17:45:02.481+0100
-    [isoFormat setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"];
+    // NB You must set the locale on this NSDateFormatter, otherwise if the
+    // user has time set to 12hr clock, it will have am/pm on the end!!!
+    // http://stackoverflow.com/q/29374181/64505
+    isoFormat.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_GB"];
+    [isoFormat setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS"];
     NSString *createdDateStr = [isoFormat stringFromDate:fbAccessTokenExpDate];
 
     [self.kirinModule setAccessToken: cbId :fbAccessToken :createdDateStr];
@@ -125,6 +137,19 @@
 }
 
 - (void) isLoggedIn:(int) cbId {
+    if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
+        [FBSession openActiveSessionWithReadPermissions:@[@"basic_info"]
+                                           allowLoginUI:NO
+                                      completionHandler:^(FBSession *session, FBSessionState state, NSError *error) {
+                                          NSLog(@"Here's the callback: %d %@", state, [error debugDescription]);
+                                          // Handler for session state changes
+                                          // This method will be called EACH time the session state changes,
+                                          // also for intermediate states and NOT just when the session open
+                                          [self sessionStateChanged:session state:state error:error];
+                                      }];
+        [self.kirinModule setIsLoggedIn: cbId :YES];
+        return;
+    }
     if (FBSession.activeSession.state == FBSessionStateOpen ||
         FBSession.activeSession.state == FBSessionStateOpenTokenExtended) {
         [self.kirinModule setIsLoggedIn: cbId :YES];
@@ -214,14 +239,15 @@
 }
 
 - (void) presentShareDialogWithParams: (NSString*) caption : (NSString*) description : (NSString*) link : (NSString*) name : (NSString*) picture : (NSString*) place : (NSString*) ref : (NSArray*) friends : (int) cbId {
-    FBShareDialogParams *shareParams = [[FBShareDialogParams alloc] init];
+    DLog(@"Friends: %d", [friends count]);
+    FBLinkShareParams *shareParams = [[FBLinkShareParams alloc] init];
     NSMutableDictionary *feedParams = [[NSMutableDictionary alloc] init];
     if (caption != nil) {
         shareParams.caption = caption;
         [feedParams setObject:caption forKey:@"caption"];
     }
     if (description != nil) {
-        shareParams.description = description;
+        shareParams.linkDescription = description;
         [feedParams setObject:description forKey:@"description"];
     }
     if (link != nil) {
@@ -298,12 +324,16 @@
 }
 
 - (void) presentRequestsDialog: (int) cbId {
+    DLog(@"About to present requests dialog");
     [FBWebDialogs presentRequestsDialogModallyWithSession:nil
                                                   message:@"request"
                                                     title:@"request"
                                                parameters:nil
                                                   handler:
     ^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
+        DLog(@"Result! %@", resultURL);
+        //
+        //
         if (error) {
             [self.kirinModule requestsDialogFail:cbId];
         } else {
@@ -315,6 +345,7 @@
                 // Test if the query begins with post_id
                 
                 NSString *query = [resultURL query];
+                DLog(@"ResultURL: %@", [resultURL absoluteString]);
                 NSRange range = [query rangeOfString:@"error_code"];
                 if (range.length > 0) {
                     // pressed Cancel

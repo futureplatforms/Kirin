@@ -41,61 +41,15 @@ public class FacebookFriends {
 	private static long _IntervalMs;
 	
 	private static final String LastSyncedKey = "kirin.friends.last.synced";
-	private static final String FbAccessTokenKey = "kirin.friends.access.token";
 	
-	private static void checkDBValid(final AsyncCallback1<Boolean> cb) {
-		FacebookHelper.getAccessToken(new AsyncCallback2<String, String>() {
-			
-			@Override
-			public void onSuccess(String accessToken, String exp) {
-				_Log.log("FBFriends.checkDBValid: got access token");
-				String savedAccessToken = _Settings.get(FbAccessTokenKey);
-				if (!accessToken.equals(savedAccessToken)) {
-					_Log.log("access token does not match");
-					_DBPlugin.resetDB(new AsyncCallback() {
-						
-						@Override
-						public void onSuccess() {
-							_Settings.put(FbAccessTokenKey, "");
-							_Settings.put(LastSyncedKey, "");
-							cb.onSuccess(false);
-						}
-						
-						@Override
-						public void onFailure() { }
-					});
-				} else {
-					_Log.log("access token matches!");
-					cb.onSuccess(true);
-				}
-			}
-			
-			@Override
-			public void onFailure() {
-				cb.onFailure();
-			}
-		});
-	}
-	
-	private static void tryDB(final AsyncCallback1<List<Friend>> cb) {
+	private static void tryDB(final AsyncCallback2<List<Friend>, Boolean> cb, boolean isFromNetwork) {
 		// is DB valid?
 		if (_DBPlugin != null) {
-			checkDBValid(new AsyncCallback1<Boolean>() {
-	
-				@Override
-				public void onSuccess(Boolean dbValid) {
-					if (dbValid) {
-						_DBPlugin.getFriends(cb);
-					}
-				}
-	
-				@Override
-				public void onFailure() { }
-			});
+			_DBPlugin.getFriends(cb, isFromNetwork);
 		}
 	}
 	
-	private static boolean shouldUseNetwork() {
+	public static boolean shouldUseNetwork() {
 		if (_DBPlugin != null) {
 			try {
 				long lastSynced = Long.parseLong(_Settings.get(LastSyncedKey), 10);
@@ -117,17 +71,37 @@ public class FacebookFriends {
 		}
 	}
 	
+	public static void reset(final AsyncCallback cb) {
+		_DBPlugin.resetDB(new AsyncCallback() {
+			
+			@Override
+			public void onSuccess() {
+				_Settings.put(LastSyncedKey, "");
+				cb.onSuccess();
+			}
+			
+			@Override
+			public void onFailure() {
+				_Settings.put(LastSyncedKey, "");
+				cb.onFailure();
+			}
+		});
+	}
+	
 	/**
 	 * onFailure gets invoked if you're not currently logged in
 	 * @param cb
 	 */
-	public static void listFriendsWithAppInstalled(final AsyncCallback1<List<Friend>> cb) {
-		tryDB(cb);
+	public static void listFriendsWithAppInstalled(final AsyncCallback2<List<Friend>, Boolean> cb, final Runnable authFailed) {
+		_Log.log("FacebookFriends listFriendsWithAppInstalled");
+		tryDB(cb, false);
 		if (shouldUseNetwork()) {
+			_Log.log("shouldUseNetwork");
 			FacebookHelper.isLoggedIn(new AsyncCallback1<Boolean>() {
 
 				@Override
 				public void onSuccess(Boolean isLoggedIn) {
+					_Log.log("FB Helper isLoggedIn :: " + isLoggedIn);
 					if (!isLoggedIn) {
 						cb.onFailure();
 					} else {
@@ -135,6 +109,7 @@ public class FacebookFriends {
 							
 							@Override
 							public void onSuccess(final JSONObject obj) {
+								_Log.log("FB Friends result :: " + obj.toString());
 								FacebookHelper.getAccessToken(new AsyncCallback2<String, String>() {
 
 									@Override
@@ -160,7 +135,6 @@ public class FacebookFriends {
 										}
 										
 										_Settings.put(LastSyncedKey, ""+new Date().getTime());
-										_Settings.put(FbAccessTokenKey, accessToken);
 										
 										if (_DBPlugin != null) {
 											_DBPlugin.saveFriends(friends, new AsyncCallback() {
@@ -170,7 +144,7 @@ public class FacebookFriends {
 													// Don't just return the friends array
 													// as it's not in the right order.
 													// Retrieve from the database
-													tryDB(cb);
+													tryDB(cb, true);
 												}
 												
 												@Override
@@ -178,7 +152,7 @@ public class FacebookFriends {
 												
 											});
 										} else {
-											cb.onSuccess(friends);
+											cb.onSuccess(friends,true);
 										}
 									}
 
@@ -196,7 +170,21 @@ public class FacebookFriends {
 							}
 							
 							@Override
-							public void onAuthFailed() { }
+							public void onAuthFailed() {
+								reset(new AsyncCallback() {
+
+									@Override
+									public void onSuccess() {
+										authFailed.run();
+									}
+
+									@Override
+									public void onFailure() {
+										authFailed.run();
+									}
+									
+								});
+							}
 						});
 					}
 				}
@@ -204,6 +192,8 @@ public class FacebookFriends {
 				@Override
 				public void onFailure() { cb.onFailure(); }
 			});
+		} else {
+			_Log.log("FacebookFriends should not use network");
 		}
 	}
 	

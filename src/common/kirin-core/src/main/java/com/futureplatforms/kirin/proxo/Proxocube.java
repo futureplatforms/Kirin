@@ -38,7 +38,6 @@ public class Proxocube {
 	 * Set bakage if you want to kick off Proxocube with some baked-in data
 	 * @param url
 	 * @param client
-	 * @param bakage
 	 */
 	protected Proxocube(String url, ProxoClient client) {
 		_Url = url;
@@ -164,4 +163,8 @@ public class Proxocube {
 		return lastSync;
 	}
 
+	public void setRevision(int revision) {
+		this._Revision = revision;
+		_Settings.put("proxocube.revision." + _Url,revision+"");
+	}
 }

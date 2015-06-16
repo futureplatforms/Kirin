@@ -140,7 +140,12 @@ public class FacebookHelper {
 					@Override
 					public void onFail(String code) {
 						log.log(verb + ": " + endpoint + " onFail(" + code + ")");
-						resp.onNetError();
+						if ("400".equals(code) || "403".equals(code)) {
+							_AuthFailed = true;
+							resp.onAuthFailed();
+						} else {
+							resp.onNetError();
+						}
 					}
 
 					@Override
@@ -273,5 +278,9 @@ public class FacebookHelper {
 	
 	public static void getAccessToken(AsyncCallback2<String, String> cb) {
 		_Delegate.getAccessToken(cb);
+	}
+	
+	public static void logEvent(String eventName, Map<String, String> parameters) {
+		_Delegate.logEvent(eventName, parameters);
 	}
 }
