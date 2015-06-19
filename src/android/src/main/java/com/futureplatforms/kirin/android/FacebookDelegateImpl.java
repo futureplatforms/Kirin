@@ -340,6 +340,9 @@ public class FacebookDelegateImpl extends FacebookDelegate {
 	@Override
 	public void isLoggedIn(final AsyncCallback1<Boolean> cb) {
 		Session session = Session.getActiveSession();
+		if (session == null) {
+			session = Session.openActiveSessionFromCache(context);
+		}
 		if (session == null || !session.getState().isOpened()) {
 			isLoggedInCallback = new AsyncCallback1<Boolean>() {
 				
