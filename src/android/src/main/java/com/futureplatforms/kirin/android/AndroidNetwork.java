@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.futureplatforms.kirin.dependencies.StaticDependencies;
+
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -13,6 +14,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
 import android.os.AsyncTask;
@@ -158,7 +160,7 @@ public class AndroidNetwork implements NetworkDelegateClient {
 					base.setHeader(name, headers.get(name));
 				}
 
-				base.setEntity(new StringEntity(toPost));
+				base.setEntity(new StringEntity(toPost, HTTP.UTF_8));
 
 				HttpResponse postResponse = null;
 

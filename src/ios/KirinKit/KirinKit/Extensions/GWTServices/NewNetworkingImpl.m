@@ -44,7 +44,7 @@
 }
 
 - (void) retrieve:(int)ref :(NSString *)method :(NSString *)url :(NSString *)payload :(NSArray *)headerKeys :(NSArray *)headerVals :(BOOL) isB64 {
-    NSData *payloadData = [payload dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+    NSData *payloadData = [payload dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
     
     NSString *payloadLen = [NSString stringWithFormat:@"%d", [payloadData length]];
     
