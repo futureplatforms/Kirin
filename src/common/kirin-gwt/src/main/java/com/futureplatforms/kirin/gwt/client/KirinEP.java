@@ -87,10 +87,10 @@ public class KirinEP implements EntryPoint {
         GwtConfiguration gp = GWT.create(GwtConfiguration.class);
         final Configuration profile = gp.getConfiguration();
         _execute();
-        final LogDelegate ld = profile == Configuration.Debug ? realLogDelegate : noopLogDelegate;
+//        final LogDelegate ld = profile == Configuration.Debug ? realLogDelegate : noopLogDelegate;
         
         StaticDependencies.getInstance().setDependencies(
-                ld, 
+                realLogDelegate,
                 new GwtSettingsDelegate(), 
                 new GwtLocation(), 
                 new GwtNetworking(),

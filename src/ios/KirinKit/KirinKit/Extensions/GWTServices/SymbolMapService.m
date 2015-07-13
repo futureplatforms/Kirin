@@ -37,9 +37,11 @@
             NSString * appName = filename;
             NSString * pathToSymbolMap = [NSString stringWithFormat:@"%@/%@/symbolMaps/%@.symbolMap", pathToWebInf, appName, strongName];
             
-            NSMutableData *data = [NSData dataWithContentsOfFile:pathToSymbolMap];
-            NSString *symbolMap = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-            [self.kirinModule setSymbolMap:symbolMap];
+            NSData *data = [NSData dataWithContentsOfFile:pathToSymbolMap];
+            if (data) {
+                NSString *symbolMap = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                [self.kirinModule setSymbolMap:symbolMap];
+            }
             break;
         }
     }

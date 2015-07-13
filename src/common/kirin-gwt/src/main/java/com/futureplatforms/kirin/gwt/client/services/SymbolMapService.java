@@ -42,9 +42,9 @@ public class SymbolMapService extends KirinService<SymbolMapServiceNative> {
 	}
 	
 	protected void _onLoad() {
-		if (StaticDependencies.getInstance().getProfile() == Configuration.Debug) {
-			getNativeObject().setSymbolMapDetails(GWT.getModuleName(), GWT.getPermutationStrongName());
-		}
+        // This will only work if the symbol maps are present on the native side
+        // (which they won't be in Release mode)
+        getNativeObject().setSymbolMapDetails(GWT.getModuleName(), GWT.getPermutationStrongName());
 	}
 
 	public void setSymbolMap(String symbolMap) {

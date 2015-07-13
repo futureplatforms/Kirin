@@ -49,6 +49,7 @@
 
 @property(nonatomic) BOOL loggingEnabled;
 
+- (void) setLoggingEnabled:(BOOL)loggingEnabled;
 
 - (id) initWithWebView: (UIWebView*) aWebView;
 
