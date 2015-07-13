@@ -11,6 +11,22 @@
     <description>Cross-platform app development in Java</description>
   <url>https://github.com/futureplatforms/Kirin</url>
 
+    <licenses>
+        <license>
+            <name>The Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>Douglas Hoskins</name>
+            <email>douglas.hoskins@futureplatforms.com</email>
+            <organization>Future Platforms</organization>
+            <organizationUrl>http://www.futureplatforms.com</organizationUrl>
+        </developer>
+    </developers>
+
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <guavaVersion>16.0.1</guavaVersion>
