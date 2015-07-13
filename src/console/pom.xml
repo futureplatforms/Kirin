@@ -4,7 +4,7 @@
   <parent>
     <artifactId>kirin</artifactId>
     <groupId>com.futureplatforms.kirin</groupId>
-    <version>1.0.3-SNAPSHOT</version>
+    <version>1.0.3</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
   <groupId>com.futureplatforms.kirin.console</groupId>
@@ -40,7 +40,7 @@
 	<dependency>
       <groupId>com.futureplatforms.kirin.core</groupId>
       <artifactId>kirin-core</artifactId>
-      <version>1.0.3-SNAPSHOT</version>
+      <version>1.0.3</version>
     </dependency>
     <dependency>
 		<groupId>org.json</groupId>
