@@ -7,8 +7,9 @@
   <version>1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
-  <name>kirin</name>
-  <url>http://maven.apache.org</url>
+  <name>Kirin</name>
+    <description>Cross-platform app development in Java</description>
+  <url>https://github.com/futureplatforms/Kirin</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
