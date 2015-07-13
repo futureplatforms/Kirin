@@ -74,12 +74,12 @@ public final class StaticDependencies {
 			private boolean cancelled;
 			private OnCancelledListener mOnCancelledListener;
 
-			protected abstract void onComplete(int statusCode, String result, Map<String, String> headers);
+			protected abstract void onSuccess(int statusCode, String result, Map<String, String> headers);
 			protected abstract void onFail(String code);
 			protected void onFailWithStatus(String code, NetworkFailType failType) {}
 			
 			public void callOnSuccess(int res, String result, Map<String, String> headers) {
-				if (!cancelled) onComplete(res, result, headers);
+				if (!cancelled) onSuccess(res, result, headers);
 			}
 
 			public void callOnFail(String code) 

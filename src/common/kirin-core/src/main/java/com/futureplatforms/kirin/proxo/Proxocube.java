@@ -133,7 +133,7 @@ public class Proxocube {
 			_Net.doHttp(HttpVerb.GET, _Url + "/" + (_Revision + 1), new NetworkResponse() {
 				
 				@Override
-				public void onComplete(int res, String result, Map<String, String> headers) {
+				public void onSuccess(int res, String result, Map<String, String> headers) {
 					if (!Strings.isNullOrEmpty(_Password)) {
 						result = StaticDependencies.getInstance().getFormatter().decryptAES(result, _Password);
 
