@@ -17,21 +17,25 @@ public abstract class KirinModule<T extends IKirinNativeObject> implements Expor
 		this();
 		mNativeObject = nativeObject;
 	}
-	
-	@NoExport
-	public final void __AndroidOnLoad(T nativeObject) {
-		mNativeObject = nativeObject;
-	}
-	
+
 	@Export
-	public final void __KirinOnLoad(JavaScriptObject kirinObject) {
+	public final void onLoad(JavaScriptObject kirinObject) {
 		if (mNativeObject instanceof IKirinProxied) {
 			((IKirinProxied) mNativeObject).$setKirinNativeObject(kirinObject);
 		}
+        _onLoad();
 	}
-	
-	@Export
-	public void __KirinOnUnload() {
+
+    @NoExport
+    public final void onPrototypeLoad(T nativeObject) {
+        mNativeObject = nativeObject;
+        _onLoad();
+    }
+
+    protected void _onLoad() {}
+
+    @Export
+	public void onUnload() {
 		if (mNativeObject instanceof IKirinProxied) {
 			((IKirinProxied) mNativeObject).$setKirinNativeObject(null);
 		}

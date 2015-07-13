@@ -47,7 +47,17 @@ public abstract class HybridModule<NativeSide extends HybridModuleNative> extend
         this.webviewIsReady = false;
         this.moduleIsReady = false;
     }
-    
+
+    @Override
+    protected void _onLoad() {
+        super._onLoad();
+        if(this.webviewIsReady) {
+            // Right. This _onLoad() has been called more than once.
+            // We should assume that the webview has been destroyed since
+            this.onWebviewDestroyed();
+        }
+    }
+
     /**
      * Needs to be called from Fragment.onCreateView() on Android and viewWillAppear on iOS. 
      */
