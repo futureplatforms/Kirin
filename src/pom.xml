@@ -30,7 +30,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <guavaVersion>16.0.1</guavaVersion>
-    <gwtVersion>2.6.0</gwtVersion>
+    <gwtVersion>2.7.0</gwtVersion>
     <gwtExporterVersion>2.5.1</gwtExporterVersion>
   </properties>
   
