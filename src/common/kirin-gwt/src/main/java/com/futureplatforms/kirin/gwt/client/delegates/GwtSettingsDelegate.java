@@ -1,39 +1,23 @@
 package com.futureplatforms.kirin.gwt.client.delegates;
 
 import com.futureplatforms.kirin.dependencies.StaticDependencies.SettingsDelegate;
+import com.futureplatforms.kirin.gwt.client.services.GwtSettingsService;
 
 public class GwtSettingsDelegate implements SettingsDelegate {
-    public native String get(String key) /*-{
-        // This is required for the junit tests which won't have access to the module
-        if (!$wnd['require']) {
-            return null;
-        }
+    public String get(String key) {
+        return GwtSettingsService.BACKDOOR()._get(key);
+    }
     
-        var settings = $wnd.require("Settings");
-        return settings.get(key);
-    }-*/;
-    
-    public native void put(String key, String value) /*-{
-        // This is required for the junit tests which won't have access to the module
-        if (!$wnd['require']) {
-            return;
-        }
-        
-        var settings = $wnd.require("Settings");
+    public void put(String key, String value) {
         if (value == null) {
-            settings.remove(key);
+            GwtSettingsService.BACKDOOR()._remove(key);
         } else {
-            settings.put(key, value);
+            GwtSettingsService.BACKDOOR()._put(key, value);
         }
-        settings.commit();
-    }-*/;
+        GwtSettingsService.BACKDOOR()._commit();
+    }
     
-    public native void clear() /*-{
-    	if (!$wnd['require']) {
-            return;
-        }
-        
-        var settings = $wnd.require("Settings");
-        settings.clear();
-    }-*/;
+    public void clear() {
+        GwtSettingsService.BACKDOOR()._clear();
+    }
 }

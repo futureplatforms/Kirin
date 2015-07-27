@@ -16,6 +16,5 @@
 @property(nonatomic) dispatch_queue_t dispatchQueue;
 
 - (SEL) findSelectorFromString: methodName;
-- (NSArray*) methodNames;
 
 @end

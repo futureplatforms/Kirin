@@ -43,7 +43,7 @@
     // TODO: will this need to be camel cased? 
     NSString* methodName = [[name componentsSeparatedByString:@":"] componentsJoinedByString:@""];
     
-    unsigned numArgs = [sig numberOfArguments];
+    NSUInteger numArgs = [sig numberOfArguments];
     if (numArgs == 2) {
         [self.jsExecutor execJS:[NSString stringWithFormat: EXECUTE_METHOD_JS, self.moduleName, methodName]];
         return;
