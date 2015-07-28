@@ -239,7 +239,7 @@
 }
 
 - (void) presentShareDialogWithParams: (NSString*) caption : (NSString*) description : (NSString*) link : (NSString*) name : (NSString*) picture : (NSString*) place : (NSString*) ref : (NSArray*) friends : (int) cbId {
-    DLog(@"Friends: %d", [friends count]);
+    DLog(@"Friends: %lu", (unsigned long)[friends count]);
     FBLinkShareParams *shareParams = [[FBLinkShareParams alloc] init];
     NSMutableDictionary *feedParams = [[NSMutableDictionary alloc] init];
     if (caption != nil) {

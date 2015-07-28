@@ -9,7 +9,6 @@
 #import "KirinLocationBackend.h"
 
 #import <CoreLocation/CoreLocation.h>
-#import <KirinKit/JSON.h>
 
 @interface KirinLocationBackend ()
 

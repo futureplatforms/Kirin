@@ -8,9 +8,6 @@
 
 #import "KirinProxyWithModule.h"
 
-#import "JSON.h"
-
-
 @interface KirinProxyWithModule ()
 
 
@@ -90,7 +87,8 @@
             [args addObject: [NSNumber numberWithDouble:arg]];
         } 
     }
-    NSString* jsString = [NSString stringWithFormat: EXECUTE_METHOD_WITH_ARGS_JS, self.moduleName, methodName, [args JSONRepresentation]];
+    NSString* json = [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:args options:0 error:nil] encoding:NSUTF8StringEncoding];
+    NSString* jsString = [NSString stringWithFormat: EXECUTE_METHOD_WITH_ARGS_JS, self.moduleName, methodName, json];
     
     [self.jsExecutor execJS:jsString];
 }

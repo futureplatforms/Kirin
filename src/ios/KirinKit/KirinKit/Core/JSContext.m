@@ -7,8 +7,6 @@
 //
 
 #import "JSContext.h"
-#import "JSON.h"
-
 
 @interface JSContext (private)
  

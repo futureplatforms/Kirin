@@ -7,7 +7,6 @@
 //
 
 #import "NativeContext.h"
-#import "JSON.h"
 #import "NativeObjectHolder.h"
 #import <UIKit/UIApplication.h>
 #import "KirinSynchronousExecute.h"
@@ -65,7 +64,7 @@
             @try {
                 NSString* argsJSON = [query stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
                 
-                NSMutableArray* arguments = [argsJSON JSONValue];
+                NSMutableArray* arguments = [NSJSONSerialization JSONObjectWithData:[argsJSON dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
                 
                 NSMethodSignature* sig = [[obj class] instanceMethodSignatureForSelector:selector];
                 

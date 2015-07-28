@@ -8,7 +8,6 @@
 
 #import "NewSettingsImpl.h"
 #import "fromNative/GwtSettingsService.h"
-#import "JSON.h"
 
 @interface NewSettingsImpl()
 @property(strong) id<GwtSettingsService> kirinModule;
@@ -26,8 +25,8 @@
 
 - (void) onRegister {
     [super onRegister];
-    
-    [self.kirinModule mergeOrOverwrite:[[self settingsAsDictionary] JSONRepresentation]];
+    NSString* json = [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:[self settingsAsDictionary] options:NSUTF8StringEncoding error:nil] encoding:NSUTF8StringEncoding];
+    [self.kirinModule mergeOrOverwrite:json];
 }
 
 - (NSDictionary*) settingsAsDictionary {
