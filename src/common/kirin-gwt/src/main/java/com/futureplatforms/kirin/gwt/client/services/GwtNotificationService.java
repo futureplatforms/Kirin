@@ -20,11 +20,11 @@ public class GwtNotificationService extends KirinService<GwtNotificationServiceN
     @NoBind
     public void _scheduleNotification(
             final int notificationId, final long timeMillisSince1970, final String title, final String text, int badge) {
-        getNativeObject().scheduleNotification(notificationId, Long.toString(timeMillisSince1970), title, text, badge);
+        getNativeObject().scheduleNotification(""+notificationId, Long.toString(timeMillisSince1970), title, text, badge);
     }
 
     @NoBind
     public void _cancelNotification(final int notificationId) {
-        getNativeObject().cancelNotification(notificationId);
+        getNativeObject().cancelNotification(""+notificationId);
     }
 }
