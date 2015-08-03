@@ -48,7 +48,7 @@
     
     NSMutableArray* args = [NSMutableArray array];
     
-    for(unsigned i = 2; i < numArgs; i++) {
+    for(NSUInteger i = 2; i < numArgs; i++) {
         const char *type = [sig getArgumentTypeAtIndex: i];
         
         if (strcmp(type, @encode(id)) == 0) {

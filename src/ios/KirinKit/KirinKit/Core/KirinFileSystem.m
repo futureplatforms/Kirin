@@ -65,7 +65,7 @@
 }
 
 - (NSString*) readStringFromFilepath: (NSString*) filePath {
-    NSMutableData* data = [NSData dataWithContentsOfFile:filePath];
+    NSData* data = [NSData dataWithContentsOfFile:filePath];
     return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 }
 
@@ -90,7 +90,7 @@
         
     NSMutableArray* files = [NSMutableArray arrayWithCapacity:[filenames count]];
     
-    for (int i=0, max=[filenames count]; i<max; i++) {
+    for (NSUInteger i=0, max=[filenames count]; i<max; i++) {
         NSString* filename = [filenames objectAtIndex:i];
         NSString* filePath = [KirinPaths join:dirPath andFilePath:filename];
 
