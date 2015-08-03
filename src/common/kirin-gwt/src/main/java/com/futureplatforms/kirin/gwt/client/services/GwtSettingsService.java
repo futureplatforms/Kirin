@@ -39,7 +39,6 @@ public class GwtSettingsService extends KirinService<GwtSettingsServiceNative> {
     }
 
     public void mergeOrOverwrite(String settingsJson) {
-        StaticDependencies.getInstance().getLogDelegate().log("MergeOrOverwrite " + settingsJson);
         try {
             JSONObject obj = json.getJSONObject(settingsJson);
             Iterator<String> it = obj.keys();
