@@ -47,7 +47,7 @@
 #pragma mark Invocation magic
 
 - (NSMethodSignature*) methodSignatureForSelector: (SEL) selector {
-    // http://www.a-coding.com/2010/10/making-nsinvocations.html
+    // http://a-coding.blogspot.co.uk/2010/10/making-nsinvocations.html
     BOOL required = YES;
     struct objc_method_description desc = protocol_getMethodDescription(self.targetProtocol, selector, required, YES);
     if (desc.name == NULL) {
