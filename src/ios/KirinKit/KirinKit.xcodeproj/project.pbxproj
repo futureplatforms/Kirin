@@ -91,8 +91,6 @@
 		1A02011E14BD628500CB9765 /* KirinExtensionStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A02011C14BD628400CB9765 /* KirinExtensionStub.m */; };
 		1A02012414BD782300CB9765 /* KirinPaths.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A02012214BD782000CB9765 /* KirinPaths.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1A02012514BD782300CB9765 /* KirinPaths.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A02012314BD782200CB9765 /* KirinPaths.m */; };
-		1A06437614CF0DB500FB7EE3 /* KirinImagePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A06437114CF0DB500FB7EE3 /* KirinImagePicker.m */; };
-		1A06437714CF0DB500FB7EE3 /* KirinImagePicker.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A06437214CF0DB500FB7EE3 /* KirinImagePicker.h */; };
 		1A06437814CF0DB500FB7EE3 /* CameraProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A06437314CF0DB500FB7EE3 /* CameraProtocol.h */; };
 		1A21D87F14E5EE4000723C20 /* KirinArgs.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A21D87D14E5EE4000723C20 /* KirinArgs.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1A21D88014E5EE4000723C20 /* KirinArgs.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A21D87E14E5EE4000723C20 /* KirinArgs.m */; };
@@ -111,8 +109,6 @@
 		1A9FE0A214D5F745008C0565 /* NativeObjectHolder.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A9FE0A014D5F745008C0565 /* NativeObjectHolder.m */; };
 		1A9FE0A514D5FA51008C0565 /* KirinExtensionOnMainThread.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A9FE0A414D5FA4F008C0565 /* KirinExtensionOnMainThread.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1A9FE0A714D5FF21008C0565 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A9FE0A614D5FF21008C0565 /* MobileCoreServices.framework */; };
-		1AA97D1E150921C5001F557E /* KirinImageTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AA97D1C150921C5001F557E /* KirinImageTransformer.h */; };
-		1AA97D1F150921C5001F557E /* KirinImageTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA97D1D150921C5001F557E /* KirinImageTransformer.m */; };
 		1AB1252314E4819A00933949 /* KirinAppDelegateHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AB1252114E4819A00933949 /* KirinAppDelegateHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1AB1252414E4819A00933949 /* KirinAppDelegateHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AB1252214E4819A00933949 /* KirinAppDelegateHelper.m */; };
 		1AE3FD8D14C9A41D009C2F3B /* KirinState.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AE3FD8B14C9A41D009C2F3B /* KirinState.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -233,8 +229,6 @@
 		1A02011C14BD628400CB9765 /* KirinExtensionStub.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KirinExtensionStub.m; sourceTree = "<group>"; };
 		1A02012214BD782000CB9765 /* KirinPaths.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KirinPaths.h; sourceTree = "<group>"; };
 		1A02012314BD782200CB9765 /* KirinPaths.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KirinPaths.m; sourceTree = "<group>"; };
-		1A06437114CF0DB500FB7EE3 /* KirinImagePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KirinImagePicker.m; sourceTree = "<group>"; };
-		1A06437214CF0DB500FB7EE3 /* KirinImagePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KirinImagePicker.h; sourceTree = "<group>"; };
 		1A06437314CF0DB500FB7EE3 /* CameraProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraProtocol.h; sourceTree = "<group>"; };
 		1A21D87D14E5EE4000723C20 /* KirinArgs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KirinArgs.h; sourceTree = "<group>"; };
 		1A21D87E14E5EE4000723C20 /* KirinArgs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KirinArgs.m; sourceTree = "<group>"; };
@@ -256,8 +250,6 @@
 		1A9FE0A014D5F745008C0565 /* NativeObjectHolder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NativeObjectHolder.m; sourceTree = "<group>"; };
 		1A9FE0A414D5FA4F008C0565 /* KirinExtensionOnMainThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KirinExtensionOnMainThread.h; sourceTree = "<group>"; };
 		1A9FE0A614D5FF21008C0565 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
-		1AA97D1C150921C5001F557E /* KirinImageTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KirinImageTransformer.h; sourceTree = "<group>"; };
-		1AA97D1D150921C5001F557E /* KirinImageTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KirinImageTransformer.m; sourceTree = "<group>"; };
 		1AA97D2015092413001F557E /* ImageTransformProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageTransformProtocol.h; sourceTree = "<group>"; };
 		1AB1252114E4819A00933949 /* KirinAppDelegateHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KirinAppDelegateHelper.h; sourceTree = "<group>"; };
 		1AB1252214E4819A00933949 /* KirinAppDelegateHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KirinAppDelegateHelper.m; sourceTree = "<group>"; };
@@ -601,11 +593,7 @@
 			isa = PBXGroup;
 			children = (
 				1A06437314CF0DB500FB7EE3 /* CameraProtocol.h */,
-				1A06437214CF0DB500FB7EE3 /* KirinImagePicker.h */,
-				1A06437114CF0DB500FB7EE3 /* KirinImagePicker.m */,
 				1AA97D2015092413001F557E /* ImageTransformProtocol.h */,
-				1AA97D1C150921C5001F557E /* KirinImageTransformer.h */,
-				1AA97D1D150921C5001F557E /* KirinImageTransformer.m */,
 			);
 			name = Camera;
 			sourceTree = "<group>";
@@ -669,7 +657,6 @@
 				1A02011D14BD628500CB9765 /* KirinExtensionStub.h in Headers */,
 				1A02012414BD782300CB9765 /* KirinPaths.h in Headers */,
 				1AE3FD8D14C9A41D009C2F3B /* KirinState.h in Headers */,
-				1A06437714CF0DB500FB7EE3 /* KirinImagePicker.h in Headers */,
 				1A06437814CF0DB500FB7EE3 /* CameraProtocol.h in Headers */,
 				1A61952A14D22105004FDD8E /* KirinFileSystem.h in Headers */,
 				09D8177217E21D6E00611BBE /* UIViewController+Hybrid.h in Headers */,
@@ -681,7 +668,6 @@
 				09FF945C18F88F2D003097F3 /* Crypto.h in Headers */,
 				09B027E218462B6F0033356B /* FMDatabaseAdditions.h in Headers */,
 				099183511832326600A35AF8 /* NewNetworkingImpl.h in Headers */,
-				1AA97D1E150921C5001F557E /* KirinImageTransformer.h in Headers */,
 				1AEA44E91527B29500E7B961 /* KirinProxy.h in Headers */,
 				1A4F7CD31549632A00A010E0 /* KirinUIViewController.h in Headers */,
 				1A4F7CD71549666D00A010E0 /* KirinKitUI.h in Headers */,
@@ -834,7 +820,6 @@
 				1A02012514BD782300CB9765 /* KirinPaths.m in Sources */,
 				09B027E118462B6F0033356B /* FMDatabase.m in Sources */,
 				1AE3FD8E14C9A41D009C2F3B /* KirinState.m in Sources */,
-				1A06437614CF0DB500FB7EE3 /* KirinImagePicker.m in Sources */,
 				099183521832326600A35AF8 /* NewNetworkingImpl.m in Sources */,
 				1A61952B14D22105004FDD8E /* KirinFileSystem.m in Sources */,
 				1A9FE0A214D5F745008C0565 /* NativeObjectHolder.m in Sources */,
@@ -845,7 +830,6 @@
 				09FF945D18F88F2D003097F3 /* Crypto.m in Sources */,
 				0991834E1832325E00A35AF8 /* NewDatabaseAccessService.m in Sources */,
 				09918359183232BC00A35AF8 /* KirinGwtServiceStub.m in Sources */,
-				1AA97D1F150921C5001F557E /* KirinImageTransformer.m in Sources */,
 				1AEA44EA1527B29500E7B961 /* KirinProxy.m in Sources */,
 				1A4F7CD41549632A00A010E0 /* KirinUIViewController.m in Sources */,
 				1A4F7CDB1549692A00A010E0 /* KirinProxyWithModule.m in Sources */,
