@@ -24,6 +24,9 @@ public class Transaction {
 				}
 				return this._Values.get(_ColumnNames.indexOf(column));
 			}
+			public Boolean hasColumn(String column) {
+				return _ColumnNames.contains(column);
+			}
 		}
 		public final ImmutableList<String> _ColumnNames;
 		public final List<Row> _Rows = Lists.newArrayList();

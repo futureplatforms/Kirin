@@ -10,7 +10,7 @@ Currently the supported targets are iOS, Android, and the Windows ecosystem incl
 
 Kirin uses Google Web Toolkit to compile Java into Javascript, and provides a structured means of invoking
 methods on your library from iOS and Windows platforms.  Your code actually runs in an
-invisible webview.  Kirin does its best to abstract this from you, so your library  
+invisible webview.  Kirin does its best to abstract this from you, so your library 
 can be integrated into your app as seamlessly as possible. 
 
 ##Features
