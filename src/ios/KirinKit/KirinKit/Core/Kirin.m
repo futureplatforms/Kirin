@@ -134,7 +134,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(Kirin)
 
 - (void) ensureStarted {
     // implicitly calls the getter, ensuring a KirinExtensions object exists.
-    self.kirinExtensions = [KirinExtensions coreExtensions];
+    if (!self.kirinExtensions) {
+        self.kirinExtensions = [KirinExtensions coreExtensions];
+    }
     [self.kirinExtensions ensureStarted];
 }
 
