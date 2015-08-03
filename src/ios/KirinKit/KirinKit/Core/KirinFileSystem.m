@@ -16,7 +16,7 @@
 @implementation KirinFileSystem
 
 + (KirinFileSystem*) fileSystem {
-    return [[[KirinFileSystem alloc] init] autorelease];
+    return [[KirinFileSystem alloc] init];
 }
 
 - (BOOL) mkdir: (NSString*) newDir {
@@ -66,7 +66,7 @@
 
 - (NSString*) readStringFromFilepath: (NSString*) filePath {
     NSMutableData* data = [NSData dataWithContentsOfFile:filePath];
-    return [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
+    return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 }
 
 - (BOOL) copyFrom: (NSString*) srcFilePath to:(NSString*) destFilePath {

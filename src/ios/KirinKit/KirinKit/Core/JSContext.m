@@ -29,11 +29,6 @@
     return self;
 }
 
-- (void) dealloc {
-    self.jsExecutor = nil;
-    [super dealloc];
-}
-
 - (void) jsOnMainThread: (NSString*) js {
     if (jsExecutor) {
         [self.jsExecutor execJS:js];

@@ -89,10 +89,4 @@
    // self.lastArg = [arg JSONRepresentation];
 }
 
-- (void) dealloc {
-    self.lastArg = nil;
-    self.lastMethod = nil;
-    [super dealloc];
-}
-
 @end

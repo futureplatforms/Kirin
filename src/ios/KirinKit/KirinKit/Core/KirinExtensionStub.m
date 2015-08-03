@@ -47,11 +47,4 @@
     [self.kirinHelper onUnload];
 }
 
-- (void) dealloc {
-    self.moduleName = nil;
-    self.kirinHelper = nil;
-    
-    [super dealloc];
-}
-
 @end

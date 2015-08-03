@@ -27,7 +27,7 @@
 
 
 + (id) proxyWithProtocol: (Protocol*) protocol andModuleName: (NSString*) moduleName andExecutor: (id<JSExecutor>) executor {
-    return [[[KirinProxyWithModule alloc] initWithProtocol:protocol andModuleName: moduleName andExecutor:executor] autorelease];
+    return [[KirinProxyWithModule alloc] initWithProtocol:protocol andModuleName: moduleName andExecutor:executor];
 }
 
 + (id) proxyWithProtocol:(Protocol *)protocol andDictionary:(NSDictionary *)dictionary {
@@ -41,11 +41,6 @@
         self.targetProtocol = protocol;
     }
     return self;
-}
-
-- (void) dealloc {
-    self.targetProtocol = nil;
-    [super dealloc];
 }
 
 #pragma mark - 

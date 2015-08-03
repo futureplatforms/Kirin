@@ -78,9 +78,4 @@
     
 }
 
-- (void) dealloc {
-    self.dictionary = nil;
-    [super dealloc];
-}
-
 @end

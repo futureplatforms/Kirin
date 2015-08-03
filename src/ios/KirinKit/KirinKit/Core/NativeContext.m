@@ -158,11 +158,4 @@
 	}
 }
 
-- (void) dealloc {
-    [self.nativeObjects removeAllObjects];
-    self.nativeObjects = nil;
-    
-    [super dealloc];
-}
-
 @end

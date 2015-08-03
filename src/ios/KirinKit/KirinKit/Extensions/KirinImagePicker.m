@@ -147,7 +147,7 @@
                 filename = fullPath;
             }
         } else {
-            filename = [[self.kirinHelper dropbox] putObject:imageToSave withTokenPrefix:@"camera."];
+            //filename = [[self.kirinHelper dropbox] putObject:imageToSave withTokenPrefix:@"camera."];
         }
         
         if (filename) {
@@ -158,7 +158,6 @@
     [picker dismissModalViewControllerAnimated:YES];
     [self cleanup];
     picker.delegate = nil;
-    [picker release];
 }
 
 #pragma mark - 
@@ -287,12 +286,6 @@
     UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return newImage;
-}
-
-
-- (void) dealloc {
-    self.config = nil;
-    [super dealloc];
 }
 
 @end
