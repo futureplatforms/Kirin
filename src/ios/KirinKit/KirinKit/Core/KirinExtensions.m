@@ -9,8 +9,6 @@
 #import "KirinExtensions.h"
 
 #import "NewSettingsImpl.h"
-#import "KirinImagePicker.h"
-#import "KirinImageTransformer.h"
 #import "NewNetworkingImpl.h"
 #import "NewDatabaseAccessService.h"
 #import "KirinGwtServiceProtocol.h"

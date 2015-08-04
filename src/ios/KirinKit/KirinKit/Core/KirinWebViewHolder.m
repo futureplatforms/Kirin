@@ -9,7 +9,7 @@
 #import "KirinWebViewHolder.h"
 
 #import <UIKit/UIApplication.h>
-#import <KirinKit/KirinPaths.h>
+#import "KirinPaths.h"
 
 @interface KirinWebViewHolder ()
 
@@ -86,7 +86,7 @@
 - (BOOL)webView:(UIWebView *)theWebView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
     
 	NSURL *url = [request URL];
-    //DLog(@"shouldStartLoadWithRequest %@", [url debugDescription]);
+    DLog(@"shouldStartLoadWithRequest %@", [url debugDescription]);
     /*
      * Get Command and Options From URL
      * We are looking for URLS that match native://<Class>/<command>[?<arguments>]

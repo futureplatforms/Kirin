@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 Future Platforms. All rights reserved.
 //
 
-#import <KirinKit/KirinKit.h>
-#import <NSObject+Kirin.h>
+#import "KirinKit.h"
+#import "NSObject+Kirin.h"
 #import "KirinGwtServiceStub.h"
 #import <toNative/SymbolMapServiceNative.h>
 

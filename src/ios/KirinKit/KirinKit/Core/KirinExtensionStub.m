@@ -7,7 +7,7 @@
 //
 
 #import "KirinExtensionStub.h"
-#import <KirinKit/Kirin.h>
+#import "Kirin.h"
 
 @implementation KirinExtensionStub
 

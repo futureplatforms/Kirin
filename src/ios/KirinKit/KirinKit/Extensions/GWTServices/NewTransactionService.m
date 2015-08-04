@@ -92,6 +92,9 @@
             opType = SQL_json;
         } else if (returnType == 3) {
             opType = SQL_batch;
+        } else {
+            NSLog(@"ERROR :: newTransactionService unknown returnType %d", returnType);
+            return;
         }
         NSString * statement = statements[i];
         
@@ -116,7 +119,8 @@
             FMResultSet * s = [db executeQuery:st.statement withArgumentsInArray:st.parameters];
             if ([db hadError]) {
                 DLog(@"DB Error :: %@", [db lastErrorMessage]);
-                rollback = YES;
+                BOOL rb = YES;
+                rollback = &rb;
                 [self.kirinModule endFailure:dbId :txId];
                 return;
             }
@@ -152,7 +156,8 @@
                     // TOKEN query
                     NSMutableArray * arr = [[NSMutableArray alloc] init];
                     while ([s next]) {
-                        NSDictionary * dict = [s resultDictionary];
+                        //NSDictionary * dict = [NSDictionary dictionaryWithDictionary:[s resultDictionary]];
+                        NSDictionary * dict = [[s resultDictionary] copy];
                         [arr addObject:dict];
                     }
                 
