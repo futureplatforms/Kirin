@@ -248,17 +248,23 @@ public class ConsoleDB implements DatabaseDelegate {
 		}
 		
 	}
-	
+
+    private static ConsoleDatabaseImpl _DbImpl;
+
 	@Override
 	public void open(String filename, DatabaseOpenedCallback cb) {
-		try {
-			Class.forName("org.sqlite.JDBC");
-			Connection c = DriverManager.getConnection("jdbc:sqlite:" + filename);
-			c.setAutoCommit(false);
-			cb.onOpened(new ConsoleDatabaseImpl(c));
-		} catch (Exception e) {
-			e.printStackTrace();
-			cb.onError();
-		}
+        if (_DbImpl == null) {
+            try {
+                System.out.println("ConsoleDB Opening Connection");
+                Class.forName("org.sqlite.JDBC");
+                Connection c = DriverManager.getConnection("jdbc:sqlite:" + filename);
+                c.setAutoCommit(false);
+                _DbImpl = new ConsoleDatabaseImpl(c);
+            } catch (Exception e) {
+                e.printStackTrace();
+                cb.onError();
+            }
+        }
+        cb.onOpened(_DbImpl);
 	}
 }
