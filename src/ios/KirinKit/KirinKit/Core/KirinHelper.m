@@ -58,6 +58,7 @@
 
     // possible race condition here. We should disallow any calls in onUnload() to native.
     [self.nativeContext unregisterNativeObject:self.jsModuleName];
+    self.nativeObject = nil;
 }
 
 - (void) jsMethod:(NSString *)methodName {
