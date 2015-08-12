@@ -42,9 +42,9 @@
         return;
     }
     
-    id result = [self.dictionary objectForKey:methodName];
+    // http://stackoverflow.com/q/16928299/64505
+    __unsafe_unretained id result = [self.dictionary objectForKey:methodName];
 
-    
     char returnType = [sig methodReturnType][0];
 
     if (returnType == @encode(id)[0]) {    
