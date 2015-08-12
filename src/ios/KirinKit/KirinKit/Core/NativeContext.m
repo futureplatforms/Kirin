@@ -69,11 +69,12 @@
                 NSMethodSignature* sig = [[obj class] instanceMethodSignatureForSelector:selector];
                 
                 NSInvocation* invocation = [NSInvocation invocationWithMethodSignature:sig];
-                
+                [invocation retainArguments];
                 invocation.selector = selector;
                 invocation.target = obj;
                 for (NSUInteger i=0, max=[arguments count]; i<max; i++) {
-                    NSObject* arg = [arguments objectAtIndex:i];
+                    // http://stackoverflow.com/q/16928299/64505
+                    __unsafe_unretained NSObject* arg = [arguments objectAtIndex:i];
                     
                     char argType = [sig getArgumentTypeAtIndex:i + 2][0];
                     BOOL handled = YES;
@@ -116,6 +117,7 @@
                     }
                 }
                 [invocation invoke];
+                [invocation self];
             } @catch (NSException* exception) {
                 DLog(@"Exception while executing %@.%@", host, fullMethodName);
                 
