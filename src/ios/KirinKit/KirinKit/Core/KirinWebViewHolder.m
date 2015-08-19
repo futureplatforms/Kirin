@@ -10,6 +10,7 @@
 
 #import <UIKit/UIApplication.h>
 #import <KirinKit/KirinPaths.h>
+#import <KirinKit/KirinSuperDevMode.h>
 
 @interface KirinWebViewHolder ()
 
@@ -42,29 +43,28 @@
 	return self;
 }
 
-
-
-
-
 - (void) _initializeWebView: (UIWebView*) aWebView {
 	aWebView.delegate = self;
 	
-	NSString* startPage = [KirinPaths indexFilename];
-	NSURL *appURL = [NSURL URLWithString:startPage];
-	if(![appURL scheme])
-	{
-        
-		NSString* indexPath = [KirinPaths pathForResource:startPage];
-        
-		appURL = [NSURL fileURLWithPath: indexPath];
-	}
+    NSURL *appURL;
+    if (KIRINDEV.superDevMode) {
+        NSLog(@"Welcome to Super Dev Mode!");
+        NSLog(@"Ensure your server is running, then use Safari > Develop");
+        appURL = [NSURL URLWithString:@"http://127.0.0.1:8888/Kirin.html"];
+    } else {
+        NSString* startPage = [KirinPaths indexFilename];
+        appURL = [NSURL URLWithString:startPage];
+        if(![appURL scheme])
+        {
+            NSString* indexPath = [KirinPaths pathForResource:startPage];
+            appURL = [NSURL fileURLWithPath: indexPath];
+        }
+        DLog(@"Loading %@", startPage);
+    }
 	
     NSURLRequest *appReq = [NSURLRequest requestWithURL:appURL cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:20.0];
-	DLog(@"Loading %@", startPage);
+
 	[aWebView loadRequest:appReq];
-    
-    
-	
 }
 
 - (void) _execJSImmediately: (NSString*) js {
@@ -126,7 +126,11 @@
                                           andArgsList:[url query]];
 		
 		return NO;
-	} else if (![[url scheme] isEqualToString:@"file"]) {
+    } else if (KIRINDEV.superDevMode &&
+               [[url scheme] isEqualToString:@"http"] &&
+               [[url host] isEqualToString:@"127.0.0.1"]) {
+        return YES;
+    } else if (![[url scheme] isEqualToString:@"file"]) {
         /*
          * We don't have a native request, load it in the main Safari browser.
          * XXX Could be security hole.
