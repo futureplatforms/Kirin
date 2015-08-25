@@ -16,7 +16,7 @@
 
 
 
-#import <KirinKit/KirinKit.h>
+#import "KirinKit.h"
 
 
 @interface FileDownloader : NSObject  {

@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-#import <KirinKit/Kirin.h>
-#import <KirinKit/KirinScreenHelper.h>
+#import "Kirin.h"
+#import "KirinScreenHelper.h"
 
 @interface KirinUIViewController : UIViewController
 

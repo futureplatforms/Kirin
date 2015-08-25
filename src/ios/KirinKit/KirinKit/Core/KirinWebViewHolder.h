@@ -8,8 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIWebView.h>
-#import <KirinKit/JSExecutor.h>
-#import <KirinKit/NativeExecutor.h>
+#import "JSExecutor.h"
+#import "NativeExecutor.h"
 
 @interface KirinWebViewHolder : NSObject <UIWebViewDelegate, JSExecutor> {
 

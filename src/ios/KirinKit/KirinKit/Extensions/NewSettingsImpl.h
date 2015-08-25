@@ -7,8 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <KirinKit/KirinKit.h>
-#import <NSObject+Kirin.h>
+#import "KirinKit.h"
+#import "NSObject+Kirin.h"
 #import "KirinGwtServiceStub.h"
 #import "toNative/GwtSettingsServiceNative.h"
 

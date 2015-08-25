@@ -7,10 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <KirinKit/JSContext.h>
-#import <KirinKit/NativeContext.h>
-#import <KirinKit/KirinDropbox.h>
-#import <KirinKit/KirinState.h>
+#import "JSContext.h"
+#import "NativeContext.h"
+#import "KirinDropbox.h"
+#import "KirinState.h"
 
 @interface KirinHelper : NSObject {
 }

@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <KirinKit/KirinExtensionProtocol.h>
+#import "KirinExtensionProtocol.h"
 
 @interface KirinExtensions : NSObject {
     

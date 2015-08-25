@@ -7,7 +7,7 @@
 //
 
 
-#import <KirinKit/KirinHelper.h>
+#import "KirinHelper.h"
 
 @interface KirinExtensionHelper : KirinHelper {
     
