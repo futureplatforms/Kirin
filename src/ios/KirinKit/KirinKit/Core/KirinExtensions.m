@@ -8,10 +8,8 @@
 
 #import "KirinExtensions.h"
 
-#import "SettingsBackend.h"
-#import "FileSystemBackend.h"
+#import "NewSettingsImpl.h"
 #import "KirinImagePicker.h"
-#import "LocalNotificationsBackend.h"
 #import "KirinImageTransformer.h"
 #import "NewNetworkingImpl.h"
 #import "NewDatabaseAccessService.h"
@@ -19,6 +17,7 @@
 #import "SymbolMapService.h"
 #import "KirinFacebook.h"
 #import "KirinGwtLocation.h"
+#import "NewNotificationsImpl.h"
 #import "Crypto.h"
 @interface KirinExtensions()
 
@@ -38,27 +37,22 @@
 
 + (KirinExtensions*) coreExtensions {
     KirinExtensions* services = [KirinExtensions empty];
-    [services registerExtension:[[[SettingsBackend alloc] init] autorelease]];
-    [services registerExtension:[[LocalNotificationsBackend alloc] init]];
     NewDatabaseAccessService *dbAccess = [[NewDatabaseAccessService alloc] init];
     [services registerGwtService:dbAccess];
     [services registerGwtService:dbAccess.NewTransactionService];
     [services registerGwtService:[[SymbolMapService alloc] init]];
     [services registerGwtService:[[KirinGwtLocation alloc] init]];
-    Crypto *cr = [[Crypto alloc] init];
-    [cr onRegister];
-
+    [services registerGwtService:[[Crypto alloc] init]];
+    [services registerGwtService:[[NewSettingsImpl alloc] init]];
+    [services registerGwtService:[[NewNotificationsImpl alloc] init]];
     
     if(NSClassFromString(@"FBSession")) {
         if ([[NSBundle mainBundle] objectForInfoDictionaryKey:@"FacebookAppID"]) {
-            KirinFacebook* fb = [[KirinFacebook alloc] init];
-            [fb onRegister];
+            [services registerGwtService:[[KirinFacebook alloc] init]];
         }
-    } else {
     }
     
-    NewNetworkingImpl * newNetworking = [[NewNetworkingImpl alloc] init];
-    [newNetworking onRegister];
+    [services registerGwtService:[[NewNetworkingImpl alloc] init]];
     
     return services;
 }

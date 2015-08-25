@@ -76,7 +76,7 @@
              }
              
              NSHTTPURLResponse * httpResp = (NSHTTPURLResponse*) response;
-             int respCode = httpResp.statusCode;
+             NSInteger respCode = httpResp.statusCode;
              NSDictionary* headerDict = [httpResp allHeaderFields];
              NSMutableArray *keyArr = [[NSMutableArray alloc] init];
              NSEnumerator *keyEnum = [headerDict keyEnumerator];

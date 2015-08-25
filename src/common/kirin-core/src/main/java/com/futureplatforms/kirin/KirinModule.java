@@ -19,9 +19,9 @@ public abstract class KirinModule<T extends IKirinNativeObject> implements Expor
 	}
 
 	@Export
-	public final void onLoad(JavaScriptObject kirinObject) {
+	public final void onLoad(String moduleName) {
 		if (mNativeObject instanceof IKirinProxied) {
-			((IKirinProxied) mNativeObject).$setKirinNativeObject(kirinObject);
+			((IKirinProxied) mNativeObject).$setKirinNativeObject(moduleName);
 		}
         _onLoad();
 	}

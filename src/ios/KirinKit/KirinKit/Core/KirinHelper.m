@@ -47,10 +47,7 @@
     // register the object so as to be callable from Javascript.
     [self.nativeContext registerNativeObject:self.nativeObject asName:self.jsModuleName];
     
-    // now tell the js what methods to construct a proxy with.
-    NSArray* methods = [self.nativeContext methodNamesFor: self.jsModuleName];
-    
-    [self.jsContext js: [NSString stringWithFormat: REGISTER_MODULE_WITH_METHODS,  self.jsModuleName, [methods JSONRepresentation]]];
+    [self.jsContext js: [NSString stringWithFormat: REGISTER_MODULE, self.jsModuleName]];
 }
 
 - (void) onUnload {

@@ -42,14 +42,14 @@ public class NativeObjectImplementationGenerator extends Generator {
 			SourceWriter sourceWriter = composer.createSourceWriter(context,
 					printWriter);
 			// Create parameterless constructor
-			sourceWriter.println(genClassName + "() {}");
+			sourceWriter.println(genClassName + "() { }");
 
-			// Add $setKirinNativeObject method to implement IKirinProxied
-			sourceWriter.println("private JavaScriptObject jso;");
+            // Add $setKirinNativeObject method to implement IKirinProxied
+			sourceWriter.println("private String ___moduleName;");
 			sourceWriter
-					.println("public void $setKirinNativeObject(JavaScriptObject jso) {");
+					.println("public void $setKirinNativeObject(String moduleName) {");
 			sourceWriter.indent();
-			sourceWriter.println("this.jso = jso;");
+			sourceWriter.println("this.___moduleName = moduleName;");
 			sourceWriter.outdent();
 			sourceWriter.println("}");
 
@@ -111,7 +111,7 @@ public class NativeObjectImplementationGenerator extends Generator {
 		for (JParameter param : params) {
 			sw.print(param.getName() + ", ");
 		}
-		sw.println("jso);");
+		sw.println("___moduleName);");
 		sw.outdent();
 		sw.println("}");
 
@@ -122,24 +122,23 @@ public class NativeObjectImplementationGenerator extends Generator {
 					+ param.getName() + ", ");
 		}
 		// passing in the handle to the JS object
-		sw.println("JavaScriptObject jso) /*-{");
+        sw.println("String ___moduleName) /*-{");
 		sw.indent();
-
-		// now invoke the method on the JS object. This is the method name,
+        // now invoke the method on the JS object. This is the method name,
 		// followed by as many underscores as there are parameters
-		sw.print("jso." + method.getName());
+        sw.print("$wnd.require('Native').exec.apply(null, [___moduleName + '." + method.getName());
 		for (int i = 0; i < params.length; i++) {
 			sw.print("_");
 		}
+        sw.print("',");
 		// and pass all parameters in
-		sw.print("(");
 		for (int i = 0; i < params.length; i++) {
 			sw.print(params[i].getName());
 			if (i != params.length - 1) {
 				sw.print(", ");
 			}
 		}
-		sw.println(");");
+		sw.println("]);");
 		sw.outdent();
 		sw.println("}-*/;");
 	}

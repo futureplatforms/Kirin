@@ -35,16 +35,8 @@
     return self;
 }
 
-- (NSArray*) methodNamesFor: (NSString*) moduleName {
-    NativeObjectHolder* holder = [self.nativeObjects objectForKey:moduleName];
-    if (!holder) {
-        [NSException raise:@"KirinNoSuchObjectException" format:@"There is no object registered called %@", moduleName];
-    }
-    return [holder methodNames];
-}
-
 - (void) registerNativeObject: (id) object asName: (NSString*) name {
-    [self.nativeObjects setValue:[NativeObjectHolder holderForObject:object] forKey:name];
+    self.nativeObjects[name] = [NativeObjectHolder holderForObject:object];
 }
 
 - (void) unregisterNativeObject: (NSString*) name {
@@ -54,7 +46,7 @@
 }
 
 - (void) executeCommandFromModule: (NSString*) host andMethod: (NSString*) fullMethodName andArgsList: (NSString*) query {
-    NativeObjectHolder* holder = [self.nativeObjects objectForKey:host];
+    NativeObjectHolder* holder = self.nativeObjects[host];
     id obj = holder ? holder.nativeObject : nil;
     
 	SEL selector = [holder findSelectorFromString:fullMethodName];

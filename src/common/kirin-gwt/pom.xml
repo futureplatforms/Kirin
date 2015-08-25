@@ -81,14 +81,14 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-	  <groupId>com.google.guava</groupId>
-	  <artifactId>guava-gwt</artifactId>
-	  <version>${guavaVersion}</version>
-	  <scope>provided</scope>
+    <groupId>com.google.guava</groupId>
+    <artifactId>guava-gwt</artifactId>
+    <version>${guavaVersion}</version>
+    <scope>provided</scope>
     </dependency>
     <!--  END common dependencies  -->
       
-	<dependency>
+  <dependency>
       <groupId>com.futureplatforms.kirin.core</groupId>
       <artifactId>kirin-core</artifactId>
       <version>1.0.5-SNAPSHOT</version>
