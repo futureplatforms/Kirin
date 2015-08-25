@@ -7,7 +7,6 @@
 //
 
 #import "KirinHelperTest.h"
-#import "JSON.h"
 #import "DummyNativeContext.h"
 
 @implementation KirinHelperTest

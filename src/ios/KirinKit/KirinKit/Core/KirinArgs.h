@@ -17,10 +17,6 @@
 
 + (NSString*) taintedForJs: (NSString*) string;
 
-+ (NSString*) object: (NSDictionary*) object;
-
-+ (NSString*) array: (NSArray*) array;
-
 + (NSString*) integer: (int) number;
 
 + (NSString*) boolean: (BOOL) boolean;

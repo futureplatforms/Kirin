@@ -13,7 +13,6 @@
 #import "FMDatabaseQueue.h"
 #import "FMDatabase.h"
 #import "KirinDropbox.h"
-#import "JSON.h"
 
 @interface NewTransactionService() {
     NewDatabaseAccessService * _DatabaseAccessService;
@@ -81,7 +80,7 @@
 // enum StatementReturnType { Rows, Token, JSON, Batch };
 - (void) appendStatements: (int) dbId : (int) txId : (NSArray*) returnTypes : (NSArray*) statementIds : (NSArray*) statements : (NSArray*) txParams {
     NSMutableArray *nativeStatements = [self getStatements:dbId :txId];
-    int numStatements = [returnTypes count];
+    NSUInteger numStatements = [returnTypes count];
     for (int i=0; i<numStatements; i++) {
         int returnType = [((NSNumber*)returnTypes[i]) intValue];
         SQLOperationType opType;
@@ -100,7 +99,10 @@
             [nativeStatements addObject:[[NewTransactionStatement alloc] initWithType:SQL_rowset andStatement:statement andParameters:nil]];
         } else {
             int statementId = [((NSNumber*)statementIds[i]) intValue];
-            NSArray * params = [txParams[i] JSONValue];
+            
+            NSString * json = txParams[i];
+            
+            NSArray * params = [NSJSONSerialization JSONObjectWithData:[json dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
             [nativeStatements addObject:[[NewTransactionStatement alloc] initWithType:opType andId:statementId andStatement:statement andParameters:params]];
         }
     }
@@ -158,7 +160,7 @@
                         NSString *token = [[KIRIN dropbox] putObject:arr];
                         [self.kirinModule statementTokenSuccess:dbId :txId :st.statementId :token];
                     } else {
-                        NSString *json = [arr JSONRepresentation];
+                        NSString *json = [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:arr options:0 error:nil] encoding:NSUTF8StringEncoding];
                         [self.kirinModule statementJSONSuccess: dbId :txId :st.statementId :json];
                     }
                 } else {

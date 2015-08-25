@@ -18,7 +18,7 @@
 @synthesize kirinModule = kirinModule_;
 
 - (id) init {
-    self.serviceName = @"GwtSettingsService";
+    self.serviceName = @"GwtNotificationService";
     self.kirinModuleProtocol = @protocol(GwtNotificationService);
     return [super initWithServiceName: self.serviceName];
 }

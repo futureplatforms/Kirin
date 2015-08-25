@@ -7,7 +7,6 @@
 //
 
 #import "KirinHelper.h"
-#import "JSON.h"
 #import "KirinProxy.h"
 
 @interface KirinHelper () 
@@ -73,8 +72,9 @@
     if (argArray == nil || [argArray count] == 0) {
         [self.jsContext js:[NSString stringWithFormat: EXECUTE_METHOD_JS, self.jsModuleName, methodName]];
     } else {
-        // we need to think about square brackets: 
-        [self.jsContext js:[NSString stringWithFormat: EXECUTE_METHOD_WITH_ARGS_JS, self.jsModuleName, methodName, [argArray JSONRepresentation]]];
+        // we need to think about square brackets:
+        NSString *json = [[NSString alloc] initWithData: [NSJSONSerialization dataWithJSONObject:argArray options:0 error:nil] encoding:NSUTF8StringEncoding];
+        [self.jsContext js:[NSString stringWithFormat: EXECUTE_METHOD_WITH_ARGS_JS, self.jsModuleName, methodName, json]];
     }    
 }
 
@@ -125,7 +125,8 @@
     if (argArray == nil || [argArray count] == 0) {
         [self.jsContext js:[NSString stringWithFormat: EXECUTE_CALLBACK_JS, callbackId]];
     } else {
-        [self.jsContext js:[NSString stringWithFormat: EXECUTE_CALLBACK_WITH_ARGS_JS, callbackId, [argArray JSONRepresentation]]];
+        NSString *json = [[NSString alloc] initWithData: [NSJSONSerialization dataWithJSONObject:argArray options:0 error:nil] encoding:NSUTF8StringEncoding];
+        [self.jsContext js:[NSString stringWithFormat: EXECUTE_CALLBACK_WITH_ARGS_JS, callbackId, json]];
     }
 }
 

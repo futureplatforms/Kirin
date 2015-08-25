@@ -7,7 +7,6 @@
 //
 
 #import "DummyNativeObject.h"
-#import "JSON.h"
 
 @implementation DummyNativeObject
 
@@ -82,12 +81,12 @@
 
 - (void) methodWithDict: (NSDictionary*) arg {
     self.lastMethod = _cmd;
-    self.lastArg = [arg JSONRepresentation];
+   // self.lastArg = [arg JSONRepresentation];
 }
 
 - (void) methodWithArray: (NSArray*) arg {
     self.lastMethod = _cmd;
-    self.lastArg = [arg JSONRepresentation];
+   // self.lastArg = [arg JSONRepresentation];
 }
 
 - (void) dealloc {
