@@ -112,7 +112,7 @@
                     if (!handled) {
                         [NSException raise:@"KirinInvocationException"
                                     format:@"Cannot call selector %@ with argument %lu value=%@",
-                         fullMethodName, i, arg];
+                         fullMethodName, (unsigned long)i, arg];
                     }
                 }
                 [invocation invoke];
@@ -156,13 +156,6 @@
         //[NSException raise:NSInternalInconsistencyException format:@"Class method '%@' not defined against class '%@'.", fullMethodName, className];
         
 	}
-}
-
-- (void) dealloc {
-    [self.nativeObjects removeAllObjects];
-    self.nativeObjects = nil;
-    
-    [super dealloc];
 }
 
 @end

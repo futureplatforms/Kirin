@@ -28,7 +28,7 @@
 
 
 - (id) init {
-	return [self initWithWebView:[[[UIWebView alloc] init] autorelease] andNativeContext:nil];
+	return [self initWithWebView:[[UIWebView alloc] init] andNativeContext:nil];
 }
 
 - (id) initWithWebView: (UIWebView*) aWebView andNativeContext: (id<NativeExecutor>) nativeExec {
@@ -92,7 +92,8 @@
      * We have to strip off the leading slash for the options.
      */
     if ([[url scheme] isEqualToString:@"ready"]) {
-		[self _execJSImmediately:@"console.log('Webview is loaded')"];
+        DLog(@"WebView is reported finished. %lu commands to tell JS", (unsigned long)[jsQueue count]);
+        [self _execJSImmediately:@"console.log('Webview is loaded')"];
 		for (int i=0; i < [jsQueue count]; i++) {
 			[self _execJSImmediately:[jsQueue objectAtIndex:i]];
 		}
@@ -140,15 +141,5 @@
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
     NSLog(@"[ERROR] %@", error);
 }
-
-- (void)dealloc {
-    [self.webView setDelegate:nil];
-    [self.webView stopLoading];
-
-    self.webView = nil;
-    self.nativeExecutor = nil;
-    [super dealloc];
-}
-
 
 @end

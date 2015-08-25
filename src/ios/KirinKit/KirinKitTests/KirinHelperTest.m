@@ -21,14 +21,6 @@
     
 }
 
-- (void)tearDown
-{
-    // Tear-down code here.
-    [ctx release];
-    [helper release];
-    [super tearDown];
-}
-
 - (void) testHelperLifecycle 
 {
     STAssertEqualObjects(@"TestModule", helper.jsModuleName, @"Helper's module name is wrong");
@@ -81,7 +73,7 @@
 }
 
 - (void) testJsExecCallbackWithConfig {
-    NSMutableDictionary* config = [[[NSMutableDictionary alloc] init] autorelease];
+    NSMutableDictionary* config = [[NSMutableDictionary alloc] init];
     [config setValue:@"callback0001" forKey:@"onSuccess"];
     [config setValue:@"errback0001" forKey:@"onError"];
     
@@ -115,7 +107,7 @@
 }
 
 - (void) testJsRemoveCallbackWithConfig {
-    NSMutableDictionary* config = [[[NSMutableDictionary alloc] init] autorelease];
+    NSMutableDictionary* config = [[NSMutableDictionary alloc] init];
     [config setValue:@"callback0001" forKey:@"onSuccess"];
     [config setValue:@"errback0001" forKey:@"onError"];
     

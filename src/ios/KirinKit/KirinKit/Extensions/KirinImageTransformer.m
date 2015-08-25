@@ -21,13 +21,13 @@
 @synthesize camera;
 
 + (KirinImageTransformer*) instance {
-    return [[[KirinImageTransformer alloc] init] autorelease];
+    return [[KirinImageTransformer alloc] init];
 }
 
 - (id) init {
     self = [super initWithModuleName:@"ImageTransform"];
     if (self) {
-        self.camera = [[[KirinImagePicker alloc] init] autorelease];
+        self.camera = [[KirinImagePicker alloc] init];
     }
     return self;
 }
@@ -66,11 +66,6 @@
     
     [self.kirinHelper cleanupCallback:config withNames:@"callback", @"errback", nil];   
     
-}
-
-- (void) dealloc {
-    self.camera = nil;
-    [super dealloc];
 }
 
 @end

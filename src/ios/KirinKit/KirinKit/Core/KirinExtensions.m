@@ -32,7 +32,7 @@
 @synthesize allExtensions;
 
 + (KirinExtensions*) empty {
-    return [[[KirinExtensions alloc] init] autorelease];
+    return [[KirinExtensions alloc] init];
 }
 
 + (KirinExtensions*) coreExtensions {
@@ -85,7 +85,7 @@
  
     self.isStarted = YES;   
     
-    for (int i=0, max=[self.allExtensions count]; i<max; i++) {
+    for (NSUInteger i=0, max=[self.allExtensions count]; i<max; i++) {
         id<KirinExtensionProtocol> service = [self.allExtensions objectAtIndex:i];
         if ([service respondsToSelector:@selector(onStart)]) {
             [service onStart];
@@ -99,14 +99,14 @@
         return;
     }
     
-    for (int i=0, max=[self.allExtensions count]; i<max; i++) {
+    for (NSUInteger i=0, max=[self.allExtensions count]; i<max; i++) {
         id<KirinExtensionProtocol> service = [self.allExtensions objectAtIndex:i];
         if ([service respondsToSelector:@selector(onStop)]) {
             [service onStop];
         }
     }
     
-    for (int i=0, max=[self.allExtensions count]; i<max; i++) {
+    for (NSUInteger i=0, max=[self.allExtensions count]; i<max; i++) {
         id<KirinExtensionProtocol> service = [self.allExtensions objectAtIndex:i];
         if ([service respondsToSelector:@selector(onUnload)]) {
             [service onUnload];
@@ -114,12 +114,6 @@
     }
     
     self.isStarted = NO;
-}
-
-- (void) dealloc {
-    self.isStarted = NO;
-    self.allExtensions = nil;
-    [super dealloc];
 }
 
 @end

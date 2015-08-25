@@ -681,7 +681,6 @@
 				09FF945C18F88F2D003097F3 /* Crypto.h in Headers */,
 				09B027E218462B6F0033356B /* FMDatabaseAdditions.h in Headers */,
 				099183511832326600A35AF8 /* NewNetworkingImpl.h in Headers */,
-				1A2EF3CD14FA9B9300D00DE2 /* SBJsonWriter.h in Headers */,
 				1AA97D1E150921C5001F557E /* KirinImageTransformer.h in Headers */,
 				1AEA44E91527B29500E7B961 /* KirinProxy.h in Headers */,
 				1A4F7CD31549632A00A010E0 /* KirinUIViewController.h in Headers */,
@@ -846,9 +845,6 @@
 				09FF945D18F88F2D003097F3 /* Crypto.m in Sources */,
 				0991834E1832325E00A35AF8 /* NewDatabaseAccessService.m in Sources */,
 				09918359183232BC00A35AF8 /* KirinGwtServiceStub.m in Sources */,
-				1A2EF3CA14FA9B9300D00DE2 /* SBJsonStreamWriterState.m in Sources */,
-				1A2EF3CC14FA9B9300D00DE2 /* SBJsonTokeniser.m in Sources */,
-				1A2EF3CE14FA9B9300D00DE2 /* SBJsonWriter.m in Sources */,
 				1AA97D1F150921C5001F557E /* KirinImageTransformer.m in Sources */,
 				1AEA44EA1527B29500E7B961 /* KirinProxy.m in Sources */,
 				1A4F7CD41549632A00A010E0 /* KirinUIViewController.m in Sources */,
@@ -915,6 +911,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
@@ -935,6 +932,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_THUMB_SUPPORT = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;

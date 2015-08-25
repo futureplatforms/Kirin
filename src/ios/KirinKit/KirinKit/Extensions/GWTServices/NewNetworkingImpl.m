@@ -46,9 +46,9 @@
 - (void) retrieve:(int)ref :(NSString *)method :(NSString *)url :(NSString *)payload :(NSArray *)headerKeys :(NSArray *)headerVals :(BOOL) isB64 {
     NSData *payloadData = [payload dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
     
-    NSString *payloadLen = [NSString stringWithFormat:@"%d", [payloadData length]];
+    NSString *payloadLen = [NSString stringWithFormat:@"%lu", (unsigned long)[payloadData length]];
     
-    NSMutableURLRequest *request = [[[NSMutableURLRequest alloc] init] autorelease];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
     [request setURL:[NSURL URLWithString:url]];
     [request setHTTPMethod:method];
     [request setValue:payloadLen forHTTPHeaderField:@"Content-Length"];
@@ -104,7 +104,7 @@
         if ([[strEncoding stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] length] == 0)
             return NSUTF8StringEncoding;
         // Try and obtain the correct string encoding from a string
-        CFStringRef cfStringRef = (CFStringRef)strEncoding;
+        CFStringRef cfStringRef = (__bridge CFStringRef)strEncoding;
         CFStringEncoding cfStringEnc = CFStringConvertIANACharSetNameToEncoding(cfStringRef);
         NSStringEncoding encoding = CFStringConvertEncodingToNSStringEncoding(cfStringEnc);
         

@@ -48,9 +48,4 @@
     [self.jsCalls removeAllObjects];
 }
 
-- (void) dealloc {
-    self.jsCalls = nil;
-    [super dealloc];
-}
-
 @end

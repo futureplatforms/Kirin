@@ -8,7 +8,7 @@
 
 #import "NativeObjectHolder.h"
 
-#import <KirinKit/KirinExtensionOnMainThread.h>
+#import "KirinExtensionOnMainThread.h"
 #import <UIKit/UIViewController.h>
 
 #import <objc/runtime.h>
@@ -23,15 +23,12 @@
 @synthesize dispatchQueue = dispatchQueue_;
 
 + (NativeObjectHolder*) holderForObject: (NSObject*) object {
-    NativeObjectHolder* holder = [[[NativeObjectHolder alloc] init] autorelease];
+    NativeObjectHolder* holder = [[NativeObjectHolder alloc] init];
     holder.nativeObject = object;
     return holder;
 }
 
 - (void) setNativeObject:(NSObject*)nativeObject {
-    
-    [nativeObject retain];
-    [nativeObject_ release];
     nativeObject_ = nativeObject;
     if (!nativeObject_) {
         self.dispatchQueue = nil;
@@ -49,7 +46,14 @@
         SEL getter = @selector(dispatchQueue);
         
         if ([nativeObject_ respondsToSelector:getter]) {
-            self.dispatchQueue = (dispatch_queue_t) [nativeObject performSelector:getter];
+            if (!nativeObject) {
+                return;
+            }
+            
+            IMP imp = [nativeObject methodForSelector:getter];
+            dispatch_queue_t (*func)(id, SEL) = (void *) imp;
+            self.dispatchQueue = (dispatch_queue_t) func(nativeObject, getter);
+//            self.dispatchQueue = (dispatch_queue_t) [nativeObject performSelector:getter];
         }
         
         if (self.dispatchQueue) {
@@ -66,12 +70,6 @@
     
     // unsure as to allow non-string munged methods.
     return NSSelectorFromString(realMethodName);
-}
-
-- (void) dealloc {
-    self.dispatchQueue = nil;
-    self.nativeObject = nil;
-    [super dealloc];
 }
 
 @end

@@ -53,7 +53,9 @@
         
         if (strcmp(type, @encode(id)) == 0) {
             // https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html
-            id arg = nil;
+            
+            // What is __unsafe_unretained?  http://stackoverflow.com/a/16932813/64505
+            __unsafe_unretained id arg = nil;
             [invocation getArgument:&arg atIndex:i];
             if (arg == nil) {
                 [args addObject:[NSNull null]];
@@ -91,13 +93,6 @@
     NSString* jsString = [NSString stringWithFormat: EXECUTE_METHOD_WITH_ARGS_JS, self.moduleName, methodName, json];
     
     [self.jsExecutor execJS:jsString];
-}
-
-
-- (void) dealloc {
-    self.jsExecutor = nil;
-    self.moduleName = nil;
-    [super dealloc];
 }
 
 @end

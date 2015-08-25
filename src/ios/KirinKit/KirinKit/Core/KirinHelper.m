@@ -204,14 +204,4 @@
     return [KirinProxy proxyWithProtocol:protocol andDictionary:dictionary];
 }
 
-- (void) dealloc {
-    self.jsContext = nil;
-    self.nativeContext = nil;
-    self.proxyForJSModule = nil;
-    self.jsModuleName = nil;
-    self.nativeObject = nil;
-    self.state = nil;
-    [super dealloc];
-}
-
 @end
