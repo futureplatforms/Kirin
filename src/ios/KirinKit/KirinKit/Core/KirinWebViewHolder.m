@@ -9,7 +9,8 @@
 #import "KirinWebViewHolder.h"
 
 #import <UIKit/UIApplication.h>
-#import "KirinPaths.h"
+#import <KirinKit/KirinPaths.h>
+#import <KirinKit/KirinSuperDevMode.h>
 
 @interface KirinWebViewHolder ()
 
@@ -42,33 +43,33 @@
 	return self;
 }
 
-
-
-
-
 - (void) _initializeWebView: (UIWebView*) aWebView {
 	aWebView.delegate = self;
 	
-	NSString* startPage = [KirinPaths indexFilename];
-	NSURL *appURL = [NSURL URLWithString:startPage];
-	if(![appURL scheme])
-	{
-        
-		NSString* indexPath = [KirinPaths pathForResource:startPage];
-        
-		appURL = [NSURL fileURLWithPath: indexPath];
-	}
+    NSURL *appURL;
+    if (KIRINDEV.superDevMode) {
+        NSLog(@"Welcome to Super Dev Mode!");
+        NSLog(@"Ensure your server is running, then use Safari > Develop");
+        appURL = [NSURL URLWithString:@"http://127.0.0.1:8888/Kirin.html"];
+    } else {
+        NSString* startPage = [KirinPaths indexFilename];
+        appURL = [NSURL URLWithString:startPage];
+        if(![appURL scheme])
+        {
+            NSString* indexPath = [KirinPaths pathForResource:startPage];
+            appURL = [NSURL fileURLWithPath: indexPath];
+        }
+        DLog(@"Loading %@", startPage);
+    }
 	
     NSURLRequest *appReq = [NSURLRequest requestWithURL:appURL cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:20.0];
+
 	[aWebView loadRequest:appReq];
-    
-    
-	
 }
 
 - (void) _execJSImmediately: (NSString*) js {
     if (DEBUG_JS) {
-        NSLog(@"Javascript: %@", js);
+        DLog(@"Javascript: %@", js);
     }
     [self.webView stringByEvaluatingJavaScriptFromString:js];
 }
@@ -85,7 +86,7 @@
 - (BOOL)webView:(UIWebView *)theWebView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
     
 	NSURL *url = [request URL];
-    DLog(@"shouldStartLoadWithRequest %@", [url debugDescription]);
+    //DLog(@"shouldStartLoadWithRequest %@", [url debugDescription]);
     /*
      * Get Command and Options From URL
      * We are looking for URLS that match native://<Class>/<command>[?<arguments>]
@@ -93,7 +94,7 @@
      */
     if ([[url scheme] isEqualToString:@"ready"]) {
         DLog(@"WebView is reported finished. %lu commands to tell JS", (unsigned long)[jsQueue count]);
-        [self _execJSImmediately:@"console.log('Webview is loaded')"];
+		[self _execJSImmediately:@"console.log('Webview is loaded')"];
 		for (int i=0; i < [jsQueue count]; i++) {
 			[self _execJSImmediately:[jsQueue objectAtIndex:i]];
 		}
@@ -125,12 +126,17 @@
                                           andArgsList:[url query]];
 		
 		return NO;
-	} else if (![[url scheme] isEqualToString:@"file"]) {
+    } else if (KIRINDEV.superDevMode &&
+               [[url scheme] isEqualToString:@"http"] &&
+               [[url host] isEqualToString:@"127.0.0.1"]) {
+        return YES;
+    } else if (![[url scheme] isEqualToString:@"file"]) {
         /*
          * We don't have a native request, load it in the main Safari browser.
          * XXX Could be security hole.
          */
         
+        DLog(@"Kirin::shouldStartLoadWithRequest: Received Unhandled URL %@", url);
         [[UIApplication sharedApplication] openURL:url];
         return NO;
 	}
@@ -139,7 +145,7 @@
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
-    NSLog(@"[ERROR] %@", error);
+    DLog(@"[ERROR] %@", error);
 }
 
 @end
