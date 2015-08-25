@@ -36,7 +36,7 @@
     
     NSString* methodName = [[name componentsSeparatedByString:@":"] componentsJoinedByString:@""];
     
-    unsigned numArgs = [sig numberOfArguments];
+    NSUInteger numArgs = [sig numberOfArguments];
     if (numArgs > 2) {
         [NSException raise:@"KirinProxyException" format:@"Message %@ has arguments, which are not supported by KirinProxyWithDictionary", methodName];
         return;
