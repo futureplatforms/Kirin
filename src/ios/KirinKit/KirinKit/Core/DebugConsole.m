@@ -22,7 +22,7 @@
 
 
 - (void) log:(id)message atLevel:(NSString*) log_level {
-    if ([KIRIN loggingEnabled]) {
+    if ([KIRINCONSTANTS loggingEnabled]) {
         NSLog(@"[%@] %@", log_level, message);
     }
 }

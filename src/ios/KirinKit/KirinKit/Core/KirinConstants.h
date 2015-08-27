@@ -1,5 +1,5 @@
 //
-//  KirinSuperDevMode.h
+//  KirinConstants.h
 //  KirinKit
 //
 //  Created by Douglas Hoskins on 19/08/2015.
@@ -9,12 +9,13 @@
 #import <Foundation/Foundation.h>
 #import <KirinKit/SynthesizeSingleton.h>
 
-@interface KirinSuperDevMode : NSObject
+@interface KirinConstants : NSObject
 
 @property(nonatomic) BOOL superDevMode;
+@property(nonatomic) BOOL loggingEnabled;
 
-SYNTHESIZE_SINGLETON_HEADER_FOR_CLASS(KirinSuperDevMode)
+SYNTHESIZE_SINGLETON_HEADER_FOR_CLASS(KirinConstants)
 
-#define KIRINDEV [KirinSuperDevMode sharedKirinSuperDevMode]
+#define KIRINCONSTANTS [KirinConstants sharedKirinConstants]
 
 @end

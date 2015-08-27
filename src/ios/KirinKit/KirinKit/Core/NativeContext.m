@@ -34,6 +34,14 @@
     return self;
 }
 
+- (NSArray*) methodNamesFor: (NSString*) moduleName {
+    NativeObjectHolder* holder = self.nativeObjects[moduleName];
+    if (!holder) {
+        [NSException raise:@"KirinNoSuchObjectException" format:@"There is no object registered called %@", moduleName];
+    }
+    return [holder methodNames];
+}
+
 - (void) registerNativeObject: (id) object asName: (NSString*) name {
     self.nativeObjects[name] = [NativeObjectHolder holderForObject:object];
 }

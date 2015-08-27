@@ -16,8 +16,7 @@
 
 
 
-
-
+#import "KirinConstants.h"
 #import "KirinHelper.h"
 #import "KirinUiFragmentHelper.h"
 #import "KirinScreenHelper.h"
@@ -46,10 +45,6 @@
 @property(nonatomic, retain) KirinExtensions* kirinExtensions;
 
 @property(nonatomic, retain) NSDictionary* notificationUserData;
-
-@property(nonatomic) BOOL loggingEnabled;
-
-- (void) setLoggingEnabled:(BOOL)loggingEnabled;
 
 - (id) initWithWebView: (UIWebView*) aWebView;
 

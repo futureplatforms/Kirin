@@ -15,12 +15,19 @@
 
 @interface NativeObjectHolder ()
 
+@property(nonatomic, retain) NSDictionary* methodsMap;
+
+- (void) initializeMethodsMap;
+- (NSString*) camelCasedMethodName: (NSString*) methodName;
+- (NSString*) underscoredMethodName: (NSString*) methodName;
+
 @end
 
 @implementation NativeObjectHolder
 
 @synthesize nativeObject = nativeObject_;
 @synthesize dispatchQueue = dispatchQueue_;
+@synthesize methodsMap = methodsMap_;
 
 + (NativeObjectHolder*) holderForObject: (NSObject*) object {
     NativeObjectHolder* holder = [[NativeObjectHolder alloc] init];
@@ -62,14 +69,80 @@
             //DLog(@"Will dispatch to KirinExtension %@ on a global dispatch queue", [nativeObject class]);
             self.dispatchQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
         }
+        
+        
+    }
+    
+    // generate the method names will use to call selectors on this object.
+    self.methodsMap = nil;
+    [self initializeMethodsMap];
+}
+
+
+- (NSString*) underscoredMethodName: (NSString*) methodName {
+    return [[methodName componentsSeparatedByString:@":"] componentsJoinedByString:@"_"];
+}
+
+
+- (NSString*) camelCasedMethodName: (NSString*) methodName {
+    NSMutableString *output = [NSMutableString string];
+    BOOL makeNextCharacterUpperCase = NO;
+    for (NSInteger idx = 0; idx < [methodName length]; idx += 1) {
+        unichar c = [methodName characterAtIndex:idx];
+        if (c == ':') {
+            makeNextCharacterUpperCase = YES;
+        } else if (makeNextCharacterUpperCase) {
+            [output appendString:[[NSString stringWithCharacters:&c length:1] uppercaseString]];
+            makeNextCharacterUpperCase = NO;
+        } else {
+            [output appendFormat:@"%C", c];
+        }
+    }
+    return output;
+}
+
+- (void) initializeMethodsMap {
+    if (self.methodsMap) {
+        return;
+    }
+    NSMutableDictionary* methods = [NSMutableDictionary dictionary];
+    
+    self.methodsMap = methods;
+    
+    Class class = object_getClass(self.nativeObject);
+    while (class) {
+        int i=0;
+        unsigned int mc = 0;
+        Method * mlist = class_copyMethodList(class, &mc);
+        
+        for(i=0;i<mc;i++) {
+            Method method = mlist[i];
+            SEL selector = method_getName(method);
+            NSString* realMethodName = NSStringFromSelector(selector);
+
+            methods[[self underscoredMethodName:realMethodName]] = realMethodName;
+            methods[[self camelCasedMethodName: realMethodName]] = realMethodName;
+        }
+        
+        /* note mlist needs to be freed */
+        free(mlist);
+        
+        class = class_getSuperclass(class);
     }
 }
 
-- (SEL) findSelectorFromString: methodName {
-    NSString * realMethodName = [[methodName componentsSeparatedByString:@"_"] componentsJoinedByString:@":"];
+- (NSArray*) methodNames {
+    NSMutableArray* methodNames = [NSMutableArray array];
+    for (NSString* methodName in [self.methodsMap keyEnumerator]) {
+        [methodNames addObject:methodName];
+    }
+    return methodNames;
     
-    // unsure as to allow non-string munged methods.
-    return NSSelectorFromString(realMethodName);
+}
+
+
+- (SEL) findSelectorFromString: methodName {
+    return NSSelectorFromString(self.methodsMap[methodName]);
 }
 
 @end

@@ -26,7 +26,7 @@
 - (void) scheduleNotification: (NSString *) notificationId : (NSString*) timeMillisSince1970 : (NSString*) title : (NSString*) text : (int) badge {
     NSDate *itemDate = [NSDate dateWithTimeIntervalSince1970:([timeMillisSince1970 doubleValue] / 1000)];
     
-    if ([KIRIN loggingEnabled]) {
+    if ([KIRINCONSTANTS loggingEnabled]) {
         NSLog(@"LocalNotificationsBackend.scheduleNotification %@ at time %@ where millisSince1970 is %@ with id %@", text, itemDate, timeMillisSince1970, notificationId);
     }
 
@@ -57,7 +57,7 @@
 }
 
 - (void) cancelNotification: (NSString *) notificationId {
-    if ([KIRIN loggingEnabled]) {
+    if ([KIRINCONSTANTS loggingEnabled]) {
         NSLog(@"LocalNotificationsBackend.cancelNotification %@", notificationId);
     }
      

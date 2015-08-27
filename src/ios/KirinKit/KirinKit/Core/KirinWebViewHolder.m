@@ -10,7 +10,7 @@
 
 #import <UIKit/UIApplication.h>
 #import <KirinKit/KirinPaths.h>
-#import <KirinKit/KirinSuperDevMode.h>
+#import <KirinKit/KirinConstants.h>
 
 @interface KirinWebViewHolder ()
 
@@ -47,7 +47,7 @@
 	aWebView.delegate = self;
 	
     NSURL *appURL;
-    if (KIRINDEV.superDevMode) {
+    if (KIRINCONSTANTS.superDevMode) {
         NSLog(@"Welcome to Super Dev Mode!");
         NSLog(@"Ensure your server is running, then use Safari > Develop");
         appURL = [NSURL URLWithString:@"http://127.0.0.1:8888/Kirin.html"];
@@ -86,7 +86,7 @@
 - (BOOL)webView:(UIWebView *)theWebView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
     
 	NSURL *url = [request URL];
-    //DLog(@"shouldStartLoadWithRequest %@", [url debugDescription]);
+//    DLog(@"shouldStartLoadWithRequest %@", [url debugDescription]);
     /*
      * Get Command and Options From URL
      * We are looking for URLS that match native://<Class>/<command>[?<arguments>]
@@ -126,7 +126,7 @@
                                           andArgsList:[url query]];
 		
 		return NO;
-    } else if (KIRINDEV.superDevMode &&
+    } else if (KIRINCONSTANTS.superDevMode &&
                [[url scheme] isEqualToString:@"http"] &&
                [[url host] isEqualToString:@"127.0.0.1"]) {
         return YES;
@@ -146,6 +146,9 @@
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
     DLog(@"[ERROR] %@", error);
+    if (KIRINCONSTANTS.superDevMode) {
+        NSLog(@"SuperDevMode error.  Please ensure you have run the dev mode server, e.g. superdev.sh");
+    }
 }
 
 @end

@@ -49,10 +49,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(Kirin)
 	return [self initWithWebView:aWebView];
 }
 
-- (void) setLoggingEnabled:(BOOL)loggingEnabled {
-    self.loggingEnabled = loggingEnabled;
-}
-
 - (id) initWithWebView: (UIWebView*) aWebView {
     self = [super init];
 	if (self) {

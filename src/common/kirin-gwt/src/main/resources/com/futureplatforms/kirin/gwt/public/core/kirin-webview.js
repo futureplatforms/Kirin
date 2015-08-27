@@ -44,7 +44,65 @@ defineModule("kirin", function (require, exports) {
 			return prefix + (counter ++);
 		};
 	})();
+	
+	var wrapCallback = function (callback, jsName, methodName) {
+		if (typeof callback !== 'function') {
+			return null;
+		}
+		var token = tokenGenerator(jsName, methodName);
+		callbacks[token] = callback;
+		return token;
+	};
+	
+	var wrapCallbacks = function (config, moduleName) {
+		if (typeof config !== 'object') {
+			throw new Error("First argument of wrapCallbacks should be an object");
+		}
+		if (typeof moduleName !== 'string') {
+			moduleName = "anonymousModule";
+		}
+		moduleName += ".";
+		var key, value;
+		for (key in config) {
+			if (config.hasOwnProperty(key)) {
+				value = config[key];
+				if (typeof value === 'function') {
+					config[key] = wrapCallback(value, moduleName, key);
+				}
+			}
+		}
+		return config;
+	};
+	
+	var createWrappingCall = function (jsName, methodName) {
+		return function () {
+			var args = slice.call(arguments, 0);
+			var i = 0, max;
+			for (max=args.length; i<max; i++) {
+				if (typeof args[i] === 'function') {
+					args[i] = wrapCallback(args[i], jsName, methodName);
+				}
+			}
+			args.unshift(jsName + "." + methodName);
+			return Native.exec.apply(null, args);
+		};
+	};
+
+	function createProxy (className, methodNames) {
+		var proxy, i=0, max;
+		if (!_.isArray(methodNames)) {
+			proxy = methodNames; // methodNames is the object.
+		} else {
+			proxy = {};
+			for (max=methodNames.length; i<max; i++) {
+				var methodName = methodNames[i];
+				proxy[methodName] = createWrappingCall(className, methodName);
+			}
+		}
+		return proxy;
+	}
 		
+	
 	function handleError(during, e) {
 		
 		
@@ -96,7 +154,8 @@ defineModule("kirin", function (require, exports) {
 
 	native2js.resolveModule = resolveModule;
 
-	native2js.loadProxyForModule = function (moduleName) {
+	native2js.loadProxyForModule = function (moduleName, methodNames) {
+		var proxy = createProxy(moduleName, methodNames);
 		var module;
 		try {
 		    module = resolveModule(moduleName);
@@ -105,7 +164,7 @@ defineModule("kirin", function (require, exports) {
 		    return;
 		}
 		try {
-			module.onLoad(moduleName);
+			module.onLoad(proxy);
 		} catch (e1) {
 			handleError("loading module " + moduleName, e1);
 		}
@@ -197,5 +256,7 @@ defineModule("kirin", function (require, exports) {
 	/* Expose the proxies to Javascript.
 	 **********************************************************************/
 	
+	exports.wrapCallback = wrapCallback;
+	exports.wrapCallbacks = wrapCallbacks;
 	exports.exposeToNative = Native.exposeToNative;
 });

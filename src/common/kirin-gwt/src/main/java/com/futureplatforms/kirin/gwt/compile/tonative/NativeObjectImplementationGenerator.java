@@ -18,7 +18,7 @@ public class NativeObjectImplementationGenerator extends Generator {
 
 	@Override
 	public String generate(TreeLogger logger, GeneratorContext context,
-			String typeName) throws UnableToCompleteException {
+						   String typeName) throws UnableToCompleteException {
 		TypeOracle oracle = context.getTypeOracle();
 		JClassType nativeObjectType = oracle.findType(typeName);
 		JClassType genericNativeObjectType = oracle.findType(IKirinProxied.class.getName());
@@ -27,14 +27,14 @@ public class NativeObjectImplementationGenerator extends Generator {
 
 		ClassSourceFileComposerFactory composer = new ClassSourceFileComposerFactory(
 				genPackageName, genClassName);
-		
+
 		composer.addImport("com.google.gwt.core.client.JavaScriptObject");
 		composer.addImport(typeName);
 		composer.addImport(genericNativeObjectType.getQualifiedSourceName());
 
 		composer.addImplementedInterface(nativeObjectType.getName());
 		composer.addImplementedInterface(genericNativeObjectType.getName());
-		
+
 		PrintWriter printWriter = context.tryCreate(logger, genPackageName,
 				genClassName);
 
@@ -42,14 +42,14 @@ public class NativeObjectImplementationGenerator extends Generator {
 			SourceWriter sourceWriter = composer.createSourceWriter(context,
 					printWriter);
 			// Create parameterless constructor
-			sourceWriter.println(genClassName + "() { }");
+			sourceWriter.println(genClassName + "() {}");
 
-            // Add $setKirinNativeObject method to implement IKirinProxied
-			sourceWriter.println("private String ___moduleName;");
+			// Add $setKirinNativeObject method to implement IKirinProxied
+			sourceWriter.println("private JavaScriptObject jso;");
 			sourceWriter
-					.println("public void $setKirinNativeObject(String moduleName) {");
+					.println("public void $setKirinNativeObject(JavaScriptObject jso) {");
 			sourceWriter.indent();
-			sourceWriter.println("this.___moduleName = moduleName;");
+			sourceWriter.println("this.jso = jso;");
 			sourceWriter.outdent();
 			sourceWriter.println("}");
 
@@ -69,21 +69,21 @@ public class NativeObjectImplementationGenerator extends Generator {
 	 * @param sourceWriter
 	 */
 	private void printAllMethods(JClassType jct, JClassType genericNativeObjectType, SourceWriter sourceWriter) {
-	    JMethod[] methods = jct.getMethods();
-        for (JMethod method : methods) {
-            if (!method.getEnclosingType().equals(genericNativeObjectType)) {
-                printMethods(method, sourceWriter);
-            }
-        }
-        
-        JClassType[] interfaces = jct.getImplementedInterfaces();
-        if (interfaces != null) {
-            for (JClassType inter : interfaces) {
-                printAllMethods(inter, genericNativeObjectType, sourceWriter);
-            }
-        }
+		JMethod[] methods = jct.getMethods();
+		for (JMethod method : methods) {
+			if (!method.getEnclosingType().equals(genericNativeObjectType)) {
+				printMethods(method, sourceWriter);
+			}
+		}
+
+		JClassType[] interfaces = jct.getImplementedInterfaces();
+		if (interfaces != null) {
+			for (JClassType inter : interfaces) {
+				printAllMethods(inter, genericNativeObjectType, sourceWriter);
+			}
+		}
 	}
-	
+
 	private void printMethods(JMethod method, SourceWriter sw) {
 		JParameter[] params = method.getParameters();
 
@@ -111,7 +111,7 @@ public class NativeObjectImplementationGenerator extends Generator {
 		for (JParameter param : params) {
 			sw.print(param.getName() + ", ");
 		}
-		sw.println("___moduleName);");
+		sw.println("jso);");
 		sw.outdent();
 		sw.println("}");
 
@@ -122,23 +122,24 @@ public class NativeObjectImplementationGenerator extends Generator {
 					+ param.getName() + ", ");
 		}
 		// passing in the handle to the JS object
-        sw.println("String ___moduleName) /*-{");
+		sw.println("JavaScriptObject jso) /*-{");
 		sw.indent();
-        // now invoke the method on the JS object. This is the method name,
+
+		// now invoke the method on the JS object. This is the method name,
 		// followed by as many underscores as there are parameters
-        sw.print("$wnd.require('Native').exec.apply(null, [___moduleName + '." + method.getName());
+		sw.print("jso." + method.getName());
 		for (int i = 0; i < params.length; i++) {
 			sw.print("_");
 		}
-        sw.print("',");
 		// and pass all parameters in
+		sw.print("(");
 		for (int i = 0; i < params.length; i++) {
 			sw.print(params[i].getName());
 			if (i != params.length - 1) {
 				sw.print(", ");
 			}
 		}
-		sw.println("]);");
+		sw.println(");");
 		sw.outdent();
 		sw.println("}-*/;");
 	}

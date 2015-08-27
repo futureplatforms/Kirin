@@ -15,8 +15,8 @@
 		095538D51B6684E100AF68B1 /* NewSettingsImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 095538D31B6684E100AF68B1 /* NewSettingsImpl.m */; };
 		095538D81B66A06600AF68B1 /* NewNotificationsImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = 095538D61B66A06600AF68B1 /* NewNotificationsImpl.h */; };
 		095538D91B66A06600AF68B1 /* NewNotificationsImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 095538D71B66A06600AF68B1 /* NewNotificationsImpl.m */; };
-		097B70B01B845C4E0075E643 /* KirinSuperDevMode.h in Headers */ = {isa = PBXBuildFile; fileRef = 097B70AE1B845C4E0075E643 /* KirinSuperDevMode.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		097B70B11B845C4E0075E643 /* KirinSuperDevMode.m in Sources */ = {isa = PBXBuildFile; fileRef = 097B70AF1B845C4E0075E643 /* KirinSuperDevMode.m */; };
+		097B70B01B845C4E0075E643 /* KirinConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 097B70AE1B845C4E0075E643 /* KirinConstants.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		097B70B11B845C4E0075E643 /* KirinConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 097B70AF1B845C4E0075E643 /* KirinConstants.m */; };
 		0991834D1832325E00A35AF8 /* NewDatabaseAccessService.h in Headers */ = {isa = PBXBuildFile; fileRef = 0991834B1832325E00A35AF8 /* NewDatabaseAccessService.h */; };
 		0991834E1832325E00A35AF8 /* NewDatabaseAccessService.m in Sources */ = {isa = PBXBuildFile; fileRef = 0991834C1832325E00A35AF8 /* NewDatabaseAccessService.m */; };
 		099183511832326600A35AF8 /* NewNetworkingImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = 0991834F1832326600A35AF8 /* NewNetworkingImpl.h */; };
@@ -145,8 +145,8 @@
 		095538D31B6684E100AF68B1 /* NewSettingsImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewSettingsImpl.m; sourceTree = "<group>"; };
 		095538D61B66A06600AF68B1 /* NewNotificationsImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewNotificationsImpl.h; sourceTree = "<group>"; };
 		095538D71B66A06600AF68B1 /* NewNotificationsImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewNotificationsImpl.m; sourceTree = "<group>"; };
-		097B70AE1B845C4E0075E643 /* KirinSuperDevMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KirinSuperDevMode.h; sourceTree = "<group>"; };
-		097B70AF1B845C4E0075E643 /* KirinSuperDevMode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KirinSuperDevMode.m; sourceTree = "<group>"; };
+		097B70AE1B845C4E0075E643 /* KirinConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KirinConstants.h; sourceTree = "<group>"; };
+		097B70AF1B845C4E0075E643 /* KirinConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KirinConstants.m; sourceTree = "<group>"; };
 		0991834B1832325E00A35AF8 /* NewDatabaseAccessService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewDatabaseAccessService.h; path = GWTServices/NewDatabaseAccessService.h; sourceTree = "<group>"; };
 		0991834C1832325E00A35AF8 /* NewDatabaseAccessService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewDatabaseAccessService.m; path = GWTServices/NewDatabaseAccessService.m; sourceTree = "<group>"; };
 		0991834F1832326600A35AF8 /* NewNetworkingImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewNetworkingImpl.h; path = GWTServices/NewNetworkingImpl.h; sourceTree = "<group>"; };
@@ -472,8 +472,8 @@
 				1A4F7CD21549632A00A010E0 /* KirinUIViewController.m */,
 				1AEE8DA1154EC8DD00B8C0D7 /* KirinUITableViewController.h */,
 				1AEE8DA2154EC8DD00B8C0D7 /* KirinUITableViewController.m */,
-				097B70AE1B845C4E0075E643 /* KirinSuperDevMode.h */,
-				097B70AF1B845C4E0075E643 /* KirinSuperDevMode.m */,
+				097B70AE1B845C4E0075E643 /* KirinConstants.h */,
+				097B70AF1B845C4E0075E643 /* KirinConstants.m */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -657,7 +657,7 @@
 				095538D81B66A06600AF68B1 /* NewNotificationsImpl.h in Headers */,
 				09B027E018462B6F0033356B /* FMDatabase.h in Headers */,
 				095538D41B6684E100AF68B1 /* NewSettingsImpl.h in Headers */,
-				097B70B01B845C4E0075E643 /* KirinSuperDevMode.h in Headers */,
+				097B70B01B845C4E0075E643 /* KirinConstants.h in Headers */,
 				1A02010D14BD072C00CB9765 /* KirinExtensionHelper.h in Headers */,
 				1A02011214BD09B000CB9765 /* KirinExtensionProtocol.h in Headers */,
 				1A02011514BD130600CB9765 /* KirinExtensions.h in Headers */,
@@ -836,7 +836,7 @@
 				09B0B56218E3616500A87C5D /* WebviewHelper.m in Sources */,
 				09FF945D18F88F2D003097F3 /* Crypto.m in Sources */,
 				0991834E1832325E00A35AF8 /* NewDatabaseAccessService.m in Sources */,
-				097B70B11B845C4E0075E643 /* KirinSuperDevMode.m in Sources */,
+				097B70B11B845C4E0075E643 /* KirinConstants.m in Sources */,
 				09918359183232BC00A35AF8 /* KirinGwtServiceStub.m in Sources */,
 				1AEA44EA1527B29500E7B961 /* KirinProxy.m in Sources */,
 				1A4F7CD41549632A00A010E0 /* KirinUIViewController.m in Sources */,

@@ -20,6 +20,7 @@
 #import "KirinExtensionStub.h"
 #import "KirinPaths.h"
 #import "KirinFileSystem.h"
+#import "KirinConstants.h"
 
 // TODO review if this is the best place to put this.
 // Better would be to go in KirinKitUI.h, but it's easier to remember here.
