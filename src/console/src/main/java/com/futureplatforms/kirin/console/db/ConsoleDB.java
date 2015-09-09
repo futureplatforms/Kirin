@@ -1,14 +1,5 @@
 package com.futureplatforms.kirin.console.db;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.sql.Types;
-import java.util.List;
-
 import com.futureplatforms.kirin.dependencies.db.Database;
 import com.futureplatforms.kirin.dependencies.db.DatabaseDelegate;
 import com.futureplatforms.kirin.dependencies.db.Transaction.RowSet;
@@ -21,6 +12,15 @@ import com.futureplatforms.kirin.dependencies.internal.TransactionBackend;
 import com.futureplatforms.kirin.dependencies.internal.TransactionBundle;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Types;
+import java.util.List;
 
 public class ConsoleDB implements DatabaseDelegate {
 
@@ -113,7 +113,15 @@ public class ConsoleDB implements DatabaseDelegate {
 		
 	}
 	public static ResultSetProcessor _PrintlnResultset = new PrintResultSetProcessor(15);
-	
+
+	public ConsoleDB() {
+		try {
+			close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 	public static void processResultSet(ResultSet resultSet, ResultSetProcessor processor) throws SQLException {
 		ResultSetMetaData metaData = resultSet.getMetaData();
 		int colCount = metaData.getColumnCount();
@@ -150,6 +158,10 @@ public class ConsoleDB implements DatabaseDelegate {
 		
 		public ConsoleDatabaseImpl(Connection c) {
 			this._Connection = c;
+		}
+
+		public void close() throws SQLException {
+			this._Connection.close();
 		}
 
 		private PreparedStatement getPreparedStatement(Statement kirinStatement) throws SQLException {
@@ -266,5 +278,12 @@ public class ConsoleDB implements DatabaseDelegate {
             }
         }
         cb.onOpened(_DbImpl);
+	}
+
+	public static void close() throws SQLException {
+		if (_DbImpl != null) {
+			_DbImpl.close();
+			_DbImpl = null;
+		}
 	}
 }
