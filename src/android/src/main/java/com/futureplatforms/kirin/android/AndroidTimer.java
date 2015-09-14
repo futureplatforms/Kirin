@@ -26,15 +26,17 @@ public class AndroidTimer implements TimerDelegate
             }
 			
 			private PlatformTimerTask self = this;
+			private Handler handler = new Handler();
+			private TimerTask scheduledTask = getTimerTask();
 			@Override
 			public void schedule(int delayMillis)
 			{
-				new Handler().postDelayed(getTimerTask(), delayMillis);
+				handler.postDelayed(scheduledTask, delayMillis);
 			}
             @Override
             public void cancel() {
-                // TODO Auto-generated method stub
-                
+				handler.removeCallbacks(scheduledTask);
+
             }
 		};
 	}
