@@ -4,7 +4,7 @@
 
   <groupId>com.futureplatforms.kirin</groupId>
   <artifactId>kirin</artifactId>
-  <version>1.0.5-SNAPSHOT</version>
+  <version>1.0.5</version>
   <packaging>pom</packaging>
 
   <name>Kirin</name>
@@ -63,7 +63,7 @@
     <developerConnection>scm:git:https://github.com/futureplatforms/Kirin.git</developerConnection>
     <connection>scm:git:https://github.com/futureplatforms/Kirin.git</connection>
     <url>https://github.com/futureplatforms/Kirin.git</url>
-    <tag>kirin-1.0.1</tag>
+    <tag>kirin-1.0.5</tag>
   </scm>
 
   <!-- Got this bit from http://central.sonatype.org/pages/apache-maven.html#distribution-management-and-authentication -->
