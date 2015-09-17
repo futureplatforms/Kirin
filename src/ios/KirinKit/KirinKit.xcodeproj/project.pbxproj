@@ -47,9 +47,6 @@
 		09DCA5021846405C00C3555C /* NewTransactionStatement.m in Sources */ = {isa = PBXBuildFile; fileRef = 09DCA5001846405C00C3555C /* NewTransactionStatement.m */; };
 		09FF945C18F88F2D003097F3 /* Crypto.h in Headers */ = {isa = PBXBuildFile; fileRef = 09FF945A18F88F2D003097F3 /* Crypto.h */; };
 		09FF945D18F88F2D003097F3 /* Crypto.m in Sources */ = {isa = PBXBuildFile; fileRef = 09FF945B18F88F2D003097F3 /* Crypto.m */; };
-		09FF946918FC47B4003097F3 /* KirinFacebook.h in Headers */ = {isa = PBXBuildFile; fileRef = 09FF946718FC47B4003097F3 /* KirinFacebook.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		09FF946A18FC47B4003097F3 /* KirinFacebook.m in Sources */ = {isa = PBXBuildFile; fileRef = 09FF946818FC47B4003097F3 /* KirinFacebook.m */; };
-		09FF946C18FC480E003097F3 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09FF946B18FC480E003097F3 /* FacebookSDK.framework */; };
 		1A00C8B614B2E2FD00211F34 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1A00C8B414B2E2FD00211F34 /* InfoPlist.strings */; };
 		1A00C8C014B2E2FD00211F34 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A00C8BF14B2E2FD00211F34 /* UIKit.framework */; };
 		1A00C8C214B2E2FD00211F34 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A00C8C114B2E2FD00211F34 /* Foundation.framework */; };
@@ -177,9 +174,6 @@
 		09DCA5001846405C00C3555C /* NewTransactionStatement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewTransactionStatement.m; path = GWTServices/NewTransactionStatement.m; sourceTree = "<group>"; };
 		09FF945A18F88F2D003097F3 /* Crypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Crypto.h; path = GWTServices/Crypto.h; sourceTree = "<group>"; };
 		09FF945B18F88F2D003097F3 /* Crypto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Crypto.m; path = GWTServices/Crypto.m; sourceTree = "<group>"; };
-		09FF946718FC47B4003097F3 /* KirinFacebook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KirinFacebook.h; sourceTree = "<group>"; };
-		09FF946818FC47B4003097F3 /* KirinFacebook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KirinFacebook.m; sourceTree = "<group>"; };
-		09FF946B18FC480E003097F3 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = KirinKit/lib/FacebookSDK.framework; sourceTree = "<group>"; };
 		1A00C8AF14B2E2FD00211F34 /* KirinKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KirinKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A00C8B314B2E2FD00211F34 /* KirinKit-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "KirinKit-Info.plist"; sourceTree = "<group>"; };
 		1A00C8B514B2E2FD00211F34 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -277,7 +271,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				09FF946C18FC480E003097F3 /* FacebookSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -342,15 +335,6 @@
 			name = Crypto;
 			sourceTree = "<group>";
 		};
-		09FF946618FC4795003097F3 /* Social */ = {
-			isa = PBXGroup;
-			children = (
-				09FF946718FC47B4003097F3 /* KirinFacebook.h */,
-				09FF946818FC47B4003097F3 /* KirinFacebook.m */,
-			);
-			name = Social;
-			sourceTree = "<group>";
-		};
 		1A00C8A114B2E2FD00211F34 = {
 			isa = PBXGroup;
 			children = (
@@ -406,7 +390,6 @@
 		1A00C8BE14B2E2FD00211F34 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				09FF946B18FC480E003097F3 /* FacebookSDK.framework */,
 				1A00C8BF14B2E2FD00211F34 /* UIKit.framework */,
 				1A00C8C114B2E2FD00211F34 /* Foundation.framework */,
 				1A00C8C314B2E2FD00211F34 /* CoreGraphics.framework */,
@@ -481,7 +464,6 @@
 		1A00C8EF14B2E32600211F34 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				09FF946618FC4795003097F3 /* Social */,
 				09FF945918F88F22003097F3 /* Crypto */,
 				090C142218C7A4B40030EC1F /* SymbolMap */,
 				1A7B90CD14FFDA3F0090DF19 /* Location */,
@@ -667,7 +649,6 @@
 				1A06437814CF0DB500FB7EE3 /* CameraProtocol.h in Headers */,
 				1A61952A14D22105004FDD8E /* KirinFileSystem.h in Headers */,
 				09D8177217E21D6E00611BBE /* UIViewController+Hybrid.h in Headers */,
-				09FF946918FC47B4003097F3 /* KirinFacebook.h in Headers */,
 				1A9FE0A114D5F745008C0565 /* NativeObjectHolder.h in Headers */,
 				1A9FE0A514D5FA51008C0565 /* KirinExtensionOnMainThread.h in Headers */,
 				1AB1252314E4819A00933949 /* KirinAppDelegateHelper.h in Headers */,
@@ -808,7 +789,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				1A00C91B14B2E32600211F34 /* DebugConsole.m in Sources */,
-				09FF946A18FC47B4003097F3 /* KirinFacebook.m in Sources */,
 				1A00C92114B2E32600211F34 /* JSContext.m in Sources */,
 				1A00C92514B2E32600211F34 /* Kirin.m in Sources */,
 				1A00C92814B2E32600211F34 /* KirinDropbox.m in Sources */,
@@ -947,10 +927,6 @@
 				DEPLOYMENT_POSTPROCESSING = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/KirinKit/lib",
-				);
 				FRAMEWORK_VERSION = A;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "KirinKit/KirinKit-Prefix.pch";
@@ -981,10 +957,6 @@
 				DEPLOYMENT_POSTPROCESSING = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/KirinKit/lib",
-				);
 				FRAMEWORK_VERSION = A;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "KirinKit/KirinKit-Prefix.pch";

@@ -13,7 +13,6 @@
 #import "NewDatabaseAccessService.h"
 #import "KirinGwtServiceProtocol.h"
 #import "SymbolMapService.h"
-#import "KirinFacebook.h"
 #import "KirinGwtLocation.h"
 #import "NewNotificationsImpl.h"
 #import "Crypto.h"
@@ -43,13 +42,6 @@
     [services registerGwtService:[[Crypto alloc] init]];
     [services registerGwtService:[[NewSettingsImpl alloc] init]];
     [services registerGwtService:[[NewNotificationsImpl alloc] init]];
-    
-    if(NSClassFromString(@"FBSession")) {
-        if ([[NSBundle mainBundle] objectForInfoDictionaryKey:@"FacebookAppID"]) {
-            [services registerGwtService:[[KirinFacebook alloc] init]];
-        }
-    }
-    
     [services registerGwtService:[[NewNetworkingImpl alloc] init]];
     
     return services;

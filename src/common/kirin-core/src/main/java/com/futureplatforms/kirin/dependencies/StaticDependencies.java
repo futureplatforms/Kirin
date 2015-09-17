@@ -7,16 +7,15 @@ import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate
 import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate.NetworkResponse;
 import com.futureplatforms.kirin.dependencies.TimerTask.TimerDelegate;
 import com.futureplatforms.kirin.dependencies.db.DatabaseDelegate;
-import com.futureplatforms.kirin.dependencies.fb.FacebookDelegate;
 import com.futureplatforms.kirin.dependencies.json.JSONDelegate;
 import com.futureplatforms.kirin.dependencies.xml.parser.XMLParser;
 
 public final class StaticDependencies {
 	public enum Configuration {
 		Debug, Release
-	};
+	}
 	
-	public static enum NetworkFailType { NetworkFail, TimeoutFail, UnknownFail };
+	public enum NetworkFailType { NetworkFail, TimeoutFail, UnknownFail }
 
 	private static StaticDependencies instance;
 
@@ -27,24 +26,24 @@ public final class StaticDependencies {
 		return instance;
 	}
 
-	public static interface LogDelegate {
-		public void log(String s);
+	public interface LogDelegate {
+		void log(String s);
 
-		public void log(String tag, String s);
+		void log(String tag, String s);
 
-		public void log(String tag, String s, Throwable t);
+		void log(String tag, String s, Throwable t);
 	}
 
-	public static interface SettingsDelegate {
-		public String get(String key);
-		public void put(String key, String value);
-		public void clear();
+	public interface SettingsDelegate {
+		String get(String key);
+		void put(String key, String value);
+		void clear();
 	}
 
-	public static interface NetworkDelegateClient {
-		public void doHttp(HttpVerb verb, String url, String payload, Map<String, String> headers,
+	public interface NetworkDelegateClient {
+		void doHttp(HttpVerb verb, String url, String payload, Map<String, String> headers,
 				NetworkResponse callback);
-		public void doHttpWithBase64Return(HttpVerb verb, String url, String payload, Map<String, String> headers,
+		void doHttpWithBase64Return(HttpVerb verb, String url, String payload, Map<String, String> headers,
 				NetworkResponse callback);
 	}
 
@@ -56,14 +55,14 @@ public final class StaticDependencies {
 			this._Client = client;
 		}
 
-		public static enum HttpVerb {
+		public enum HttpVerb {
 			DELETE(false), GET(false), POST(true), PUT(true);
 			public final boolean _HasPayload;
 
 			private HttpVerb(boolean hasPayload) {
 				this._HasPayload = hasPayload;
 			}
-		};
+		}
 
 		public static void UpdateNetworkConnectionStatus(boolean enabled)
 		{
@@ -148,8 +147,7 @@ public final class StaticDependencies {
 	private Configuration _Profile;
 	private TimerDelegate _TimerDelegate;
 	private NotificationDelegate _NotificationDelegate;
-	private FacebookDelegate _FacebookDelegate;
-	
+
 	public TimerDelegate getTimerDelegate() {
 		return _TimerDelegate;
 	}
@@ -198,15 +196,11 @@ public final class StaticDependencies {
 		return _DatabasesDelegate;
 	}
 	
-	public FacebookDelegate getFacebookDelegate() {
-		return _FacebookDelegate;
-	}
-
 	public void setDependencies(LogDelegate logDelegate, SettingsDelegate settingsDelegate,
 			LocationDelegate locationDelegate, NetworkDelegateClient networkDelegateClient,
 			JSONDelegate jsonDelegate, XMLParser xmlParser, Formatter formatter,
 			Configuration profile, DatabaseDelegate databasesDelegate, TimerDelegate timerDel,
-			NotificationDelegate notificationDelegate, FacebookDelegate fbDel) {
+			NotificationDelegate notificationDelegate) {
 		this.mLogDelegate = logDelegate;
 		this.mSettingsDelegate = settingsDelegate;
 		this.mLocationDelegate = locationDelegate;
@@ -219,6 +213,5 @@ public final class StaticDependencies {
 		this._DatabasesDelegate = databasesDelegate;
 		this._TimerDelegate = timerDel;
 		this._NotificationDelegate = notificationDelegate;
-		this._FacebookDelegate = fbDel;
 	}
 }

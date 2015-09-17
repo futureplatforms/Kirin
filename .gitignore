@@ -95,3 +95,4 @@ src/wp8-xaml-cs/KirinWP8/app/SERVICE_BINDINGS/windows/fromNative/NetworkingServi
 src/wp8-xaml-cs/KirinWP8/app/SERVICE_BINDINGS/windows/fromNative/SymbolMapService.cs
 src/wp8-xaml-cs/KirinWP8/app/SERVICE_BINDINGS/windows/fromNative/TransactionService.cs
 settings.xml
+src/.idea
