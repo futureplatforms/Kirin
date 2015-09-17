@@ -15,6 +15,8 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<platform.version>5.0.1_r2</platform.version>
+		<android.compat.version>[19.0.1,)</android.compat.version>
+		<google.play.services.version>[22.0.0,)</google.play.services.version>
 	</properties>
 	<profiles>
 	    <profile>
@@ -57,20 +59,20 @@
 		<dependency>
 			<groupId>android.support</groupId>
 			<artifactId>compatibility-v4</artifactId>
-			<version>19.1.0</version>
+			<version>${android.compat.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.google.android.gms</groupId>
 			<artifactId>google-play-services</artifactId>
-			<version>22.0.0</version>
+			<version>${google.play.services.version}</version>
 			<type>jar</type>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>android.support</groupId>
 			<artifactId>compatibility-v7-appcompat</artifactId>
-			<version>19.1.0</version>
+			<version>${android.compat.version}</version>
 			<type>jar</type>
 			<scope>provided</scope>
 		</dependency>

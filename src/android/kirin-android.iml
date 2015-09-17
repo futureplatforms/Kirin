@@ -25,9 +25,9 @@
     <orderEntry type="module" module-name="kirin-core" />
     <orderEntry type="library" name="Maven: com.google.guava:guava:16.0.1" level="project" />
     <orderEntry type="module" module-name="kirin-gwt-stub" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: android.support:compatibility-v4:19.1.0" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: com.google.android.gms:google-play-services:22.0.0" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: android.support:compatibility-v7-appcompat:19.1.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: android.support:compatibility-v4:23.0.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: com.google.android.gms:google-play-services:26.0.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: android.support:compatibility-v7-appcompat:23.0.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: junit:junit:3.8.1" level="project" />
   </component>
   <component name="org.twodividedbyzero.idea.findbugs">

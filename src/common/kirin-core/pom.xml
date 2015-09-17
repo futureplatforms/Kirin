@@ -55,7 +55,7 @@
     <dependency>
         <groupId>com.google.guava</groupId>
         <artifactId>guava</artifactId>
-        <version>${guavaVersion}</version>
+        <version>${guava.version}</version>
     </dependency>
   </dependencies>
   
@@ -129,7 +129,7 @@
 	    <plugin>
 	      <groupId>org.codehaus.mojo</groupId>
 	      <artifactId>gwt-maven-plugin</artifactId>
-	      <version>${gwtVersion}</version>
+	      <version>${gwt.version}</version>
 	      <executions>
 	        <execution>
 	          <goals>

@@ -52,13 +52,13 @@
     <dependency>
       <groupId>com.google.gwt</groupId>
       <artifactId>gwt-user</artifactId>
-      <version>${gwtVersion}</version>
+      <version>${gwt.version}</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>com.google.gwt</groupId>
       <artifactId>gwt-dev</artifactId>
-      <version>${gwtVersion}</version>
+      <version>${gwt.version}</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -77,13 +77,13 @@
     <dependency>
       <groupId>org.timepedia.exporter</groupId>
       <artifactId>gwtexporter</artifactId>
-      <version>${gwtExporterVersion}</version>
+      <version>${gwt.exporter.version}</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
     <groupId>com.google.guava</groupId>
     <artifactId>guava-gwt</artifactId>
-    <version>${guavaVersion}</version>
+    <version>${guava.version}</version>
     <scope>provided</scope>
     </dependency>
     <!--  END common dependencies  -->
@@ -131,7 +131,7 @@
                                 <pluginExecutionFilter>
                                     <groupId>org.codehaus.mojo</groupId>
                                     <artifactId>gwt-maven-plugin</artifactId>
-                                    <versionRange>${gwtVersion}</versionRange>
+                                    <versionRange>${gwt.version}</versionRange>
                                     <goals>
                                         <goal>resources</goal>
                                         <goal>compile</goal>
@@ -165,7 +165,7 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>gwt-maven-plugin</artifactId>
-        <version>${gwtVersion}</version>
+        <version>${gwt.version}</version>
         <executions>
           <execution>
             <configuration>

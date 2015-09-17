@@ -29,9 +29,9 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <guavaVersion>16.0.1</guavaVersion>
-    <gwtVersion>2.7.0</gwtVersion>
-    <gwtExporterVersion>2.5.1</gwtExporterVersion>
+    <guava.version>16.0.1</guava.version>
+    <gwt.version>2.7.0</gwt.version>
+    <gwt.exporter.version>2.5.1</gwt.exporter.version>
   </properties>
   
   <profiles>
