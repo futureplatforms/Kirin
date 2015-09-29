@@ -120,33 +120,33 @@ public class KirinEP implements EntryPoint {
             log.log("GWT.getVersion: " + GWT.getVersion());
         }
 
-        GWT.setUncaughtExceptionHandler(new GWT.UncaughtExceptionHandler() {
-            private static final String UNKNOWN_DOT = "Unknown.";
-            private static final String UNKNOWN_SOURCE = "(Unknown Source)";
-
-            @Override
-            public void onUncaughtException(Throwable e) {
-                StackTraceElement[] stes = e.getStackTrace();
-                ld.log("==== UNCAUGHT EXCEPTION ON KIRIN ====");
-                for (StackTraceElement ste : stes) {
-                    String exc = ste.toString();
-                    SymbolMapService sms = SymbolMapService.BACKDOOR();
-                    if (sms != null) {
-                        if (exc.startsWith(UNKNOWN_DOT)) {
-                            if (exc.endsWith(UNKNOWN_SOURCE)) {
-                                String symbol = exc.substring(UNKNOWN_DOT.length(), exc.length() - UNKNOWN_SOURCE.length());
-                                if (sms._SymbolMap != null && sms._SymbolMap.containsKey(symbol)) {
-                                    MappedJavaMethod method = sms._SymbolMap.get(symbol);
-                                    ld.log(method._ClassName + "::" + method._MemberName);
-                                    continue;
-                                }
-                            }
-                        }
-                    }
-                    ld.log(ste.toString());
-                }
-            }
-        });
+//        GWT.setUncaughtExceptionHandler(new GWT.UncaughtExceptionHandler() {
+//            private static final String UNKNOWN_DOT = "Unknown.";
+//            private static final String UNKNOWN_SOURCE = "(Unknown Source)";
+//
+//            @Override
+//            public void onUncaughtException(Throwable e) {
+//                StackTraceElement[] stes = e.getStackTrace();
+//                ld.log("==== UNCAUGHT EXCEPTION ON KIRIN ====");
+//                for (StackTraceElement ste : stes) {
+//                    String exc = ste.toString();
+//                    SymbolMapService sms = SymbolMapService.BACKDOOR();
+//                    if (sms != null) {
+//                        if (exc.startsWith(UNKNOWN_DOT)) {
+//                            if (exc.endsWith(UNKNOWN_SOURCE)) {
+//                                String symbol = exc.substring(UNKNOWN_DOT.length(), exc.length() - UNKNOWN_SOURCE.length());
+//                                if (sms._SymbolMap != null && sms._SymbolMap.containsKey(symbol)) {
+//                                    MappedJavaMethod method = sms._SymbolMap.get(symbol);
+//                                    ld.log(method._ClassName + "::" + method._MemberName);
+//                                    continue;
+//                                }
+//                            }
+//                        }
+//                    }
+//                    ld.log(ste.toString());
+//                }
+//            }
+//        });
     }
 
     private static native void _execute() /*-{
