@@ -9,10 +9,13 @@ import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.futureplatforms.kirin.console.dropbox.ConsoleDropboxes;
+import com.futureplatforms.kirin.dependencies.StaticDependencies;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate.HttpVerb;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate.NetworkResponse;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegateClient;
@@ -74,7 +77,7 @@ public class ConsoleNetwork implements NetworkDelegateClient {
 	}
 	
 	private enum HttpReturnType {
-		Plain, Base64
+		Plain, Base64, Token
 	}
 
 	private void _doHttp(final HttpVerb verb, final String url, final String payload,
@@ -103,7 +106,7 @@ public class ConsoleNetwork implements NetworkDelegateClient {
 					
 					code = conn.getResponseCode();
 					Map<String, List<String>> reqProps = conn.getHeaderFields();
-					Map<String, String> retHeaders = Maps.newHashMap();
+					Map<String, String> retHeaders = new HashMap<>();
 					Set<String> reqKeys = reqProps.keySet();
 					for (String reqKey : reqKeys) {
 						retHeaders.put(reqKey, reqProps.get(reqKey).get(0));
@@ -113,8 +116,10 @@ public class ConsoleNetwork implements NetworkDelegateClient {
 						String str;
 						if (returnType == HttpReturnType.Plain) {
 							str = slurp(is, 1024);
-						} else {
+						} else if (returnType == HttpReturnType.Base64) {
 							str = BaseEncoding.base64().encode(slurpBytes(is, 1024));
+						} else {
+							str = ConsoleDropboxes.getInstance()._NetworkDropbox.putItem(slurpBytes(is, 1024));
 						}
 						callback.callOnSuccess(code, str, retHeaders);
 					} catch (Throwable t) {
@@ -140,5 +145,10 @@ public class ConsoleNetwork implements NetworkDelegateClient {
 			String payload, Map<String, String> headers,
 			NetworkResponse callback) {
 		_doHttp(verb, url, payload, headers, callback, HttpReturnType.Base64);
+	}
+
+	@Override
+	public void doHttpWithTokenReturn(HttpVerb verb, String url, String payload, Map<String, String> headers, NetworkResponse callback) {
+		_doHttp(verb, url, payload, headers, callback, HttpReturnType.Token);
 	}
 }

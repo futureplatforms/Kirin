@@ -14,9 +14,9 @@ import com.futureplatforms.kirin.dependencies.xml.parser.XMLParser;
 public final class StaticDependencies {
 	public enum Configuration {
 		Debug, Release
-	};
+	}
 	
-	public static enum NetworkFailType { NetworkFail, TimeoutFail, UnknownFail };
+	public enum NetworkFailType { NetworkFail, TimeoutFail, UnknownFail }
 
 	private static StaticDependencies instance;
 
@@ -27,25 +27,25 @@ public final class StaticDependencies {
 		return instance;
 	}
 
-	public static interface LogDelegate {
-		public void log(String s);
-
-		public void log(String tag, String s);
-
-		public void log(String tag, String s, Throwable t);
+	public interface LogDelegate {
+		void log(String s);
+		void log(String tag, String s);
+		void log(String tag, String s, Throwable t);
 	}
 
-	public static interface SettingsDelegate {
-		public String get(String key);
-		public void put(String key, String value);
-		public void clear();
+	public interface SettingsDelegate {
+		String get(String key);
+		void put(String key, String value);
+		void clear();
 	}
 
-	public static interface NetworkDelegateClient {
-		public void doHttp(HttpVerb verb, String url, String payload, Map<String, String> headers,
+	public interface NetworkDelegateClient {
+		void doHttp(HttpVerb verb, String url, String payload, Map<String, String> headers,
 				NetworkResponse callback);
-		public void doHttpWithBase64Return(HttpVerb verb, String url, String payload, Map<String, String> headers,
+		void doHttpWithBase64Return(HttpVerb verb, String url, String payload, Map<String, String> headers,
 				NetworkResponse callback);
+		void doHttpWithTokenReturn(HttpVerb verb, String url, String payload, Map<String, String> headers,
+									NetworkResponse callback);
 	}
 
 	public static class NetworkDelegate {
@@ -56,14 +56,14 @@ public final class StaticDependencies {
 			this._Client = client;
 		}
 
-		public static enum HttpVerb {
+		public enum HttpVerb {
 			DELETE(false), GET(false), POST(true), PUT(true);
 			public final boolean _HasPayload;
 
-			private HttpVerb(boolean hasPayload) {
+			HttpVerb(boolean hasPayload) {
 				this._HasPayload = hasPayload;
 			}
-		};
+		}
 
 		public static void UpdateNetworkConnectionStatus(boolean enabled)
 		{
@@ -133,6 +133,11 @@ public final class StaticDependencies {
 		public final void doHttpWithBase64Return(HttpVerb verb, String url, String payload,
 				Map<String, String> headers, NetworkResponse callback) {
 			_Client.doHttpWithBase64Return(verb, url, payload, headers, callback);
+		}
+
+		public final void doHttpWithTokenReturn(HttpVerb verb, String url, String payload,
+												 Map<String, String> headers, NetworkResponse callback) {
+			_Client.doHttpWithTokenReturn(verb, url, payload, headers, callback);
 		}
 	}
 
