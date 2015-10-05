@@ -1,5 +1,6 @@
 package com.futureplatforms.kirin.console.db;
 
+import com.futureplatforms.kirin.console.dropbox.ConsoleDropboxes;
 import com.futureplatforms.kirin.dependencies.db.Database;
 import com.futureplatforms.kirin.dependencies.db.DatabaseDelegate;
 import com.futureplatforms.kirin.dependencies.db.Transaction.RowSet;
@@ -203,7 +204,7 @@ public class ConsoleDB implements DatabaseDelegate {
 									try {
 										if (sToken._Callback != null) {
 											ResultSet resultSet = execQuery(kirinStatement);
-											String token = ConsoleDBDropbox.getInstance().putResultSet(resultSet);
+											String token = ConsoleDropboxes.getInstance()._DbDropbox.putItem(resultSet);
 											sToken._Callback.onSuccess(token);
 										} else {
 											execUpdate(kirinStatement);
