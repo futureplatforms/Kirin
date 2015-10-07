@@ -15,6 +15,8 @@
 
 @implementation NewNetworkingImpl
 
+typedef enum NetRetrieveType { Net_Default, Net_B64, Net_Token } NetRetrieveType;
+
 @synthesize kirinModule = kirinModule_;
 
 - (id) init {
@@ -43,7 +45,7 @@
                   :NO];
 }
 
-- (void) retrieve:(int)ref :(NSString *)method :(NSString *)url :(NSString *)payload :(NSArray *)headerKeys :(NSArray *)headerVals :(BOOL) isB64 {
+- (void) retrieve:(int)ref :(NSString *)method :(NSString *)url :(NSString *)payload :(NSArray *)headerKeys :(NSArray *)headerVals :(NetRetrieveType) netType {
     NSData *payloadData = [payload dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
     
     NSString *payloadLen = [NSString stringWithFormat:@"%lu", (unsigned long)[payloadData length]];
@@ -69,10 +71,17 @@
              [self.kirinModule onError:ref];
          } else {
              NSString *respStr;
-             if (isB64) {
-                 respStr = [NewNetworkingImpl Base64Encode:data];
-             } else {
-                 respStr = [[NSString alloc] initWithData:data encoding:[NewNetworkingImpl stringEncodingFromString:[response textEncodingName]]];
+             switch (netType) {
+                 case Net_Default: {
+                     respStr = [[NSString alloc] initWithData:data encoding:[NewNetworkingImpl stringEncodingFromString:[response textEncodingName]]];
+                 } break;
+                 case Net_B64: {
+                     respStr = [NewNetworkingImpl Base64Encode:data];
+                 } break;
+                 default: {
+                 /* case Net_Token: */
+                     respStr = [[KIRIN dropbox] putObject:data];
+                 } break;
              }
              
              NSHTTPURLResponse * httpResp = (NSHTTPURLResponse*) response;

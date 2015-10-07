@@ -28,9 +28,7 @@ public final class StaticDependencies {
 
 	public interface LogDelegate {
 		void log(String s);
-
 		void log(String tag, String s);
-
 		void log(String tag, String s, Throwable t);
 	}
 
@@ -45,6 +43,8 @@ public final class StaticDependencies {
 				NetworkResponse callback);
 		void doHttpWithBase64Return(HttpVerb verb, String url, String payload, Map<String, String> headers,
 				NetworkResponse callback);
+		void doHttpWithTokenReturn(HttpVerb verb, String url, String payload, Map<String, String> headers,
+									NetworkResponse callback);
 	}
 
 	public static class NetworkDelegate {
@@ -59,7 +59,7 @@ public final class StaticDependencies {
 			DELETE(false), GET(false), POST(true), PUT(true);
 			public final boolean _HasPayload;
 
-			private HttpVerb(boolean hasPayload) {
+			HttpVerb(boolean hasPayload) {
 				this._HasPayload = hasPayload;
 			}
 		}
@@ -132,6 +132,11 @@ public final class StaticDependencies {
 		public final void doHttpWithBase64Return(HttpVerb verb, String url, String payload,
 				Map<String, String> headers, NetworkResponse callback) {
 			_Client.doHttpWithBase64Return(verb, url, payload, headers, callback);
+		}
+
+		public final void doHttpWithTokenReturn(HttpVerb verb, String url, String payload,
+												 Map<String, String> headers, NetworkResponse callback) {
+			_Client.doHttpWithTokenReturn(verb, url, payload, headers, callback);
 		}
 	}
 

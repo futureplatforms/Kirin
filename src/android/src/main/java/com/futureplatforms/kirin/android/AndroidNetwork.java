@@ -1,11 +1,14 @@
 package com.futureplatforms.kirin.android;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.futureplatforms.kirin.android.dropbox.AndroidDropboxes;
 import com.futureplatforms.kirin.dependencies.StaticDependencies;
 
 import org.apache.http.Header;
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
@@ -36,7 +39,17 @@ public class AndroidNetwork implements NetworkDelegateClient {
 	}
 	
 	private enum HttpReturnType {
-		Plain, Base64
+		Plain, Base64, Token
+	}
+
+	private static String getResult(HttpReturnType returnType, HttpEntity entity) throws IOException {
+		if (returnType == HttpReturnType.Plain) {
+			return EntityUtils.toString(entity, "UTF-8");
+		} else if (returnType == HttpReturnType.Base64){
+			return BaseEncoding.base64().encode(EntityUtils.toByteArray(entity));
+		} else {
+			return AndroidDropboxes.getInstance()._NetworkDropbox.putItem(EntityUtils.toByteArray(entity));
+		}
 	}
 
 	private class GetAsyncTask extends AsyncTask<Object, Void, Boolean> {
@@ -76,24 +89,18 @@ public class AndroidNetwork implements NetworkDelegateClient {
 					}
 				});
 
-				HttpResponse getResponse = null;
-
-				getResponse = client.execute(get);
+				HttpResponse getResponse = client.execute(get);
 				try {
 					res = getResponse.getStatusLine().getStatusCode();
 				} catch (Throwable t) {}
 				Header[] responseHeaders = getResponse.getAllHeaders();
 
-				responseHeaderMap = new HashMap<String, String>();
+				responseHeaderMap = new HashMap<>();
 				for (Header h : responseHeaders) {
 					responseHeaderMap.put(h.getName(), h.getValue());
 				}
 
-				if (_ReturnType == HttpReturnType.Plain) {
-					result = EntityUtils.toString(getResponse.getEntity(), "UTF-8");
-				} else {
-					result = BaseEncoding.base64().encode(EntityUtils.toByteArray(getResponse.getEntity()));
-				}
+				result = getResult(_ReturnType, getResponse.getEntity());
 				return true;
 
 			} catch (Exception e) {
@@ -162,26 +169,20 @@ public class AndroidNetwork implements NetworkDelegateClient {
 
 				base.setEntity(new StringEntity(toPost, HTTP.UTF_8));
 
-				HttpResponse postResponse = null;
-
-				postResponse = client.execute(base);
+				HttpResponse postResponse = client.execute(base);
 				try {
 					res = postResponse.getStatusLine().getStatusCode();
 				} catch (Throwable t) {}
 
 				Header[] responseHeaders = postResponse.getAllHeaders();
 
-				responseHeaderMap = new HashMap<String, String>();
+				responseHeaderMap = new HashMap<>();
 				for (Header h : responseHeaders) {
 					responseHeaderMap.put(h.getName(), h.getValue());
 				}
-				
-				if (_ReturnType == HttpReturnType.Plain) {
-					result = EntityUtils.toString(postResponse.getEntity());
-				} else {
-					result = BaseEncoding.base64().encode(EntityUtils.toByteArray(postResponse.getEntity()));
-				}
-				
+
+				result = getResult(_ReturnType, postResponse.getEntity());
+
 				return true;
 
 			} catch (Exception e) {
@@ -234,6 +235,24 @@ public class AndroidNetwork implements NetworkDelegateClient {
 				new PostPutAsyncTask(verb).execute(url, payload, headers, callback, HttpReturnType.Base64);
 				break;
 	
+			default:
+				throw new IllegalArgumentException(verb + " unsupported");
+		}
+	}
+
+	@Override
+	public void doHttpWithTokenReturn(HttpVerb verb, String url,
+									   String payload, Map<String, String> headers,
+									   NetworkResponse callback) {
+		switch (verb) {
+			case GET:
+				new GetAsyncTask().execute(url, headers, callback, HttpReturnType.Token);
+				break;
+			case POST:
+			case PUT:
+				new PostPutAsyncTask(verb).execute(url, payload, headers, callback, HttpReturnType.Token);
+				break;
+
 			default:
 				throw new IllegalArgumentException(verb + " unsupported");
 		}
