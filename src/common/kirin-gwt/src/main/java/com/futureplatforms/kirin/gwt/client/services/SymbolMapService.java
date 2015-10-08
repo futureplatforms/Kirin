@@ -1,5 +1,7 @@
 package com.futureplatforms.kirin.gwt.client.services;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.timepedia.exporter.client.Export;
@@ -50,17 +52,27 @@ public class SymbolMapService extends KirinService<SymbolMapServiceNative> {
 	public void setSymbolMap(String symbolMap) {
 		// Symbol maps are in the form:
 		// # jsName, jsniIdent, className, memberName, sourceUri, sourceLine, fragmentNumber
-//		String[] lines = symbolMap.split("\n");
-//		for (String line : lines) {
-//			// Ignore comments
-//			try {
-//				if (!line.startsWith("#")) {
-//					String[] components = line.split(",");
-//					_SymbolMap.put(components[0], new MappedJavaMethod(components[2], components[3], components[4], components[5]));
-//				}
-//			} catch (Throwable t) {
-//			}
-//		}
+
+		// Strange bug in String.split caused infinite loop here on iOS 9.  So replacing
+		// with our own implementation.
+		List<String> lines = new ArrayList<>();
+		int from = 0, index;
+		while ((index = symbolMap.indexOf("\n", from)) != -1) {
+			lines.add(symbolMap.substring(from, index));
+			from = index + 1;
+		}
+		lines.add(symbolMap.substring(from));
+
+		for (String line : lines) {
+			// Ignore comments
+			try {
+				if (!line.startsWith("#")) {
+					String[] components = line.split(",");
+					_SymbolMap.put(components[0], new MappedJavaMethod(components[2], components[3], components[4], components[5]));
+				}
+			} catch (Throwable t) {
+			}
+		}
 		StaticDependencies.getInstance().getLogDelegate().log("SymbolMap: " + _SymbolMap.size());
 	}
 }
