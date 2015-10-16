@@ -25,6 +25,16 @@ typedef enum NetRetrieveType { Net_Default, Net_B64, Net_Token } NetRetrieveType
     return [super initWithServiceName: self.serviceName];
 }
 
+- (void) retrieveToken:(int)connId :(NSString *)method :(NSString *)url :(NSString *)postData :(NSArray *)headerKeys :(NSArray *)headerVals {
+    [self retrieve:connId
+                  :method
+                  :url
+                  :postData
+                  :headerKeys
+                  :headerVals
+                  :Net_Token];
+}
+
 - (void) retrieveB64: (int) ref : (NSString*) method : (NSString*) url : (NSString*) payload : (NSArray*) headerKeys : (NSArray*) headerVals {
     [self retrieve:ref
                   :method
@@ -32,7 +42,7 @@ typedef enum NetRetrieveType { Net_Default, Net_B64, Net_Token } NetRetrieveType
                   :payload
                   :headerKeys
                   :headerVals
-                  :YES];
+                  :Net_B64];
 }
 
 - (void) retrieve: (int) ref : (NSString*) method : (NSString*) url : (NSString*) payload : (NSArray*) headerKeys : (NSArray*) headerVals {
@@ -42,7 +52,7 @@ typedef enum NetRetrieveType { Net_Default, Net_B64, Net_Token } NetRetrieveType
                   :payload
                   :headerKeys
                   :headerVals
-                  :NO];
+                  :Net_Default];
 }
 
 - (void) retrieve:(int)ref :(NSString *)method :(NSString *)url :(NSString *)payload :(NSArray *)headerKeys :(NSArray *)headerVals :(NetRetrieveType) netType {
