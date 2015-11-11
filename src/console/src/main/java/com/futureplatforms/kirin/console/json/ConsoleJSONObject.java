@@ -54,6 +54,7 @@ public class ConsoleJSONObject extends com.futureplatforms.kirin.dependencies.js
         try {
             return jsonObject.getString(key);
         } catch (JSONException e) {
+            e.printStackTrace();
             throw new IllegalArgumentException("couldn't get string :: " + key);
         }
     }
