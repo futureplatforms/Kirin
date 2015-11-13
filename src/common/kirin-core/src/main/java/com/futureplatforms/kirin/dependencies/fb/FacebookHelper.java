@@ -1,5 +1,6 @@
 package com.futureplatforms.kirin.dependencies.fb;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,7 +58,7 @@ public class FacebookHelper {
 			final AsyncCallback1<Boolean> cb,
 			final Permission ... permissions) {
 		final LogDelegate log = StaticDependencies.getInstance().getLogDelegate();
-		log.log("hasAllPermissions:" + permissions);
+		log.log("hasAllPermissions:" + Arrays.toString(permissions));
 		if (permissions != null) {
 			for (Permission permission : permissions) {
 				log.log(permission.toString());
