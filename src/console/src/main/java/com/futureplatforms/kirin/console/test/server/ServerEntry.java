@@ -15,35 +15,35 @@ public class ServerEntry {
 		boolean matches(String postData);
 	}
 	
-	private final String _UrlEndsWith, _XmlReturn;
+	private final String _UrlContains, _ToReturn;
 	private final Condition _Condition;
 	
-	public ServerEntry(String urlEndsWith, String xmlReturn) {
-		this(urlEndsWith, new Condition() {
+	public ServerEntry(String urlContains, String toReturn) {
+		this(urlContains, new Condition() {
 			
 			@Override
 			public boolean matches(String postData) {
 				return true;
 			}
-		}, xmlReturn);
+		}, toReturn);
 	}
 	
-	public ServerEntry(String urlEndsWith, Condition condition, String xmlReturn) {
-		this._UrlEndsWith = urlEndsWith;
+	public ServerEntry(String urlContains, Condition condition, String toReturn) {
+		this._UrlContains = urlContains;
 		this._Condition = condition;
-		this._XmlReturn = xmlReturn;
+		this._ToReturn = toReturn;
 	}
 	
 	public boolean matches(String url, String postData) {
-		return url.contains(this._UrlEndsWith) && _Condition.matches(postData);
+		return url.contains(this._UrlContains) && _Condition.matches(postData);
 	}
 	
 	public void result(NetworkResponse callback) {
 		try {
-			URL res = Server.class.getResource("/" + _XmlReturn);
-			String inputXML = Resources.toString(res, Charsets.UTF_8);
-			inputXML = inputXML.replaceAll("&\\s+", "&amp;");
-			callback.callOnSuccess(200, inputXML, new HashMap<String, String>());
+			URL res = Server.class.getResource("/" + _ToReturn);
+			String toReturn = Resources.toString(res, Charsets.UTF_8);
+			toReturn = toReturn.replaceAll("&\\s+", "&amp;");
+			callback.callOnSuccess(200, toReturn, new HashMap<String, String>());
 		} catch (IOException e) {
 			callback.callOnFail("err");
 		}

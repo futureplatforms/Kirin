@@ -36,6 +36,7 @@ public class Server implements NetworkDelegateClient {
 			System.out.println(verb.name());
 			System.out.println(url);
 			System.out.println(payload);
+			callback.callOnFail("404");
 			//new ConsoleNetwork().doHttp(verb, url, payload, headers, callback);
 		}
 	}
