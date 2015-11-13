@@ -7,7 +7,6 @@
 //
 
 #import "NativeContext.h"
-#import "JSON.h"
 #import "NativeObjectHolder.h"
 #import <UIKit/UIApplication.h>
 #import "KirinSynchronousExecute.h"
@@ -36,7 +35,7 @@
 }
 
 - (NSArray*) methodNamesFor: (NSString*) moduleName {
-    NativeObjectHolder* holder = [self.nativeObjects objectForKey:moduleName];
+    NativeObjectHolder* holder = self.nativeObjects[moduleName];
     if (!holder) {
         [NSException raise:@"KirinNoSuchObjectException" format:@"There is no object registered called %@", moduleName];
     }
@@ -44,7 +43,7 @@
 }
 
 - (void) registerNativeObject: (id) object asName: (NSString*) name {
-    [self.nativeObjects setValue:[NativeObjectHolder holderForObject:object] forKey:name];
+    self.nativeObjects[name] = [NativeObjectHolder holderForObject:object];
 }
 
 - (void) unregisterNativeObject: (NSString*) name {
@@ -54,7 +53,7 @@
 }
 
 - (void) executeCommandFromModule: (NSString*) host andMethod: (NSString*) fullMethodName andArgsList: (NSString*) query {
-    NativeObjectHolder* holder = [self.nativeObjects objectForKey:host];
+    NativeObjectHolder* holder = self.nativeObjects[host];
     id obj = holder ? holder.nativeObject : nil;
     
 	SEL selector = [holder findSelectorFromString:fullMethodName];
@@ -73,16 +72,17 @@
             @try {
                 NSString* argsJSON = [query stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
                 
-                NSMutableArray* arguments = [argsJSON JSONValue];
+                NSMutableArray* arguments = [NSJSONSerialization JSONObjectWithData:[argsJSON dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
                 
                 NSMethodSignature* sig = [[obj class] instanceMethodSignatureForSelector:selector];
                 
                 NSInvocation* invocation = [NSInvocation invocationWithMethodSignature:sig];
-                
+                [invocation retainArguments];
                 invocation.selector = selector;
                 invocation.target = obj;
                 for (NSUInteger i=0, max=[arguments count]; i<max; i++) {
-                    NSObject* arg = [arguments objectAtIndex:i];
+                    // http://stackoverflow.com/q/16928299/64505
+                    __unsafe_unretained NSObject* arg = [arguments objectAtIndex:i];
                     
                     char argType = [sig getArgumentTypeAtIndex:i + 2][0];
                     BOOL handled = YES;
@@ -121,19 +121,20 @@
                     if (!handled) {
                         [NSException raise:@"KirinInvocationException"
                                     format:@"Cannot call selector %@ with argument %lu value=%@",
-                         fullMethodName, i, arg];
+                         fullMethodName, (unsigned long)i, arg];
                     }
                 }
                 [invocation invoke];
+                [invocation self];
             } @catch (NSException* exception) {
-                DLog(@"Exception while executing %@.%@", host, fullMethodName);
+                NSLog(@"Exception while executing %@.%@", host, fullMethodName);
                 
                 // Create a string based on the exception
                 NSString *exceptionMessage = [NSString stringWithFormat:@"%@\nReason: %@\nUser Info: %@", [exception name], [exception reason], [exception userInfo]];
                 
                 // Always log to console for history
-                DLog(@"Exception raised:\n%@", exceptionMessage);
-                DLog(@"Backtrace: %@", [exception callStackSymbols]);
+                NSLog(@"Exception raised:\n%@", exceptionMessage);
+                NSLog(@"Backtrace: %@", [exception callStackSymbols]);
             } @finally {
                 if (isBackgroundThread) {
                     [[UIApplication sharedApplication] endBackgroundTask:taskId];
@@ -160,18 +161,11 @@
         if (!className) {
             className = host;
         }
-        DLog(@"Class method '%@' not defined in class %@, called from module %@.js", fullMethodName, className, host);
+        NSLog(@"Class method '%@' not defined in class %@, called from module %@.js", fullMethodName, className, host);
         
         //[NSException raise:NSInternalInconsistencyException format:@"Class method '%@' not defined against class '%@'.", fullMethodName, className];
         
 	}
-}
-
-- (void) dealloc {
-    [self.nativeObjects removeAllObjects];
-    self.nativeObjects = nil;
-    
-    [super dealloc];
 }
 
 @end

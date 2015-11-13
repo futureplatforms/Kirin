@@ -8,17 +8,13 @@
 
 #import "KirinExtensions.h"
 
-#import "SettingsBackend.h"
-#import "FileSystemBackend.h"
-#import "KirinImagePicker.h"
-#import "LocalNotificationsBackend.h"
-#import "KirinImageTransformer.h"
+#import "NewSettingsImpl.h"
 #import "NewNetworkingImpl.h"
 #import "NewDatabaseAccessService.h"
 #import "KirinGwtServiceProtocol.h"
 #import "SymbolMapService.h"
-#import "KirinFacebook.h"
 #import "KirinGwtLocation.h"
+#import "NewNotificationsImpl.h"
 #import "Crypto.h"
 @interface KirinExtensions()
 
@@ -33,34 +29,20 @@
 @synthesize allExtensions;
 
 + (KirinExtensions*) empty {
-    DLog(@"Empty KirinExtensions");
-    return [[[KirinExtensions alloc] init] autorelease];
+    return [[KirinExtensions alloc] init];
 }
 
 + (KirinExtensions*) coreExtensions {
     KirinExtensions* services = [KirinExtensions empty];
-    DLog(@"Core KirinExtensions");
-    [services registerExtension:[[[SettingsBackend alloc] init] autorelease]];
-    [services registerExtension:[[LocalNotificationsBackend alloc] init]];
     NewDatabaseAccessService *dbAccess = [[NewDatabaseAccessService alloc] init];
     [services registerGwtService:dbAccess];
     [services registerGwtService:dbAccess.NewTransactionService];
     [services registerGwtService:[[SymbolMapService alloc] init]];
     [services registerGwtService:[[KirinGwtLocation alloc] init]];
-    Crypto *cr = [[Crypto alloc] init];
-    [cr onRegister];
-
-    
-    if(NSClassFromString(@"FBSession")) {
-        if ([[NSBundle mainBundle] objectForInfoDictionaryKey:@"FacebookAppID"]) {
-            KirinFacebook* fb = [[KirinFacebook alloc] init];
-            [fb onRegister];
-        }
-    } else {
-    }
-    
-    NewNetworkingImpl * newNetworking = [[NewNetworkingImpl alloc] init];
-    [newNetworking onRegister];
+    [services registerGwtService:[[Crypto alloc] init]];
+    [services registerGwtService:[[NewSettingsImpl alloc] init]];
+    [services registerGwtService:[[NewNotificationsImpl alloc] init]];
+    [services registerGwtService:[[NewNetworkingImpl alloc] init]];
     
     return services;
 }
@@ -93,7 +75,7 @@
  
     self.isStarted = YES;   
     
-    for (int i=0, max=[self.allExtensions count]; i<max; i++) {
+    for (NSUInteger i=0, max=[self.allExtensions count]; i<max; i++) {
         id<KirinExtensionProtocol> service = [self.allExtensions objectAtIndex:i];
         if ([service respondsToSelector:@selector(onStart)]) {
             [service onStart];
@@ -107,14 +89,14 @@
         return;
     }
     
-    for (int i=0, max=[self.allExtensions count]; i<max; i++) {
+    for (NSUInteger i=0, max=[self.allExtensions count]; i<max; i++) {
         id<KirinExtensionProtocol> service = [self.allExtensions objectAtIndex:i];
         if ([service respondsToSelector:@selector(onStop)]) {
             [service onStop];
         }
     }
     
-    for (int i=0, max=[self.allExtensions count]; i<max; i++) {
+    for (NSUInteger i=0, max=[self.allExtensions count]; i<max; i++) {
         id<KirinExtensionProtocol> service = [self.allExtensions objectAtIndex:i];
         if ([service respondsToSelector:@selector(onUnload)]) {
             [service onUnload];
@@ -122,12 +104,6 @@
     }
     
     self.isStarted = NO;
-}
-
-- (void) dealloc {
-    self.isStarted = NO;
-    self.allExtensions = nil;
-    [super dealloc];
 }
 
 @end

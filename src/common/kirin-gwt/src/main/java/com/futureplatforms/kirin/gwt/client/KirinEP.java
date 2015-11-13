@@ -3,9 +3,12 @@ package com.futureplatforms.kirin.gwt.client;
 import com.futureplatforms.kirin.dependencies.StaticDependencies;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.Configuration;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.LogDelegate;
-import com.futureplatforms.kirin.gwt.client.delegates.*;
+import com.futureplatforms.kirin.gwt.client.delegates.GwtFormatter;
+import com.futureplatforms.kirin.gwt.client.delegates.GwtLocation;
+import com.futureplatforms.kirin.gwt.client.delegates.GwtNotificationDelegate;
+import com.futureplatforms.kirin.gwt.client.delegates.GwtSettingsDelegate;
+import com.futureplatforms.kirin.gwt.client.delegates.GwtTimerDelegate;
 import com.futureplatforms.kirin.gwt.client.delegates.db.GwtDatabaseDelegate;
-import com.futureplatforms.kirin.gwt.client.delegates.fb.GwtFacebook;
 import com.futureplatforms.kirin.gwt.client.delegates.json.GwtJSON;
 import com.futureplatforms.kirin.gwt.client.delegates.net.GwtNetworking;
 import com.futureplatforms.kirin.gwt.client.delegates.xml.GwtXMLParserImpl;
@@ -99,8 +102,7 @@ public class KirinEP implements EntryPoint {
                 profile,
                 new GwtDatabaseDelegate(),
                 new GwtTimerDelegate(),
-                new GwtNotificationDelegate(),
-                new GwtFacebook());
+                new GwtNotificationDelegate());
 
         PrintStream ps = new GwtPrintStream();
 

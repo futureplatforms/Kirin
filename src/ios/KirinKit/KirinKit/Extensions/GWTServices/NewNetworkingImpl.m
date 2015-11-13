@@ -89,7 +89,7 @@ typedef enum NetRetrieveType { Net_Default, Net_B64, Net_Token } NetRetrieveType
                      respStr = [NewNetworkingImpl Base64Encode:data];
                  } break;
                  default: {
-                 /* case Net_Token: */
+                     /* case Net_Token: */
                      respStr = [[KIRIN dropbox] putObject:data];
                  } break;
              }
@@ -181,31 +181,31 @@ typedef enum NetRetrieveType { Net_Default, Net_B64, Net_Token } NetRetrieveType
     while (inpos < inLength){
         switch (cycle) {
             case 0:
-            outputBuffer[outpos++] = Encode[(inputBuffer[inpos]&0xFC)>>2];
-            cycle = 1;
-            break;
+                outputBuffer[outpos++] = Encode[(inputBuffer[inpos]&0xFC)>>2];
+                cycle = 1;
+                break;
             case 1:
-            temp = (inputBuffer[inpos++]&0x03)<<4;
-            outputBuffer[outpos] = Encode[temp];
-            cycle = 2;
-            break;
+                temp = (inputBuffer[inpos++]&0x03)<<4;
+                outputBuffer[outpos] = Encode[temp];
+                cycle = 2;
+                break;
             case 2:
-            outputBuffer[outpos++] = Encode[temp|(inputBuffer[inpos]&0xF0)>> 4];
-            temp = (inputBuffer[inpos++]&0x0F)<<2;
-            outputBuffer[outpos] = Encode[temp];
-            cycle = 3;
-            break;
+                outputBuffer[outpos++] = Encode[temp|(inputBuffer[inpos]&0xF0)>> 4];
+                temp = (inputBuffer[inpos++]&0x0F)<<2;
+                outputBuffer[outpos] = Encode[temp];
+                cycle = 3;
+                break;
             case 3:
-            outputBuffer[outpos++] = Encode[temp|(inputBuffer[inpos]&0xC0)>>6];
-            cycle = 4;
-            break;
+                outputBuffer[outpos++] = Encode[temp|(inputBuffer[inpos]&0xC0)>>6];
+                cycle = 4;
+                break;
             case 4:
-            outputBuffer[outpos++] = Encode[inputBuffer[inpos++]&0x3f];
-            cycle = 0;
-            break;
+                outputBuffer[outpos++] = Encode[inputBuffer[inpos++]&0x3f];
+                cycle = 0;
+                break;
             default:
-            cycle = 0;
-            break;
+                cycle = 0;
+                break;
         }
     }
     NSString *pictemp = [NSString stringWithUTF8String:outputBuffer];

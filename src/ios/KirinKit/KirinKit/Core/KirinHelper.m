@@ -7,7 +7,6 @@
 //
 
 #import "KirinHelper.h"
-#import "JSON.h"
 #import "KirinProxy.h"
 
 @interface KirinHelper () 
@@ -46,11 +45,13 @@
 - (void) onLoad {
     // register the object so as to be callable from Javascript.
     [self.nativeContext registerNativeObject:self.nativeObject asName:self.jsModuleName];
-    
+
     // now tell the js what methods to construct a proxy with.
     NSArray* methods = [self.nativeContext methodNamesFor: self.jsModuleName];
+
+    NSString *methodsJSON = [[NSString alloc] initWithData: [NSJSONSerialization dataWithJSONObject:methods options:0 error:nil] encoding:NSUTF8StringEncoding];
     
-    [self.jsContext js: [NSString stringWithFormat: REGISTER_MODULE_WITH_METHODS,  self.jsModuleName, [methods JSONRepresentation]]];
+    [self.jsContext js: [NSString stringWithFormat: REGISTER_MODULE_WITH_METHODS, self.jsModuleName, methodsJSON]];
 }
 
 - (void) onUnload {
@@ -77,8 +78,9 @@
     if (argArray == nil || [argArray count] == 0) {
         [self.jsContext js:[NSString stringWithFormat: EXECUTE_METHOD_JS, self.jsModuleName, methodName]];
     } else {
-        // we need to think about square brackets: 
-        [self.jsContext js:[NSString stringWithFormat: EXECUTE_METHOD_WITH_ARGS_JS, self.jsModuleName, methodName, [argArray JSONRepresentation]]];
+        // we need to think about square brackets:
+        NSString *json = [[NSString alloc] initWithData: [NSJSONSerialization dataWithJSONObject:argArray options:0 error:nil] encoding:NSUTF8StringEncoding];
+        [self.jsContext js:[NSString stringWithFormat: EXECUTE_METHOD_WITH_ARGS_JS, self.jsModuleName, methodName, json]];
     }    
 }
 
@@ -129,7 +131,8 @@
     if (argArray == nil || [argArray count] == 0) {
         [self.jsContext js:[NSString stringWithFormat: EXECUTE_CALLBACK_JS, callbackId]];
     } else {
-        [self.jsContext js:[NSString stringWithFormat: EXECUTE_CALLBACK_WITH_ARGS_JS, callbackId, [argArray JSONRepresentation]]];
+        NSString *json = [[NSString alloc] initWithData: [NSJSONSerialization dataWithJSONObject:argArray options:0 error:nil] encoding:NSUTF8StringEncoding];
+        [self.jsContext js:[NSString stringWithFormat: EXECUTE_CALLBACK_WITH_ARGS_JS, callbackId, json]];
     }
 }
 
@@ -205,16 +208,6 @@
 
 - (id) proxyForJavascriptObject:(Protocol *)protocol andDictionary: (NSDictionary*) dictionary {
     return [KirinProxy proxyWithProtocol:protocol andDictionary:dictionary];
-}
-
-- (void) dealloc {
-    self.jsContext = nil;
-    self.nativeContext = nil;
-    self.proxyForJSModule = nil;
-    self.jsModuleName = nil;
-    self.nativeObject = nil;
-    self.state = nil;
-    [super dealloc];
 }
 
 @end

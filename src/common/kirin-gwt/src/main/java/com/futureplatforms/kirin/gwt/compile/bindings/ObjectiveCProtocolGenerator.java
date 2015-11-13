@@ -61,8 +61,6 @@ public class ObjectiveCProtocolGenerator extends InterfaceGenerator {
 		} else if (type.isArray() != null) {
 			objcTypeName = "NSArray*";
 		} else if (classType != null) {
-			//if (classType.isAssignableTo(mClassCollection)) {
-			//} else if (classType.isAssignableTo(mClassMap)) {
 		    if (javaTypeName.equals("com.google.gwt.core.client.JsArray")) {
                 objcTypeName = "NSArray*";
             } else if (classType.isAssignableTo(jsObjType)) {

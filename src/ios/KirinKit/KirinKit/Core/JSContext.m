@@ -7,8 +7,6 @@
 //
 
 #import "JSContext.h"
-#import "JSON.h"
-
 
 @interface JSContext (private)
  
@@ -31,16 +29,11 @@
     return self;
 }
 
-- (void) dealloc {
-    self.jsExecutor = nil;
-    [super dealloc];
-}
-
 - (void) jsOnMainThread: (NSString*) js {
     if (jsExecutor) {
         [self.jsExecutor execJS:js];
     } else {
-        DLog(@"No JSExecutor! javascript: %@", js);
+        NSLog(@"No JSExecutor! javascript: %@", js);
     }
 }
 

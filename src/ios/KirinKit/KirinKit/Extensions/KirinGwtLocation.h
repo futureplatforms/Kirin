@@ -7,8 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <KirinKit/NSObject+Kirin.h>
-#import <KirinKit/KirinGwtServiceStub.h>
+#import "NSObject+Kirin.h"
+#import "KirinGwtServiceStub.h"
 #import <toNative/GwtLocationServiceNative.h>
 #import <CoreLocation/CoreLocation.h>
 

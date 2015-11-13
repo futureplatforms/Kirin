@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <KirinKit/KirinUiFragmentHelper.h>
+#import "KirinUiFragmentHelper.h"
 
 @interface KirinScreenHelper : KirinUiFragmentHelper {
     

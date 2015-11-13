@@ -7,7 +7,7 @@
 //
 
 #import "KirinGwtServiceStub.h"
-#import <KirinKit/Kirin.h>
+#import "Kirin.h"
 #import "NSObject+Kirin.h"
 
 @implementation KirinGwtServiceStub

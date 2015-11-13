@@ -16,7 +16,7 @@
 @implementation KirinFileSystem
 
 + (KirinFileSystem*) fileSystem {
-    return [[[KirinFileSystem alloc] init] autorelease];
+    return [[KirinFileSystem alloc] init];
 }
 
 - (BOOL) mkdir: (NSString*) newDir {
@@ -60,13 +60,12 @@
         }
     }
     
-    DLog(@"No fileArea was specified, so defaulting to 'temporary'");
     return [KirinPaths filePathInTempDir:filePath];
 }
 
 - (NSString*) readStringFromFilepath: (NSString*) filePath {
-    NSMutableData* data = [NSData dataWithContentsOfFile:filePath];
-    return [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
+    NSData* data = [NSData dataWithContentsOfFile:filePath];
+    return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 }
 
 - (BOOL) copyFrom: (NSString*) srcFilePath to:(NSString*) destFilePath {
@@ -90,7 +89,7 @@
         
     NSMutableArray* files = [NSMutableArray arrayWithCapacity:[filenames count]];
     
-    for (int i=0, max=[filenames count]; i<max; i++) {
+    for (NSUInteger i=0, max=[filenames count]; i<max; i++) {
         NSString* filename = [filenames objectAtIndex:i];
         NSString* filePath = [KirinPaths join:dirPath andFilePath:filename];
 

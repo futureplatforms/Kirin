@@ -8,9 +8,6 @@
 
 #import "KirinProxyWithModule.h"
 
-#import "JSON.h"
-
-
 @interface KirinProxyWithModule ()
 
 
@@ -43,7 +40,7 @@
     // TODO: will this need to be camel cased? 
     NSString* methodName = [[name componentsSeparatedByString:@":"] componentsJoinedByString:@""];
     
-    unsigned numArgs = [sig numberOfArguments];
+    NSUInteger numArgs = [sig numberOfArguments];
     if (numArgs == 2) {
         [self.jsExecutor execJS:[NSString stringWithFormat: EXECUTE_METHOD_JS, self.moduleName, methodName]];
         return;
@@ -51,12 +48,14 @@
     
     NSMutableArray* args = [NSMutableArray array];
     
-    for(unsigned i = 2; i < numArgs; i++) {
+    for(NSUInteger i = 2; i < numArgs; i++) {
         const char *type = [sig getArgumentTypeAtIndex: i];
         
         if (strcmp(type, @encode(id)) == 0) {
             // https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html
-            id arg = nil;
+            
+            // What is __unsafe_unretained?  http://stackoverflow.com/a/16932813/64505
+            __unsafe_unretained id arg = nil;
             [invocation getArgument:&arg atIndex:i];
             if (arg == nil) {
                 [args addObject:[NSNull null]];
@@ -90,16 +89,10 @@
             [args addObject: [NSNumber numberWithDouble:arg]];
         } 
     }
-    NSString* jsString = [NSString stringWithFormat: EXECUTE_METHOD_WITH_ARGS_JS, self.moduleName, methodName, [args JSONRepresentation]];
+    NSString* json = [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:args options:0 error:nil] encoding:NSUTF8StringEncoding];
+    NSString* jsString = [NSString stringWithFormat: EXECUTE_METHOD_WITH_ARGS_JS, self.moduleName, methodName, json];
     
     [self.jsExecutor execJS:jsString];
-}
-
-
-- (void) dealloc {
-    self.jsExecutor = nil;
-    self.moduleName = nil;
-    [super dealloc];
 }
 
 @end

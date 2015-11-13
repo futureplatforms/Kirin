@@ -73,11 +73,7 @@ public class NetworkingService extends KirinService<NetworkingServiceNative> {
     // These are the methods that native uses to call back to us
     public void payload(int connId, int respCode, String str, String[] headerKeys, String[] headerVals) {
         NetworkResponse resp = results.remove(connId);
-        if (respCode >= 200 && respCode <= 299) {
-        	resp.callOnSuccess(respCode, str, fromArrays(headerKeys, headerVals));
-        } else {
-        	resp.callOnFail(""+respCode);
-        }
+    	resp.callOnSuccess(respCode, str, fromArrays(headerKeys, headerVals));
     }
     
     public void onError(int connId) {

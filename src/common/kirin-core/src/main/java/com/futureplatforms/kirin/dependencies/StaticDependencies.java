@@ -7,7 +7,6 @@ import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate
 import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate.NetworkResponse;
 import com.futureplatforms.kirin.dependencies.TimerTask.TimerDelegate;
 import com.futureplatforms.kirin.dependencies.db.DatabaseDelegate;
-import com.futureplatforms.kirin.dependencies.fb.FacebookDelegate;
 import com.futureplatforms.kirin.dependencies.json.JSONDelegate;
 import com.futureplatforms.kirin.dependencies.xml.parser.XMLParser;
 
@@ -74,7 +73,7 @@ public final class StaticDependencies {
 			private boolean cancelled;
 			private OnCancelledListener mOnCancelledListener;
 
-			protected abstract void onSuccess(int res, String result, Map<String, String> headers);
+			protected abstract void onSuccess(int statusCode, String result, Map<String, String> headers);
 			protected abstract void onFail(String code);
 			protected void onFailWithStatus(String code, NetworkFailType failType) {}
 			
@@ -153,8 +152,7 @@ public final class StaticDependencies {
 	private Configuration _Profile;
 	private TimerDelegate _TimerDelegate;
 	private NotificationDelegate _NotificationDelegate;
-	private FacebookDelegate _FacebookDelegate;
-	
+
 	public TimerDelegate getTimerDelegate() {
 		return _TimerDelegate;
 	}
@@ -203,15 +201,11 @@ public final class StaticDependencies {
 		return _DatabasesDelegate;
 	}
 	
-	public FacebookDelegate getFacebookDelegate() {
-		return _FacebookDelegate;
-	}
-
 	public void setDependencies(LogDelegate logDelegate, SettingsDelegate settingsDelegate,
 			LocationDelegate locationDelegate, NetworkDelegateClient networkDelegateClient,
 			JSONDelegate jsonDelegate, XMLParser xmlParser, Formatter formatter,
 			Configuration profile, DatabaseDelegate databasesDelegate, TimerDelegate timerDel,
-			NotificationDelegate notificationDelegate, FacebookDelegate fbDel) {
+			NotificationDelegate notificationDelegate) {
 		this.mLogDelegate = logDelegate;
 		this.mSettingsDelegate = settingsDelegate;
 		this.mLocationDelegate = locationDelegate;
@@ -224,6 +218,5 @@ public final class StaticDependencies {
 		this._DatabasesDelegate = databasesDelegate;
 		this._TimerDelegate = timerDel;
 		this._NotificationDelegate = notificationDelegate;
-		this._FacebookDelegate = fbDel;
 	}
 }

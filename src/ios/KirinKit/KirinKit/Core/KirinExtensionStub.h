@@ -6,8 +6,8 @@
 //  Copyright 2012 Future Platforms. All rights reserved.
 //
 
-#import <KirinKit/KirinExtensionProtocol.h>
-#import <KirinKit/KirinExtensionHelper.h>
+#import "KirinExtensionProtocol.h"
+#import "KirinExtensionHelper.h"
 
 
 @interface KirinExtensionStub : NSObject <KirinExtensionProtocol> {

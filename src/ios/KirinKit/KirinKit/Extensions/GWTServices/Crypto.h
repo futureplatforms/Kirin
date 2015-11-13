@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <NSObject+Kirin.h>
+#import "NSObject+Kirin.h"
 #import "KirinGwtServiceStub.h"
 #import <toNative/CryptoServiceNative.h>
 
