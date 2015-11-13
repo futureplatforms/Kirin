@@ -3,7 +3,7 @@
 	<parent>
 		<artifactId>kirin</artifactId>
 		<groupId>com.futureplatforms.kirin</groupId>
-		<version>1.0.8-SNAPSHOT</version>
+		<version>1.0.8</version>
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
@@ -49,12 +49,12 @@
 		<dependency>
 			<groupId>com.futureplatforms.kirin.core</groupId>
 			<artifactId>kirin-core</artifactId>
-			<version>1.0.8-SNAPSHOT</version>
+			<version>1.0.8</version>
 		</dependency>
 		<dependency>
 			<groupId>com.futureplatforms.kirin.gwtstub</groupId>
 			<artifactId>kirin-gwt-stub</artifactId>
-			<version>1.0.8-SNAPSHOT</version>
+			<version>1.0.8</version>
 		</dependency>
 		<dependency>
 			<groupId>android.support</groupId>
