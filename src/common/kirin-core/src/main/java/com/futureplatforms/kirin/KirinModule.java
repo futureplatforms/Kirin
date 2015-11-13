@@ -10,7 +10,10 @@ public abstract class KirinModule<T extends IKirinNativeObject> implements Expor
 
 	protected T mNativeObject;
 	
-	private KirinModule() {}
+	@Export
+	private KirinModule() {
+		// No instantiation with a no arg ctor.
+	}
 	
 	@NoExport
 	public KirinModule(T nativeObject) {
@@ -19,22 +22,22 @@ public abstract class KirinModule<T extends IKirinNativeObject> implements Expor
 	}
 
 	@Export
-	public final void onLoad(JavaScriptObject moduleName) {
+	public final void onLoad(JavaScriptObject kirinObject) {
 		if (mNativeObject instanceof IKirinProxied) {
-			((IKirinProxied) mNativeObject).$setKirinNativeObject(moduleName);
+			((IKirinProxied) mNativeObject).$setKirinNativeObject(kirinObject);
 		}
-        _onLoad();
+		_onLoad();
 	}
-
+	
     @NoExport
-    public final void onPrototypeLoad(T nativeObject) {
-        mNativeObject = nativeObject;
+    public final void onPrototypeLoad(T screen) {
+        mNativeObject = screen;
         _onLoad();
     }
-
-    protected void _onLoad() {}
-
-    @Export
+    
+	protected void _onLoad() {}
+	
+	@Export
 	public void onUnload() {
 		if (mNativeObject instanceof IKirinProxied) {
 			((IKirinProxied) mNativeObject).$setKirinNativeObject(null);

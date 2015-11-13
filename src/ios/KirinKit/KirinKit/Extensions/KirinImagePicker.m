@@ -41,10 +41,12 @@
 }
 
 - (void) cameraPicture:(NSDictionary *)config {
-    [self getPicture:config fromSource:UIImagePickerControllerSourceTypeCamera];
+        DLog(@"Pick an image from the camera");
+    [self getPicture:config fromSource:UIImagePickerControllerSourceTypeCamera];    
 }
 
 - (void) galleryPicture:(NSDictionary *)config {
+    DLog(@"Pick an image from the gallery");
     [self getPicture:config fromSource:UIImagePickerControllerSourceTypeSavedPhotosAlbum];
 }
 
@@ -62,6 +64,7 @@
         return;
     }
     
+    DLog(@"Image picker or camera is available");
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     // select camera rather than library
     picker.sourceType = sourceType; 
@@ -82,6 +85,7 @@
 // For responding to the user tapping Cancel.
 - (void) imagePickerControllerDidCancel: (UIImagePickerController *) picker 
 {
+    DLog(@"imagePickerControllerDidCancel");
     picker.delegate = nil;
     
 	if([picker respondsToSelector:@selector(presentingViewController)]) {
@@ -143,7 +147,7 @@
                 filename = fullPath;
             }
         } else {
-            //filename = [[self.kirinHelper dropbox] putObject:imageToSave withTokenPrefix:@"camera."];
+            filename = [[self.kirinHelper dropbox] putObject:imageToSave withTokenPrefix:@"camera."];
         }
         
         if (filename) {
@@ -154,6 +158,7 @@
     [picker dismissModalViewControllerAnimated:YES];
     [self cleanup];
     picker.delegate = nil;
+    [picker release];
 }
 
 #pragma mark - 
@@ -231,6 +236,8 @@
     [sourceImage drawInRect:thumbnailRect];
     
     newImage = UIGraphicsGetImageFromCurrentImageContext();
+    if(newImage == nil) 
+        DLog(@"could not scale image");
     
     //pop the context to get back to the default
     UIGraphicsEndImageContext();
@@ -280,6 +287,12 @@
     UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return newImage;
+}
+
+
+- (void) dealloc {
+    self.config = nil;
+    [super dealloc];
 }
 
 @end

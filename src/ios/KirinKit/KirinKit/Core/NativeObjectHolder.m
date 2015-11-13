@@ -8,7 +8,7 @@
 
 #import "NativeObjectHolder.h"
 
-#import "KirinExtensionOnMainThread.h"
+#import <KirinKit/KirinExtensionOnMainThread.h>
 #import <UIKit/UIViewController.h>
 
 #import <objc/runtime.h>
@@ -30,12 +30,15 @@
 @synthesize methodsMap = methodsMap_;
 
 + (NativeObjectHolder*) holderForObject: (NSObject*) object {
-    NativeObjectHolder* holder = [[NativeObjectHolder alloc] init];
+    NativeObjectHolder* holder = [[[NativeObjectHolder alloc] init] autorelease];
     holder.nativeObject = object;
     return holder;
 }
 
 - (void) setNativeObject:(NSObject*)nativeObject {
+    
+    [nativeObject retain];
+    [nativeObject_ release];
     nativeObject_ = nativeObject;
     if (!nativeObject_) {
         self.dispatchQueue = nil;
@@ -53,14 +56,7 @@
         SEL getter = @selector(dispatchQueue);
         
         if ([nativeObject_ respondsToSelector:getter]) {
-            if (!nativeObject) {
-                return;
-            }
-            
-            IMP imp = [nativeObject methodForSelector:getter];
-            dispatch_queue_t (*func)(id, SEL) = (void *) imp;
-            self.dispatchQueue = (dispatch_queue_t) func(nativeObject, getter);
-//            self.dispatchQueue = (dispatch_queue_t) [nativeObject performSelector:getter];
+            self.dispatchQueue = (dispatch_queue_t) [nativeObject performSelector:getter];
         }
         
         if (self.dispatchQueue) {
@@ -119,9 +115,9 @@
             Method method = mlist[i];
             SEL selector = method_getName(method);
             NSString* realMethodName = NSStringFromSelector(selector);
-
-            methods[[self underscoredMethodName:realMethodName]] = realMethodName;
-            methods[[self camelCasedMethodName: realMethodName]] = realMethodName;
+            // comment out this line to disallow using 
+            [methods setObject:realMethodName forKey:[self underscoredMethodName:realMethodName]];
+            [methods setObject:realMethodName forKey:[self camelCasedMethodName: realMethodName]];
         }
         
         /* note mlist needs to be freed */
@@ -137,12 +133,23 @@
         [methodNames addObject:methodName];
     }
     return methodNames;
-    
+	
 }
 
 
 - (SEL) findSelectorFromString: methodName {
-    return NSSelectorFromString(self.methodsMap[methodName]);
+    NSString* realMethodName = [self.methodsMap objectForKey:methodName];
+    
+//    DLog(@"Javascript is calling: %@, calling a method called %@", methodName, realMethodName);
+    
+    // unsure as to allow non-string munged methods.
+    return NSSelectorFromString(realMethodName);
+}
+
+- (void) dealloc {
+    self.dispatchQueue = nil;
+    self.nativeObject = nil;
+    [super dealloc];
 }
 
 @end

@@ -9,10 +9,9 @@
 #import "KirinDropbox.h"
 #import <limits.h>
 
-@interface KirinDropbox() {
-    NSMutableDictionary * dropbox;
-    int key;
-}
+@interface KirinDropbox()
+@property (nonatomic, strong)    NSMutableDictionary * dropbox;
+@property (nonatomic, assign)    int key;
 
 @end
 
@@ -22,26 +21,26 @@
     self = [super init];
     
     if (self) {
-        dropbox = [[NSMutableDictionary alloc] init];
-        key = INT_MIN;
+        self.dropbox = [[NSMutableDictionary alloc] init];
+        _key = INT_MIN;
     }
     
     return self;
 }
 
 - (NSString *) putObject:(id) object {
-    int thisKey = key;
-    key++;
+    int thisKey = _key;
+    _key++;
     
     NSString *strKey = [NSString stringWithFormat:@"%d", thisKey];
     
-    [dropbox setObject:object forKey:strKey];
+    [self.dropbox setObject:[object retain] forKey:strKey];
     return strKey;
 }
 
 - (id) consumeObjectWithToken:(NSString *) token {
-    id obj = [dropbox objectForKey:token];
-    [dropbox removeObjectForKey:token];
+    id obj = [self.dropbox objectForKey:token];
+    [self.dropbox removeObjectForKey:token];
     return obj;
 }
 

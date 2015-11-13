@@ -13,6 +13,7 @@
 #import "FMDatabaseQueue.h"
 #import "FMDatabase.h"
 #import "KirinDropbox.h"
+#import "JSON.h"
 
 @interface NewTransactionService() {
     NewDatabaseAccessService * _DatabaseAccessService;
@@ -80,7 +81,7 @@
 // enum StatementReturnType { Rows, Token, JSON, Batch };
 - (void) appendStatements: (int) dbId : (int) txId : (NSArray*) returnTypes : (NSArray*) statementIds : (NSArray*) statements : (NSArray*) txParams {
     NSMutableArray *nativeStatements = [self getStatements:dbId :txId];
-    NSUInteger numStatements = [returnTypes count];
+    int numStatements = [returnTypes count];
     for (int i=0; i<numStatements; i++) {
         int returnType = [((NSNumber*)returnTypes[i]) intValue];
         SQLOperationType opType;
@@ -92,9 +93,6 @@
             opType = SQL_json;
         } else if (returnType == 3) {
             opType = SQL_batch;
-        } else {
-            NSLog(@"ERROR :: newTransactionService unknown returnType %d", returnType);
-            return;
         }
         NSString * statement = statements[i];
         
@@ -102,10 +100,7 @@
             [nativeStatements addObject:[[NewTransactionStatement alloc] initWithType:SQL_rowset andStatement:statement andParameters:nil]];
         } else {
             int statementId = [((NSNumber*)statementIds[i]) intValue];
-            
-            NSString * json = txParams[i];
-            
-            NSArray * params = [NSJSONSerialization JSONObjectWithData:[json dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
+            NSArray * params = [txParams[i] JSONValue];
             [nativeStatements addObject:[[NewTransactionStatement alloc] initWithType:opType andId:statementId andStatement:statement andParameters:params]];
         }
     }
@@ -119,8 +114,7 @@
             FMResultSet * s = [db executeQuery:st.statement withArgumentsInArray:st.parameters];
             if ([db hadError]) {
                 DLog(@"DB Error :: %@", [db lastErrorMessage]);
-                BOOL rb = YES;
-                rollback = &rb;
+                rollback = YES;
                 [self.kirinModule endFailure:dbId :txId];
                 return;
             }
@@ -156,8 +150,7 @@
                     // TOKEN query
                     NSMutableArray * arr = [[NSMutableArray alloc] init];
                     while ([s next]) {
-                        //NSDictionary * dict = [NSDictionary dictionaryWithDictionary:[s resultDictionary]];
-                        NSDictionary * dict = [[s resultDictionary] copy];
+                        NSDictionary * dict = [s resultDictionary];
                         [arr addObject:dict];
                     }
                 
@@ -165,11 +158,11 @@
                         NSString *token = [[KIRIN dropbox] putObject:arr];
                         [self.kirinModule statementTokenSuccess:dbId :txId :st.statementId :token];
                     } else {
-                        NSString *json = [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:arr options:0 error:nil] encoding:NSUTF8StringEncoding];
+                        NSString *json = [arr JSONRepresentation];
                         [self.kirinModule statementJSONSuccess: dbId :txId :st.statementId :json];
                     }
                 } else {
-                    NSLog(@"DB ERROR -- UNEXPECTED TYPE");
+                    DLog(@"DB ERROR -- UNEXPECTED TYPE");
                 }
             } else {
                 // FMDB plays silly beggars if you don't iterate through the result set... weird

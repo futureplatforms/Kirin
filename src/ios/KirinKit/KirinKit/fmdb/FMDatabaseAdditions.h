@@ -7,8 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "FMDatabase.h"
-
 
 /** Category of additions for `<FMDatabase>` class.
  
@@ -29,8 +27,6 @@
  @param ... A list of parameters that will be bound to the `?` placeholders in the SQL query.
 
  @return `int` value.
- 
- @note To use this method from Swift, you must include `FMDatabaseAdditionsVariadic.swift` in your project.
  */
 
 - (int)intForQuery:(NSString*)query, ...;
@@ -41,8 +37,6 @@
  @param ... A list of parameters that will be bound to the `?` placeholders in the SQL query.
 
  @return `long` value.
- 
- @note To use this method from Swift, you must include `FMDatabaseAdditionsVariadic.swift` in your project.
  */
 
 - (long)longForQuery:(NSString*)query, ...;
@@ -53,8 +47,6 @@
  @param ... A list of parameters that will be bound to the `?` placeholders in the SQL query.
 
  @return `BOOL` value.
- 
- @note To use this method from Swift, you must include `FMDatabaseAdditionsVariadic.swift` in your project.
  */
 
 - (BOOL)boolForQuery:(NSString*)query, ...;
@@ -65,8 +57,6 @@
  @param ... A list of parameters that will be bound to the `?` placeholders in the SQL query.
 
  @return `double` value.
- 
- @note To use this method from Swift, you must include `FMDatabaseAdditionsVariadic.swift` in your project.
  */
 
 - (double)doubleForQuery:(NSString*)query, ...;
@@ -77,8 +67,6 @@
  @param ... A list of parameters that will be bound to the `?` placeholders in the SQL query.
 
  @return `NSString` value.
- 
- @note To use this method from Swift, you must include `FMDatabaseAdditionsVariadic.swift` in your project.
  */
 
 - (NSString*)stringForQuery:(NSString*)query, ...;
@@ -89,8 +77,6 @@
  @param ... A list of parameters that will be bound to the `?` placeholders in the SQL query.
 
  @return `NSData` value.
- 
- @note To use this method from Swift, you must include `FMDatabaseAdditionsVariadic.swift` in your project.
  */
 
 - (NSData*)dataForQuery:(NSString*)query, ...;
@@ -101,8 +87,6 @@
  @param ... A list of parameters that will be bound to the `?` placeholders in the SQL query.
 
  @return `NSDate` value.
- 
- @note To use this method from Swift, you must include `FMDatabaseAdditionsVariadic.swift` in your project.
  */
 
 - (NSDate*)dateForQuery:(NSString*)query, ...;
@@ -233,14 +217,12 @@
 
 - (void)setApplicationID:(uint32_t)appID;
 
-#if TARGET_OS_MAC && !TARGET_OS_IPHONE
 /** Retrieve application ID string
 
  @return The `NSString` value of the application ID.
 
  @see setApplicationIDString:
  */
-
 
 - (NSString*)applicationIDString;
 
@@ -254,28 +236,5 @@
 - (void)setApplicationIDString:(NSString*)string;
 #endif
 
-#endif
-
-///-----------------------------------
-/// @name user version identifier tasks
-///-----------------------------------
-
-/** Retrieve user version
- 
- @return The `uint32_t` numeric value of the user version.
- 
- @see setUserVersion:
- */
-
-- (uint32_t)userVersion;
-
-/** Set the user-version
- 
- @param version The `uint32_t` numeric value of the user version.
- 
- @see userVersion
- */
-
-- (void)setUserVersion:(uint32_t)version;
 
 @end

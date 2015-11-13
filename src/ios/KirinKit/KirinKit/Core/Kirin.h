@@ -16,17 +16,18 @@
 
 
 
-#import "KirinConstants.h"
-#import "KirinHelper.h"
-#import "KirinUiFragmentHelper.h"
-#import "KirinScreenHelper.h"
-#import "KirinExtensionHelper.h"
-#import "KirinAppDelegateHelper.h"
-#import "KirinExtensions.h"
 
-#import "KirinDropbox.h"
 
-#import "SynthesizeSingleton.h"
+#import <KirinKit/KirinHelper.h>
+#import <KirinKit/KirinUiFragmentHelper.h>
+#import <KirinKit/KirinScreenHelper.h>
+#import <KirinKit/KirinExtensionHelper.h>
+#import <KirinKit/KirinAppDelegateHelper.h>
+#import <KirinKit/KirinExtensions.h>
+
+#import <KirinKit/KirinDropbox.h>
+
+#import <KirinKit/SynthesizeSingleton.h>
 #import <UIKit/UIWebView.h>
 
 #ifdef __APPLE__

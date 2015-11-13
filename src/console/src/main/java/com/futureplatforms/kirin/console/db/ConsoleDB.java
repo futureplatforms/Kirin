@@ -26,9 +26,9 @@ import java.util.List;
 public class ConsoleDB implements DatabaseDelegate {
 
 	public interface ResultSetProcessor {
-		public void columnNames(List<String> colNames);
-		public void nextRow(List<Object> nextRow);
-		public void finished();
+		void columnNames(List<String> colNames);
+		void nextRow(List<Object> nextRow);
+		void finished();
 	}
 	
 	private static class ConsoleDBResultSetProcessor implements ResultSetProcessor {

@@ -34,7 +34,9 @@ public class ConsoleDBJSON implements ResultSetProcessor {
 				Object col = nextRow.get(i);
 				String colName = _ColNames.get(i);
 				
-				if (col instanceof Integer) {
+				if (col == null) {
+					obj.put(colName, null);
+				} else if (col instanceof Integer) {
 					obj.put(colName, (Integer) col);
 				} else if (col instanceof Double) {
 					obj.put(colName, (Double) col);

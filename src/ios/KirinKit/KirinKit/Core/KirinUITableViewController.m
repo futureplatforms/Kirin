@@ -7,7 +7,7 @@
 //
 
 #import "KirinUITableViewController.h"
-#import "Kirin.h"
+#import <KirinKit/Kirin.h>
 
 @interface KirinUITableViewController ()
 

@@ -7,6 +7,7 @@
 //
 
 #import "KirinHelperTest.h"
+#import "JSON.h"
 #import "DummyNativeContext.h"
 
 @implementation KirinHelperTest
@@ -19,6 +20,14 @@
     helper = [[KirinHelper alloc] initWithModuleName: @"TestModule" andNativeObject: self andJsContext: ctx andNativeContext: nativeContext andState:nil];
     STAssertNotNil(helper, @"Helper should not be nil");
     
+}
+
+- (void)tearDown
+{
+    // Tear-down code here.
+    [ctx release];
+    [helper release];
+    [super tearDown];
 }
 
 - (void) testHelperLifecycle 
@@ -73,7 +82,7 @@
 }
 
 - (void) testJsExecCallbackWithConfig {
-    NSMutableDictionary* config = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary* config = [[[NSMutableDictionary alloc] init] autorelease];
     [config setValue:@"callback0001" forKey:@"onSuccess"];
     [config setValue:@"errback0001" forKey:@"onError"];
     
@@ -107,7 +116,7 @@
 }
 
 - (void) testJsRemoveCallbackWithConfig {
-    NSMutableDictionary* config = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary* config = [[[NSMutableDictionary alloc] init] autorelease];
     [config setValue:@"callback0001" forKey:@"onSuccess"];
     [config setValue:@"errback0001" forKey:@"onError"];
     

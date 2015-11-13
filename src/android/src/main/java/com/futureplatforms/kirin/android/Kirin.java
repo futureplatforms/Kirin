@@ -17,11 +17,18 @@ public final class Kirin {
     }
 
     public static void kickOff(Context context, boolean includeLocation) {
-        kickOff(context, includeLocation, null);
+        kickOff(context, includeLocation, true);
     }
 
+    public static void kickOff(Context context, boolean includeLocation, boolean includeFacebook) {
+        kickOff(context, includeLocation, includeFacebook, null);
+    }
 
     public static void kickOff(Context context, boolean includeLocation, final CrashLog crashLog) {
+        kickOff(context, includeLocation, true, crashLog);
+    }
+    
+    public static void kickOff(Context context, boolean includeLocation, boolean includeFacebook, final CrashLog crashLog) {
         boolean isDebug =  0 != ( context.getApplicationInfo().flags &= ApplicationInfo.FLAG_DEBUGGABLE );
 
         StaticDependencies.getInstance().setDependencies(
@@ -47,6 +54,7 @@ public final class Kirin {
                 isDebug ? Configuration.Debug : Configuration.Release,
                 new AndroidDatabase(context),
                 new AndroidTimer(),
-                new AndroidNotification(context));
+                new AndroidNotification(context),
+                includeFacebook ? new FacebookDelegateImpl(context) : null);
     }
 }

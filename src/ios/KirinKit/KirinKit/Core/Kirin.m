@@ -22,8 +22,8 @@
 #import "KirinWebViewHolder.h"
 #import "DebugConsole.h"
 
-#import "JSContext.h"
-#import "NativeContext.h"
+#import "KirinKit/JSContext.h"
+#import "KirinKit/NativeContext.h"
 
 #import "KirinState.h"
 
@@ -40,12 +40,21 @@
 
 
 
-@implementation Kirin
+@implementation Kirin 
+
+@synthesize dropbox = dropbox_;
+@synthesize kirinExtensions = kirinExtensions_;
+
+
+@synthesize jsContext = jsContext_;
+@synthesize nativeContext = nativeContext_;
+
+@synthesize state = state_;
 
 SYNTHESIZE_SINGLETON_FOR_CLASS(Kirin)
 
 - (id) init {
-    UIWebView* aWebView = [[UIWebView alloc] init];
+    UIWebView* aWebView = [[[UIWebView alloc] init] autorelease];
 	return [self initWithWebView:aWebView];
 }
 
@@ -53,26 +62,25 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(Kirin)
     self = [super init];
 	if (self) {
 
-        self.nativeContext = [[NativeContext alloc] init];
+        self.nativeContext = [[[NativeContext alloc] init] autorelease];
 
-        [self.nativeContext registerNativeObject:[[DebugConsole alloc] init] asName:@"DebugConsole"];
+        [self.nativeContext registerNativeObject:[[[DebugConsole alloc] init] autorelease] asName:@"DebugConsole"];
         
         self.state = [KirinState initialState];
-        self.state.dropbox = [[KirinDropbox alloc] init];
+        self.state.dropbox = [[[KirinDropbox alloc] init] autorelease];
 
         // TODO deprecate the use of self.dropbox, and pass around KirinState instead.
         self.dropbox = self.state.dropbox;
         
         // the webview needs to be able to call out to native using the nativeContext.
-        KirinWebViewHolder* webViewHolder = [[KirinWebViewHolder alloc] initWithWebView:aWebView andNativeContext: self.nativeContext];
+        KirinWebViewHolder* webViewHolder = [[[KirinWebViewHolder alloc] initWithWebView:aWebView andNativeContext: self.nativeContext] autorelease];
         
-        self.jsContext = [[JSContext alloc] initWithJSExecutor: webViewHolder];
+        self.jsContext = [[[JSContext alloc] initWithJSExecutor: webViewHolder] autorelease];     
         // Debug on port 9999
         // http://atnan.com/blog/2011/11/17/enabling-remote-debugging-via-private-apis-in-mobile-safari/
 #if defined(__APPLE__) && TARGET_IPHONE_SIMULATOR
         if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 5.0) {
             // turn on Safari debugging, in iOS 5.0+ on the simulator.
-            NSLog(@"turn on safari debugging");
             [NSClassFromString(@"WebView") performSelector:@selector(_enableRemoteInspector)];
         }
 
@@ -83,51 +91,51 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(Kirin)
 
 - (KirinHelper*) bindObject: (id) nativeObject toModule:(NSString*) moduleName {
     [self ensureStarted];
-    return [[KirinHelper alloc] initWithModuleName:moduleName
+    return [[[KirinHelper alloc] initWithModuleName:moduleName 
                                    andNativeObject:nativeObject 
                                       andJsContext:self.jsContext 
                                   andNativeContext:self.nativeContext
-                                        andState:self.state];
+                                        andState:self.state] autorelease];
 }
 
 - (KirinUiFragmentHelper*) bindUiFragment: (id) nativeObject toModule:(NSString*) moduleName {
     [self ensureStarted];
-    return [[KirinUiFragmentHelper alloc] initWithModuleName:moduleName
+    return [[[KirinUiFragmentHelper alloc] initWithModuleName:moduleName 
                                               andNativeObject:nativeObject 
                                                  andJsContext:self.jsContext 
                                              andNativeContext:self.nativeContext
-                                                   andState:self.state];
+                                                   andState:self.state] autorelease];
     
 }
 
 - (KirinScreenHelper*) bindScreen: (id) nativeObject toModule:(NSString*) moduleName {
     [self ensureStarted];
 
-    return [[KirinScreenHelper alloc] initWithModuleName:moduleName
+    return [[[KirinScreenHelper alloc] initWithModuleName:moduleName 
                                               andNativeObject:nativeObject 
                                                  andJsContext:self.jsContext 
                                              andNativeContext:self.nativeContext
-                                                   andState:self.state];
+                                                   andState:self.state] autorelease];
 }
 
 - (KirinExtensionHelper*) bindService: (id) nativeObject toModule:(NSString*) moduleName {
     // we don't want to ensureStarted here, because this will be adding services, 
     // and services is what we're starting.
-    return [[KirinExtensionHelper alloc] initWithModuleName:moduleName
+    return [[[KirinExtensionHelper alloc] initWithModuleName:moduleName 
                                           andNativeObject:nativeObject 
                                              andJsContext:self.jsContext 
                                          andNativeContext:self.nativeContext
-                                               andState:self.state];
+                                               andState:self.state] autorelease];
 }
 
 - (KirinAppDelegateHelper*) bindAppDelegate: (id) nativeObject toModule: (NSString*) moduleName {
     [self ensureStarted];
     
-    return [[KirinAppDelegateHelper alloc] initWithModuleName:moduleName
+    return [[[KirinAppDelegateHelper alloc] initWithModuleName:moduleName 
                                           andNativeObject:nativeObject 
                                              andJsContext:self.jsContext 
                                          andNativeContext:self.nativeContext
-                                                 andState:self.state];
+                                                 andState:self.state] autorelease];
 }
 
 #pragma mark -
@@ -135,14 +143,46 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(Kirin)
 
 - (void) ensureStarted {
     // implicitly calls the getter, ensuring a KirinExtensions object exists.
-    if (!self.kirinExtensions) {
+    [self.kirinExtensions ensureStarted];
+}
+
+- (void) setKirinExtensions:(KirinExtensions *) extensions {
+    if (extensions != nil && kirinExtensions_ != nil) {
+        [NSException raise:@"KirinExtensionsException" 
+                    format:@"Cannot change kirinExtensions contained once the first service has been added"];
+    }
+    
+    [kirinExtensions_ release];
+    kirinExtensions_ = extensions;
+    [kirinExtensions_ retain];
+}
+
+
+- (KirinExtensions*) kirinExtensions {
+    if (kirinExtensions_ == nil) {
         self.kirinExtensions = [KirinExtensions coreExtensions];
     }
-    [self.kirinExtensions ensureStarted];
+    return kirinExtensions_;
 }
 
 - (void) unloadKirin {
     [self.kirinExtensions unloadServices];
 }
+
+
+
+
+#pragma mark -
+#pragma mark Memory managment
+- (void)dealloc
+{
+    self.jsContext = nil;
+    self.nativeContext = nil;
+    self.dropbox = nil;
+    self.kirinExtensions = nil;
+	[super dealloc];
+}
+
+	
 
 @end

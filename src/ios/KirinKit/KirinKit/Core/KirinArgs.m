@@ -8,6 +8,8 @@
 
 #import "KirinArgs.h"
 
+#import "JSON.h"
+
 @implementation KirinArgs
 
 + (NSString*) string: (NSString*) string {
@@ -21,6 +23,14 @@
 + (NSString*) taintedForJs: (NSString*) string {
     return [NSString stringWithFormat:@"\"%@\"", 
             [string stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding]];
+}
+
++ (NSString*) array: (NSArray*) object {
+    return [object JSONRepresentation];
+}
+
++ (NSString*) object: (NSDictionary*) object {
+    return [object JSONRepresentation];
 }
 
 + (NSString*) integer: (int) number {

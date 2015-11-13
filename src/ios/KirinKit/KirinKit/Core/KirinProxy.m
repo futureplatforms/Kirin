@@ -27,7 +27,7 @@
 
 
 + (id) proxyWithProtocol: (Protocol*) protocol andModuleName: (NSString*) moduleName andExecutor: (id<JSExecutor>) executor {
-    return [[KirinProxyWithModule alloc] initWithProtocol:protocol andModuleName: moduleName andExecutor:executor];
+    return [[[KirinProxyWithModule alloc] initWithProtocol:protocol andModuleName: moduleName andExecutor:executor] autorelease];
 }
 
 + (id) proxyWithProtocol:(Protocol *)protocol andDictionary:(NSDictionary *)dictionary {
@@ -43,11 +43,16 @@
     return self;
 }
 
+- (void) dealloc {
+    self.targetProtocol = nil;
+    [super dealloc];
+}
+
 #pragma mark - 
 #pragma mark Invocation magic
 
 - (NSMethodSignature*) methodSignatureForSelector: (SEL) selector {
-    // http://a-coding.blogspot.co.uk/2010/10/making-nsinvocations.html
+    // http://www.a-coding.com/2010/10/making-nsinvocations.html
     BOOL required = YES;
     struct objc_method_description desc = protocol_getMethodDescription(self.targetProtocol, selector, required, YES);
     if (desc.name == NULL) {

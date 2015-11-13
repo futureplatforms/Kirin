@@ -7,31 +7,14 @@
   <version>1.0.8-SNAPSHOT</version>
   <packaging>pom</packaging>
 
-  <name>Kirin</name>
-    <description>Cross-platform app development in Java</description>
-  <url>https://github.com/futureplatforms/Kirin</url>
-
-    <licenses>
-        <license>
-            <name>The Apache License, Version 2.0</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-        </license>
-    </licenses>
-
-    <developers>
-        <developer>
-            <name>Douglas Hoskins</name>
-            <email>douglas.hoskins@futureplatforms.com</email>
-            <organization>Future Platforms</organization>
-            <organizationUrl>http://www.futureplatforms.com</organizationUrl>
-        </developer>
-    </developers>
+  <name>kirin</name>
+  <url>http://maven.apache.org</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <guava.version>16.0.1</guava.version>
-    <gwt.version>2.7.0</gwt.version>
-    <gwt.exporter.version>2.5.1</gwt.exporter.version>
+    <guavaVersion>16.0.1</guavaVersion>
+    <gwtVersion>2.6.0</gwtVersion>
+    <gwtExporterVersion>2.5.1</gwtExporterVersion>
   </properties>
   
   <profiles>
@@ -146,41 +129,11 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-
-    <reporting>
-        <plugins>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>findbugs-maven-plugin</artifactId>
-                <version>3.0.1</version>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-pmd-plugin</artifactId>
-                <version>3.5</version>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>2.15</version>
-                <reportSets>
-                    <reportSet>
-                        <reports>
-                            <report>checkstyle</report>
-                        </reports>
-                    </reportSet>
-                </reportSets>
-            </plugin>
-        </plugins>
-    </reporting>
-
   <modules>
     <module>common/kirin-core</module>
     <module>common/kirin-gwt-stub</module>
     <module>android</module>
     <module>common/kirin-gwt</module>
-    <module>console</module>
-    <module>ios</module>
-    <!--<module>wp8-xaml-cs</module>-->
+	<module>console</module>
   </modules>
 </project>

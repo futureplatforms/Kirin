@@ -7,7 +7,7 @@
 //
 
 #import "KirinExtensionStub.h"
-#import "Kirin.h"
+#import <KirinKit/Kirin.h>
 
 @implementation KirinExtensionStub
 
@@ -45,6 +45,13 @@
 
 - (void) onUnload {
     [self.kirinHelper onUnload];
+}
+
+- (void) dealloc {
+    self.moduleName = nil;
+    self.kirinHelper = nil;
+    
+    [super dealloc];
 }
 
 @end

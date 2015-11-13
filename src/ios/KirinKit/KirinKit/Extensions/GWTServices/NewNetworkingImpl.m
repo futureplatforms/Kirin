@@ -25,6 +25,16 @@ typedef enum NetRetrieveType { Net_Default, Net_B64, Net_Token } NetRetrieveType
     return [super initWithServiceName: self.serviceName];
 }
 
+- (void) retrieveToken:(int)connId :(NSString *)method :(NSString *)url :(NSString *)postData :(NSArray *)headerKeys :(NSArray *)headerVals {
+    [self retrieve:connId
+                  :method
+                  :url
+                  :postData
+                  :headerKeys
+                  :headerVals
+                  :Net_Token];
+}
+
 - (void) retrieveB64: (int) ref : (NSString*) method : (NSString*) url : (NSString*) payload : (NSArray*) headerKeys : (NSArray*) headerVals {
     [self retrieve:ref
                   :method
@@ -32,7 +42,7 @@ typedef enum NetRetrieveType { Net_Default, Net_B64, Net_Token } NetRetrieveType
                   :payload
                   :headerKeys
                   :headerVals
-                  :YES];
+                  :Net_B64];
 }
 
 - (void) retrieve: (int) ref : (NSString*) method : (NSString*) url : (NSString*) payload : (NSArray*) headerKeys : (NSArray*) headerVals {
@@ -42,7 +52,7 @@ typedef enum NetRetrieveType { Net_Default, Net_B64, Net_Token } NetRetrieveType
                   :payload
                   :headerKeys
                   :headerVals
-                  :NO];
+                  :Net_Default];
 }
 
 - (void) retrieve:(int)ref :(NSString *)method :(NSString *)url :(NSString *)payload :(NSArray *)headerKeys :(NSArray *)headerVals :(NetRetrieveType) netType {
@@ -50,7 +60,7 @@ typedef enum NetRetrieveType { Net_Default, Net_B64, Net_Token } NetRetrieveType
     
     NSString *payloadLen = [NSString stringWithFormat:@"%lu", (unsigned long)[payloadData length]];
     
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    NSMutableURLRequest *request = [[[NSMutableURLRequest alloc] init] autorelease];
     [request setURL:[NSURL URLWithString:url]];
     [request setHTTPMethod:method];
     [request setValue:payloadLen forHTTPHeaderField:@"Content-Length"];
@@ -109,11 +119,15 @@ typedef enum NetRetrieveType { Net_Default, Net_B64, Net_Token } NetRetrieveType
 {
     @try
     {
+        DLog(@": start");
+        
         // Default to NSUTF8StringEncoding if blank string supplied
         if ([[strEncoding stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] length] == 0)
             return NSUTF8StringEncoding;
+        
+        DLog(@"Attempting to find encoding = %@", strEncoding);
         // Try and obtain the correct string encoding from a string
-        CFStringRef cfStringRef = (__bridge CFStringRef)strEncoding;
+        CFStringRef cfStringRef = (CFStringRef)strEncoding;
         CFStringEncoding cfStringEnc = CFStringConvertIANACharSetNameToEncoding(cfStringRef);
         NSStringEncoding encoding = CFStringConvertEncodingToNSStringEncoding(cfStringEnc);
         
@@ -122,7 +136,12 @@ typedef enum NetRetrieveType { Net_Default, Net_B64, Net_Token } NetRetrieveType
     @catch (NSException *exception)
     {
         // In-case the conversion failed
+        DLog(@"Could not find encoding, defaulting to UTF8");
         return NSUTF8StringEncoding;
+    }
+    @finally
+    {
+        DLog(@": end");
     }
 }
 

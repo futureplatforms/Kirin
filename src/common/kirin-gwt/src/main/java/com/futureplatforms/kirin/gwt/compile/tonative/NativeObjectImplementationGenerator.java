@@ -18,7 +18,7 @@ public class NativeObjectImplementationGenerator extends Generator {
 
 	@Override
 	public String generate(TreeLogger logger, GeneratorContext context,
-						   String typeName) throws UnableToCompleteException {
+			String typeName) throws UnableToCompleteException {
 		TypeOracle oracle = context.getTypeOracle();
 		JClassType nativeObjectType = oracle.findType(typeName);
 		JClassType genericNativeObjectType = oracle.findType(IKirinProxied.class.getName());
@@ -27,14 +27,14 @@ public class NativeObjectImplementationGenerator extends Generator {
 
 		ClassSourceFileComposerFactory composer = new ClassSourceFileComposerFactory(
 				genPackageName, genClassName);
-
+		
 		composer.addImport("com.google.gwt.core.client.JavaScriptObject");
 		composer.addImport(typeName);
 		composer.addImport(genericNativeObjectType.getQualifiedSourceName());
 
 		composer.addImplementedInterface(nativeObjectType.getName());
 		composer.addImplementedInterface(genericNativeObjectType.getName());
-
+		
 		PrintWriter printWriter = context.tryCreate(logger, genPackageName,
 				genClassName);
 
@@ -69,21 +69,21 @@ public class NativeObjectImplementationGenerator extends Generator {
 	 * @param sourceWriter
 	 */
 	private void printAllMethods(JClassType jct, JClassType genericNativeObjectType, SourceWriter sourceWriter) {
-		JMethod[] methods = jct.getMethods();
-		for (JMethod method : methods) {
-			if (!method.getEnclosingType().equals(genericNativeObjectType)) {
-				printMethods(method, sourceWriter);
-			}
-		}
-
-		JClassType[] interfaces = jct.getImplementedInterfaces();
-		if (interfaces != null) {
-			for (JClassType inter : interfaces) {
-				printAllMethods(inter, genericNativeObjectType, sourceWriter);
-			}
-		}
+	    JMethod[] methods = jct.getMethods();
+        for (JMethod method : methods) {
+            if (!method.getEnclosingType().equals(genericNativeObjectType)) {
+                printMethods(method, sourceWriter);
+            }
+        }
+        
+        JClassType[] interfaces = jct.getImplementedInterfaces();
+        if (interfaces != null) {
+            for (JClassType inter : interfaces) {
+                printAllMethods(inter, genericNativeObjectType, sourceWriter);
+            }
+        }
 	}
-
+	
 	private void printMethods(JMethod method, SourceWriter sw) {
 		JParameter[] params = method.getParameters();
 

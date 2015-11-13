@@ -23,7 +23,9 @@
     return [super initWithServiceName: self.serviceName];
 }
 
-- (void) setSymbolMapDetails: (NSString*) moduleName : (NSString*) strongName {    
+- (void) setSymbolMapDetails: (NSString*) moduleName : (NSString*) strongName; {
+    DLog(@"SetStrongName %@", strongName);
+    
     // We want to load /app/WEB-INF/<app_name>/symbolMaps/<strongName>.symbolMap
     NSString * resourcePath = [[NSBundle mainBundle] resourcePath];
     NSString * pathToWebInf = [NSString stringWithFormat:@"%@/app/WEB-INF", resourcePath];
@@ -37,11 +39,9 @@
             NSString * appName = filename;
             NSString * pathToSymbolMap = [NSString stringWithFormat:@"%@/%@/symbolMaps/%@.symbolMap", pathToWebInf, appName, strongName];
             
-            NSData *data = [NSData dataWithContentsOfFile:pathToSymbolMap];
-            if (data) {
-                NSString *symbolMap = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-                [self.kirinModule setSymbolMap:symbolMap];
-            }
+            NSMutableData *data = [NSData dataWithContentsOfFile:pathToSymbolMap];
+            NSString *symbolMap = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            [self.kirinModule setSymbolMap:symbolMap];
             break;
         }
     }

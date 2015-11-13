@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <artifactId>kirin</artifactId>
@@ -12,27 +13,6 @@
   <packaging>jar</packaging>
   <name>kirin-core</name>
   <url>http://maven.apache.org</url>
-    <profiles>
-      <profile>
-      <id>Windows</id>
-      <activation>
-        <os>
-          <family>Windows</family>
-        </os>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-deploy-plugin</artifactId>
-            <configuration>
-              <skip>true</skip>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-  </profiles>
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -55,7 +35,7 @@
     <dependency>
         <groupId>com.google.guava</groupId>
         <artifactId>guava</artifactId>
-        <version>${guava.version}</version>
+        <version>${guavaVersion}</version>
     </dependency>
   </dependencies>
   
@@ -118,7 +98,6 @@
                                     <execute />
                                 </action>
                             </pluginExecution>
-
                         </pluginExecutions>
                     </lifecycleMappingMetadata>
                 </configuration>
@@ -126,8 +105,7 @@
         </plugins>
     </pluginManagement>
     <plugins>
-
-    <plugin>
+        <plugin>
 		  <groupId>org.apache.maven.plugins</groupId>
 		  <artifactId>maven-compiler-plugin</artifactId>
 		  <version>3.0</version>
@@ -139,7 +117,7 @@
 	    <plugin>
 	      <groupId>org.codehaus.mojo</groupId>
 	      <artifactId>gwt-maven-plugin</artifactId>
-	      <version>${gwt.version}</version>
+	      <version>${gwtVersion}</version>
 	      <executions>
 	        <execution>
 	          <goals>

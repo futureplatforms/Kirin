@@ -40,25 +40,11 @@
     __unsafe_unretained id _delegate;
     
     NSUInteger          _maximumNumberOfDatabasesToCreate;
-    int                 _openFlags;
 }
 
-/** Database path */
-
 @property (atomic, retain) NSString *path;
-
-/** Delegate object */
-
 @property (atomic, assign) id delegate;
-
-/** Maximum number of databases to create */
-
 @property (atomic, assign) NSUInteger maximumNumberOfDatabasesToCreate;
-
-/** Open flags */
-
-@property (atomic, readonly) int openFlags;
-
 
 ///---------------------
 /// @name Initialization
@@ -73,16 +59,6 @@
 
 + (instancetype)databasePoolWithPath:(NSString*)aPath;
 
-/** Create pool using path and specified flags
-
- @param aPath The file path of the database.
- @param openFlags Flags passed to the openWithFlags method of the database
-
- @return The `FMDatabasePool` object. `nil` on error.
- */
-
-+ (instancetype)databasePoolWithPath:(NSString*)aPath flags:(int)openFlags;
-
 /** Create pool using path.
 
  @param aPath The file path of the database.
@@ -91,16 +67,6 @@
  */
 
 - (instancetype)initWithPath:(NSString*)aPath;
-
-/** Create pool using path and specified flags.
-
- @param aPath The file path of the database.
- @param openFlags Flags passed to the openWithFlags method of the database
-
- @return The `FMDatabasePool` object. `nil` on error.
- */
-
-- (instancetype)initWithPath:(NSString*)aPath flags:(int)openFlags;
 
 ///------------------------------------------------
 /// @name Keeping track of checked in/out databases
@@ -161,8 +127,6 @@
 /** Synchronously perform database operations in pool using save point.
 
  @param block The code to be run on the `FMDatabasePool` pool.
- 
- @return `NSError` object if error; `nil` if successful.
 
  @warning You can not nest these, since calling it will pull another database out of the pool and you'll get a deadlock. If you need to nest, use `<[FMDatabase startSavePointWithName:error:]>` instead.
 */
@@ -173,32 +137,9 @@
 @end
 
 
-/** FMDatabasePool delegate category
- 
- This is a category that defines the protocol for the FMDatabasePool delegate
- */
-
 @interface NSObject (FMDatabasePoolDelegate)
 
-/** Asks the delegate whether database should be added to the pool. 
- 
- @param pool     The `FMDatabasePool` object.
- @param database The `FMDatabase` object.
- 
- @return `YES` if it should add database to pool; `NO` if not.
- 
- */
-
 - (BOOL)databasePool:(FMDatabasePool*)pool shouldAddDatabaseToPool:(FMDatabase*)database;
-
-/** Tells the delegate that database was added to the pool.
- 
- @param pool     The `FMDatabasePool` object.
- @param database The `FMDatabase` object.
-
- */
-
-- (void)databasePool:(FMDatabasePool*)pool didAddDatabase:(FMDatabase*)database;
 
 @end
 

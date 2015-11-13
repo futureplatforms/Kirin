@@ -14,7 +14,7 @@
 @synthesize dropbox = dropbox_;
 
 + (KirinState*) initialState {
-    return [[KirinState alloc] init];
+    return [[[KirinState alloc] init] autorelease];
     
 }
 
