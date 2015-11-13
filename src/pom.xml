@@ -12,9 +12,9 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <guavaVersion>16.0.1</guavaVersion>
-    <gwtVersion>2.6.0</gwtVersion>
-    <gwtExporterVersion>2.5.1</gwtExporterVersion>
+    <guava.version>16.0.1</guava.version>
+    <gwt.version>2.7.0</gwt.version>
+    <gwt.exporter.version>2.5.1</gwt.exporter.version>
   </properties>
   
   <profiles>
@@ -86,7 +86,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-release-plugin</artifactId>
-        <version>2.5.1</version>
+        <version>2.5.3</version>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
