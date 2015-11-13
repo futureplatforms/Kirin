@@ -7,8 +7,25 @@
   <version>1.0.8-SNAPSHOT</version>
   <packaging>pom</packaging>
 
-  <name>kirin</name>
-  <url>http://maven.apache.org</url>
+  <name>Kirin</name>
+  <description>Cross-platform app development in Java</description>
+  <url>https://github.com/futureplatforms/Kirin</url>
+
+  <licenses>
+    <license>
+      <name>The Apache License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+    </license>
+  </licenses>
+
+  <developers>
+    <developer>
+      <name>Douglas Hoskins</name>
+      <email>douglas.hoskins@futureplatforms.com</email>
+      <organization>Future Platforms</organization>
+      <organizationUrl>http://www.futureplatforms.com</organizationUrl>
+    </developer>
+  </developers>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -16,7 +33,7 @@
     <gwt.version>2.7.0</gwt.version>
     <gwt.exporter.version>2.5.1</gwt.exporter.version>
   </properties>
-  
+
   <profiles>
     <profile>
       <id>Windows</id>
@@ -41,7 +58,7 @@
       </properties>
     </profile>
   </profiles>
-  
+
   <scm>
     <developerConnection>scm:git:https://github.com/futureplatforms/Kirin.git</developerConnection>
     <connection>scm:git:https://github.com/futureplatforms/Kirin.git</connection>
@@ -65,24 +82,24 @@
   <build>
     <plugins>
       <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.0</version>
-          <configuration>
-            <source>1.7</source>
-            <target>1.7</target>
-              <compilerId>javac-with-errorprone</compilerId>
-              <forceJavacCompilerUse>true</forceJavacCompilerUse>
-          </configuration>
-            <dependencies>
-                <dependency>
-                    <groupId>org.codehaus.plexus</groupId>
-                    <artifactId>plexus-compiler-javac-errorprone</artifactId>
-                    <version>2.5</version>
-                </dependency>
-            </dependencies>
-        </plugin>
-        
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.0</version>
+        <configuration>
+          <source>1.7</source>
+          <target>1.7</target>
+          <compilerId>javac-with-errorprone</compilerId>
+          <forceJavacCompilerUse>true</forceJavacCompilerUse>
+        </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>org.codehaus.plexus</groupId>
+            <artifactId>plexus-compiler-javac-errorprone</artifactId>
+            <version>2.5</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-release-plugin</artifactId>
@@ -102,22 +119,22 @@
           </execution>
         </executions>
       </plugin>
-        <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-javadoc-plugin</artifactId>
-            <version>2.9</version>
-            <executions>
-                <execution>
-                    <id>attach-javadocs</id>
-                    <goals>
-                        <goal>jar</goal>
-                    </goals>
-                    <configuration>
-                        <additionalparam>-Xdoclint:none</additionalparam>
-                    </configuration>
-                </execution>
-            </executions>
-        </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.9</version>
+        <executions>
+          <execution>
+            <id>attach-javadocs</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+            <configuration>
+              <additionalparam>-Xdoclint:none</additionalparam>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
 
@@ -134,6 +151,7 @@
     <module>common/kirin-gwt-stub</module>
     <module>android</module>
     <module>common/kirin-gwt</module>
-	<module>console</module>
+    <module>console</module>
+    <module>ios</module>
   </modules>
 </project>
