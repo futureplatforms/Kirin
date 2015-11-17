@@ -260,6 +260,14 @@ public abstract class JSONObject {
 		}
 	}
 
+    public int safeGetInt(String key) {
+        try {
+            return getInt(key);
+        } catch (Throwable t) {
+            return 0;
+        }
+    }
+
 	public JSONObject safeGetObject(String key) {
 		try {
 			return getJSONObject(key);
