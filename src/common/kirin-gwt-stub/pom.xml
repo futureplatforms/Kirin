@@ -4,7 +4,7 @@
   <parent>
     <artifactId>kirin</artifactId>
     <groupId>com.futureplatforms.kirin</groupId>
-    <version>1.0.9-SNAPSHOT</version>
+    <version>1.0.9</version>
     <relativePath>../../pom.xml</relativePath>
   </parent>
   <groupId>com.futureplatforms.kirin.gwtstub</groupId>
