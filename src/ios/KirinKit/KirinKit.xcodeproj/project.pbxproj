@@ -672,6 +672,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1A00C8D514B2E2FD00211F34 /* Build configuration list for PBXNativeTarget "KirinKit" */;
 			buildPhases = (
+				092E5E731C02544300DCB568 /* Clean */,
 				1A00C8A914B2E2FD00211F34 /* Sources */,
 				1A00C8AA14B2E2FD00211F34 /* Frameworks */,
 				1A00C8AB14B2E2FD00211F34 /* Headers */,
@@ -755,6 +756,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		092E5E731C02544300DCB568 /* Clean */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = Clean;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "rm -rf \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\"";
+		};
 		1A00C8AD14B2E2FD00211F34 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
