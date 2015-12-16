@@ -80,7 +80,10 @@
 - (void)locationManager:(CLLocationManager *)manager
        didFailWithError:(NSError *) error {
     DLog(@"Err: %@", [error debugDescription]);
-    [self.kirinModule locationError:[error debugDescription]];
+    //if the  error code is kCLErrorLocationUnknown, the system will keep trying to retrievea location
+    if([error code] != kCLErrorLocationUnknown){
+        [self.kirinModule locationError:[error debugDescription]];
+    }
 }
 
 @end
