@@ -23,6 +23,20 @@ public abstract class TimerTask {
      */
     public static abstract class PlatformTimerTask {
         private TimerTask mTimerTask;
+
+        private static int TIMER_ID = Integer.MIN_VALUE;
+
+        private int id;
+
+        public PlatformTimerTask() {
+            this.id = TIMER_ID;
+            TIMER_ID++;
+        }
+
+        protected int getTimerId() {
+            return id;
+        }
+
         private final void setRealTimerTask(TimerTask task) {
             mTimerTask = task;
         }
@@ -51,8 +65,8 @@ public abstract class TimerTask {
      * @author douglashoskins
      *
      */
-    public static interface TimerDelegate {
-        public PlatformTimerTask getPlatformTimerTask();
+    public interface TimerDelegate {
+        PlatformTimerTask getPlatformTimerTask();
     }
     
     private PlatformTimerTask mPtt;
@@ -70,7 +84,9 @@ public abstract class TimerTask {
     public void cancel() {
         mPtt.cancel();
     }
-    
+
+    public int testId() { return mPtt.getTimerId(); }
+
     /**
      * Override this method to specify the deferred action to be taken.
      */
