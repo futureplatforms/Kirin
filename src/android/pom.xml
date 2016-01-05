@@ -37,20 +37,20 @@
 		<dependency>
 			<groupId>android.support</groupId>
 			<artifactId>compatibility-v4</artifactId>
-			<version>23.1.1</version>
+			<version>19.1.0</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.google.android.gms</groupId>
 			<artifactId>google-play-services</artifactId>
-			<version>29.0.0</version>
+			<version>22.0.0</version>
 			<type>jar</type>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>android.support</groupId>
 			<artifactId>compatibility-v7-appcompat</artifactId>
-			<version>23.1.1</version>
+			<version>19.1.0</version>
 			<type>jar</type>
 			<scope>provided</scope>
 		</dependency>
