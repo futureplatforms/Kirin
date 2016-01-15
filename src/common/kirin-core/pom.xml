@@ -7,8 +7,8 @@
     <version>1.0.11-SNAPSHOT</version>
     <relativePath>../../pom.xml</relativePath>
   </parent>
-  <groupId>com.futureplatforms.kirin.core</groupId>
-  <artifactId>kirin-core</artifactId>
+  <groupId>com.futureplatforms.kirin</groupId>
+  <artifactId>core</artifactId>
   <packaging>jar</packaging>
   <name>kirin-core</name>
   <url>http://maven.apache.org</url>
@@ -48,8 +48,8 @@
     </dependency>
     
 	<dependency>
-      <groupId>com.futureplatforms.kirin.gwtstub</groupId>
-      <artifactId>kirin-gwt-stub</artifactId>
+      <groupId>com.futureplatforms.kirin</groupId>
+      <artifactId>gwtstub</artifactId>
       <version>1.0.11-SNAPSHOT</version>
     </dependency>
     <dependency>

@@ -7,8 +7,8 @@
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.futureplatforms.kirin.android</groupId>
-	<artifactId>kirin-android</artifactId>
+	<groupId>com.futureplatforms.kirin</groupId>
+	<artifactId>android</artifactId>
 	<name>kirin-android</name>
 	<packaging>jar</packaging>
 
@@ -47,13 +47,13 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.futureplatforms.kirin.core</groupId>
-			<artifactId>kirin-core</artifactId>
+			<groupId>com.futureplatforms.kirin</groupId>
+			<artifactId>core</artifactId>
 			<version>1.0.11-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>com.futureplatforms.kirin.gwtstub</groupId>
-			<artifactId>kirin-gwt-stub</artifactId>
+			<groupId>com.futureplatforms.kirin</groupId>
+			<artifactId>gwtstub</artifactId>
 			<version>1.0.11-SNAPSHOT</version>
 		</dependency>
 		<dependency>

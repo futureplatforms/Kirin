@@ -7,8 +7,8 @@
     <version>1.0.11-SNAPSHOT</version>
     <relativePath>../../pom.xml</relativePath>
   </parent>
-  <groupId>com.futureplatforms.kirin.gwt</groupId>
-  <artifactId>kirin-gwt</artifactId>
+  <groupId>com.futureplatforms.kirin</groupId>
+  <artifactId>gwt</artifactId>
   <name>kirin-gwt</name>
 
     <profiles>
@@ -89,8 +89,8 @@
     <!--  END common dependencies  -->
       
   <dependency>
-      <groupId>com.futureplatforms.kirin.core</groupId>
-      <artifactId>kirin-core</artifactId>
+      <groupId>com.futureplatforms.kirin</groupId>
+      <artifactId>core</artifactId>
       <version>1.0.11-SNAPSHOT</version>
       <scope>provided</scope>
     </dependency>

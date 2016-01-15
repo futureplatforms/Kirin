@@ -7,8 +7,8 @@
     <version>1.0.11-SNAPSHOT</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
-  <groupId>com.futureplatforms.kirin.console</groupId>
-  <artifactId>kirin-console</artifactId>
+  <groupId>com.futureplatforms.kirin</groupId>
+  <artifactId>console</artifactId>
   <packaging>jar</packaging>
   <name>kirin-console</name>
   <url>http://maven.apache.org</url>
@@ -17,8 +17,8 @@
   </properties>
   <dependencies>
 	<dependency>
-      <groupId>com.futureplatforms.kirin.core</groupId>
-      <artifactId>kirin-core</artifactId>
+      <groupId>com.futureplatforms.kirin</groupId>
+      <artifactId>core</artifactId>
       <version>1.0.11-SNAPSHOT</version>
     </dependency>
     <dependency>

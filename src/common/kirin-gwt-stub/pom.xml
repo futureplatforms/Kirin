@@ -7,8 +7,8 @@
     <version>1.0.11-SNAPSHOT</version>
     <relativePath>../../pom.xml</relativePath>
   </parent>
-  <groupId>com.futureplatforms.kirin.gwtstub</groupId>
-  <artifactId>kirin-gwt-stub</artifactId>
+  <groupId>com.futureplatforms.kirin</groupId>
+  <artifactId>gwtstub</artifactId>
   <packaging>jar</packaging>
   <name>kirin-gwt-stub</name>
   <url>http://maven.apache.org</url>
