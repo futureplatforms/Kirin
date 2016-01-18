@@ -100,11 +100,11 @@
   <!-- Got this bit from http://central.sonatype.org/pages/apache-maven.html#distribution-management-and-authentication -->
   <distributionManagement>
     <snapshotRepository>
-      <id>snapshot</id>
+      <id>${snapshot.id}</id>
       <url>${snapshot.repo}</url>
     </snapshotRepository>
     <repository>
-      <id>ossrh</id>
+      <id>${repo.id}</id>
       <url>${repo}</url>
     </repository>
   </distributionManagement>
