@@ -24,18 +24,17 @@
 }
 
 - (void) setSymbolMapDetails: (NSString*) moduleName : (NSString*) strongName {    
-    // We want to load /app/WEB-INF/<app_name>/symbolMaps/<strongName>.symbolMap
+    // We want to load /app/symbolMaps/<strongName>.symbolMap
     NSString * resourcePath = [[NSBundle mainBundle] resourcePath];
-    NSString * pathToWebInf = [NSString stringWithFormat:@"%@/app/WEB-INF", resourcePath];
+    NSString * pathToApp = [NSString stringWithFormat:@"%@/app", resourcePath];
     
     // WEB-INF contains three folders: classes, lib and the app name.  To save us
     // passing in the app name, look for the entry that is not "classes" or "lib".
     NSFileManager *filemgr =[NSFileManager defaultManager];
-    NSArray* filenames = [filemgr contentsOfDirectoryAtPath:pathToWebInf error:nil];
+    NSArray* filenames = [filemgr contentsOfDirectoryAtPath:pathToApp error:nil];
     for (NSString *filename in filenames) {
         if (![filename isEqualToString:@"classes"] && ![filename isEqualToString:@"lib"]) {
-            NSString * appName = filename;
-            NSString * pathToSymbolMap = [NSString stringWithFormat:@"%@/%@/symbolMaps/%@.symbolMap", pathToWebInf, appName, strongName];
+            NSString * pathToSymbolMap = [NSString stringWithFormat:@"%@/symbolMaps/%@.symbolMap", pathToApp, strongName];
             
             NSData *data = [NSData dataWithContentsOfFile:pathToSymbolMap];
             if (data) {
