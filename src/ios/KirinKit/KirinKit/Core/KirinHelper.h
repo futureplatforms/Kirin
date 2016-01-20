@@ -16,7 +16,7 @@
 }
 
 @property(retain) NSString* jsModuleName;
-@property(retain) NSObject* nativeObject;
+@property(weak) NSObject* nativeObject;
 
 @property(retain) KirinState* state;
 

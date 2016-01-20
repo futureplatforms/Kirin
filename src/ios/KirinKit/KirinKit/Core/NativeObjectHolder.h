@@ -12,7 +12,7 @@
 
 + (NativeObjectHolder*) holderForObject: (NSObject*) object;
 
-@property(retain, nonatomic) NSObject* nativeObject;
+@property(weak) NSObject* nativeObject;
 @property(nonatomic) dispatch_queue_t dispatchQueue;
 
 - (SEL) findSelectorFromString: methodName;
