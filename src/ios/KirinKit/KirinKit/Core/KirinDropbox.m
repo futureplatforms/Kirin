@@ -34,7 +34,7 @@
     
     NSString *strKey = [NSString stringWithFormat:@"%d", thisKey];
     
-    [self.dropbox setObject:[object retain] forKey:strKey];
+    [self.dropbox setObject:object forKey:strKey];
     return strKey;
 }
 

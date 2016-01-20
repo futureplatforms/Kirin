@@ -60,7 +60,7 @@ typedef enum NetRetrieveType { Net_Default, Net_B64, Net_Token } NetRetrieveType
     
     NSString *payloadLen = [NSString stringWithFormat:@"%lu", (unsigned long)[payloadData length]];
     
-    NSMutableURLRequest *request = [[[NSMutableURLRequest alloc] init] autorelease];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
     [request setURL:[NSURL URLWithString:url]];
     [request setHTTPMethod:method];
     [request setValue:payloadLen forHTTPHeaderField:@"Content-Length"];
@@ -127,7 +127,7 @@ typedef enum NetRetrieveType { Net_Default, Net_B64, Net_Token } NetRetrieveType
         
         DLog(@"Attempting to find encoding = %@", strEncoding);
         // Try and obtain the correct string encoding from a string
-        CFStringRef cfStringRef = (CFStringRef)strEncoding;
+        CFStringRef cfStringRef = (__bridge CFStringRef)strEncoding;
         CFStringEncoding cfStringEnc = CFStringConvertIANACharSetNameToEncoding(cfStringRef);
         NSStringEncoding encoding = CFStringConvertEncodingToNSStringEncoding(cfStringEnc);
         
