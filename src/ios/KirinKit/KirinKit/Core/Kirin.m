@@ -33,7 +33,7 @@
 
 @property(nonatomic, retain) JSContext* jsContext;
 @property(nonatomic, retain) NativeContext* nativeContext;
-
+@property(nonatomic, retain) DebugConsole* debugConsole;
 @property(nonatomic, retain) KirinState* state;
 
 @end
@@ -54,8 +54,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(Kirin)
 	if (self) {
 
         self.nativeContext = [[NativeContext alloc] init];
-
-        [self.nativeContext registerNativeObject:[[DebugConsole alloc] init] asName:@"DebugConsole"];
+        
+        [self.nativeContext registerNativeObject:(self.debugConsole = [[DebugConsole alloc] init]) asName:@"DebugConsole"];
         
         self.state = [KirinState initialState];
         self.state.dropbox = [[KirinDropbox alloc] init];
