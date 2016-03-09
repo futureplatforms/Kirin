@@ -14,9 +14,9 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<platform.version>5.0.1_r2</platform.version>
-		<android.compat.version>[19.0.1,)</android.compat.version>
-		<google.play.services.version>[22.0.0,)</google.play.services.version>
+		<platform.version>6.0_r2</platform.version>
+		<android.compat.version>23.2.1</android.compat.version>
+		<google.play.services.version>29.0.0</google.play.services.version>
 	</properties>
 	<profiles>
 	    <profile>
