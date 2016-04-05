@@ -29,6 +29,7 @@ public abstract class Formatter {
     public abstract byte[] hmacSHA1(String message, String passphrase);
     public abstract String sha512B64(String toEncode);
     public abstract String decryptAES(String encodedB64, String password);
+    public abstract String[] parseBatchSql(String batchSql);
     
     /**
      * Returns BASE64-Encoded PBKDF2 HMAC-SHA1

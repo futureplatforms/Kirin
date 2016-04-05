@@ -274,10 +274,8 @@ public class Transaction {
      * @param batch
      */
     public void execBatchUpdate(String batch) { 
-    	// Stick a newline on the end in case we forgot
-    	batch += "\n";
-    	String[] lines = batch.split(";(\\s)*[\n\r]");
-    	_BatchQueries.add(lines); 
+    	String[] lines = StaticDependencies.getInstance().getFormatter().parseBatchSql(batch);
+    	_BatchQueries.add(lines);
     	_TxElements.add(TxElementType.Batch); 
     }
     

@@ -1,11 +1,14 @@
 package com.futureplatforms.kirin.gwt.client.delegates;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.futureplatforms.kirin.dependencies.AsyncCallback.AsyncCallback1;
 import com.futureplatforms.kirin.dependencies.Formatter;
 import com.futureplatforms.kirin.gwt.client.services.CryptoService;
+import com.google.gwt.core.client.JsArrayString;
 import com.google.gwt.http.client.URL;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
@@ -121,7 +124,24 @@ public class GwtFormatter extends Formatter {
 	public String decryptAES(String encodedB64, String password) {
 		return _decryptAES(encodedB64, password);
 	}
-	
+
+	@Override
+	public String[] parseBatchSql(String batchSql) {
+		JsArrayString jsArr = _parseBatchSql(batchSql);
+		List<String> list = new ArrayList<>();
+		for (int i=0; i<jsArr.length(); i++) {
+			String s = jsArr.get(i);
+			if (s.length() > 0) {
+				list.add(s);
+			}
+		}
+		return list.toArray(new String[0]);
+	}
+
+	private native static final JsArrayString _parseBatchSql(String batchSql)/*-{
+		return batchSql.split(/;\s*[\n\r]/g);
+	}-*/;
+
 	private native final String _decryptAES(String encodedB64, String password) /*-{
 		var cryptoJS = $wnd.CryptoJS;
 		var first16OfHash = function(phrase) {

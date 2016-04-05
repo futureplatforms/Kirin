@@ -164,6 +164,12 @@ public class AndroidFormatter extends Formatter {
 	}
 
 	@Override
+	public String[] parseBatchSql(String batchSql) {
+		batchSql += "\n";
+		return batchSql.split(";(\\s)*[\n\r]");
+	}
+
+	@Override
 	public void pbkdf2(final String plaintext, final String salt, final int iterations,
 			final int keyLenBytes, final AsyncCallback1<byte[]> cb) {
 		new AsyncTask<Void, Void, Void>() {

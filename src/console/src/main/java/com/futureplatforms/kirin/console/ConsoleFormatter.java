@@ -127,6 +127,13 @@ public class ConsoleFormatter extends Formatter {
 	}
 
 	@Override
+	public String[] parseBatchSql(String batchSql) {
+		batchSql += "\n";
+		return batchSql.split(";(\\s)*[\n\r]");
+
+	}
+
+	@Override
 	public void pbkdf2(String plaintext, String salt, int iterations,
 			int keyLenBytes, AsyncCallback1<byte[]> cb) {
 		// TODO Auto-generated method stub
