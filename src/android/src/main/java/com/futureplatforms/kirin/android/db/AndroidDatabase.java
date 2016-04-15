@@ -3,6 +3,7 @@ package com.futureplatforms.kirin.android.db;
 import java.util.List;
 import java.util.Map;
 
+import android.os.AsyncTask;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -116,47 +117,64 @@ public class AndroidDatabase implements DatabaseDelegate {
 			return array;
 		}
 
+		private class DBAsyncTask extends AsyncTask<Object, Void, Boolean> {
+			private TransactionBundle bundle;
+			@Override
+			protected Boolean doInBackground(Object... objects) {
+				bundle = (TransactionBundle) objects[0];
+
+				db.beginTransaction();
+				try {
+					int statementCount = 0, batchCount = 0;
+					for (TxElementType type : bundle._Types) {
+						if (type == TxElementType.Statement) {
+							Statement st = bundle._Statements.get(statementCount);
+							statementCount++;
+
+							// Execute the statement
+							if (st instanceof InsertStatement) executeInsert((InsertStatement) st);
+							else if (st instanceof UpdateStatement) executeUpdate((UpdateStatement) st);
+							else if (st instanceof StatementWithRowsReturn) executeQueryWithRowsReturn(st);
+							else if (st instanceof StatementWithJSONReturn) executeQueryWithJsonReturn(st);
+							else executeQueryWithTokenReturn(st);
+						} else {
+							// execute batch
+							String[] batch = bundle._Batches.get(batchCount);
+							for (String sql : batch) {
+								db.execSQL(sql);
+							}
+							batchCount++;
+						}
+					}
+					db.setTransactionSuccessful();
+					db.endTransaction();
+					return true;
+				} catch (Exception e) {
+					e.printStackTrace();
+					db.endTransaction();
+					return false;
+				}
+			}
+
+			@Override
+			protected void onPostExecute(Boolean success) {
+				super.onPostExecute(success);
+				if (success) {
+					bundle._ClosedCallback.onComplete();
+				} else {
+					bundle._ClosedCallback.onError();
+				}
+			}
+		}
+
 		@Override
 		protected void performTransaction(TransactionCallback cb) {
 			cb.onSuccess(new TransactionBackend() {
-
 				@Override
 				public void pullTrigger(TransactionBundle bundle) {
-					db.beginTransaction();
-					try {
-						int statementCount = 0, batchCount = 0;
-						for (TxElementType type : bundle._Types) {
-							if (type == TxElementType.Statement) {
-								Statement st = bundle._Statements.get(statementCount);
-								statementCount++;
-
-								// Execute the statement
-								if (st instanceof InsertStatement) executeInsert((InsertStatement) st);
-								else if (st instanceof UpdateStatement) executeUpdate((UpdateStatement) st);
-								else if (st instanceof StatementWithRowsReturn) executeQueryWithRowsReturn(st);
-								else if (st instanceof StatementWithJSONReturn) executeQueryWithJsonReturn(st);
-								else executeQueryWithTokenReturn(st);
-							} else {
-								// execute batch
-								String[] batch = bundle._Batches.get(batchCount);
-								for (String sql : batch) {
-									db.execSQL(sql);
-								}
-								batchCount++;
-							}
-						}
-						db.setTransactionSuccessful();
-						db.endTransaction();
-						bundle._ClosedCallback.onComplete();
-					} catch (Exception e) {
-						e.printStackTrace();
-						db.endTransaction();
-						bundle._ClosedCallback.onError();
-					}
+					new DBAsyncTask().execute(bundle);
 				}
-
 			});
-
 		}
 
 		private void executeInsert(InsertStatement st) {
