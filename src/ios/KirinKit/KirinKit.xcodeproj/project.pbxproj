@@ -912,6 +912,7 @@
 					"$(PROJECT_DIR)/../../common/kirin-gwt/target/bindings/SERVICE_BINDINGS/ios",
 				);
 				SDKROOT = iphoneos;
+				STRIP_INSTALLED_PRODUCT = NO;
 			};
 			name = Debug;
 		};
@@ -931,6 +932,7 @@
 					"$(PROJECT_DIR)/../../common/kirin-gwt/target/bindings/SERVICE_BINDINGS/ios",
 				);
 				SDKROOT = iphoneos;
+				STRIP_INSTALLED_PRODUCT = NO;
 			};
 			name = Release;
 		};
