@@ -21,13 +21,12 @@ It's also very easy to add support for new services which may become available, 
 Currently the following APIs are provided: 
 
 | | iOS | Android | Windows XAML/C# | Windows HTML/JS |
-|-|-|-|-|-|
+|---|---|---|---|---|
 |Networking |✓|✓|✓|✓|
 |SQLite Database |✓|✓|✓||
 |Key/value setting persistence |✓|✓|✓|✓|
 |Local Notifications |✓|✓|||
 |GPS |✓|✓|✓||
-|Facebook |✓|✓|||
 |JSON parsing |✓|✓|✓|✓|
 |XML parsing |✓|✓|✓|✓|
 |Calendar event creation |✓|✓|||
