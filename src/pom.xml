@@ -122,10 +122,6 @@
       <profile>
           <id>disable-java8-doclint</id>
           <activation>
-              <property>
-                  <name>performRelease</name>
-                  <value>true</value>
-              </property>
               <jdk>[1.8,)</jdk>
           </activation>
           <properties>
