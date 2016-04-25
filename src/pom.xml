@@ -108,14 +108,29 @@
                               <goals>
                                   <goal>jar</goal>
                               </goals>
-                              <configuration>
-                                  <additionalparam>-Xdoclint:none</additionalparam>
-                              </configuration>
                           </execution>
                       </executions>
                   </plugin>
               </plugins>
           </build>
+      </profile>
+
+      <!--
+            Set -Xdoclint:none for Javadoc generation in JDK8+ only
+            http://stackoverflow.com/a/34808603/64505
+      -->
+      <profile>
+          <id>disable-java8-doclint</id>
+          <activation>
+              <property>
+                  <name>performRelease</name>
+                  <value>true</value>
+              </property>
+              <jdk>[1.8,)</jdk>
+          </activation>
+          <properties>
+              <additionalparam>-Xdoclint:none</additionalparam>
+          </properties>
       </profile>
   </profiles>
   
