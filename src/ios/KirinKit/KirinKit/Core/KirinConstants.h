@@ -13,6 +13,7 @@
 
 @property(nonatomic) BOOL superDevMode;
 @property(nonatomic) BOOL loggingEnabled;
+@property(nonatomic) BOOL logJS;
 
 SYNTHESIZE_SINGLETON_HEADER_FOR_CLASS(KirinConstants)
 
