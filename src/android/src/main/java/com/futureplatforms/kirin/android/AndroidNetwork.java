@@ -49,55 +49,36 @@ public class AndroidNetwork implements NetworkDelegateClient {
 		}
 	}
 
-	private static byte[] slurpBytes(final InputStream is, final int bufferSize)
-	{
+	private static byte[] slurpBytes(final InputStream is, final int bufferSize) throws IOException {
 		final byte[] buffer = new byte[bufferSize];
 		final ByteArrayOutputStream out = new ByteArrayOutputStream();
 		try {
-			try {
-				for (;;) {
-					int rsz = is.read(buffer, 0, buffer.length);
-					if (rsz < 0)
-						break;
-					out.write(buffer, 0, rsz);
-				}
+			for (;;) {
+				int rsz = is.read(buffer, 0, buffer.length);
+				if (rsz < 0)
+					break;
+				out.write(buffer, 0, rsz);
 			}
-			finally {
-				is.close();
-			}
-		}
-		catch (UnsupportedEncodingException ex) {
-	    /* ... */
-		}
-		catch (IOException ex) {
-	      /* ... */
+		} finally {
+			is.close();
 		}
 		return out.toByteArray();
 	}
 
-	private static String slurpString(final InputStream is, final int bufferSize)
-	{
+	private static String slurpString(final InputStream is, final int bufferSize) throws IOException {
 		final char[] buffer = new char[bufferSize];
 		final StringBuilder out = new StringBuilder();
+		final Reader in = new InputStreamReader(is, "UTF-8");
 		try {
-			final Reader in = new InputStreamReader(is, "UTF-8");
-			try {
-				for (;;) {
-					int rsz = in.read(buffer, 0, buffer.length);
-					if (rsz < 0)
-						break;
-					out.append(buffer, 0, rsz);
-				}
-			}
-			finally {
-				in.close();
+			for (;;) {
+				int rsz = in.read(buffer, 0, buffer.length);
+				if (rsz < 0)
+					break;
+				out.append(buffer, 0, rsz);
 			}
 		}
-		catch (UnsupportedEncodingException ex) {
-	    /* ... */
-		}
-		catch (IOException ex) {
-	      /* ... */
+		finally {
+			in.close();
 		}
 		return out.toString();
 	}
