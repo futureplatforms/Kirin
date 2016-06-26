@@ -1,7 +1,11 @@
 package com.futureplatforms.kirin.gwt.client.services.db;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import com.futureplatforms.kirin.dependencies.StaticDependencies;
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.ExportPackage;
 import org.timepedia.exporter.client.NoExport;
@@ -31,27 +35,56 @@ public class DatabaseAccessService extends KirinService<DatabaseAccessServiceNat
         // rather than native code (as with most regular screen modules).
         _Instance = this;
     }
-    
-    private int _NextDbId = Integer.MIN_VALUE;
-    private Map<Integer, DatabaseOpenedCallback> _OpenCallbacks = Maps.newHashMap();
-    
+
+    private static class DatabaseCallback {
+        public final DatabaseOpenedCallback cb;
+        public final String filename;
+        public DatabaseCallback(DatabaseOpenedCallback cb, String filename) {
+            this.cb = cb;
+            this.filename = filename;
+        }
+    }
+
+
+    private Map<String, List<DatabaseOpenedCallback>> callbacks = new HashMap<>();
+    private Map<String, GwtDatabase> databasesByName = new HashMap<>();
+
     @NoBind
     @NoExport
     public void _openDatabase(String filename, DatabaseOpenedCallback cb) {
-        int thisId = _NextDbId;
-        _NextDbId++;
-        _OpenCallbacks.put(thisId, cb);
-    	getNativeObject().open(filename, thisId);
+        if (databasesByName.containsKey(filename)) {
+            cb.onOpened(databasesByName.get(filename));
+            return;
+        }
+
+        if (!callbacks.containsKey(filename)) {
+            callbacks.put(filename, new ArrayList<DatabaseOpenedCallback>());
+        }
+
+        List<DatabaseOpenedCallback> l = callbacks.get(filename);
+        l.add(cb);
+
+        if (l.size() == 1) {
+            // don't want to kick off more than one native call per db
+            getNativeObject().open(filename);
+        }
     }
     
     // BEGIN  Callback functions for database open
-    public void databaseOpenedSuccess(int dbId) {
-		DatabaseOpenedCallback cb = _OpenCallbacks.remove(dbId);
-		cb.onOpened(new GwtDatabase(dbId));
+    public void databaseOpenedSuccess(String filename) {
+        GwtDatabase db = new GwtDatabase(filename);
+
+        for (DatabaseOpenedCallback cb : callbacks.get(filename)) {
+            cb.onOpened(db);
+        }
+        callbacks.clear();
     }
-    public void databaseOpenedFailure(int dbId) {
-    	DatabaseOpenedCallback cb = _OpenCallbacks.remove(dbId);
-    	cb.onError();
+
+    public void databaseOpenedFailure(String filename) {
+        for (DatabaseOpenedCallback cb : callbacks.get(filename)) {
+            cb.onError();
+        }
+        callbacks.clear();
     }
     // END  Callback functions for database open
     

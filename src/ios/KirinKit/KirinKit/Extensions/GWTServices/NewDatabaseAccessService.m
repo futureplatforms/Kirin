@@ -18,27 +18,40 @@
 
 @implementation NewDatabaseAccessService
 
+static dispatch_queue_t serialDispatchQueue = nil;
+
 @synthesize kirinModule = kirinModule_;
 
 - (id) init {
     self.serviceName = @"DatabaseAccessService";
     self.kirinModuleProtocol = @protocol(DatabaseAccessService);
-    self.DbForId = [[NSMutableDictionary alloc] init];
+    self.DbForFilename = [[NSMutableDictionary alloc] init];
     self.NewTransactionService = [[NewTransactionService alloc] initWithDatabaseAccessService:self];
     return [super initWithServiceName: self.serviceName];
 }
 
 // gets called by Kirin
-- (void) open: (NSString*) filename : (int) dbId {
+- (void) open: (NSString*) filename {
     NSString *docsPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
     NSString *dbPath   = [docsPath stringByAppendingPathComponent:filename];
     FMDatabaseQueue *queue = [FMDatabaseQueue databaseQueueWithPath:dbPath];
     if (queue != nil) {
-        [self.DbForId setObject:queue forKey:@(dbId)];
-        [self.kirinModule databaseOpenedSuccess:dbId];
+        [self.DbForFilename setObject:queue forKey:filename];
+        [self.kirinModule databaseOpenedSuccess:filename];
     } else {
-        [self.kirinModule databaseOpenedFailure:dbId];
+        [self.kirinModule databaseOpenedFailure:filename];
     }
+}
+
++ (dispatch_queue_t) getDatabaseDispatchQueue {
+    if (!serialDispatchQueue) {
+        serialDispatchQueue = dispatch_queue_create("com.futureplatforms.kirin.databasesqueue", DISPATCH_QUEUE_SERIAL);
+    }
+    return serialDispatchQueue;
+}
+
+- (dispatch_queue_t) dispatchQueue {
+    return [NewDatabaseAccessService getDatabaseDispatchQueue];
 }
 
 @end

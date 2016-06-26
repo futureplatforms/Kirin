@@ -43,7 +43,7 @@
 }
 
 - (void) registerNativeObject: (id) object asName: (NSString*) name {
-    self.nativeObjects[name] = [NativeObjectHolder holderForObject:object];
+    self.nativeObjects[name] = [NativeObjectHolder holderForObject:object withName:name];
 }
 
 - (void) unregisterNativeObject: (NSString*) name {
@@ -61,6 +61,12 @@
     BOOL isBackgroundThread = (holder.dispatchQueue != nil);
 	if (obj && [obj respondsToSelector:selector]) {
         void (^block)(void) = ^{
+            
+            if ([NSThread isMainThread])
+                NSLog(@"Main Thread: %@.%@", host, fullMethodName);
+            else
+                NSLog(@"Not on Main Thread: %@.%@", host, fullMethodName);
+            
             __block UIBackgroundTaskIdentifier taskId = UIBackgroundTaskInvalid;
             
             if (isBackgroundThread) {
@@ -151,6 +157,12 @@
                 dispatch_async(queue, block);
             }
         } else {
+            NSLog(@"NO QUEUE, RUNNING IMMEDIATELY: %@.%@", host, fullMethodName);
+            if ([NSThread isMainThread])
+                NSLog(@"Main Thread: %@.%@", host, fullMethodName);
+            else
+                NSLog(@"Not on Main Thread: %@.%@", host, fullMethodName);
+            
             block();
         }
 	} else {                

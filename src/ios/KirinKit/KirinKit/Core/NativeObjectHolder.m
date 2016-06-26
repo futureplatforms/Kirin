@@ -9,6 +9,7 @@
 #import "NativeObjectHolder.h"
 
 #import "KirinExtensionOnMainThread.h"
+#import "KirinSerialExecute.h"
 #import <UIKit/UIViewController.h>
 
 #import <objc/runtime.h>
@@ -16,6 +17,7 @@
 @interface NativeObjectHolder ()
 
 @property(nonatomic, retain) NSDictionary* methodsMap;
+@property(nonatomic, copy) NSString* name;
 
 - (void) initializeMethodsMap;
 - (NSString*) camelCasedMethodName: (NSString*) methodName;
@@ -25,14 +27,25 @@
 
 @implementation NativeObjectHolder
 
+static dispatch_queue_t serialDispatchQueue = nil;
+
 @synthesize nativeObject = nativeObject_;
 @synthesize dispatchQueue = dispatchQueue_;
 @synthesize methodsMap = methodsMap_;
 
-+ (NativeObjectHolder*) holderForObject: (NSObject*) object {
++ (NativeObjectHolder*) holderForObject: (NSObject*) object withName:(NSString *)name {
     NativeObjectHolder* holder = [[NativeObjectHolder alloc] init];
+    holder.name = name;
     holder.nativeObject = object;
     return holder;
+}
+
++ (dispatch_queue_t) globalSerialQueue {
+    if (!serialDispatchQueue) {
+        serialDispatchQueue = dispatch_queue_create("com.futureplatforms.kirin", DISPATCH_QUEUE_SERIAL);
+    }
+    NSLog(@"SERIAL DISPATCH QUEUE");
+    return serialDispatchQueue;
 }
 
 - (void) setNativeObject:(NSObject*)nativeObject {
@@ -42,16 +55,20 @@
         return;
     }
     
-    if ([nativeObject isKindOfClass:[UIViewController class]]) {
-        //DLog(@"Will dispatch to UIViewController %@ on the main thread", [nativeObject class]);
-        self.dispatchQueue = nil;//dispatch_get_main_queue();
-    } else if ([nativeObject conformsToProtocol:@protocol(KirinExtensionOnMainThread)]) {
-       // DLog(@"Will dispatch to KirinExtensionWithUI %@ on the main thread", [nativeObject class]);
-        self.dispatchQueue = nil;//dispatch_get_main_queue();
+    if (
+            [nativeObject isKindOfClass:[UIViewController class]] ||
+            [nativeObject conformsToProtocol:@protocol(KirinExtensionOnMainThread)]
+        ) {
+        // Dispatch to main/UI thread
+        self.dispatchQueue = nil;
+    } else if ([nativeObject conformsToProtocol:@protocol(KirinSerialExecute)]) {
+        // Dispatch to custom serial queue
+        NSString * queueName = [NSString stringWithFormat:@"com.futureplatforms.kirin.%@", self.name];
+        self.dispatchQueue = dispatch_queue_create([queueName UTF8String], DISPATCH_QUEUE_SERIAL);
     } else {
-        
         SEL getter = @selector(dispatchQueue);
         
+        // See if this object provides its own dispatch queue
         if ([nativeObject_ respondsToSelector:getter]) {
             if (!nativeObject) {
                 return;
@@ -60,13 +77,12 @@
             IMP imp = [nativeObject methodForSelector:getter];
             dispatch_queue_t (*func)(id, SEL) = (void *) imp;
             self.dispatchQueue = (dispatch_queue_t) func(nativeObject, getter);
-//            self.dispatchQueue = (dispatch_queue_t) [nativeObject performSelector:getter];
+            NSLog(@"setNativeObject responds to dispatch queue getter: %@, %p", self.name, self.dispatchQueue);
+            
         }
         
-        if (self.dispatchQueue) {
-            //DLog(@"Will dispatch to KirinExtension %@ on a custom dispatch queue", [nativeObject class]);
-        } else {
-            //DLog(@"Will dispatch to KirinExtension %@ on a global dispatch queue", [nativeObject class]);
+        if (!self.dispatchQueue) {
+            // This object does not provide its own dispatch queue, so use a default global concurrent queue
             self.dispatchQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
         }
         

@@ -11,10 +11,11 @@
 #import "KirinGwtServiceStub.h"
 #import "NewTransactionService.h"
 #import <toNative/DatabaseAccessServiceNative.h>
-#import "KirinSynchronousExecute.h"
 
-@interface NewDatabaseAccessService : KirinGwtServiceStub<DatabaseAccessServiceNative, KirinSynchronousExecute>
+@interface NewDatabaseAccessService : KirinGwtServiceStub<DatabaseAccessServiceNative>
 
-@property (strong, nonatomic) NSMutableDictionary * DbForId;
+@property (strong, nonatomic) NSMutableDictionary * DbForFilename;
 @property (strong, nonatomic) NewTransactionService * NewTransactionService;
++ (dispatch_queue_t) getDatabaseDispatchQueue;
+- (dispatch_queue_t) dispatchQueue;
 @end

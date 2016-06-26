@@ -10,7 +10,9 @@
 
 @interface NativeObjectHolder : NSObject
 
-+ (NativeObjectHolder*) holderForObject: (NSObject*) object;
++ (NativeObjectHolder*) holderForObject: (NSObject*) object withName:(NSString*) name;
+
++ (dispatch_queue_t) dispatchQueue;
 
 @property(weak) NSObject* nativeObject;
 @property(nonatomic) dispatch_queue_t dispatchQueue;

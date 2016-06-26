@@ -10,8 +10,8 @@
 #import "NSObject+Kirin.h"
 #import "KirinGwtServiceStub.h"
 #import <toNative/TransactionServiceNative.h>
-#import "KirinSynchronousExecute.h"
 
-@interface NewTransactionService : KirinGwtServiceStub<TransactionServiceNative, KirinSynchronousExecute>
+@interface NewTransactionService : KirinGwtServiceStub<TransactionServiceNative>
 - (id) initWithDatabaseAccessService: (id) databaseAccessService;
+- (dispatch_queue_t) dispatchQueue;
 @end

@@ -4,15 +4,15 @@ import com.futureplatforms.kirin.dependencies.db.Database;
 import com.futureplatforms.kirin.gwt.client.services.db.TransactionService;
 
 public class GwtDatabase extends Database {
-	public final int _DbId;
+	public final String _Filename;
 	
-	public GwtDatabase(int dbId) {
-		this._DbId = dbId;
+	public GwtDatabase(String filename) {
+		this._Filename = filename;
 	}
 	
 	@Override
 	public void performTransaction(TransactionCallback callback) {
 		TransactionService ts = TransactionService.BACKDOOR();
-		ts._BeginTransaction(_DbId, callback);
+		ts._BeginTransaction(_Filename, callback);
 	}
 }
