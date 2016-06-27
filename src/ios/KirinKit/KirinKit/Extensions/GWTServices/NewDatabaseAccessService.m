@@ -45,7 +45,7 @@ static dispatch_queue_t serialDispatchQueue = nil;
 
 + (dispatch_queue_t) getDatabaseDispatchQueue {
     if (!serialDispatchQueue) {
-        serialDispatchQueue = dispatch_queue_create("com.futureplatforms.kirin.databasesqueue", DISPATCH_QUEUE_SERIAL);
+        serialDispatchQueue = dispatch_queue_create("com.futureplatforms.kirin.dbqueue", DISPATCH_QUEUE_SERIAL);
     }
     return serialDispatchQueue;
 }
