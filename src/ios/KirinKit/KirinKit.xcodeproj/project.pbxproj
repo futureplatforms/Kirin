@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		090364CE1D2275C0005FE904 /* bindings in Resources */ = {isa = PBXBuildFile; fileRef = 090364CD1D2275C0005FE904 /* bindings */; };
 		090C142518C83D2C0030EC1F /* SymbolMapService.h in Headers */ = {isa = PBXBuildFile; fileRef = 090C142318C83D2C0030EC1F /* SymbolMapService.h */; };
 		090C142618C83D2C0030EC1F /* SymbolMapService.m in Sources */ = {isa = PBXBuildFile; fileRef = 090C142418C83D2C0030EC1F /* SymbolMapService.m */; };
 		091D1AC316F071E3001400FF /* NSObject+Kirin.h in Headers */ = {isa = PBXBuildFile; fileRef = 091D1AC116F071E3001400FF /* NSObject+Kirin.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -38,7 +39,6 @@
 		09B0B56218E3616500A87C5D /* WebviewHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 09B0B56018E3616500A87C5D /* WebviewHelper.m */; };
 		09C2D369191280020097F9EB /* KirinGwtLocation.h in Headers */ = {isa = PBXBuildFile; fileRef = 09C2D367191280020097F9EB /* KirinGwtLocation.h */; };
 		09C2D36A191280020097F9EB /* KirinGwtLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 09C2D368191280020097F9EB /* KirinGwtLocation.m */; };
-		09D5D2A71D1BD43100FEAEA3 /* bindings in Resources */ = {isa = PBXBuildFile; fileRef = 09D5D2A61D1BD43100FEAEA3 /* bindings */; };
 		09D8177217E21D6E00611BBE /* UIViewController+Hybrid.h in Headers */ = {isa = PBXBuildFile; fileRef = 09D8177017E21D6E00611BBE /* UIViewController+Hybrid.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		09D8177317E21D6E00611BBE /* UIViewController+Hybrid.m in Sources */ = {isa = PBXBuildFile; fileRef = 09D8177117E21D6E00611BBE /* UIViewController+Hybrid.m */; };
 		09DCA4FD1846342300C3555C /* NewTransactionService.h in Headers */ = {isa = PBXBuildFile; fileRef = 09DCA4FB1846342300C3555C /* NewTransactionService.h */; };
@@ -133,6 +133,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		090364CD1D2275C0005FE904 /* bindings */ = {isa = PBXFileReference; lastKnownFileType = folder; path = bindings; sourceTree = "<group>"; };
 		090C142318C83D2C0030EC1F /* SymbolMapService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SymbolMapService.h; path = GWTServices/SymbolMapService.h; sourceTree = "<group>"; };
 		090C142418C83D2C0030EC1F /* SymbolMapService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SymbolMapService.m; path = GWTServices/SymbolMapService.m; sourceTree = "<group>"; };
 		09188E6D18B4DC3D00FBBB77 /* KirinSynchronousExecute.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KirinSynchronousExecute.h; sourceTree = "<group>"; };
@@ -166,7 +167,6 @@
 		09C2D367191280020097F9EB /* KirinGwtLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KirinGwtLocation.h; sourceTree = "<group>"; };
 		09C2D368191280020097F9EB /* KirinGwtLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KirinGwtLocation.m; sourceTree = "<group>"; };
 		09D5D2A51D1ADBFC00FEAEA3 /* KirinSerialExecute.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KirinSerialExecute.h; sourceTree = "<group>"; };
-		09D5D2A61D1BD43100FEAEA3 /* bindings */ = {isa = PBXFileReference; lastKnownFileType = folder; path = bindings; sourceTree = "<group>"; };
 		09D8177017E21D6E00611BBE /* UIViewController+Hybrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Hybrid.h"; sourceTree = "<group>"; };
 		09D8177117E21D6E00611BBE /* UIViewController+Hybrid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Hybrid.m"; sourceTree = "<group>"; };
 		09DCA4FB1846342300C3555C /* NewTransactionService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewTransactionService.h; path = GWTServices/NewTransactionService.h; sourceTree = "<group>"; };
@@ -355,7 +355,7 @@
 				1A00C8C814B2E2FD00211F34 /* KirinKitTests */,
 				1A00C8BE14B2E2FD00211F34 /* Frameworks */,
 				1A00C8B014B2E2FD00211F34 /* Products */,
-				09D5D2A61D1BD43100FEAEA3 /* bindings */,
+				090364CD1D2275C0005FE904 /* bindings */,
 			);
 			sourceTree = "<group>";
 		};
@@ -741,7 +741,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				09D5D2A71D1BD43100FEAEA3 /* bindings in Resources */,
+				090364CE1D2275C0005FE904 /* bindings in Resources */,
 				1A00C8B614B2E2FD00211F34 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
