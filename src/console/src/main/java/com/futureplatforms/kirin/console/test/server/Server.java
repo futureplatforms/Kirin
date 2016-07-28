@@ -1,5 +1,6 @@
 package com.futureplatforms.kirin.console.test.server;
 
+import com.futureplatforms.kirin.console.ConsoleNetwork;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate.HttpVerb;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegate.NetworkResponse;
 import com.futureplatforms.kirin.dependencies.StaticDependencies.NetworkDelegateClient;
@@ -11,8 +12,17 @@ import java.util.Map;
 public class Server implements NetworkDelegateClient {
 
 	public final List<ServerEntry> _Entries = new ArrayList<>();
+	private boolean fallbackToRealHttp;
 
-	public Server() {}
+	public Server() { }
+
+	public void setFallbackToRealHttp(boolean fallbackToRealHttp) {
+		this.fallbackToRealHttp = fallbackToRealHttp;
+	}
+
+	public boolean getFallbackToRealHttp() {
+		return this.fallbackToRealHttp;
+	}
 	
 	private boolean checkMap(String url, String postData, NetworkResponse callback) {
 		ServerEntry lastMatch = null;
@@ -36,8 +46,11 @@ public class Server implements NetworkDelegateClient {
 			System.out.println(verb.name());
 			System.out.println(url);
 			System.out.println(payload);
-			callback.callOnFail("404");
-			//new ConsoleNetwork().doHttp(verb, url, payload, headers, callback);
+			if (fallbackToRealHttp) {
+				new ConsoleNetwork().doHttp(verb, url, payload, headers, callback);
+			} else {
+				callback.callOnFail("404");
+			}
 		}
 	}
 
