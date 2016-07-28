@@ -151,7 +151,6 @@
                 dispatch_async(queue, block);
             }
         } else {
-            NSLog(@"NO QUEUE, RUNNING IMMEDIATELY: %@.%@", host, fullMethodName);
             block();
         }
 	} else {                
