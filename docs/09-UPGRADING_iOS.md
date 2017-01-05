@@ -13,21 +13,20 @@ UPGRADING iOS APP TO MAVEN CENTRAL KIRIN
 10. Copy lib/Kirin/KirinKit.framework into Frameworks
 11. Add "$(SRCROOT)/../../lib/Kirin" to Framework Search Paths
 12. Change the Header Search Paths, the name of the app will be added in
-13. In main project > Info, create new Configuration called "Debug: SDM", duplicated from Debug
+13. In main project > Info, create new target Debug: SDM, duplicated from Debug
 14. In main project, build settings, preprocessor macros, Debug: SDM, add SDM=1 
 15. If using CocoaPods, add a Debug: SDM target there too.
 16. Create new scheme, "App name: SDM". 
 17. Add the following to the start of AppDelegate:didFinishLaunchingWithOptions:
+#if DEBUG
+    KIRINCONSTANTS.loggingEnabled = YES;
+#endif
     
-        #if DEBUG
-            KIRINCONSTANTS.loggingEnabled = YES;
-        #endif
-    
-        #if SDM
-        #if TARGET_IPHONE_SIMULATOR
-            KIRINCONSTANTS.superDevMode = YES;
-        #else
-            NSLog(@"SuperDevMode only works on simulator!!");
-            return NO;
-        #endif
-        #endif
+#if SDM
+#if TARGET_IPHONE_SIMULATOR
+    KIRINCONSTANTS.superDevMode = YES;
+#else
+    NSLog(@"SuperDevMode only works on simulator!!");
+    return NO;
+#endif
+#endif

@@ -9,7 +9,6 @@ Get a new Kirin project with Android, iPhone and WP8 targets.
 * Ensure you have maven installed (`mvn -version` must work on command line)
 * For eclipse development, install the [M2E plugin](http://eclipse.org/m2e/)
 * For android development, ensure you have the Android SDK installed, and the `ANDROID_HOME` environment variable is set -- make sure this is up-to-date by running `android update sdk`
-* Use [maven-android-sdk-deployer](https://github.com/simpligility/maven-android-sdk-deployer) to install components of the Android SDK into a Maven repository
 * Ensure you have your platform's development tools installed (xcode for iOS, MS Visual Studio Express for Windows Phone)
 
 ## Correct version of Maven

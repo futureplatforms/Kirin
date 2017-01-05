@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "KirinScreenHelper.h"
+#import <KirinKit/KirinScreenHelper.h>
 
 @interface KirinUITableViewController : UITableViewController
 @property(retain, nonatomic) KirinScreenHelper* kirinHelper;

@@ -9,7 +9,7 @@
 #import "NewTransactionService.h"
 #import "NewTransactionStatement.h"
 #import "NewDatabaseAccessService.h"
-#import <fromNative/TransactionService.h>
+#import "fromNative/TransactionService.h"
 #import "FMDatabaseQueue.h"
 #import "FMDatabase.h"
 #import "KirinDropbox.h"
@@ -34,11 +34,11 @@
     return [super initWithServiceName: self.serviceName];
 }
 
-- (NSMutableArray*) getStatements: (NSString *) filename : (int) txId {
+- (NSMutableArray*) getStatements: (int) dbId : (int) txId {
     NSMutableDictionary * txToStatements;
-    if ((txToStatements = [_DbToTx objectForKey:filename]) == nil) {
+    if ((txToStatements = [_DbToTx objectForKey:@(dbId)]) == nil) {
         txToStatements = [[NSMutableDictionary alloc] init];
-        [_DbToTx setObject:txToStatements forKey:filename];
+        [_DbToTx setObject:txToStatements forKey:@(dbId)];
     }
     
     NSMutableArray *statements;
@@ -49,24 +49,28 @@
     return statements;
 }
 
-- (void) appendStatementForRows: (NSString *) filename : (int) txId : (int) statementId : (NSString*) statement : (NSArray*) params {
-    NSMutableArray *statements = [self getStatements:filename :txId];
+- (void) begin: (int) dbId : (int) txId {
+    [self.kirinModule transactionBeginOnSuccess:dbId :txId];
+}
+
+- (void) appendStatementForRows: (int) dbId : (int) txId : (int) statementId : (NSString*) statement : (NSArray*) params {
+    NSMutableArray *statements = [self getStatements:dbId :txId];
     [statements addObject:[[NewTransactionStatement alloc] initWithType:SQL_rowset andId:statementId andStatement:statement andParameters:params]];
 }
 
-- (void) appendStatementForToken: (NSString *) filename : (int) txId : (int) statementId : (NSString*) statement : (NSArray*) params {
-    NSMutableArray *statements = [self getStatements:filename :txId];
+- (void) appendStatementForToken: (int) dbId : (int) txId : (int) statementId : (NSString*) statement : (NSArray*) params {
+    NSMutableArray *statements = [self getStatements:dbId :txId];
     [statements addObject:[[NewTransactionStatement alloc] initWithType:SQL_token andId:statementId andStatement:statement andParameters:params]];
 }
 
-- (void) appendStatementForJSON: (NSString *) filename : (int) txId : (int) statementId : (NSString*) statement : (NSArray*) params {
-    NSMutableArray *statements = [self getStatements:filename :txId];
+- (void) appendStatementForJSON: (int) dbId : (int) txId : (int) statementId : (NSString*) statement : (NSArray*) params {
+    NSMutableArray *statements = [self getStatements:dbId :txId];
     [statements addObject:[[NewTransactionStatement alloc] initWithType:SQL_json andId:statementId andStatement:statement andParameters:params]];
 }
 
 
-- (void) appendBatch: (NSString *) filename : (int) txId : (NSArray*) batch {
-    NSMutableArray *statements = [self getStatements:filename :txId];
+- (void) appendBatch: (int) dbId : (int) txId : (NSArray*) batch {
+    NSMutableArray *statements = [self getStatements:dbId :txId];
     for (NSString *b in batch) {
         [statements addObject:[[NewTransactionStatement alloc] initWithType:SQL_rowset andStatement:b andParameters:nil]];
     }
@@ -74,8 +78,8 @@
 
 // Appending a bunch of statements.
 // enum StatementReturnType { Rows, Token, JSON, Batch };
-- (void) appendStatements: (NSString *) filename : (int) txId : (NSArray*) returnTypes : (NSArray*) statementIds : (NSArray*) statements : (NSArray*) txParams {
-    NSMutableArray *nativeStatements = [self getStatements:filename :txId];
+- (void) appendStatements: (int) dbId : (int) txId : (NSArray*) returnTypes : (NSArray*) statementIds : (NSArray*) statements : (NSArray*) txParams {
+    NSMutableArray *nativeStatements = [self getStatements:dbId :txId];
     NSUInteger numStatements = [returnTypes count];
     for (int i=0; i<numStatements; i++) {
         int returnType = [((NSNumber*)returnTypes[i]) intValue];
@@ -88,9 +92,6 @@
             opType = SQL_json;
         } else if (returnType == 3) {
             opType = SQL_batch;
-        } else {
-            NSLog(@"ERROR :: newTransactionService unknown returnType %d", returnType);
-            return;
         }
         NSString * statement = statements[i];
         
@@ -107,18 +108,16 @@
     }
 }
 
-- (void) end: (NSString *) filename : (int) txId {
-    NSLog(@"End transaction on database %@", filename);
-    FMDatabaseQueue * dbQueue = [_DatabaseAccessService.DbForFilename objectForKey:filename];
+- (void) end: (int) dbId : (int) txId {
+    FMDatabaseQueue * dbQueue = [_DatabaseAccessService.DbForId objectForKey:@(dbId)];
     [dbQueue inTransaction:^(FMDatabase *db, BOOL *rollback) {
-        NSMutableArray * statements = [self getStatements:filename :txId];
+        NSMutableArray * statements = [self getStatements:dbId :txId];
         for (NewTransactionStatement * st in statements) {
             FMResultSet * s = [db executeQuery:st.statement withArgumentsInArray:st.parameters];
             if ([db hadError]) {
                 DLog(@"DB Error :: %@", [db lastErrorMessage]);
-                BOOL rb = YES;
-                rollback = &rb;
-                [self.kirinModule endFailure:filename :txId];
+                rollback = YES;
+                [self.kirinModule endFailure:dbId :txId];
                 return;
             }
             
@@ -131,7 +130,7 @@
                     for (int i=0; i<colCount; i++) {
                         [columnNames addObject:[s columnNameForIndex:i]];
                     }
-                    [self.kirinModule statementRowSuccessColumnNames:filename :txId :st.statementId :columnNames];
+                    [self.kirinModule statementRowSuccessColumnNames:dbId :txId :st.statementId :columnNames];
                 
                     // Now iterate through all rows
                     while ([s next]) {
@@ -144,42 +143,36 @@
                                 [row addObject:[s stringForColumnIndex:i]];
                             }
                         }
-                        [self.kirinModule statementRowSuccess:filename :txId :st.statementId :row];
+                        [self.kirinModule statementRowSuccess:dbId :txId :st.statementId :row];
                     }
                 
                     // Finally tell Kirin we've finished!
-                    [self.kirinModule statementRowSuccessEnd:filename :txId :st.statementId];
+                    [self.kirinModule statementRowSuccessEnd:dbId :txId :st.statementId];
                 } else if (st.type == SQL_token || st.type == SQL_json) {
                     // TOKEN query
                     NSMutableArray * arr = [[NSMutableArray alloc] init];
                     while ([s next]) {
-                        //NSDictionary * dict = [NSDictionary dictionaryWithDictionary:[s resultDictionary]];
-                        NSDictionary * dict = [[s resultDictionary] copy];
+                        NSDictionary * dict = [s resultDictionary];
                         [arr addObject:dict];
                     }
                 
                     if (st.type == SQL_token) {
                         NSString *token = [[KIRIN dropbox] putObject:arr];
-                        [self.kirinModule statementTokenSuccess:filename :txId :st.statementId :token];
+                        [self.kirinModule statementTokenSuccess:dbId :txId :st.statementId :token];
                     } else {
                         NSString *json = [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:arr options:0 error:nil] encoding:NSUTF8StringEncoding];
-                        [self.kirinModule statementJSONSuccess: filename :txId :st.statementId :json];
+                        [self.kirinModule statementJSONSuccess: dbId :txId :st.statementId :json];
                     }
                 } else {
-                    NSLog(@"DB ERROR -- UNEXPECTED TYPE");
+                    DLog(@"DB ERROR -- UNEXPECTED TYPE");
                 }
             } else {
                 // FMDB plays silly beggars if you don't iterate through the result set... weird
                 while ([s next]);
             }
         }
-        [self.kirinModule endSuccess:filename :txId];
+        [self.kirinModule endSuccess:dbId :txId];
     }];
 }
-
-- (dispatch_queue_t) dispatchQueue {
-    return [NewDatabaseAccessService getDatabaseDispatchQueue];
-}
-
 
 @end

@@ -45,13 +45,13 @@
 - (void) onLoad {
     // register the object so as to be callable from Javascript.
     [self.nativeContext registerNativeObject:self.nativeObject asName:self.jsModuleName];
-
+    
     // now tell the js what methods to construct a proxy with.
     NSArray* methods = [self.nativeContext methodNamesFor: self.jsModuleName];
-
-    NSString *methodsJSON = [[NSString alloc] initWithData: [NSJSONSerialization dataWithJSONObject:methods options:0 error:nil] encoding:NSUTF8StringEncoding];
     
-    [self.jsContext js: [NSString stringWithFormat: REGISTER_MODULE_WITH_METHODS, self.jsModuleName, methodsJSON]];
+    NSString *json = [[NSString alloc] initWithData: [NSJSONSerialization dataWithJSONObject:methods options:0 error:nil] encoding:NSUTF8StringEncoding];
+
+    [self.jsContext js: [NSString stringWithFormat: REGISTER_MODULE_WITH_METHODS,  self.jsModuleName, json]];
 }
 
 - (void) onUnload {
@@ -208,6 +208,16 @@
 
 - (id) proxyForJavascriptObject:(Protocol *)protocol andDictionary: (NSDictionary*) dictionary {
     return [KirinProxy proxyWithProtocol:protocol andDictionary:dictionary];
+}
+
+- (void) dealloc {
+    self.jsContext = nil;
+    self.nativeContext = nil;
+    self.proxyForJSModule = nil;
+    self.jsModuleName = nil;
+    self.nativeObject = nil;
+    self.state = nil;
+    [super dealloc];
 }
 
 @end

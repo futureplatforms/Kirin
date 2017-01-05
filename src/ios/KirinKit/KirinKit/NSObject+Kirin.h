@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Future Platforms. All rights reserved.
 //
 
-#import "KirinKit.h"
+#import <KirinKit/KirinKit.h>
 
 @interface NSObject (Kirin)
 @property (nonatomic, copy) KirinScreenHelper* kirinHelper;

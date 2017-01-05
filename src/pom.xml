@@ -4,174 +4,18 @@
 
   <groupId>com.futureplatforms.kirin</groupId>
   <artifactId>kirin</artifactId>
-  <version>2.0.4-SNAPSHOT</version>
+  <version>1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
-  <name>Kirin</name>
-    <description>Cross-platform app development in Java</description>
-  <url>https://github.com/futureplatforms/Kirin</url>
-
-    <licenses>
-        <license>
-            <name>The Apache License, Version 2.0</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-        </license>
-    </licenses>
-
-    <developers>
-        <developer>
-            <name>Douglas Hoskins</name>
-            <email>douglas.hoskins@futureplatforms.com</email>
-            <organization>Future Platforms</organization>
-            <organizationUrl>http://www.futureplatforms.com</organizationUrl>
-        </developer>
-    </developers>
+  <name>kirin</name>
+  <url>http://maven.apache.org</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <guava.version>16.0.1</guava.version>
-    <gwt.version>2.7.0</gwt.version>
-    <gwt.exporter.version>2.5.1</gwt.exporter.version>
-      <snapshot.repo>SPECIFY_ME</snapshot.repo>
-      <repo>SPECIFY_ME</repo>
+    <guavaVersion>16.0.1</guavaVersion>
+    <gwtVersion>2.6.0</gwtVersion>
+    <gwtExporterVersion>2.5.1</gwtExporterVersion>
   </properties>
-  
-  <profiles>
-    <profile>
-      <id>Windows</id>
-      <activation>
-        <os>
-          <family>Windows</family>
-        </os>
-      </activation>
-      <properties>
-        <script.extension>bat</script.extension>
-      </properties>
-    </profile>
-    <profile>
-      <id>NotWindows</id>
-      <activation>
-        <os>
-          <family>!Windows</family>
-        </os>
-      </activation>
-      <properties>
-        <script.extension>sh</script.extension>
-      </properties>
-    </profile>
-
-      <!--  Release profile as suggested here http://stackoverflow.com/a/14869692/64505  -->
-      <profile>
-          <id>release-sign-artifacts</id>
-          <activation>
-              <property>
-                  <name>performRelease</name>
-                  <value>true</value>
-              </property>
-          </activation>
-          <build>
-              <plugins>
-                  <plugin>
-                      <groupId>org.apache.maven.plugins</groupId>
-                      <artifactId>maven-gpg-plugin</artifactId>
-                      <version>1.5</version>
-                      <executions>
-                          <execution>
-                              <id>sign-artifacts</id>
-                              <phase>verify</phase>
-                              <goals>
-                                  <goal>sign</goal>
-                              </goals>
-                          </execution>
-                      </executions>
-                  </plugin>
-                  <plugin>
-                      <groupId>org.apache.maven.plugins</groupId>
-                      <artifactId>maven-source-plugin</artifactId>
-                      <version>3.0.0</version>
-                      <executions>
-                          <execution>
-                              <id>attach-javadocs</id>
-                              <goals>
-                                  <goal>jar</goal>
-                              </goals>
-                          </execution>
-                      </executions>
-                  </plugin>
-                  <plugin>
-                      <groupId>org.apache.maven.plugins</groupId>
-                      <artifactId>maven-javadoc-plugin</artifactId>
-                      <version>2.9</version>
-                      <executions>
-                          <execution>
-                              <id>attach-javadocs</id>
-                              <goals>
-                                  <goal>jar</goal>
-                              </goals>
-                          </execution>
-                      </executions>
-                  </plugin>
-              </plugins>
-          </build>
-      </profile>
-
-      <!--
-            Set -Xdoclint:none for Javadoc generation in JDK8+ only
-            http://stackoverflow.com/a/34808603/64505
-      -->
-      <profile>
-          <id>disable-java8-doclint</id>
-          <activation>
-              <jdk>[1.8.0,)</jdk>
-          </activation>
-          <properties>
-              <additionalparam>-Xdoclint:none</additionalparam>
-          </properties>
-      </profile>
-  </profiles>
-  
-  <scm>
-    <developerConnection>scm:git:https://github.com/futureplatforms/Kirin.git</developerConnection>
-    <connection>scm:git:https://github.com/futureplatforms/Kirin.git</connection>
-    <url>https://github.com/futureplatforms/Kirin.git</url>
-    <tag>kirin-1.0.1</tag>
-  </scm>
-
-  <!-- Got this bit from http://central.sonatype.org/pages/apache-maven.html#distribution-management-and-authentication -->
-  <distributionManagement>
-    <snapshotRepository>
-      <id>${snapshot.id}</id>
-      <url>${snapshot.repo}</url>
-    </snapshotRepository>
-    <repository>
-      <id>${repo.id}</id>
-      <url>${repo}</url>
-    </repository>
-  </distributionManagement>
-
-  <!-- Got this bit from http://central.sonatype.org/pages/apache-maven.html#gpg-signed-components -->
-  <build>
-    <plugins>
-      <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.0</version>
-          <configuration>
-            <source>1.7</source>
-            <target>1.7</target>
-              <compilerId>javac-with-errorprone</compilerId>
-              <forceJavacCompilerUse>true</forceJavacCompilerUse>
-          </configuration>
-            <dependencies>
-                <dependency>
-                    <groupId>org.codehaus.plexus</groupId>
-                    <artifactId>plexus-compiler-javac-errorprone</artifactId>
-                    <version>2.5</version>
-                </dependency>
-            </dependencies>
-        </plugin>
-    </plugins>
-  </build>
 
   <dependencies>
     <dependency>
@@ -181,41 +25,11 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-
-    <reporting>
-        <plugins>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>findbugs-maven-plugin</artifactId>
-                <version>3.0.1</version>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-pmd-plugin</artifactId>
-                <version>3.5</version>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>2.15</version>
-                <reportSets>
-                    <reportSet>
-                        <reports>
-                            <report>checkstyle</report>
-                        </reports>
-                    </reportSet>
-                </reportSets>
-            </plugin>
-        </plugins>
-    </reporting>
-
   <modules>
     <module>common/kirin-core</module>
     <module>common/kirin-gwt-stub</module>
     <module>android</module>
     <module>common/kirin-gwt</module>
-    <module>console</module>
-    <module>ios</module>
-    <!--<module>wp8-xaml-cs</module>-->
+	<module>console</module>
   </modules>
 </project>

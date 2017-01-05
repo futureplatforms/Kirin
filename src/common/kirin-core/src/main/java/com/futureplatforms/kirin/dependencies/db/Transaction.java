@@ -1,6 +1,5 @@
 package com.futureplatforms.kirin.dependencies.db;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.futureplatforms.kirin.dependencies.StaticDependencies;
@@ -9,6 +8,8 @@ import com.futureplatforms.kirin.dependencies.db.Database.TxRunner;
 import com.futureplatforms.kirin.dependencies.internal.TransactionBackend;
 import com.futureplatforms.kirin.dependencies.internal.TransactionBundle;
 import com.futureplatforms.kirin.dependencies.json.JSONArray;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
 
 public class Transaction {
 	public static class RowSet {
@@ -27,10 +28,10 @@ public class Transaction {
 				return _ColumnNames.contains(column);
 			}
 		}
-		public final List<String> _ColumnNames;
-		public final List<Row> _Rows = new ArrayList<>();
+		public final ImmutableList<String> _ColumnNames;
+		public final List<Row> _Rows = Lists.newArrayList();
 		
-		public RowSet(List<String> columnNames) {
+		public RowSet(ImmutableList<String> columnNames) {
 			_ColumnNames = columnNames;
 		}
 		public void addRow(List<String> values) {
@@ -141,18 +142,18 @@ public class Transaction {
     	Statement, Batch
     }
 
-    private List<TxElementType> _TxElements = new ArrayList<>();
-    private List<Statement> _Statements = new ArrayList<>();
-    private List<String[]> _BatchQueries = new ArrayList<>();
+    private List<TxElementType> _TxElements = Lists.newArrayList();
+    private List<Statement> _Statements = Lists.newArrayList();
+    private List<String[]> _BatchQueries = Lists.newArrayList();
     
     public enum Mode {
     	ReadOnly, ReadWrite
     }
     private TransactionBackend _Backend;
     
-    public interface TransactionCallback {
-    	void onSuccess(Transaction t);
-    	void onError();
+    public static interface TransactionCallback {
+    	public void onSuccess(Transaction t);
+    	public void onError();
     }
     
     protected Transaction(TransactionBackend backend) {

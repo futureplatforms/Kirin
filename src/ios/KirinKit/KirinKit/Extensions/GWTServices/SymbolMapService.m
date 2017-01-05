@@ -23,24 +23,25 @@
     return [super initWithServiceName: self.serviceName];
 }
 
-- (void) setSymbolMapDetails: (NSString*) moduleName : (NSString*) strongName {    
-    // We want to load /app/symbolMaps/<strongName>.symbolMap
+- (void) setSymbolMapDetails: (NSString*) moduleName : (NSString*) strongName; {
+    DLog(@"SetStrongName %@", strongName);
+    
+    // We want to load /app/WEB-INF/<app_name>/symbolMaps/<strongName>.symbolMap
     NSString * resourcePath = [[NSBundle mainBundle] resourcePath];
-    NSString * pathToApp = [NSString stringWithFormat:@"%@/app", resourcePath];
+    NSString * pathToWebInf = [NSString stringWithFormat:@"%@/app/WEB-INF", resourcePath];
     
     // WEB-INF contains three folders: classes, lib and the app name.  To save us
     // passing in the app name, look for the entry that is not "classes" or "lib".
     NSFileManager *filemgr =[NSFileManager defaultManager];
-    NSArray* filenames = [filemgr contentsOfDirectoryAtPath:pathToApp error:nil];
+    NSArray* filenames = [filemgr contentsOfDirectoryAtPath:pathToWebInf error:nil];
     for (NSString *filename in filenames) {
         if (![filename isEqualToString:@"classes"] && ![filename isEqualToString:@"lib"]) {
-            NSString * pathToSymbolMap = [NSString stringWithFormat:@"%@/symbolMaps/%@.symbolMap", pathToApp, strongName];
+            NSString * appName = filename;
+            NSString * pathToSymbolMap = [NSString stringWithFormat:@"%@/%@/symbolMaps/%@.symbolMap", pathToWebInf, appName, strongName];
             
-            NSData *data = [NSData dataWithContentsOfFile:pathToSymbolMap];
-            if (data) {
-                NSString *symbolMap = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-                [self.kirinModule setSymbolMap:symbolMap];
-            }
+            NSMutableData *data = [NSData dataWithContentsOfFile:pathToSymbolMap];
+            NSString *symbolMap = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            [self.kirinModule setSymbolMap:symbolMap];
             break;
         }
     }

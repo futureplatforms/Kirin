@@ -53,7 +53,7 @@ public abstract class InterfaceGenerator {
 		if(outStream == null) {
 		    return; // We've already generated this protocol
 		}
-
+		// TODO Auto-generated method stub
 		PrintWriter printWriter = new PrintWriter(outStream);
 		try {
 			printWriter.format(preambleForClass(nativeObjectType.getSimpleSourceName()));
@@ -70,14 +70,14 @@ public abstract class InterfaceGenerator {
 					if (method.isAnnotationPresent(NoBind.class)) {
 					    continue;
 					}
-
-                    // TODO filter out the lifecycle methods.
-                    if (isKirinModuleMethod(method)) {
-                        continue;
-                    }
-
-                    // TODO check if the method is exported or not.
-                    if (!isMethodExported(method)) {
+					
+					// TODO filter out the lifecycle methods.
+					if (isKirinModuleMethod(method)) {
+						continue;
+					}
+					
+					// TODO check if the method is exported or not.
+					if (!isMethodExported(method)) {
 						continue;
 					}
 					
@@ -104,21 +104,21 @@ public abstract class InterfaceGenerator {
 	private boolean isMethodExported(JMethod method) {
 		return method.getAnnotation(NoExport.class) == null;
 	}
-
-    private boolean isKirinModuleMethod(JMethod method) {
-        String name = method.getName();
-
-        String[] kirinMethods = {"onLoad", "onUnload"};
-
-        for (String kirinMethod : kirinMethods) {
-            if (kirinMethod.equals(name)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private boolean parameterNamesValid(TreeLogger logger, JMethod method) {
+	
+	private boolean isKirinModuleMethod(JMethod method) {
+		String name = method.getName();
+		
+		String[] kirinMethods = {"onLoad", "onUnload"};
+		
+		for (String kirinMethod : kirinMethods) {
+			if (kirinMethod.equals(name)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	private boolean parameterNamesValid(TreeLogger logger, JMethod method) {
 		// These are keywords which exist in C#, Obj-C or Javascript, but not in Java
 		for (String keyword : KEYWORDS) {
 			if (keyword.equals(method.getName())) {

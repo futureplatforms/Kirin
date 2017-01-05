@@ -7,15 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "NSObject+Kirin.h"
+#import <NSObject+Kirin.h>
 #import "KirinGwtServiceStub.h"
 #import "NewTransactionService.h"
 #import <toNative/DatabaseAccessServiceNative.h>
 
 @interface NewDatabaseAccessService : KirinGwtServiceStub<DatabaseAccessServiceNative>
 
-@property (strong, nonatomic) NSMutableDictionary * DbForFilename;
+@property (strong, nonatomic) NSMutableDictionary * DbForId;
 @property (strong, nonatomic) NewTransactionService * NewTransactionService;
-+ (dispatch_queue_t) getDatabaseDispatchQueue;
-- (dispatch_queue_t) dispatchQueue;
 @end

@@ -40,7 +40,7 @@
     // TODO: will this need to be camel cased? 
     NSString* methodName = [[name componentsSeparatedByString:@":"] componentsJoinedByString:@""];
     
-    NSUInteger numArgs = [sig numberOfArguments];
+    unsigned numArgs = [sig numberOfArguments];
     if (numArgs == 2) {
         [self.jsExecutor execJS:[NSString stringWithFormat: EXECUTE_METHOD_JS, self.moduleName, methodName]];
         return;
@@ -48,14 +48,12 @@
     
     NSMutableArray* args = [NSMutableArray array];
     
-    for(NSUInteger i = 2; i < numArgs; i++) {
+    for(unsigned i = 2; i < numArgs; i++) {
         const char *type = [sig getArgumentTypeAtIndex: i];
         
         if (strcmp(type, @encode(id)) == 0) {
             // https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html
-            
-            // What is __unsafe_unretained?  http://stackoverflow.com/a/16932813/64505
-            __unsafe_unretained id arg = nil;
+            id arg = nil;
             [invocation getArgument:&arg atIndex:i];
             if (arg == nil) {
                 [args addObject:[NSNull null]];
@@ -93,6 +91,13 @@
     NSString* jsString = [NSString stringWithFormat: EXECUTE_METHOD_WITH_ARGS_JS, self.moduleName, methodName, json];
     
     [self.jsExecutor execJS:jsString];
+}
+
+
+- (void) dealloc {
+    self.jsExecutor = nil;
+    self.moduleName = nil;
+    [super dealloc];
 }
 
 @end

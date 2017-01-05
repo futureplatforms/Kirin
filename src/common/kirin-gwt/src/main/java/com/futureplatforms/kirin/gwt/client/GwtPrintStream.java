@@ -4,7 +4,6 @@ import com.futureplatforms.kirin.dependencies.StaticDependencies;
 
 import java.io.OutputStream;
 import java.io.PrintStream;
-import java.util.Arrays;
 
 /**
  * Created by douglashoskins on 14/08/2015.
@@ -26,7 +25,7 @@ public class GwtPrintStream extends PrintStream {
         if (x == null) {
             println("<null>");
         } else {
-            println("" + Arrays.toString(x));
+            println("" + x);
         }
     }
 
@@ -67,7 +66,7 @@ public class GwtPrintStream extends PrintStream {
     }
 
     public void println(char[] x) {
-        println("" + Arrays.toString(x));
+        println("" + x);
     }
 
     public void println(double x) {

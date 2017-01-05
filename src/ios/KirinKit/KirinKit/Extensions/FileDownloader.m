@@ -18,6 +18,7 @@
 
 #import "FileDownloader.h"
 #import "Kirin.h"
+#import "JSON.h"
 
 @implementation FileDownloader
 
@@ -25,7 +26,7 @@
 @synthesize kirinHelper;
 
 + (FileDownloader*) downloaderWithHelper: (KirinHelper*) helper {
-    FileDownloader* downloader = [[FileDownloader alloc] init];
+    FileDownloader* downloader = [[[FileDownloader alloc] init] autorelease];
     downloader.kirinHelper = helper;
     return downloader;
 }
@@ -56,7 +57,7 @@
 	theConnection=[[NSURLConnection alloc] initWithRequest:req delegate:self];
     
     if (theConnection) {
-        data = [NSMutableData data];
+        data = [[NSMutableData data] retain];
     } else {
         [self failWithError:[ NSString stringWithFormat: @"<NETWORKING BACKEND> Couldn't init connection: %@", req]];
     }
@@ -107,6 +108,11 @@
 - (void)connection:(NSURLConnection *)connection
   didFailWithError:(NSError *)error
 {
+    // release the connection, and the data object
+    [connection release];
+    // receivedData is declared as a method instance elsewhere
+    [data release];
+    
     // inform the user
     NSLog(@"<NETWORKING BACKEND> Connection failed! Error - %@ %@",
           [error localizedDescription],
@@ -122,6 +128,10 @@
     NSLog(@"<NETWORKING BACKEND> Succeeded! Received %d bytes of data",[data length]);
     
     [self writeToFile: data];
+    
+    // release the connection, and the data object
+    [connection release];
+    [data release];
 }
 
 -(void) cleanupCallbacks
@@ -159,6 +169,12 @@
     
     [self cleanupCallbacks];
     
+}
+
+- (void)dealloc {
+    self.kirinHelper = nil;
+    self.config = nil;
+    [super dealloc];
 }
 
 @end

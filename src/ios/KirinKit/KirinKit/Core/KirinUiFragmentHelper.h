@@ -6,7 +6,7 @@
 //  Copyright 2012 Future Platforms. All rights reserved.
 //
 
-#import "KirinHelper.h"
+#import <KirinKit/KirinHelper.h>
 
 @interface KirinUiFragmentHelper : KirinHelper {
     

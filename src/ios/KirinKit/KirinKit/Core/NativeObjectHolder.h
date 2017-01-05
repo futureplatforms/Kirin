@@ -10,11 +10,9 @@
 
 @interface NativeObjectHolder : NSObject
 
-+ (NativeObjectHolder*) holderForObject: (NSObject*) object withName:(NSString*) name;
++ (NativeObjectHolder*) holderForObject: (NSObject*) object;
 
-+ (dispatch_queue_t) dispatchQueue;
-
-@property(weak) NSObject* nativeObject;
+@property(retain, nonatomic) NSObject* nativeObject;
 @property(nonatomic) dispatch_queue_t dispatchQueue;
 
 - (SEL) findSelectorFromString: methodName;

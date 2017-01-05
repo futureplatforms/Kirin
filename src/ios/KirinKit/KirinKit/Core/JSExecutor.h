@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#define DEBUG_JS NO
+
 #define EXECUTE_METHOD_JS @"EXPOSED_TO_NATIVE.native2js.execMethod('%@', '%@')"
 #define EXECUTE_METHOD_WITH_ARGS_JS @"EXPOSED_TO_NATIVE.native2js.execMethod('%@', '%@', %@)"
 #define DEPRECATED_EXECUTE_METHOD_WITH_ARGS_JS @"EXPOSED_TO_NATIVE.native2js.execMethod('%@', '%@', [%@])"

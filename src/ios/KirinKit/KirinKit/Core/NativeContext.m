@@ -35,7 +35,7 @@
 }
 
 - (NSArray*) methodNamesFor: (NSString*) moduleName {
-    NativeObjectHolder* holder = self.nativeObjects[moduleName];
+    NativeObjectHolder* holder = [self.nativeObjects objectForKey:moduleName];
     if (!holder) {
         [NSException raise:@"KirinNoSuchObjectException" format:@"There is no object registered called %@", moduleName];
     }
@@ -43,7 +43,7 @@
 }
 
 - (void) registerNativeObject: (id) object asName: (NSString*) name {
-    self.nativeObjects[name] = [NativeObjectHolder holderForObject:object withName:name];
+    [self.nativeObjects setValue:[NativeObjectHolder holderForObject:object] forKey:name];
 }
 
 - (void) unregisterNativeObject: (NSString*) name {
@@ -53,7 +53,7 @@
 }
 
 - (void) executeCommandFromModule: (NSString*) host andMethod: (NSString*) fullMethodName andArgsList: (NSString*) query {
-    NativeObjectHolder* holder = self.nativeObjects[host];
+    NativeObjectHolder* holder = [self.nativeObjects objectForKey:host];
     id obj = holder ? holder.nativeObject : nil;
     
 	SEL selector = [holder findSelectorFromString:fullMethodName];
@@ -77,12 +77,11 @@
                 NSMethodSignature* sig = [[obj class] instanceMethodSignatureForSelector:selector];
                 
                 NSInvocation* invocation = [NSInvocation invocationWithMethodSignature:sig];
-                [invocation retainArguments];
+                
                 invocation.selector = selector;
                 invocation.target = obj;
                 for (NSUInteger i=0, max=[arguments count]; i<max; i++) {
-                    // http://stackoverflow.com/q/16928299/64505
-                    __unsafe_unretained NSObject* arg = [arguments objectAtIndex:i];
+                    NSObject* arg = [arguments objectAtIndex:i];
                     
                     char argType = [sig getArgumentTypeAtIndex:i + 2][0];
                     BOOL handled = YES;
@@ -121,20 +120,19 @@
                     if (!handled) {
                         [NSException raise:@"KirinInvocationException"
                                     format:@"Cannot call selector %@ with argument %lu value=%@",
-                         fullMethodName, (unsigned long)i, arg];
+                         fullMethodName, i, arg];
                     }
                 }
                 [invocation invoke];
-                [invocation self];
             } @catch (NSException* exception) {
-                NSLog(@"Exception while executing %@.%@", host, fullMethodName);
+                DLog(@"Exception while executing %@.%@", host, fullMethodName);
                 
                 // Create a string based on the exception
                 NSString *exceptionMessage = [NSString stringWithFormat:@"%@\nReason: %@\nUser Info: %@", [exception name], [exception reason], [exception userInfo]];
                 
                 // Always log to console for history
-                NSLog(@"Exception raised:\n%@", exceptionMessage);
-                NSLog(@"Backtrace: %@", [exception callStackSymbols]);
+                DLog(@"Exception raised:\n%@", exceptionMessage);
+                DLog(@"Backtrace: %@", [exception callStackSymbols]);
             } @finally {
                 if (isBackgroundThread) {
                     [[UIApplication sharedApplication] endBackgroundTask:taskId];
@@ -161,11 +159,18 @@
         if (!className) {
             className = host;
         }
-        NSLog(@"Class method '%@' not defined in class %@, called from module %@.js", fullMethodName, className, host);
+        DLog(@"Class method '%@' not defined in class %@, called from module %@.js", fullMethodName, className, host);
         
         //[NSException raise:NSInternalInconsistencyException format:@"Class method '%@' not defined against class '%@'.", fullMethodName, className];
         
 	}
+}
+
+- (void) dealloc {
+    [self.nativeObjects removeAllObjects];
+    self.nativeObjects = nil;
+    
+    [super dealloc];
 }
 
 @end

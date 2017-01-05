@@ -1,6 +1,5 @@
 <!DOCTYPE module PUBLIC "//gwt-module/" "http://google-web-toolkit.googlecode.com/svn/tags/1.6.2/distro-source/core/src/gwt-module.dtd">
-<!-- Ensure the rename-to matches the gwtRename property in the pom -->
-<module rename-to="KirinServiceExport">
+<module rename-to='KirinServiceExport'>
   <!-- Inherit the core Web Toolkit stuff.                        -->
   <inherits name='com.google.gwt.core.Core'/>
   <inherits name='com.google.gwt.json.JSON' />

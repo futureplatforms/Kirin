@@ -55,14 +55,41 @@ typedef enum NetRetrieveType { Net_Default, Net_B64, Net_Token } NetRetrieveType
                   :Net_Default];
 }
 
+- (BOOL) testRetrieve:(int)ref :(NSString *)url :(NSString *)payload {
+    NSDictionary<NSString *, NSString *> *env = [NSProcessInfo processInfo].environment;
+    for (NSString* key in env) {
+        if ([url containsString:key]) {
+            NSString* value = [env objectForKey:key];
+            NSLog(@"Kirin UITesting Networking :: MATCH FOUND for URL %@", url);
+            [self.kirinModule payload:ref :200 :value :@[] :@[]];
+            if (!value || value.length == 0) {
+                NSLog(@">>> EMPTY RETURN VALUE");
+            }
+            return YES;
+        }
+    }
+    return NO;
+}
+
 - (void) retrieve:(int)ref :(NSString *)method :(NSString *)url :(NSString *)payload :(NSArray *)headerKeys :(NSArray *)headerVals :(NetRetrieveType) netType {
+    
+    if ([Kirin isUiTesting]) {
+        if ([self testRetrieve:ref :url :payload]) {
+            return;
+        } else {
+            NSLog(@"Kirin UITesting Networking :: NO MATCH FOUND for URL %@", url);
+        }
+        return;
+    }
+    
     NSData *payloadData = [payload dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
     
     NSString *payloadLen = [NSString stringWithFormat:@"%lu", (unsigned long)[payloadData length]];
     
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    NSMutableURLRequest *request = [[[NSMutableURLRequest alloc] init] autorelease];
     [request setURL:[NSURL URLWithString:url]];
     [request setHTTPMethod:method];
+    [request setTimeoutInterval:120];
     [request setValue:payloadLen forHTTPHeaderField:@"Content-Length"];
     for (int i=0; i<headerKeys.count; i++) {
         NSString * key = headerKeys[i];
@@ -89,7 +116,7 @@ typedef enum NetRetrieveType { Net_Default, Net_B64, Net_Token } NetRetrieveType
                      respStr = [NewNetworkingImpl Base64Encode:data];
                  } break;
                  default: {
-                     /* case Net_Token: */
+                 /* case Net_Token: */
                      respStr = [[KIRIN dropbox] putObject:data];
                  } break;
              }
@@ -127,7 +154,7 @@ typedef enum NetRetrieveType { Net_Default, Net_B64, Net_Token } NetRetrieveType
         
         DLog(@"Attempting to find encoding = %@", strEncoding);
         // Try and obtain the correct string encoding from a string
-        CFStringRef cfStringRef = (__bridge CFStringRef)strEncoding;
+        CFStringRef cfStringRef = (CFStringRef)strEncoding;
         CFStringEncoding cfStringEnc = CFStringConvertIANACharSetNameToEncoding(cfStringRef);
         NSStringEncoding encoding = CFStringConvertEncodingToNSStringEncoding(cfStringEnc);
         
@@ -181,31 +208,31 @@ typedef enum NetRetrieveType { Net_Default, Net_B64, Net_Token } NetRetrieveType
     while (inpos < inLength){
         switch (cycle) {
             case 0:
-                outputBuffer[outpos++] = Encode[(inputBuffer[inpos]&0xFC)>>2];
-                cycle = 1;
-                break;
+            outputBuffer[outpos++] = Encode[(inputBuffer[inpos]&0xFC)>>2];
+            cycle = 1;
+            break;
             case 1:
-                temp = (inputBuffer[inpos++]&0x03)<<4;
-                outputBuffer[outpos] = Encode[temp];
-                cycle = 2;
-                break;
+            temp = (inputBuffer[inpos++]&0x03)<<4;
+            outputBuffer[outpos] = Encode[temp];
+            cycle = 2;
+            break;
             case 2:
-                outputBuffer[outpos++] = Encode[temp|(inputBuffer[inpos]&0xF0)>> 4];
-                temp = (inputBuffer[inpos++]&0x0F)<<2;
-                outputBuffer[outpos] = Encode[temp];
-                cycle = 3;
-                break;
+            outputBuffer[outpos++] = Encode[temp|(inputBuffer[inpos]&0xF0)>> 4];
+            temp = (inputBuffer[inpos++]&0x0F)<<2;
+            outputBuffer[outpos] = Encode[temp];
+            cycle = 3;
+            break;
             case 3:
-                outputBuffer[outpos++] = Encode[temp|(inputBuffer[inpos]&0xC0)>>6];
-                cycle = 4;
-                break;
+            outputBuffer[outpos++] = Encode[temp|(inputBuffer[inpos]&0xC0)>>6];
+            cycle = 4;
+            break;
             case 4:
-                outputBuffer[outpos++] = Encode[inputBuffer[inpos++]&0x3f];
-                cycle = 0;
-                break;
+            outputBuffer[outpos++] = Encode[inputBuffer[inpos++]&0x3f];
+            cycle = 0;
+            break;
             default:
-                cycle = 0;
-                break;
+            cycle = 0;
+            break;
         }
     }
     NSString *pictemp = [NSString stringWithUTF8String:outputBuffer];

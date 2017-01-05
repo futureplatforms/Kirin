@@ -7,16 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "JSContext.h"
-#import "NativeContext.h"
-#import "KirinDropbox.h"
-#import "KirinState.h"
+#import <KirinKit/JSContext.h>
+#import <KirinKit/NativeContext.h>
+#import <KirinKit/KirinDropbox.h>
+#import <KirinKit/KirinState.h>
 
 @interface KirinHelper : NSObject {
 }
 
 @property(retain) NSString* jsModuleName;
-@property(weak) NSObject* nativeObject;
+@property(retain) NSObject* nativeObject;
 
 @property(retain) KirinState* state;
 

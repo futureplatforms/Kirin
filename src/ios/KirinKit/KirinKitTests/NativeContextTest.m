@@ -21,6 +21,12 @@
     jsCtx = [[DummyJSContext alloc] init];
 }
 
+- (void) tearDown {
+    [nativeObjects release];
+    [nativeCtx release];
+    [jsCtx release];
+}
+
 - (void) testExecuteFromUrl {
     [nativeCtx registerNativeObject:jsCtx asName:@"OBJ"];
     [nativeCtx executeCommandFromModule:@"OBJ" andMethod:@"js_" andArgsList:@"[\"aNativeArgument\"]"];
@@ -37,7 +43,7 @@
 }
 
 - (void) testExecuteCommandWithMultipleArgs {
-    DummyNativeObject* obj = [[DummyNativeObject alloc] init];
+    DummyNativeObject* obj = [[[DummyNativeObject alloc] init] autorelease];
     [nativeCtx registerNativeObject:obj asName:@"obj"];
     
     obj.lastArg = nil;
@@ -69,7 +75,7 @@
            withArgsList: (NSString*) argsList 
              shouldCall: (SEL) selector
                 withArg: (NSString*) receivedArg {
-    DummyNativeObject* obj = [[DummyNativeObject alloc] init];
+    DummyNativeObject* obj = [[[DummyNativeObject alloc] init] autorelease];
     [nativeCtx registerNativeObject:obj asName:@"obj"];
 
     obj.lastArg = nil;

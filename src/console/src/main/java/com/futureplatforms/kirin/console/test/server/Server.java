@@ -12,17 +12,8 @@ import java.util.Map;
 public class Server implements NetworkDelegateClient {
 
 	public final List<ServerEntry> _Entries = new ArrayList<>();
-	private boolean fallbackToRealHttp;
 
-	public Server() { }
-
-	public void setFallbackToRealHttp(boolean fallbackToRealHttp) {
-		this.fallbackToRealHttp = fallbackToRealHttp;
-	}
-
-	public boolean getFallbackToRealHttp() {
-		return this.fallbackToRealHttp;
-	}
+	public Server() {}
 	
 	private boolean checkMap(String url, String postData, NetworkResponse callback) {
 		ServerEntry lastMatch = null;
@@ -37,7 +28,15 @@ public class Server implements NetworkDelegateClient {
 		}
 		return false;
 	}
-	
+
+	private enum TestServerNetworkType { FullyOffline, FallbackToOnline }
+
+	private TestServerNetworkType networkType = TestServerNetworkType.FullyOffline;
+
+	public void fallbackToOnline() {
+		networkType = TestServerNetworkType.FallbackToOnline;
+	}
+
 	@Override
 	public void doHttp(HttpVerb verb, String url, String payload,
 			Map<String, String> headers, NetworkResponse callback) {
@@ -46,7 +45,7 @@ public class Server implements NetworkDelegateClient {
 			System.out.println(verb.name());
 			System.out.println(url);
 			System.out.println(payload);
-			if (fallbackToRealHttp) {
+			if (networkType == TestServerNetworkType.FallbackToOnline) {
 				new ConsoleNetwork().doHttp(verb, url, payload, headers, callback);
 			} else {
 				callback.callOnFail("404");

@@ -47,7 +47,7 @@ public final class Random {
 	 */
 	public static int nextInt() {
 		// "~~" forces the value to a 32 bit integer.
-		return (int) (Math.floor(Math.random() * 4294967296L) - 2147483648L);
+		return (int) (Math.floor(Math.random() * 4294967296l) - 2147483648l);
 	};
 
 	/**

@@ -7,7 +7,7 @@
 //
 
 
-#import "NativeExecutor.h"
+#import <KirinKit/NativeExecutor.h>
 
 @interface NativeContext : NSObject<NativeExecutor>  {
 }
