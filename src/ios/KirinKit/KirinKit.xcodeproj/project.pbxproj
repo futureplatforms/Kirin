@@ -18,7 +18,6 @@
 		09918357183232BC00A35AF8 /* KirinGwtServiceProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 09918354183232BC00A35AF8 /* KirinGwtServiceProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		09918358183232BC00A35AF8 /* KirinGwtServiceStub.h in Headers */ = {isa = PBXBuildFile; fileRef = 09918355183232BC00A35AF8 /* KirinGwtServiceStub.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		09918359183232BC00A35AF8 /* KirinGwtServiceStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 09918356183232BC00A35AF8 /* KirinGwtServiceStub.m */; };
-		0991835B1832426300A35AF8 /* app in Resources */ = {isa = PBXBuildFile; fileRef = 0991835A1832426300A35AF8 /* app */; };
 		09B027E018462B6F0033356B /* FMDatabase.h in Headers */ = {isa = PBXBuildFile; fileRef = 09B027D518462B6F0033356B /* FMDatabase.h */; };
 		09B027E118462B6F0033356B /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 09B027D618462B6F0033356B /* FMDatabase.m */; };
 		09B027E218462B6F0033356B /* FMDatabaseAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 09B027D718462B6F0033356B /* FMDatabaseAdditions.h */; };
@@ -31,6 +30,7 @@
 		09B027EA18462B6F0033356B /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 09B027DF18462B6F0033356B /* FMResultSet.m */; };
 		09B0B56118E3616500A87C5D /* WebviewHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 09B0B55F18E3616500A87C5D /* WebviewHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		09B0B56218E3616500A87C5D /* WebviewHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 09B0B56018E3616500A87C5D /* WebviewHelper.m */; };
+		09C0FC1E1E1FE2ED00EA7165 /* app in Resources */ = {isa = PBXBuildFile; fileRef = 09C0FC1D1E1FE2ED00EA7165 /* app */; };
 		09C2D369191280020097F9EB /* KirinGwtLocation.h in Headers */ = {isa = PBXBuildFile; fileRef = 09C2D367191280020097F9EB /* KirinGwtLocation.h */; };
 		09C2D36A191280020097F9EB /* KirinGwtLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 09C2D368191280020097F9EB /* KirinGwtLocation.m */; };
 		09D8177217E21D6E00611BBE /* UIViewController+Hybrid.h in Headers */ = {isa = PBXBuildFile; fileRef = 09D8177017E21D6E00611BBE /* UIViewController+Hybrid.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -158,7 +158,6 @@
 		09918354183232BC00A35AF8 /* KirinGwtServiceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KirinGwtServiceProtocol.h; sourceTree = "<group>"; };
 		09918355183232BC00A35AF8 /* KirinGwtServiceStub.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KirinGwtServiceStub.h; sourceTree = "<group>"; };
 		09918356183232BC00A35AF8 /* KirinGwtServiceStub.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KirinGwtServiceStub.m; sourceTree = "<group>"; };
-		0991835A1832426300A35AF8 /* app */ = {isa = PBXFileReference; lastKnownFileType = folder; name = app; path = "../../common/kirin-gwt/target/kirin-gwt-1.0-SNAPSHOT/app"; sourceTree = "<group>"; };
 		09B027D518462B6F0033356B /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
 		09B027D618462B6F0033356B /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
 		09B027D718462B6F0033356B /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
@@ -171,6 +170,7 @@
 		09B027DF18462B6F0033356B /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
 		09B0B55F18E3616500A87C5D /* WebviewHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebviewHelper.h; sourceTree = "<group>"; };
 		09B0B56018E3616500A87C5D /* WebviewHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebviewHelper.m; sourceTree = "<group>"; };
+		09C0FC1D1E1FE2ED00EA7165 /* app */ = {isa = PBXFileReference; lastKnownFileType = folder; name = app; path = "../../common/kirin-gwt/target/app"; sourceTree = "<group>"; };
 		09C2D367191280020097F9EB /* KirinGwtLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KirinGwtLocation.h; sourceTree = "<group>"; };
 		09C2D368191280020097F9EB /* KirinGwtLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KirinGwtLocation.m; sourceTree = "<group>"; };
 		09D8177017E21D6E00611BBE /* UIViewController+Hybrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Hybrid.h"; sourceTree = "<group>"; };
@@ -381,7 +381,7 @@
 				1A00C8C814B2E2FD00211F34 /* KirinKitTests */,
 				1A00C8BE14B2E2FD00211F34 /* Frameworks */,
 				1A00C8B014B2E2FD00211F34 /* Products */,
-				0991835A1832426300A35AF8 /* app */,
+				09C0FC1D1E1FE2ED00EA7165 /* app */,
 			);
 			sourceTree = "<group>";
 		};
@@ -802,7 +802,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0991835B1832426300A35AF8 /* app in Resources */,
+				09C0FC1E1E1FE2ED00EA7165 /* app in Resources */,
 				1A00C8B614B2E2FD00211F34 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -960,8 +960,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"$(PROJECT_DIR)/../../common/kirin-gwt/target/kirin-gwt-1.0-SNAPSHOT/app/SERVICE_BINDINGS/ios",
+					"\"$(PROJECT_DIR)/../../common/kirin-gwt/target/bindings/SERVICE_BINDINGS/ios\"",
 				);
 				SDKROOT = iphoneos;
 			};
@@ -978,8 +977,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"$(PROJECT_DIR)/../../common/kirin-gwt/target/kirin-gwt-1.0-SNAPSHOT/app/SERVICE_BINDINGS/ios",
+					"\"$(PROJECT_DIR)/../../common/kirin-gwt/target/bindings/SERVICE_BINDINGS/ios\"",
 				);
 				SDKROOT = iphoneos;
 			};
@@ -1002,6 +1000,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "KirinKit/KirinKit-Prefix.pch";
 				GCC_THUMB_SUPPORT = NO;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(PROJECT_DIR)/../../common/kirin-gwt/target/bindings/SERVICE_BINDINGS/ios\"",
+				);
 				INFOPLIST_FILE = "KirinKit/KirinKit-Info.plist";
 				INFOPLIST_PATH = "$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/Info.plist";
 				INSTALL_PATH = "$(BUILT_PRODUCTS_DIR)";
@@ -1036,6 +1038,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "KirinKit/KirinKit-Prefix.pch";
 				GCC_THUMB_SUPPORT = NO;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(PROJECT_DIR)/../../common/kirin-gwt/target/bindings/SERVICE_BINDINGS/ios\"",
+				);
 				INFOPLIST_FILE = "KirinKit/KirinKit-Info.plist";
 				INFOPLIST_PATH = "$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/Info.plist";
 				INSTALL_PATH = "$(BUILT_PRODUCTS_DIR)";
