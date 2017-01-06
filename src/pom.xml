@@ -33,7 +33,7 @@
     <gwt.exporter.version>2.5.1</gwt.exporter.version>
       <snapshot.repo>SPECIFY_ME</snapshot.repo>
       <repo>SPECIFY_ME</repo>
-    <gwtVersion>2.6.0</gwtVersion>
+    <gwt.version>2.6.0</gwt.version>
   </properties>
   
   <profiles>
@@ -215,5 +215,6 @@
     <module>android</module>
     <module>common/kirin-gwt</module>
     <module>console</module>
+    <module>ios</module>
   </modules>
 </project>

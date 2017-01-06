@@ -38,6 +38,7 @@
     <webappDirectory>${project.build.directory}/${project.build.finalName}/app</webappDirectory>
     <gwtModule>com.futureplatforms.kirin.gwt.KirinServiceExport</gwtModule>
     <deployDirectory>${webappDirectory}/WEB-INF</deployDirectory>
+    <gwtRename>KirinServiceExport</gwtRename>
   </properties>
 
   <dependencies>
@@ -51,13 +52,13 @@
     <dependency>
       <groupId>com.google.gwt</groupId>
       <artifactId>gwt-user</artifactId>
-      <version>${gwtVersion}</version>
+      <version>${gwt.version}</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>com.google.gwt</groupId>
       <artifactId>gwt-dev</artifactId>
-      <version>${gwtVersion}</version>
+      <version>${gwt.version}</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -200,6 +201,7 @@
                 <argument>${project.artifactId}</argument>
                 <argument>${project.version}</argument>
                 <argument>${gwtRename}</argument>
+                <argument>${gwt.version}</argument>
               </arguments>
             </configuration>
           </execution>
