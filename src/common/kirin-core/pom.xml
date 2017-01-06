@@ -1,18 +1,38 @@
 <?xml version="1.0"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <artifactId>kirin</artifactId>
     <groupId>com.futureplatforms.kirin</groupId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.5.0-SNAPSHOT</version>
     <relativePath>../../pom.xml</relativePath>
   </parent>
-  <groupId>com.futureplatforms.kirin.core</groupId>
-  <artifactId>kirin-core</artifactId>
+  <groupId>com.futureplatforms.kirin</groupId>
+  <artifactId>core</artifactId>
   <packaging>jar</packaging>
   <name>kirin-core</name>
   <url>http://maven.apache.org</url>
+    <profiles>
+      <profile>
+      <id>Windows</id>
+      <activation>
+        <os>
+          <family>Windows</family>
+        </os>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-deploy-plugin</artifactId>
+            <configuration>
+              <skip>true</skip>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -28,14 +48,14 @@
     </dependency>
     
 	<dependency>
-      <groupId>com.futureplatforms.kirin.gwtstub</groupId>
-      <artifactId>kirin-gwt-stub</artifactId>
-      <version>1.0-SNAPSHOT</version>
+      <groupId>com.futureplatforms.kirin</groupId>
+      <artifactId>gwtstub</artifactId>
+      <version>1.5.0-SNAPSHOT</version>
     </dependency>
     <dependency>
         <groupId>com.google.guava</groupId>
         <artifactId>guava</artifactId>
-        <version>${guavaVersion}</version>
+        <version>${guava.version}</version>
     </dependency>
   </dependencies>
   
@@ -106,10 +126,11 @@
         </plugins>
     </pluginManagement>
     <plugins>
-        <plugin>
+
+    <plugin>
 		  <groupId>org.apache.maven.plugins</groupId>
 		  <artifactId>maven-compiler-plugin</artifactId>
-		  <version>2.1</version>
+		  <version>3.0</version>
 		  <configuration>
 		    <source>1.7</source>
 		    <target>1.7</target>
@@ -118,7 +139,7 @@
 	    <plugin>
 	      <groupId>org.codehaus.mojo</groupId>
 	      <artifactId>gwt-maven-plugin</artifactId>
-	      <version>${gwtVersion}</version>
+	      <version>${gwt.version}</version>
 	      <executions>
 	        <execution>
 	          <goals>
