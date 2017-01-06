@@ -57,7 +57,7 @@ public class FacebookHelper {
 			final AsyncCallback1<Boolean> cb,
 			final Permission ... permissions) {
 		final LogDelegate log = StaticDependencies.getInstance().getLogDelegate();
-		log.log("hasAllPermissions:" + permissions);
+		log.log("hasAllPermissions:" + permissions.length);
 		if (permissions != null) {
 			for (Permission permission : permissions) {
 				log.log(permission.toString());
