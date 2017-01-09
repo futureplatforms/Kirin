@@ -15,7 +15,7 @@
 */
 
 
-
+#import "Kirin.h"
 #import "DebugConsole.h"
 
 @implementation DebugConsole
@@ -23,7 +23,9 @@
 
 
 - (void)log:(id)message atLevel:(NSString*) log_level {
-	   DLog(@"[%@] %@", log_level, message);
+    if ([KIRINCONSTANTS loggingEnabled]) {
+        NSLog(@"[%@] %@", log_level, message);
+    }
 }
 
 @end

@@ -11,6 +11,8 @@
 		090C142618C83D2C0030EC1F /* SymbolMapService.m in Sources */ = {isa = PBXBuildFile; fileRef = 090C142418C83D2C0030EC1F /* SymbolMapService.m */; };
 		091D1AC316F071E3001400FF /* NSObject+Kirin.h in Headers */ = {isa = PBXBuildFile; fileRef = 091D1AC116F071E3001400FF /* NSObject+Kirin.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		091D1AC416F071E3001400FF /* NSObject+Kirin.m in Sources */ = {isa = PBXBuildFile; fileRef = 091D1AC216F071E3001400FF /* NSObject+Kirin.m */; };
+		093587F51E237AD900E1625D /* KirinConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 093587F31E237AD900E1625D /* KirinConstants.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		093587F61E237AD900E1625D /* KirinConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 093587F41E237AD900E1625D /* KirinConstants.m */; };
 		0991834D1832325E00A35AF8 /* NewDatabaseAccessService.h in Headers */ = {isa = PBXBuildFile; fileRef = 0991834B1832325E00A35AF8 /* NewDatabaseAccessService.h */; };
 		0991834E1832325E00A35AF8 /* NewDatabaseAccessService.m in Sources */ = {isa = PBXBuildFile; fileRef = 0991834C1832325E00A35AF8 /* NewDatabaseAccessService.m */; };
 		099183511832326600A35AF8 /* NewNetworkingImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = 0991834F1832326600A35AF8 /* NewNetworkingImpl.h */; };
@@ -151,6 +153,8 @@
 		09188E6D18B4DC3D00FBBB77 /* KirinSynchronousExecute.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KirinSynchronousExecute.h; sourceTree = "<group>"; };
 		091D1AC116F071E3001400FF /* NSObject+Kirin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Kirin.h"; sourceTree = "<group>"; };
 		091D1AC216F071E3001400FF /* NSObject+Kirin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Kirin.m"; sourceTree = "<group>"; };
+		093587F31E237AD900E1625D /* KirinConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KirinConstants.h; sourceTree = "<group>"; };
+		093587F41E237AD900E1625D /* KirinConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KirinConstants.m; sourceTree = "<group>"; };
 		0991834B1832325E00A35AF8 /* NewDatabaseAccessService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewDatabaseAccessService.h; path = GWTServices/NewDatabaseAccessService.h; sourceTree = "<group>"; };
 		0991834C1832325E00A35AF8 /* NewDatabaseAccessService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewDatabaseAccessService.m; path = GWTServices/NewDatabaseAccessService.m; sourceTree = "<group>"; };
 		0991834F1832326600A35AF8 /* NewNetworkingImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewNetworkingImpl.h; path = GWTServices/NewNetworkingImpl.h; sourceTree = "<group>"; };
@@ -492,6 +496,8 @@
 				1A4F7CD21549632A00A010E0 /* KirinUIViewController.m */,
 				1AEE8DA1154EC8DD00B8C0D7 /* KirinUITableViewController.h */,
 				1AEE8DA2154EC8DD00B8C0D7 /* KirinUITableViewController.m */,
+				093587F31E237AD900E1625D /* KirinConstants.h */,
+				093587F41E237AD900E1625D /* KirinConstants.m */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -667,6 +673,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				09B027E418462B6F0033356B /* FMDatabasePool.h in Headers */,
+				093587F51E237AD900E1625D /* KirinConstants.h in Headers */,
 				24BD526517131066000E3C64 /* Sharing.h in Headers */,
 				1A00C92414B2E32600211F34 /* Kirin.h in Headers */,
 				1A00C92714B2E32600211F34 /* KirinDropbox.h in Headers */,
@@ -874,6 +881,7 @@
 				09B027E118462B6F0033356B /* FMDatabase.m in Sources */,
 				1AE3FD8E14C9A41D009C2F3B /* KirinState.m in Sources */,
 				1A06437614CF0DB500FB7EE3 /* KirinImagePicker.m in Sources */,
+				093587F61E237AD900E1625D /* KirinConstants.m in Sources */,
 				099183521832326600A35AF8 /* NewNetworkingImpl.m in Sources */,
 				1A61952B14D22105004FDD8E /* KirinFileSystem.m in Sources */,
 				1A9FE0A214D5F745008C0565 /* NativeObjectHolder.m in Sources */,

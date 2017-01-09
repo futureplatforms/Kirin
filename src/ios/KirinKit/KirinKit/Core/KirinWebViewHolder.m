@@ -10,6 +10,7 @@
 
 #import <UIKit/UIApplication.h>
 #import <KirinKit/KirinPaths.h>
+#import <KirinKit/KirinConstants.h>
 
 @interface KirinWebViewHolder ()
 
@@ -68,8 +69,8 @@
 }
 
 - (void) _execJSImmediately: (NSString*) js {
-    if (DEBUG_JS) {
-        DLog(@"Javascript: %@", js);
+    if (KIRINCONSTANTS.logJS) {
+        NSLog(@"Javascript: %@", js);
     }
     [self.webView stringByEvaluatingJavaScriptFromString:js];
 }
@@ -105,7 +106,10 @@
         
         return NO;
     } else if ([[url scheme] isEqualToString:@"native"]) {
-    	
+        if (KIRINCONSTANTS.logJS) {
+            NSLog(@"Incoming: %@", [url debugDescription]);
+        }
+
         // Tell the JS code that we've got this command, and we're ready for another
         [theWebView stringByEvaluatingJavaScriptFromString:@"EXPOSED_TO_NATIVE.runNext();"];
         

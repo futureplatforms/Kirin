@@ -38,7 +38,7 @@
     if (jsExecutor) {
         [self.jsExecutor execJS:js];
     } else {
-        DLog(@"No JSExecutor! javascript: %@", js);
+        NSLog(@"No JSExecutor! javascript: %@", js);
     }
 }
 
