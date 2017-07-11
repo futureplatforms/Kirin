@@ -47,11 +47,6 @@
 		09FF945C18F88F2D003097F3 /* Crypto.h in Headers */ = {isa = PBXBuildFile; fileRef = 09FF945A18F88F2D003097F3 /* Crypto.h */; };
 		09FF945D18F88F2D003097F3 /* Crypto.m in Sources */ = {isa = PBXBuildFile; fileRef = 09FF945B18F88F2D003097F3 /* Crypto.m */; };
 		1A00C8B614B2E2FD00211F34 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1A00C8B414B2E2FD00211F34 /* InfoPlist.strings */; };
-		1A00C8C014B2E2FD00211F34 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A00C8BF14B2E2FD00211F34 /* UIKit.framework */; };
-		1A00C8C214B2E2FD00211F34 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A00C8C114B2E2FD00211F34 /* Foundation.framework */; };
-		1A00C8C414B2E2FD00211F34 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A00C8C314B2E2FD00211F34 /* CoreGraphics.framework */; };
-		1A00C8C714B2E2FD00211F34 /* KirinKit.framework in Resources */ = {isa = PBXBuildFile; fileRef = 1A00C8AF14B2E2FD00211F34 /* KirinKit.framework */; };
-		1A00C8CD14B2E2FD00211F34 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1A00C8CB14B2E2FD00211F34 /* InfoPlist.strings */; };
 		1A00C91A14B2E32600211F34 /* DebugConsole.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A00C8DC14B2E32600211F34 /* DebugConsole.h */; };
 		1A00C91B14B2E32600211F34 /* DebugConsole.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A00C8DD14B2E32600211F34 /* DebugConsole.m */; };
 		1A00C92014B2E32600211F34 /* JSContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A00C8E014B2E32600211F34 /* JSContext.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -69,12 +64,6 @@
 		1A00C93114B2E32600211F34 /* NativeContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A00C8EC14B2E32600211F34 /* NativeContext.m */; };
 		1A00C93314B2E32600211F34 /* NativeExecutor.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A00C8ED14B2E32600211F34 /* NativeExecutor.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1A00C93414B2E32600211F34 /* SynthesizeSingleton.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A00C8EE14B2E32600211F34 /* SynthesizeSingleton.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		1A00C97A14B2E36500211F34 /* NativeContextTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A00C97014B2E36500211F34 /* NativeContextTest.m */; };
-		1A00C97B14B2E36500211F34 /* KirinTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A00C97214B2E36500211F34 /* KirinTests.m */; };
-		1A00C97C14B2E36500211F34 /* KirinHelperTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A00C97414B2E36500211F34 /* KirinHelperTest.m */; };
-		1A00C97D14B2E36500211F34 /* DummyNativeContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A00C97614B2E36500211F34 /* DummyNativeContext.m */; };
-		1A00C97E14B2E36500211F34 /* DummyJSContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A00C97814B2E36500211F34 /* DummyJSContext.m */; };
-		1A00C99514B2EC5F00211F34 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A00C99414B2EC5F00211F34 /* libsqlite3.0.dylib */; settings = {ATTRIBUTES = (Weak, ); }; };
 		1A00C99A14B2EE8900211F34 /* KirinKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A00C99814B2EE8800211F34 /* KirinKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1A02010214BCFFED00CB9765 /* KirinUiFragmentHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A02010014BCFFED00CB9765 /* KirinUiFragmentHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1A02010314BCFFED00CB9765 /* KirinUiFragmentHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A02010114BCFFED00CB9765 /* KirinUiFragmentHelper.m */; };
@@ -92,7 +81,6 @@
 		1A06437814CF0DB500FB7EE3 /* CameraProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A06437314CF0DB500FB7EE3 /* CameraProtocol.h */; };
 		1A21D87F14E5EE4000723C20 /* KirinArgs.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A21D87D14E5EE4000723C20 /* KirinArgs.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1A21D88014E5EE4000723C20 /* KirinArgs.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A21D87E14E5EE4000723C20 /* KirinArgs.m */; };
-		1A2D478A1552954100EDF796 /* KirinArgsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A2D47891552954100EDF796 /* KirinArgsTest.m */; };
 		1A4F7CD31549632A00A010E0 /* KirinUIViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A4F7CD11549632A00A010E0 /* KirinUIViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1A4F7CD41549632A00A010E0 /* KirinUIViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A4F7CD21549632A00A010E0 /* KirinUIViewController.m */; };
 		1A4F7CD71549666D00A010E0 /* KirinKitUI.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A4F7CD61549666D00A010E0 /* KirinKitUI.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -102,34 +90,19 @@
 		1A4F7CDF15496D0000A010E0 /* KirinProxyWithDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A4F7CDD15496D0000A010E0 /* KirinProxyWithDictionary.m */; };
 		1A61952A14D22105004FDD8E /* KirinFileSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A61952814D22105004FDD8E /* KirinFileSystem.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1A61952B14D22105004FDD8E /* KirinFileSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A61952914D22105004FDD8E /* KirinFileSystem.m */; };
-		1A6A21F11546B249006B5D13 /* DummyNativeObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A6A21F01546B249006B5D13 /* DummyNativeObject.m */; };
 		1A9FE0A114D5F745008C0565 /* NativeObjectHolder.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A9FE09F14D5F744008C0565 /* NativeObjectHolder.h */; };
 		1A9FE0A214D5F745008C0565 /* NativeObjectHolder.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A9FE0A014D5F745008C0565 /* NativeObjectHolder.m */; };
 		1A9FE0A514D5FA51008C0565 /* KirinExtensionOnMainThread.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A9FE0A414D5FA4F008C0565 /* KirinExtensionOnMainThread.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		1A9FE0A714D5FF21008C0565 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A9FE0A614D5FF21008C0565 /* MobileCoreServices.framework */; };
 		1AB1252314E4819A00933949 /* KirinAppDelegateHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AB1252114E4819A00933949 /* KirinAppDelegateHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1AB1252414E4819A00933949 /* KirinAppDelegateHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AB1252214E4819A00933949 /* KirinAppDelegateHelper.m */; };
 		1AE3FD8D14C9A41D009C2F3B /* KirinState.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AE3FD8B14C9A41D009C2F3B /* KirinState.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1AE3FD8E14C9A41D009C2F3B /* KirinState.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AE3FD8C14C9A41D009C2F3B /* KirinState.m */; };
 		1AEA44E91527B29500E7B961 /* KirinProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AEA44E71527B29500E7B961 /* KirinProxy.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1AEA44EA1527B29500E7B961 /* KirinProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AEA44E81527B29500E7B961 /* KirinProxy.m */; };
-		1AEA44EE1527B84C00E7B961 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AEA44ED1527B84C00E7B961 /* CoreLocation.framework */; };
-		1AEA44F41527B92000E7B961 /* KirinProxyTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AEA44F11527B92000E7B961 /* KirinProxyTest.m */; };
 		1AEE8DA3154EC8DD00B8C0D7 /* KirinUITableViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AEE8DA1154EC8DD00B8C0D7 /* KirinUITableViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1AEE8DA4154EC8DD00B8C0D7 /* KirinUITableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AEE8DA2154EC8DD00B8C0D7 /* KirinUITableViewController.m */; };
-		1AF8396714CA13FA00E0D436 /* NetworkingTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AF8396614CA13FA00E0D436 /* NetworkingTest.m */; };
 		24BD526517131066000E3C64 /* Sharing.h in Headers */ = {isa = PBXBuildFile; fileRef = 24BD526217131066000E3C64 /* Sharing.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		1A00C8C514B2E2FD00211F34 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 1A00C8A314B2E2FD00211F34 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 1A00C8AE14B2E2FD00211F34;
-			remoteInfo = KirinKit;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		090C142318C83D2C0030EC1F /* SymbolMapService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SymbolMapService.h; path = GWTServices/SymbolMapService.h; sourceTree = "<group>"; };
@@ -177,7 +150,6 @@
 		1A00C8B314B2E2FD00211F34 /* KirinKit-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "KirinKit-Info.plist"; sourceTree = "<group>"; };
 		1A00C8B514B2E2FD00211F34 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1A00C8B714B2E2FD00211F34 /* KirinKit-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "KirinKit-Prefix.pch"; sourceTree = "<group>"; };
-		1A00C8BD14B2E2FD00211F34 /* KirinKitTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KirinKitTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A00C8BF14B2E2FD00211F34 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		1A00C8C114B2E2FD00211F34 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1A00C8C314B2E2FD00211F34 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -273,19 +245,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		1A00C8B914B2E2FD00211F34 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				1AEA44EE1527B84C00E7B961 /* CoreLocation.framework in Frameworks */,
-				1A9FE0A714D5FF21008C0565 /* MobileCoreServices.framework in Frameworks */,
-				1A00C99514B2EC5F00211F34 /* libsqlite3.0.dylib in Frameworks */,
-				1A00C8C014B2E2FD00211F34 /* UIKit.framework in Frameworks */,
-				1A00C8C214B2E2FD00211F34 /* Foundation.framework in Frameworks */,
-				1A00C8C414B2E2FD00211F34 /* CoreGraphics.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -360,7 +319,6 @@
 			isa = PBXGroup;
 			children = (
 				1A00C8AF14B2E2FD00211F34 /* KirinKit.framework */,
-				1A00C8BD14B2E2FD00211F34 /* KirinKitTests.octest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -687,25 +645,6 @@
 			productReference = 1A00C8AF14B2E2FD00211F34 /* KirinKit.framework */;
 			productType = "com.apple.product-type.bundle";
 		};
-		1A00C8BC14B2E2FD00211F34 /* KirinKitTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 1A00C8D814B2E2FD00211F34 /* Build configuration list for PBXNativeTarget "KirinKitTests" */;
-			buildPhases = (
-				1A00C8B814B2E2FD00211F34 /* Sources */,
-				1A00C8B914B2E2FD00211F34 /* Frameworks */,
-				1A00C8BA14B2E2FD00211F34 /* Resources */,
-				1A00C8BB14B2E2FD00211F34 /* ShellScript */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				1A00C8C614B2E2FD00211F34 /* PBXTargetDependency */,
-			);
-			name = KirinKitTests;
-			productName = KirinKitTests;
-			productReference = 1A00C8BD14B2E2FD00211F34 /* KirinKitTests.octest */;
-			productType = "com.apple.product-type.bundle.ocunit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -728,7 +667,6 @@
 			projectRoot = "";
 			targets = (
 				1A00C8AE14B2E2FD00211F34 /* KirinKit */,
-				1A00C8BC14B2E2FD00211F34 /* KirinKitTests */,
 			);
 		};
 /* End PBXProject section */
@@ -739,15 +677,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				1A00C8B614B2E2FD00211F34 /* InfoPlist.strings in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		1A00C8BA14B2E2FD00211F34 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				1A00C8C714B2E2FD00211F34 /* KirinKit.framework in Resources */,
-				1A00C8CD14B2E2FD00211F34 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -780,19 +709,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "set -e\n\nset +u\nif [[ $UFW_MASTER_SCRIPT_RUNNING ]]\nthen\n    # Nothing for the slave script to do\n    exit 0\nfi\nset -u\nexport UFW_MASTER_SCRIPT_RUNNING=1\n\n\n# Functions\n\n## List files in the specified directory, storing to the specified array.\n#\n# @param $1 The path to list\n# @param $2 The name of the array to fill\n#\n##\nlist_files ()\n{\n    filelist=$(ls \"$1\")\n    while read line\n    do\n        eval \"$2[\\${#$2[*]}]=\\\"\\$line\\\"\"\n    done <<< \"$filelist\"\n}\n\n\n# Sanity check\n\nif [[ ! -f \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" ]]\nthen\n    echo \"Framework target \\\"${TARGET_NAME}\\\" had no source files to build from. Make sure your source files have the correct target membership\"\n    exit 1\nfi\n\n\n# Gather information\n\nif [[ \"$SDK_NAME\" =~ ([A-Za-z]+) ]]\nthen\n    UFW_SDK_PLATFORM=${BASH_REMATCH[1]}\nelse\n    echo \"Could not find platform name from SDK_NAME: $SDK_NAME\"\n    exit 1\nfi\n\nif [[ \"$SDK_NAME\" =~ ([0-9]+.*$) ]]\nthen\n    UFW_SDK_VERSION=${BASH_REMATCH[1]}\nelse\n    echo \"Could not find sdk version from SDK_NAME: $SDK_NAME\"\n    exit 1\nfi\n\nif [[ \"$UFW_SDK_PLATFORM\" = \"iphoneos\" ]]\nthen\n    UFW_OTHER_PLATFORM=iphonesimulator\nelse\n    UFW_OTHER_PLATFORM=iphoneos\nfi\n\nif [[ \"$BUILT_PRODUCTS_DIR\" =~ (.*)$UFW_SDK_PLATFORM$ ]]\nthen\n    UFW_OTHER_BUILT_PRODUCTS_DIR=\"${BASH_REMATCH[1]}${UFW_OTHER_PLATFORM}\"\nelse\n    echo \"Could not find $UFW_SDK_PLATFORM in $BUILT_PRODUCTS_DIR\"\n    exit 1\nfi\n\n\n# Short-circuit if all binaries are up to date.\n# We already checked the other platform in the prerun script.\n\nif [[ -f \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" ]] && [[ -f \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/${EXECUTABLE_PATH}\" ]] && [[ ! \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" -nt \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/${EXECUTABLE_PATH}\" ]]\nthen\n    exit 0\nfi\n\n\n# Make sure the other platform gets built\n\necho \"Build other platform\"\n\necho xcodebuild -project \"${PROJECT_FILE_PATH}\" -target \"${TARGET_NAME}\" -configuration \"${CONFIGURATION}\" -sdk ${UFW_OTHER_PLATFORM}${UFW_SDK_VERSION} BUILD_DIR=\"${BUILD_DIR}\" CONFIGURATION_TEMP_DIR=\"${PROJECT_TEMP_DIR}/${CONFIGURATION}-${UFW_OTHER_PLATFORM}\" $ACTION\nxcodebuild -project \"${PROJECT_FILE_PATH}\" -target \"${TARGET_NAME}\" -configuration \"${CONFIGURATION}\" -sdk ${UFW_OTHER_PLATFORM}${UFW_SDK_VERSION} BUILD_DIR=\"${BUILD_DIR}\" CONFIGURATION_TEMP_DIR=\"${PROJECT_TEMP_DIR}/${CONFIGURATION}-${UFW_OTHER_PLATFORM}\" $ACTION\n\n\n# Build the fat static library binary\n\necho \"Create universal static library\"\n\n# Libtool has moved in Xcode 7\nif [[ \"$XCODE_VERSION_MAJOR\" = \"0600\" ]]\nthen\n    LIBTOOL_DIR=\"$PLATFORM_DEVELOPER_BIN_DIR\"\nelse\n    LIBTOOL_DIR=\"$DT_TOOLCHAIN_DIR/usr/bin/\"\nfi\n\necho \"$LIBTOOL_DIR/libtool\" -static \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" \"${UFW_OTHER_BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" -o \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}.temp\"\n\"$LIBTOOL_DIR/libtool\" -static \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" \"${UFW_OTHER_BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" -o \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}.temp\"\n\necho mv \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}.temp\" \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\"\nmv \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}.temp\" \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\"\n\n\n# Build framework structure\n\necho \"Build symlinks\"\n\necho ln -sf A \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/Versions/Current\"\nln -sf A \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/Versions/Current\"\necho ln -sf Versions/Current/Headers \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/Headers\"\nln -sf Versions/Current/Headers \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/Headers\"\necho ln -sf Versions/Current/Resources \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/Resources\"\nln -sf Versions/Current/Resources \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/Resources\"\necho ln -sf \"Versions/Current/${EXECUTABLE_NAME}\" \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/${EXECUTABLE_NAME}\"\nln -sf \"Versions/Current/${EXECUTABLE_NAME}\" \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/${EXECUTABLE_NAME}\"\n\n\n# Link to binary for unit tests\n\nmkdir -p \"${BUILT_PRODUCTS_DIR}/.fake_fw_testing.framework\"\nln -sf \"../${WRAPPER_NAME}/${EXECUTABLE_NAME}\" \"${BUILT_PRODUCTS_DIR}/.fake_fw_testing.framework/.fake_fw_testing\"\n\n\n# Build embedded framework structure\n\necho \"Build Embedded Framework\"\n\necho rm -rf \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework\"\nrm -rf \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework\"\necho mkdir -p \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/Resources\"\nmkdir -p \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/Resources\"\necho cp -a \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/\"\ncp -a \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/\"\n\ndeclare -a UFW_FILE_LIST\nlist_files \"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\" UFW_FILE_LIST\nfor filename in \"${UFW_FILE_LIST[@]}\"\ndo\n    if [[ \"${filename}\" != \"Info.plist\" ]] && [[ ! \"${filename}\" =~ .*\\.lproj$ ]]\n    then\n        echo ln -sf \"../${WRAPPER_NAME}/Resources/${filename}\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/Resources/${filename}\"\n        ln -sf \"../${WRAPPER_NAME}/Resources/${filename}\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/Resources/${filename}\"\n    fi\ndone\n\n\n# Replace other platform's framework with a copy of this one (so that both have the same universal binary)\n\necho \"Copy from $UFW_SDK_PLATFORM to $UFW_OTHER_PLATFORM\"\n\necho rm -rf \"${BUILD_DIR}/${CONFIGURATION}-${UFW_OTHER_PLATFORM}\"\nrm -rf \"${BUILD_DIR}/${CONFIGURATION}-${UFW_OTHER_PLATFORM}\"\necho cp -a \"${BUILD_DIR}/${CONFIGURATION}-${UFW_SDK_PLATFORM}\" \"${BUILD_DIR}/${CONFIGURATION}-${UFW_OTHER_PLATFORM}\"\ncp -a \"${BUILD_DIR}/${CONFIGURATION}-${UFW_SDK_PLATFORM}\" \"${BUILD_DIR}/${CONFIGURATION}-${UFW_OTHER_PLATFORM}\"\n";
-		};
-		1A00C8BB14B2E2FD00211F34 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -846,31 +762,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		1A00C8B814B2E2FD00211F34 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				1A00C97A14B2E36500211F34 /* NativeContextTest.m in Sources */,
-				1A00C97B14B2E36500211F34 /* KirinTests.m in Sources */,
-				1A00C97C14B2E36500211F34 /* KirinHelperTest.m in Sources */,
-				1A00C97D14B2E36500211F34 /* DummyNativeContext.m in Sources */,
-				1A00C97E14B2E36500211F34 /* DummyJSContext.m in Sources */,
-				1AF8396714CA13FA00E0D436 /* NetworkingTest.m in Sources */,
-				1AEA44F41527B92000E7B961 /* KirinProxyTest.m in Sources */,
-				1A6A21F11546B249006B5D13 /* DummyNativeObject.m in Sources */,
-				1A2D478A1552954100EDF796 /* KirinArgsTest.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		1A00C8C614B2E2FD00211F34 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 1A00C8AE14B2E2FD00211F34 /* KirinKit */;
-			targetProxy = 1A00C8C514B2E2FD00211F34 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		1A00C8B414B2E2FD00211F34 /* InfoPlist.strings */ = {
@@ -1009,62 +901,6 @@
 			};
 			name = Release;
 		};
-		1A00C8D914B2E2FD00211F34 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "KirinKitTests/KirinKitTests-Prefix.pch";
-				GCC_THUMB_SUPPORT = NO;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				INFOPLIST_FILE = "KirinKitTests/KirinKitTests-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)\"",
-				);
-				OTHER_LDFLAGS = (
-					"-framework",
-					SenTestingKit,
-					"-framework",
-					.fake_fw_testing,
-				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = octest;
-			};
-			name = Debug;
-		};
-		1A00C8DA14B2E2FD00211F34 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "KirinKitTests/KirinKitTests-Prefix.pch";
-				GCC_THUMB_SUPPORT = NO;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				INFOPLIST_FILE = "KirinKitTests/KirinKitTests-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)\"",
-				);
-				OTHER_LDFLAGS = (
-					"-framework",
-					SenTestingKit,
-					"-framework",
-					.fake_fw_testing,
-				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = octest;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1082,15 +918,6 @@
 			buildConfigurations = (
 				1A00C8D614B2E2FD00211F34 /* Debug */,
 				1A00C8D714B2E2FD00211F34 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		1A00C8D814B2E2FD00211F34 /* Build configuration list for PBXNativeTarget "KirinKitTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				1A00C8D914B2E2FD00211F34 /* Debug */,
-				1A00C8DA14B2E2FD00211F34 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
